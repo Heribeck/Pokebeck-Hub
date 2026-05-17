@@ -4,11 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PokeType Guess</title>
-    <script src="estructura/logic/script.js"></script>
+    <script defer src="estructura/logica/app.js"></script>
     <link rel="stylesheet" href="estructura/estilo/style.css">
 </head>
 
 <body>
     <h1>PokeType Guess</h1>
+
+    <section class="layout-configuracion">
+
+        <div class="racha">
+            <button id="btn-engranaje" class="btn-icono">⚙️</button>
+            <p>Score: <span id="racha-actual">0</span> || MAX: <span id="racha-maxima">0</span></p>
+        </div>
+    
+        <div id="menu-desplegable" class="menu-oculto">
+            <button id="btn-reset-racha" class="btn-menu">Reiniciar Racha</button>
+            <button id="btn-reset-juego" class="btn-menu">Reiniciar Juego</button>
+        </div>
+        
+    </section>
+
+    <section class="layout-types">
+        <h2 id="h2-types">Tipos Del Pokemon</h2>
+        <img src="" alt="" style="display: none;" id="pokemon-sprite" class="sprite-pokemon">
+        <div class="div-types" id="div-icono-types">
+            <img id="type1-icon" class="type-icon" src="" alt="Agua">
+            <img id="type2-icon" class="type-icon" src="" alt="Fuego">
+        </div>
+    </section>
+
+    <section class="layout-respuesta">
+
+        <div id="respuesta-input">
+            <h3>Escribe Tu Respuesta</h3>   
+            <input type="text" class="input-pokemon" id="pokemon" placeholder="Nombre del Pokémon">
+        </div>
+
+        <div class="botones-respuesta">
+            <button class="btn-revelar" id="btn-revelar">Revelar</button>
+            <button class="btn-no-existe" id="btn-no-existe">No Existe</button>
+            <button class="btn-next" id="btn-next" style="display: none;">Siguiente</button>
+        </div>
+
+    </section>
+
+    <div id="notificacion" class="layout-notificacion">
+        <span id="mensaje">Mensaje de prueba</span>
+    </div>
+    
+    
 </body>
 </html>
