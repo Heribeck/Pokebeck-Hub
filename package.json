@@ -1,0 +1,24 @@
+{
+  "name": "poketype-guess",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Heribeck/poketype-guess.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Heribeck/poketype-guess/issues"
+  },
+  "homepage": "https://github.com/Heribeck/poketype-guess#readme",
+  "dependencies": {
+    "@capacitor/android": "^8.3.4"
+  }
+}

@@ -310,10 +310,16 @@ btnNoExiste.addEventListener("click", () => {
         rachaActualElement.textContent = rachaActual;
         rachaMaximaElement.textContent = rachaMaxima;
         
-        generarTipos(); 
+        setTimeout(() => {
+            generarTipos(); 
+        }, 700);
+        
 
     } else {
         mostrarNotificacion("¡Te equivocaste! ❌ Esa combinación SÍ existe en el juego.");
+        setTimeout(() => {
+            generarTipos(); 
+        }, 700);
         
         rachaActual = 0;
         rachaActualElement.textContent = rachaActual;
