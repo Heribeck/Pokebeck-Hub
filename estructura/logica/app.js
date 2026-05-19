@@ -17,8 +17,6 @@ const blacklist = {
   "poison,ice": true,
   "ground,fairy": true,
   "fairy,ground": true,
-  "dragon,fairy": true,
-  "fairy,dragon": true
 };
 
 const types = [
@@ -286,7 +284,8 @@ setting.addEventListener("click", () => {
 btnRevelar.addEventListener("click", () => {
     const respuesta = inputPokemon.value;
     const respuestaLimpia = respuesta.toLowerCase().trim();
-    const respuestaApi = diccionarioPokemon[respuestaLimpia] || respuestaLimpia;
+    const respuestaFormateada = respuestaLimpia.replace(/ /g, "-");
+    const respuestaApi = diccionarioPokemon[respuestaFormateada] || respuestaFormateada;
 
     validarRespuesta(respuestaApi);
     inputPokemon.value = "";
