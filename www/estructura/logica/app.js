@@ -88,6 +88,7 @@ const diccionarioPokemon = {
     "colacrito": "scream-tail",
     "furioseta": "brute-bonnet",
     "melena aleteo": "flutter-mane",
+    "melenaleteo": "flutter-mane",
     "reptalada": "slither-wing",
     "pelarena": "sandy-shocks",
     "bramaluna": "roaring-moon",
@@ -136,6 +137,8 @@ const diccionarioPokemon = {
     "chien pao": "chien-pao",
     "wo chien": "wo-chien",
     "chi yu": "chi-yu",
+    "frillish": "frillish-male",
+    "jellicent": "jellicent-male",
 
     // --- DIFERENCIAS DE GÉNERO (Redirigiendo al macho por defecto) ---
     "pyroar": "pyroar-male",
@@ -168,6 +171,7 @@ const btnResetRacha = document.getElementById("btn-reset-racha");
 const btnResetJuego = document.getElementById("btn-reset-juego");
 const notificacion = document.getElementById("notificacion");
 const toastMensaje = document.getElementById("mensaje");
+const btnComunidad = document.getElementById("btn-comunidad");
 
 let type1Value
 let type2Value
@@ -274,7 +278,7 @@ function mostrarNotificacion(mensaje) {
     }, 2000);
 }
 
-
+//Evento para el botón de configuración
 setting.addEventListener("click", () => {
     menuDesplegable.classList.toggle("mostrar");
     setting.style.transform = menuDesplegable.classList.contains("mostrar") ? "rotate(90deg)" : "rotate(0deg)";
@@ -326,6 +330,7 @@ btnNoExiste.addEventListener("click", () => {
     }
 });
 
+// Evento para el botón de siguiente
 btnNext.addEventListener("click", () => {
     spritePokemon.style.display = "none";
     divIconoTypes.style.display = "flex";
@@ -337,6 +342,7 @@ btnNext.addEventListener("click", () => {
     generarTipos();
 });
 
+// Evento para el botón de reiniciar racha
 btnResetRacha.addEventListener("click", () => {
     localStorage.removeItem("rachaMaxima");
 
@@ -351,6 +357,7 @@ btnResetRacha.addEventListener("click", () => {
     mostrarNotificacion("¡Récord borrado con éxito! Empiezas desde cero.");
 });
 
+// Evento para el botón de reiniciar juego
 btnResetJuego.addEventListener("click", () => {
 
     rachaActual = 0;
@@ -360,6 +367,14 @@ btnResetJuego.addEventListener("click", () => {
     
     menuDesplegable.classList.remove("mostrar");
     generarTipos();
+});
+
+btnComunidad.addEventListener("click", ()=>{
+    if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Browser) {
+        window.Capacitor.Plugins.Browser.open({ url: 'https://t.me/heribeck' });
+    } else {
+        window.open('https://t.me/heribeck', '_blank');
+    }
 });
 
 

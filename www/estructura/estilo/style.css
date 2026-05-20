@@ -110,7 +110,7 @@ p {
 }
 
 .menu-oculto {
- position: absolute;
+    position: absolute;
     top: 40px;
     right: 0;
     background-color: #2c2f33; 
@@ -134,13 +134,24 @@ p {
 }
 
 .btn-menu {
-    background-color: #FFCB05; /* Tu amarillo */
-    color: #2c2f33; /* Letra oscura */
+    background-color: #FFCB05;
+    color: #2c2f33;
     border: none;
     padding: 10px 15px;
     border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
+}   
+
+#btn-comunidad {
+    transition: all 0.15s ease;
+    background-color: darkturquoise;
+}
+
+#btn-comunidad:active {
+    transform: scale(0.65);
+    opacity: 0.85;
+    filter: brightness(85%);
 }
 
 .racha {
@@ -221,6 +232,10 @@ p {
     background-color: #0288d1;
     color: white;
     width: 120px;
+}
+
+.btn-revelar:active {
+    background-color: black !important;
 }
 
 .sprite-pokemon {
