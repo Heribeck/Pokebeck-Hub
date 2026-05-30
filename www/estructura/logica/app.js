@@ -386,8 +386,8 @@ async function iniciarGeneracion() {
 
 //Función para generar tipos aleatorios
 async function generarTipos(tipo1Generic, tipo2Generic) {
-    type1Value = "steel";//types[Aleatoriedad(0, types.length - 1)];
-    type2Value = "steel";//types[Aleatoriedad(0, types.length - 1)];
+    type1Value = "normal";//types[Aleatoriedad(0, types.length - 1)];
+    type2Value = "ice";//types[Aleatoriedad(0, types.length - 1)];
     
     tipo1Generic.src = typesIcono[type1Value];
     tipo2Generic.src = typesIcono[type2Value];
@@ -433,13 +433,20 @@ function iniciarBarraTiempo(estado, modo, parrafo, boton, barra, mensaje, time, 
 
 //Funcion de toda la logica de juego del modo Campista
 async function campistaLogica(){
-    const pokemonesValidos = pokedex.filter(pokemon => pokemon.types.includes(type1Value) && pokemon.types.includes(type2Value));
+
+    let pokemonesValidos;
+    if (type1Value === type2Value){
+      pokemonesValidos = pokedex.filter(pokemon => pokemon.types.includes(type1Value) && pokemon.types.length === 1);
+    }else {
+      pokemonesValidos = pokedex.filter(pokemon => pokemon.types.includes(type1Value) && pokemon.types.includes(type2Value));
+    }
+    console.log(pokemonesValidos);
 
     if(pokemonesValidos.length === 0){
-        generarTipos(tipo1Campista, tipo2Campista)
-        campistaLogica();
-        console.log("No hay pokemones con esa combinación");
-        return;
+      generarTipos(tipo1Campista, tipo2Campista)
+      campistaLogica();
+      console.log("No hay pokemones con esa combinación");
+      return;
     }
         
     console.log(pokemonesValidos.map(p => p.name));
@@ -511,16 +518,15 @@ async function campistaLogica(){
                 btnNextCampista.style.display = "flex";
 
             } else {
-                    
-                mensajeAciertoCampista.textContent = "Has Perdido, ¡Inténtalo de nuevo!";
-                estadoJuego.scoreCampista = 0;
-                pScoreCampista.textContent = estadoJuego.scoreCampista;
-                btnIntentoCampista.style.display = "flex";
-                const buttons = document.querySelectorAll(".btn-opcion");
+              mensajeAciertoCampista.innerHTML = "Has Perdido.<br>La respuesa correcta era <strong>" + correctPokemon.name.charAt(0).toUpperCase() + correctPokemon.name.slice(1) + "</strong>";
+              estadoJuego.scoreCampista = 0;
+              pScoreCampista.textContent = estadoJuego.scoreCampista;
+              btnIntentoCampista.style.display = "flex";
+              const buttons = document.querySelectorAll(".btn-opcion");
 
-                buttons.forEach(btn => {
-                    btn.style.display = "none";
-                });
+              buttons.forEach(btn => {
+                  btn.style.display = "none";
+              });
             }
         });
         });
@@ -590,7 +596,7 @@ function validarSelect() {
         pScoreAs.textContent = estadoJuego.scoreAsDeBatalla;
         datalistAs.innerHTML = "";
         btnIntentoAs.style.display = "flex";
-        mensajeAciertoAs.innerHTML = "¡Incorrecto! <br/>" + selectedPokemon + " no tiene esa combinación de tipos.";
+        mensajeAciertoAs.innerHTML = "¡Incorrecto! <br/><strong>" + selectedPokemon.charAt(0).toUpperCase() + selectedPokemon.slice(1) + "</strong> no tiene esa combinación de tipos.";
         clearInterval(tiempoAsDeBatalla);
     }
 }
@@ -826,6 +832,7 @@ btnNextAs.addEventListener("click", () => {
   btnNoExisteAs.style.display = "flex";
   inputSelectAs.disabled = false;
   inputSelectAs.value = "";
+  cajaSelect.style.display = "block";
   mensajeAciertoAs.textContent = "";
   datalistAs.innerHTML = "";
   generarTipos(tipo1As, tipo2As);
