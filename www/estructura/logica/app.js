@@ -386,8 +386,8 @@ async function iniciarGeneracion() {
 
 //Función para generar tipos aleatorios
 async function generarTipos(tipo1Generic, tipo2Generic) {
-    type1Value = "normal";//types[Aleatoriedad(0, types.length - 1)];
-    type2Value = "ice";//types[Aleatoriedad(0, types.length - 1)];
+    type1Value = types[Aleatoriedad(0, types.length - 1)];
+    type2Value = types[Aleatoriedad(0, types.length - 1)];
     
     tipo1Generic.src = typesIcono[type1Value];
     tipo2Generic.src = typesIcono[type2Value];
