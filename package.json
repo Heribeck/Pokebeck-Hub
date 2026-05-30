@@ -1,6 +1,6 @@
 {
   "name": "poketype-guess",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,9 @@
   "homepage": "https://github.com/Heribeck/poketype-guess#readme",
   "dependencies": {
     "@capacitor-community/firebase-analytics": "^8.0.0",
-    "@capacitor/android": "^8.3.4"
+    "@capacitor-firebase/remote-config": "^8.2.0",
+    "@capacitor/android": "^8.3.4",
+    "@capacitor/app": "^8.1.0"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5"

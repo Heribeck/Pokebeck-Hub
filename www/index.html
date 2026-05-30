@@ -1,74 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PokeType Guess</title>
-    <script defer src="estructura/logica/app.js"></script>
+    <script type="module" defer src="estructura/logica/app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="estructura/estilo/style.css">
     
 </head>
 
 <body>
-    <h1>PokeType Guess</h1>
 
-    <section class="layout-configuracion">
+    <section id="custom-splash" class="layout-custom-splash">
 
-        <div class="racha">
-            <button id="btn-engranaje" class="btn-icono"><i class="fas fa-cog"></i></button>
-            <p>Score: <span id="racha-actual">0</span> || MAX: <span id="racha-maxima">0</span></p>
+        <img src="assets/splash.png">
+        <h1>PokeType Guess</h1>
+
+       <div class="Caja-barra-carga">
+       <div class="barra-carga"></div>
+       </div>
+
+        <p>Preparando el Desafío...</p>
+
+        <h4>Hecho por Heribeck</h4>
+
+    </section>
+
+    <main id="main" class="layout-main">
+
+        <h1>PokeType Guess</h1>
+        
+        <img src="assets/icono-only.png" alt="Icono PokeType Guess" class="icono-main">
+
+        <p>¿Puedes reconocerlos a todos?</p>
+
+        <div class="caja-btn-main">
+            <button id="btn-juego" class="boton-juego">Jugar</button>
+            <button id="btn-generador" class="boton-generador">Generador</button>
+            <button id="btn-acerca" class="boton-acerca">Acerca del Juego</button>
         </div>
-    
-        <div id="menu-desplegable" class="menu-oculto">
 
-            <button id="btn-reset-racha" class="btn-menu">
-                <i class="fas fa-redo"></i>
-                Reiniciar Racha
-            </button>
-            
-            <button id="btn-reset-juego" class="btn-menu">
-                <i class="fas fa-redo"></i>
-                Reiniciar Juego
-            </button>
+        <p class="texto-version">Versión 1.1.1 | © 2026 PokeType Guess</p> 
 
-            <button id="btn-comunidad" class="btn-menu"> 
-                <i class="fab fa-telegram"></i> 
-                Comunidad
-            </button>
+    </main>
 
+    <section id="dificultad" class="layout-dificultad">
+
+        <h2>DIFICULTAD DE JUEGO</h2>
+
+        <h4>Elige tu nivel de entrenamiento</h4>
+
+        <div class="caja-dificultades">
+            <button id="btn-campista" class="boton-campista"> <i class="fas fa-user"></i> Campista</button>
+            <button id="btn-as" class="boton-as"> <i class="fas fa-user-tie"></i> As de Batalla</button>
+            <button id="btn-campeon" class="boton-campeon"> <i class="fas fa-crown"></i> Campeón</button>
+        </div>
+
+    </section>
+
+    <section id="generador" class="layout-generador">
+
+        <div class="caja-generador">
+
+            <h2>Generador de Tipos</h2>
+
+            <div class="caja-tipos-generador">
+                <img id="tipo1" class="img-tipo" src="assets/icono-only.png" alt="Agua">
+                <img id="tipo2" class="img-tipo" src="assets/icono-only.png" alt="Fuego">
+            </div>
+
+            <button class="boton-generar" id="btn-generar">Generar</button>
+
+        </div>
+
+    </section>
+
+    <section id="acerca" class="layout-acerca">
+
+        <h2>Acerca del Juego</h2>
+
+        <h4>Disclaimer</h4>
+
+        <p class="parrafo-disclaimer">
+        PokéType-Guess es un proyecto realizado por fans, sin fines de lucro. No tengo afiliación alguna con The Pokémon Company, Nintendo o Game Freak. Todos los nombres, imágenes, sonidos y marcas registradas de Pokémon son propiedad de sus respectivos dueños. Este proyecto ha sido desarrollado con fines educativos y de entretenimiento.
+        Feedback, ideas, reportes de bugs o colaboración.<br/>
+        Si te gustó el juego y quieres apoyar el proyecto, únete a la comunidad oficial.
+        </p>
+
+        <button id="telegram" class="boton-telegram">
+            <i class="fab fa-telegram"></i> 
+            Telegram
+        </button>
+
+    </section>
+
+    <section id="panel-campista" class="layout-campista">
+
+        <h2 style="color: #43a047;">Nivel Campista</h2>
+
+        <div id="configuracion-campista" class="caja-configuracion-campista">
+
+            <button id="reinicio-score-campista" class="boton-reinicio"><i class="fa-solid fa-rotate-right"></i></button>
+
+            <p>Score: <span id="score-campista">0</span> || MAX: <span id="max-campista">0</span></p>
+                
+            <button id="reinicio-max-campista" class="boton-reinicio"><i class="fa-solid fa-rotate-right"></i></button>
+
+        </div>
+
+        <div class="caja-tipos">
+
+            <img id="type1-icon-campista" class="type-icon" src="assets/icono-only.png" alt="Normal">
+            <img id="type2-icon-campista" class="type-icon" src="assets/icono-only.png" alt="Normal">
+
+        </div>
+
+        <p id="mensaje-acierto-campista"></p>
+
+        <div class="caja-barra-tiempo">
+            <div id="tiempo-campista" class="barra-tiempo"></div>
         </div>
         
-    </section>
+        <div class="botones-campista" id="btns-campista">
 
-    <section class="layout-types">
-        <h2 id="h2-types">Tipos Del Pokemon</h2>
-        <img src="" alt="" style="display: none;" id="pokemon-sprite" class="sprite-pokemon">
-        <div class="div-types" id="div-icono-types">
-            <img id="type1-icon" class="type-icon" src="" alt="Agua">
-            <img id="type2-icon" class="type-icon" src="" alt="Fuego">
-        </div>
-    </section>
+            <button id="btn-iniciar-juego-campista" class="boton-iniciar-juego">Iniciar Juego</button> 
+            <button id="btn-next-campista" class="boton-next">Siguiente</button>
+            <button id="btn-intento-campista" class="boton-intento">Intentar de Nuevo</button>
 
-    <section class="layout-respuesta">
-
-        <div id="respuesta-input">
-            <h3>Escribe Tu Respuesta</h3>   
-            <input type="text" class="input-pokemon" id="pokemon" placeholder="Nombre del Pokémon">
         </div>
 
-        <div class="botones-respuesta">
-            <button class="btn-revelar" id="btn-revelar">Revelar</button>
-            <button class="btn-no-existe" id="btn-no-existe">No Existe</button>
-            <button class="btn-next" id="btn-next" style="display: none;">Siguiente</button>
+        <div id="opciones-pokemon" class="caja-opciones-pokemon">
+        </div>
+
+
+        <div id="ventana-confirmacion-campista" class="layout-confirmacion-ventana">
+
+            <div class="caja-confirmacion">
+
+                <h3>Reiniciar Score Máximo</h3>
+
+                <p>¿Seguro que deseas reiniciar tu récord?</p>
+
+                <div class="caja-botones-confirmacion">
+
+                    <button id="btn-confirmar-reinicio-campista" class="btn-confirmar">Confirmar</button>
+
+                    <button id="btn-cancelar-reinicio-campista" class="btn-cancelar">Cancelar</button>
+
+                </div>
+
+            </div>
+
         </div>
 
     </section>
 
-    <div id="notificacion" class="layout-notificacion">
-        <span id="mensaje">Mensaje de prueba</span>
-    </div>
+    <section id="panel-As" class="layout-As">
+
+        <h2 style="color: #ff9800;">Nivel As De Batalla</h2>
+
+        <div id="configuracion-As" class="caja-configuracion-As">
+
+            <button id="reinicio-score-As" class="boton-reinicio"><i class="fa-solid fa-rotate-right"></i></button>
+
+            <p>Score: <span id="score-As">0</span> || MAX: <span id="max-As">0</span></p>
+                
+            <button id="reinicio-max-As" class="boton-reinicio"><i class="fa-solid fa-rotate-right"></i></button>
+
+        </div>
+
+        <div class="caja-tipos">
+
+            <img id="type1-icon-As" class="type-icon" src="assets/icono-only.png" alt="Normal">
+            <img id="type2-icon-As" class="type-icon" src="assets/icono-only.png" alt="Normal">
+
+        </div>
+
+        <p id="mensaje-acierto-As"></p>
+
+
+        <div class="caja-barra-tiempo">
+            <div id="tiempo-As" class="barra-tiempo"></div>
+        </div>
+
+        <div class="caja-select" style="display: none;" id="caja-select">
+
+            <input id="select" list="pokemones">
+            <datalist id="pokemones">
+                <option value=""></option>
+            </datalist>
+
+        </div>
+
+        <div class="botones-As">
+            <button id="iniciar-juego-As" class="boton-iniciar-juego">Iniciar Juego</button>
+            <button id="btn-next-As" class="boton-next">Siguiente</button>
+            <button id="btn-intento-As" class="boton-intento">Volver a Intentarlo</button>
+            <button id="btn-validar-select-As" class="boton-validar-select">Validar</button>
+            <button id="no-existe-As" class="boton-no-existe">No Existe</button>
+        </div>
+
+
+        <div id="ventana-confirmacion-As" class="layout-confirmacion-ventana">
+
+            <div class="caja-confirmacion">
+
+                <h3>Reiniciar Score Máximo</h3>
+
+                <p>¿Seguro que deseas reiniciar tu récord?</p>
+
+                <div class="caja-botones-confirmacion">
+
+                    <button id="btn-confirmar-reinicio-As" class="btn-confirmar">Confirmar</button>
+
+                    <button id="btn-cancelar-reinicio-As" class="btn-cancelar">Cancelar</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section id="panel-campeon" class="layout-campeon">
+
+        <h2 style="color: #f44336;">Nivel Campeón</h2>
+
+        <div id="configuracion-campeon" class="caja-configuracion-campeon">
+
+            <button id="reinicio-score-campeon" class="boton-reinicio"><i class="fa-solid fa-rotate-right"></i></button>
+
+            <p>Score: <span id="score-campeon">0</span> || MAX: <span id="max-campeon">0</span></p>
+                
+            <button id="reinicio-max-campeon" class="boton-reinicio"><i class="fa-solid fa-rotate-right"></i></button>
+
+        </div>
+
+        <div class="caja-tipos">
+
+            <img id="type1-icon-campeon" class="type-icon" src="assets/icono-only.png" alt="Normal">
+            <img id="type2-icon-campeon" class="type-icon" src="assets/icono-only.png" alt="Normal">
+
+        </div>
+
+        <p id="mensaje-acierto-campeon"></p>
+
+
+        <div class="caja-barra-tiempo">
+            <div class="barra-tiempo" id="tiempo-campeon"></div>
+        </div>
+
+        <div id="caja-input" style="display: none;">
+
+            <h3>Escribe Tu Respuesta</h3>  
+
+            <input type="text" class="input-pokemon" id="respuesta-input-campeon" placeholder="Nombre del Pokémon">
+            
+        </div>
     
+        <div class="botones-campeon">
+
+            <button id="iniciar-juego-campeon" class="boton-iniciar-juego">Iniciar Juego</button>
+            <button id="btn-next-campeon" class="boton-next" >Siguiente</button>
+            <button id="btn-intento-campeon" class="boton-intento" >Volver a Intentarlo</button>
+            <button class="btn-revelar-campeon" id="btn-revelar-campeon">Revelar</button>
+            <button id="no-existe-campeon" class="boton-no-existe">No Existe</button>
+
+        </div>
+
+        <div id="ventana-confirmacion-campeon" class="layout-confirmacion-ventana">
+
+            <div class="caja-confirmacion">
+
+                <h3>Reiniciar Score Máximo</h3>
+
+                <p>¿Seguro que deseas reiniciar tu récord?</p>
+
+                <div class="caja-botones-confirmacion">
+
+                    <button id="btn-confirmar-reinicio-campeon" class="btn-confirmar">Confirmar</button>
+
+                    <button id="btn-cancelar-reinicio-campeon" class="btn-cancelar">Cancelar</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section id="notificacion" class="layout-notificacion">
+        <p><span id="mensaje-notificacion">Mensaje de prueba</span></p>
+    </section>
     
 </body>
+
 </html>
