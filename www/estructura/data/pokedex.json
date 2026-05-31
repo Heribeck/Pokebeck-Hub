@@ -270,6 +270,14 @@
     "sprite": "./assets/pokemones/nidoran-m.png"
   },
   {
+    "id": 32,
+    "name": "nidoran",
+    "types": [
+      "poison"
+    ],
+    "sprite": "./assets/pokemones/nidoran-m.png"
+  },
+  {
     "id": 33,
     "name": "nidorino",
     "types": [
@@ -3262,6 +3270,14 @@
     "sprite": "./assets/pokemones/jirachi.png"
   },
   {
+    "id": 386,
+    "name": "deoxys",
+    "types": [
+      "psychic"
+    ],
+    "sprite": "./assets/pokemones/deoxys-normal.png"
+  },
+  {
     "id": 387,
     "name": "turtwig",
     "types": [
@@ -3480,6 +3496,15 @@
       "bug"
     ],
     "sprite": "./assets/pokemones/burmy.png"
+  },
+  {
+    "id": 413,
+    "name": "wormadam",
+    "types": [
+      "bug",
+      "grass"
+    ],
+    "sprite": "./assets/pokemones/wormadam-plant.png"
   },
   {
     "id": 414,
@@ -4096,6 +4121,15 @@
     "sprite": "./assets/pokemones/regigigas.png"
   },
   {
+    "id": 487,
+    "name": "giratina",
+    "types": [
+      "ghost",
+      "dragon"
+    ],
+    "sprite": "./assets/pokemones/giratina-altered.png"
+  },
+  {
     "id": 488,
     "name": "cresselia",
     "types": [
@@ -4126,6 +4160,14 @@
       "dark"
     ],
     "sprite": "./assets/pokemones/darkrai.png"
+  },
+  {
+    "id": 492,
+    "name": "shaymin",
+    "types": [
+      "grass"
+    ],
+    "sprite": "./assets/pokemones/shaymin-land.png"
   },
   {
     "id": 493,
@@ -4603,6 +4645,14 @@
     "sprite": "./assets/pokemones/lilligant.png"
   },
   {
+    "id": 550,
+    "name": "basculin",
+    "types": [
+      "water"
+    ],
+    "sprite": "./assets/pokemones/basculin-red-striped.png"
+  },
+  {
     "id": 551,
     "name": "sandile",
     "types": [
@@ -4636,6 +4686,14 @@
       "fire"
     ],
     "sprite": "./assets/pokemones/darumaka.png"
+  },
+  {
+    "id": 555,
+    "name": "darmanitan",
+    "types": [
+      "fire"
+    ],
+    "sprite": "./assets/pokemones/darmanitan-standard.png"
   },
   {
     "id": 556,
@@ -4941,6 +4999,24 @@
       "poison"
     ],
     "sprite": "./assets/pokemones/amoonguss.png"
+  },
+  {
+    "id": 592,
+    "name": "frillish",
+    "types": [
+      "water",
+      "ghost"
+    ],
+    "sprite": "./assets/pokemones/frillish-male.png"
+  },
+  {
+    "id": 593,
+    "name": "jellicent",
+    "types": [
+      "water",
+      "ghost"
+    ],
+    "sprite": "./assets/pokemones/jellicent-male.png"
   },
   {
     "id": 594,
@@ -5344,6 +5420,23 @@
     "sprite": "./assets/pokemones/virizion.png"
   },
   {
+    "id": 641,
+    "name": "tornadus",
+    "types": [
+      "flying"
+    ],
+    "sprite": "./assets/pokemones/tornadus-incarnate.png"
+  },
+  {
+    "id": 642,
+    "name": "thundurus",
+    "types": [
+      "electric",
+      "flying"
+    ],
+    "sprite": "./assets/pokemones/thundurus-incarnate.png"
+  },
+  {
     "id": 643,
     "name": "reshiram",
     "types": [
@@ -5362,6 +5455,15 @@
     "sprite": "./assets/pokemones/zekrom.png"
   },
   {
+    "id": 645,
+    "name": "landorus",
+    "types": [
+      "ground",
+      "flying"
+    ],
+    "sprite": "./assets/pokemones/landorus-incarnate.png"
+  },
+  {
     "id": 646,
     "name": "kyurem",
     "types": [
@@ -5369,6 +5471,24 @@
       "ice"
     ],
     "sprite": "./assets/pokemones/kyurem.png"
+  },
+  {
+    "id": 647,
+    "name": "keldeo",
+    "types": [
+      "water",
+      "fighting"
+    ],
+    "sprite": "./assets/pokemones/keldeo-ordinary.png"
+  },
+  {
+    "id": 648,
+    "name": "meloetta",
+    "types": [
+      "normal",
+      "psychic"
+    ],
+    "sprite": "./assets/pokemones/meloetta-aria.png"
   },
   {
     "id": 649,
@@ -5533,6 +5653,15 @@
     "sprite": "./assets/pokemones/litleo.png"
   },
   {
+    "id": 668,
+    "name": "pyroar",
+    "types": [
+      "fire",
+      "normal"
+    ],
+    "sprite": "./assets/pokemones/pyroar-male.png"
+  },
+  {
     "id": 669,
     "name": "flabebe",
     "types": [
@@ -5606,6 +5735,14 @@
     "sprite": "./assets/pokemones/espurr.png"
   },
   {
+    "id": 678,
+    "name": "meowstic",
+    "types": [
+      "psychic"
+    ],
+    "sprite": "./assets/pokemones/meowstic-male.png"
+  },
+  {
     "id": 679,
     "name": "honedge",
     "types": [
@@ -5622,6 +5759,15 @@
       "ghost"
     ],
     "sprite": "./assets/pokemones/doublade.png"
+  },
+  {
+    "id": 681,
+    "name": "aegislash",
+    "types": [
+      "steel",
+      "ghost"
+    ],
+    "sprite": "./assets/pokemones/aegislash-shield.png"
   },
   {
     "id": 682,
@@ -5866,6 +6012,24 @@
     "sprite": "./assets/pokemones/trevenant.png"
   },
   {
+    "id": 710,
+    "name": "pumpkaboo",
+    "types": [
+      "ghost",
+      "grass"
+    ],
+    "sprite": "./assets/pokemones/pumpkaboo-average.png"
+  },
+  {
+    "id": 711,
+    "name": "gourgeist",
+    "types": [
+      "ghost",
+      "grass"
+    ],
+    "sprite": "./assets/pokemones/gourgeist-average.png"
+  },
+  {
     "id": 712,
     "name": "bergmite",
     "types": [
@@ -5915,6 +6079,15 @@
       "flying"
     ],
     "sprite": "./assets/pokemones/yveltal.png"
+  },
+  {
+    "id": 718,
+    "name": "zygarde",
+    "types": [
+      "dragon",
+      "ground"
+    ],
+    "sprite": "./assets/pokemones/zygarde-50.png"
   },
   {
     "id": 719,
@@ -6107,6 +6280,15 @@
     "sprite": "./assets/pokemones/crabominable.png"
   },
   {
+    "id": 741,
+    "name": "oricorio",
+    "types": [
+      "fire",
+      "flying"
+    ],
+    "sprite": "./assets/pokemones/oricorio-baile.png"
+  },
+  {
     "id": 742,
     "name": "cutiefly",
     "types": [
@@ -6131,6 +6313,22 @@
       "rock"
     ],
     "sprite": "./assets/pokemones/rockruff.png"
+  },
+  {
+    "id": 745,
+    "name": "lycanroc",
+    "types": [
+      "rock"
+    ],
+    "sprite": "./assets/pokemones/lycanroc-midday.png"
+  },
+  {
+    "id": 746,
+    "name": "wishiwashi",
+    "types": [
+      "water"
+    ],
+    "sprite": "./assets/pokemones/wishiwashi-solo.png"
   },
   {
     "id": 747,
@@ -6364,6 +6562,15 @@
     "sprite": "./assets/pokemones/silvally.png"
   },
   {
+    "id": 774,
+    "name": "minior",
+    "types": [
+      "rock",
+      "flying"
+    ],
+    "sprite": "./assets/pokemones/minior-red-meteor.png"
+  },
+  {
     "id": 775,
     "name": "komala",
     "types": [
@@ -6388,6 +6595,15 @@
       "steel"
     ],
     "sprite": "./assets/pokemones/togedemaru.png"
+  },
+  {
+    "id": 778,
+    "name": "mimikyu",
+    "types": [
+      "ghost",
+      "fairy"
+    ],
+    "sprite": "./assets/pokemones/mimikyu-disguised.png"
   },
   {
     "id": 779,
@@ -6441,6 +6657,15 @@
       "fighting"
     ],
     "sprite": "./assets/pokemones/kommo-o.png"
+  },
+  {
+    "id": 785,
+    "name": "tapu koko",
+    "types": [
+      "electric",
+      "fairy"
+    ],
+    "sprite": "./assets/pokemones/tapu-koko.png"
   },
   {
     "id": 786,
@@ -6974,6 +7199,15 @@
     "sprite": "./assets/pokemones/toxel.png"
   },
   {
+    "id": 849,
+    "name": "toxtricity",
+    "types": [
+      "electric",
+      "poison"
+    ],
+    "sprite": "./assets/pokemones/toxtricity-amped.png"
+  },
+  {
     "id": 850,
     "name": "sizzlipede",
     "types": [
@@ -7185,6 +7419,24 @@
     "sprite": "./assets/pokemones/stonjourner.png"
   },
   {
+    "id": 876,
+    "name": "indeedee",
+    "types": [
+      "psychic",
+      "normal"
+    ],
+    "sprite": "./assets/pokemones/indeedee-male.png"
+  },
+  {
+    "id": 877,
+    "name": "morpeko",
+    "types": [
+      "electric",
+      "dark"
+    ],
+    "sprite": "./assets/pokemones/morpeko-full-belly.png"
+  },
+  {
     "id": 878,
     "name": "cufant",
     "types": [
@@ -7306,6 +7558,15 @@
     "sprite": "./assets/pokemones/kubfu.png"
   },
   {
+    "id": 892,
+    "name": "urshifu",
+    "types": [
+      "fighting",
+      "dark"
+    ],
+    "sprite": "./assets/pokemones/urshifu-single-strike.png"
+  },
+  {
     "id": 893,
     "name": "zarude",
     "types": [
@@ -7383,6 +7644,15 @@
     "sprite": "./assets/pokemones/ursaluna.png"
   },
   {
+    "id": 902,
+    "name": "basculegion",
+    "types": [
+      "water",
+      "ghost"
+    ],
+    "sprite": "./assets/pokemones/basculegion-male.png"
+  },
+  {
     "id": 903,
     "name": "sneasler",
     "types": [
@@ -7399,6 +7669,15 @@
       "poison"
     ],
     "sprite": "./assets/pokemones/overqwil.png"
+  },
+  {
+    "id": 905,
+    "name": "enamorus",
+    "types": [
+      "fairy",
+      "flying"
+    ],
+    "sprite": "./assets/pokemones/enamorus-incarnate.png"
   },
   {
     "id": 906,
@@ -7484,6 +7763,14 @@
     "sprite": "./assets/pokemones/lechonk.png"
   },
   {
+    "id": 916,
+    "name": "oinkologne",
+    "types": [
+      "normal"
+    ],
+    "sprite": "./assets/pokemones/oinkologne-male.png"
+  },
+  {
     "id": 917,
     "name": "tarountula",
     "types": [
@@ -7549,6 +7836,14 @@
       "normal"
     ],
     "sprite": "./assets/pokemones/tandemaus.png"
+  },
+  {
+    "id": 925,
+    "name": "maushold",
+    "types": [
+      "normal"
+    ],
+    "sprite": "./assets/pokemones/maushold-family-of-four.png"
   },
   {
     "id": 926,
@@ -7866,6 +8161,14 @@
     "sprite": "./assets/pokemones/finizen.png"
   },
   {
+    "id": 964,
+    "name": "palafin",
+    "types": [
+      "water"
+    ],
+    "sprite": "./assets/pokemones/palafin-zero.png"
+  },
+  {
     "id": 965,
     "name": "varoom",
     "types": [
@@ -7977,6 +8280,15 @@
     "sprite": "./assets/pokemones/dondozo.png"
   },
   {
+    "id": 978,
+    "name": "tatsugiri",
+    "types": [
+      "dragon",
+      "water"
+    ],
+    "sprite": "./assets/pokemones/tatsugiri-curly.png"
+  },
+  {
     "id": 979,
     "name": "annihilape",
     "types": [
@@ -8002,6 +8314,14 @@
       "psychic"
     ],
     "sprite": "./assets/pokemones/farigiraf.png"
+  },
+  {
+    "id": 982,
+    "name": "dudunsparce",
+    "types": [
+      "normal"
+    ],
+    "sprite": "./assets/pokemones/dudunsparce-two-segment.png"
   },
   {
     "id": 983,
@@ -8049,6 +8369,15 @@
     "sprite": "./assets/pokemones/flutter-mane.png"
   },
   {
+    "id": 987,
+    "name": "melena aleteo",
+    "types": [
+      "ghost",
+      "fairy"
+    ],
+    "sprite": "./assets/pokemones/flutter-mane.png"
+  },
+  {
     "id": 988,
     "name": "reptalada",
     "types": [
@@ -8059,7 +8388,7 @@
   },
   {
     "id": 989,
-    "name": "colmillares",
+    "name": "pelarena",
     "types": [
       "electric",
       "ground"
@@ -8121,6 +8450,15 @@
     "sprite": "./assets/pokemones/iron-thorns.png"
   },
   {
+    "id": 995,
+    "name": "ferropuas",
+    "types": [
+      "rock",
+      "electric"
+    ],
+    "sprite": "./assets/pokemones/iron-thorns.png"
+  },
+  {
     "id": 996,
     "name": "frigibax",
     "types": [
@@ -8165,6 +8503,42 @@
     "sprite": "./assets/pokemones/gholdengo.png"
   },
   {
+    "id": 1001,
+    "name": "wo chien",
+    "types": [
+      "dark",
+      "grass"
+    ],
+    "sprite": "./assets/pokemones/wo-chien.png"
+  },
+  {
+    "id": 1002,
+    "name": "chien pao",
+    "types": [
+      "dark",
+      "ice"
+    ],
+    "sprite": "./assets/pokemones/chien-pao.png"
+  },
+  {
+    "id": 1003,
+    "name": "ting lu",
+    "types": [
+      "dark",
+      "ground"
+    ],
+    "sprite": "./assets/pokemones/ting-lu.png"
+  },
+  {
+    "id": 1004,
+    "name": "chi yu",
+    "types": [
+      "dark",
+      "fire"
+    ],
+    "sprite": "./assets/pokemones/chi-yu.png"
+  },
+  {
     "id": 1005,
     "name": "bramaluna",
     "types": [
@@ -8176,6 +8550,15 @@
   {
     "id": 1006,
     "name": "ferropaladín",
+    "types": [
+      "fairy",
+      "fighting"
+    ],
+    "sprite": "./assets/pokemones/iron-valiant.png"
+  },
+  {
+    "id": 1006,
+    "name": "ferropaladin",
     "types": [
       "fairy",
       "fighting"
@@ -8308,8 +8691,26 @@
     "sprite": "./assets/pokemones/gouging-fire.png"
   },
   {
+    "id": 1020,
+    "name": "flamariete",
+    "types": [
+      "fire",
+      "dragon"
+    ],
+    "sprite": "./assets/pokemones/gouging-fire.png"
+  },
+  {
     "id": 1021,
     "name": "furiofuego",
+    "types": [
+      "electric",
+      "dragon"
+    ],
+    "sprite": "./assets/pokemones/raging-bolt.png"
+  },
+  {
+    "id": 1021,
+    "name": "electrofuria",
     "types": [
       "electric",
       "dragon"
@@ -8352,423 +8753,64 @@
     "sprite": "./assets/pokemones/pecharunt.png"
   },
   {
-    "id": 32,
-    "name": "nidoran",
+    "id": 10033,
+    "name": "mega venusaur",
     "types": [
+      "grass",
       "poison"
     ],
-    "sprite": "./assets/pokemones/nidoran-m.png"
+    "sprite": "./assets/pokemones/venusaur-mega.png"
   },
   {
-    "id": 386,
-    "name": "deoxys",
+    "id": 10034,
+    "name": "mega charizard x",
     "types": [
-      "psychic"
-    ],
-    "sprite": "./assets/pokemones/deoxys-normal.png"
-  },
-  {
-    "id": 413,
-    "name": "wormadam",
-    "types": [
-      "bug",
-      "grass"
-    ],
-    "sprite": "./assets/pokemones/wormadam-plant.png"
-  },
-  {
-    "id": 487,
-    "name": "giratina",
-    "types": [
-      "ghost",
+      "fire",
       "dragon"
     ],
-    "sprite": "./assets/pokemones/giratina-altered.png"
+    "sprite": "./assets/pokemones/charizard-mega-x.png"
   },
   {
-    "id": 492,
-    "name": "shaymin",
-    "types": [
-      "grass"
-    ],
-    "sprite": "./assets/pokemones/shaymin-land.png"
-  },
-  {
-    "id": 550,
-    "name": "basculin",
-    "types": [
-      "water"
-    ],
-    "sprite": "./assets/pokemones/basculin-red-striped.png"
-  },
-  {
-    "id": 555,
-    "name": "darmanitan",
-    "types": [
-      "fire"
-    ],
-    "sprite": "./assets/pokemones/darmanitan-standard.png"
-  },
-  {
-    "id": 592,
-    "name": "frillish",
-    "types": [
-      "water",
-      "ghost"
-    ],
-    "sprite": "./assets/pokemones/frillish-male.png"
-  },
-  {
-    "id": 593,
-    "name": "jellicent",
-    "types": [
-      "water",
-      "ghost"
-    ],
-    "sprite": "./assets/pokemones/jellicent-male.png"
-  },
-  {
-    "id": 641,
-    "name": "tornadus",
-    "types": [
-      "flying"
-    ],
-    "sprite": "./assets/pokemones/tornadus-incarnate.png"
-  },
-  {
-    "id": 642,
-    "name": "thundurus",
-    "types": [
-      "electric",
-      "flying"
-    ],
-    "sprite": "./assets/pokemones/thundurus-incarnate.png"
-  },
-  {
-    "id": 645,
-    "name": "landorus",
-    "types": [
-      "ground",
-      "flying"
-    ],
-    "sprite": "./assets/pokemones/landorus-incarnate.png"
-  },
-  {
-    "id": 647,
-    "name": "keldeo",
-    "types": [
-      "water",
-      "fighting"
-    ],
-    "sprite": "./assets/pokemones/keldeo-ordinary.png"
-  },
-  {
-    "id": 648,
-    "name": "meloetta",
-    "types": [
-      "normal",
-      "psychic"
-    ],
-    "sprite": "./assets/pokemones/meloetta-aria.png"
-  },
-  {
-    "id": 668,
-    "name": "pyroar",
-    "types": [
-      "fire",
-      "normal"
-    ],
-    "sprite": "./assets/pokemones/pyroar-male.png"
-  },
-  {
-    "id": 678,
-    "name": "meowstic",
-    "types": [
-      "psychic"
-    ],
-    "sprite": "./assets/pokemones/meowstic-male.png"
-  },
-  {
-    "id": 681,
-    "name": "aegislash",
-    "types": [
-      "steel",
-      "ghost"
-    ],
-    "sprite": "./assets/pokemones/aegislash-shield.png"
-  },
-  {
-    "id": 710,
-    "name": "pumpkaboo",
-    "types": [
-      "ghost",
-      "grass"
-    ],
-    "sprite": "./assets/pokemones/pumpkaboo-average.png"
-  },
-  {
-    "id": 711,
-    "name": "gourgeist",
-    "types": [
-      "ghost",
-      "grass"
-    ],
-    "sprite": "./assets/pokemones/gourgeist-average.png"
-  },
-  {
-    "id": 718,
-    "name": "zygarde",
-    "types": [
-      "dragon",
-      "ground"
-    ],
-    "sprite": "./assets/pokemones/zygarde-50.png"
-  },
-  {
-    "id": 741,
-    "name": "oricorio",
+    "id": 10035,
+    "name": "mega charizard y",
     "types": [
       "fire",
       "flying"
     ],
-    "sprite": "./assets/pokemones/oricorio-baile.png"
+    "sprite": "./assets/pokemones/charizard-mega-y.png"
   },
   {
-    "id": 745,
-    "name": "lycanroc",
-    "types": [
-      "rock"
-    ],
-    "sprite": "./assets/pokemones/lycanroc-midday.png"
-  },
-  {
-    "id": 746,
-    "name": "wishiwashi",
+    "id": 10036,
+    "name": "mega blastoise",
     "types": [
       "water"
     ],
-    "sprite": "./assets/pokemones/wishiwashi-solo.png"
+    "sprite": "./assets/pokemones/blastoise-mega.png"
   },
   {
-    "id": 774,
-    "name": "minior",
+    "id": 10037,
+    "name": "mega alakazam",
     "types": [
-      "rock",
-      "flying"
+      "psychic"
     ],
-    "sprite": "./assets/pokemones/minior-red-meteor.png"
+    "sprite": "./assets/pokemones/alakazam-mega.png"
   },
   {
-    "id": 778,
-    "name": "mimikyu",
+    "id": 10038,
+    "name": "mega gengar",
     "types": [
       "ghost",
-      "fairy"
-    ],
-    "sprite": "./assets/pokemones/mimikyu-disguised.png"
-  },
-  {
-    "id": 785,
-    "name": "tapu koko",
-    "types": [
-      "electric",
-      "fairy"
-    ],
-    "sprite": "./assets/pokemones/tapu-koko.png"
-  },
-  {
-    "id": 849,
-    "name": "toxtricity",
-    "types": [
-      "electric",
       "poison"
     ],
-    "sprite": "./assets/pokemones/toxtricity-amped.png"
+    "sprite": "./assets/pokemones/gengar-mega.png"
   },
   {
-    "id": 876,
-    "name": "indeedee",
-    "types": [
-      "psychic",
-      "normal"
-    ],
-    "sprite": "./assets/pokemones/indeedee-male.png"
-  },
-  {
-    "id": 877,
-    "name": "morpeko",
-    "types": [
-      "electric",
-      "dark"
-    ],
-    "sprite": "./assets/pokemones/morpeko-full-belly.png"
-  },
-  {
-    "id": 892,
-    "name": "urshifu",
-    "types": [
-      "fighting",
-      "dark"
-    ],
-    "sprite": "./assets/pokemones/urshifu-single-strike.png"
-  },
-  {
-    "id": 902,
-    "name": "basculegion",
-    "types": [
-      "water",
-      "ghost"
-    ],
-    "sprite": "./assets/pokemones/basculegion-male.png"
-  },
-  {
-    "id": 905,
-    "name": "enamorus",
-    "types": [
-      "fairy",
-      "flying"
-    ],
-    "sprite": "./assets/pokemones/enamorus-incarnate.png"
-  },
-  {
-    "id": 916,
-    "name": "oinkologne",
+    "id": 10039,
+    "name": "mega kangaskhan",
     "types": [
       "normal"
     ],
-    "sprite": "./assets/pokemones/oinkologne-male.png"
-  },
-  {
-    "id": 925,
-    "name": "maushold",
-    "types": [
-      "normal"
-    ],
-    "sprite": "./assets/pokemones/maushold-family-of-four.png"
-  },
-  {
-    "id": 964,
-    "name": "palafin",
-    "types": [
-      "water"
-    ],
-    "sprite": "./assets/pokemones/palafin-zero.png"
-  },
-  {
-    "id": 978,
-    "name": "tatsugiri",
-    "types": [
-      "dragon",
-      "water"
-    ],
-    "sprite": "./assets/pokemones/tatsugiri-curly.png"
-  },
-  {
-    "id": 982,
-    "name": "dudunsparce",
-    "types": [
-      "normal"
-    ],
-    "sprite": "./assets/pokemones/dudunsparce-two-segment.png"
-  },
-  {
-    "id": 985,
-    "name": "colacrito",
-    "types": [
-      "fairy",
-      "psychic"
-    ],
-    "sprite": "./assets/pokemones/scream-tail.png"
-  },
-  {
-    "id": 987,
-    "name": "melena aleteo",
-    "types": [
-      "ghost",
-      "fairy"
-    ],
-    "sprite": "./assets/pokemones/flutter-mane.png"
-  },
-  {
-    "id": 989,
-    "name": "pelarena",
-    "types": [
-      "electric",
-      "ground"
-    ],
-    "sprite": "./assets/pokemones/sandy-shocks.png"
-  },
-  {
-    "id": 995,
-    "name": "ferropuas",
-    "types": [
-      "rock",
-      "electric"
-    ],
-    "sprite": "./assets/pokemones/iron-thorns.png"
-  },
-  {
-    "id": 1001,
-    "name": "wo chien",
-    "types": [
-      "dark",
-      "grass"
-    ],
-    "sprite": "./assets/pokemones/wo-chien.png"
-  },
-  {
-    "id": 1002,
-    "name": "chien pao",
-    "types": [
-      "dark",
-      "ice"
-    ],
-    "sprite": "./assets/pokemones/chien-pao.png"
-  },
-  {
-    "id": 1003,
-    "name": "ting lu",
-    "types": [
-      "dark",
-      "ground"
-    ],
-    "sprite": "./assets/pokemones/ting-lu.png"
-  },
-  {
-    "id": 1004,
-    "name": "chi yu",
-    "types": [
-      "dark",
-      "fire"
-    ],
-    "sprite": "./assets/pokemones/chi-yu.png"
-  },
-  {
-    "id": 1006,
-    "name": "ferropaladin",
-    "types": [
-      "fairy",
-      "fighting"
-    ],
-    "sprite": "./assets/pokemones/iron-valiant.png"
-  },
-  {
-    "id": 1020,
-    "name": "flamariete",
-    "types": [
-      "fire",
-      "dragon"
-    ],
-    "sprite": "./assets/pokemones/gouging-fire.png"
-  },
-  {
-    "id": 1021,
-    "name": "electrofuria",
-    "types": [
-      "electric",
-      "dragon"
-    ],
-    "sprite": "./assets/pokemones/raging-bolt.png"
+    "sprite": "./assets/pokemones/kangaskhan-mega.png"
   },
   {
     "id": 10040,
@@ -8787,6 +8829,15 @@
       "dark"
     ],
     "sprite": "./assets/pokemones/gyarados-mega.png"
+  },
+  {
+    "id": 10042,
+    "name": "mega aerodactyl",
+    "types": [
+      "rock",
+      "flying"
+    ],
+    "sprite": "./assets/pokemones/aerodactyl-mega.png"
   },
   {
     "id": 10043,
@@ -8815,12 +8866,162 @@
     "sprite": "./assets/pokemones/ampharos-mega.png"
   },
   {
+    "id": 10046,
+    "name": "mega scizor",
+    "types": [
+      "bug",
+      "steel"
+    ],
+    "sprite": "./assets/pokemones/scizor-mega.png"
+  },
+  {
+    "id": 10047,
+    "name": "mega heracross",
+    "types": [
+      "bug",
+      "fighting"
+    ],
+    "sprite": "./assets/pokemones/heracross-mega.png"
+  },
+  {
+    "id": 10048,
+    "name": "mega houndoom",
+    "types": [
+      "dark",
+      "fire"
+    ],
+    "sprite": "./assets/pokemones/houndoom-mega.png"
+  },
+  {
+    "id": 10049,
+    "name": "mega tyranitar",
+    "types": [
+      "rock",
+      "dark"
+    ],
+    "sprite": "./assets/pokemones/tyranitar-mega.png"
+  },
+  {
+    "id": 10050,
+    "name": "mega blaziken",
+    "types": [
+      "fire",
+      "fighting"
+    ],
+    "sprite": "./assets/pokemones/blaziken-mega.png"
+  },
+  {
+    "id": 10051,
+    "name": "mega gardevoir",
+    "types": [
+      "psychic",
+      "fairy"
+    ],
+    "sprite": "./assets/pokemones/gardevoir-mega.png"
+  },
+  {
+    "id": 10052,
+    "name": "mega mawile",
+    "types": [
+      "steel",
+      "fairy"
+    ],
+    "sprite": "./assets/pokemones/mawile-mega.png"
+  },
+  {
     "id": 10053,
     "name": "mega aggron",
     "types": [
       "steel"
     ],
     "sprite": "./assets/pokemones/aggron-mega.png"
+  },
+  {
+    "id": 10054,
+    "name": "mega medicham",
+    "types": [
+      "fighting",
+      "psychic"
+    ],
+    "sprite": "./assets/pokemones/medicham-mega.png"
+  },
+  {
+    "id": 10055,
+    "name": "mega manectric",
+    "types": [
+      "electric"
+    ],
+    "sprite": "./assets/pokemones/manectric-mega.png"
+  },
+  {
+    "id": 10056,
+    "name": "mega banette",
+    "types": [
+      "ghost"
+    ],
+    "sprite": "./assets/pokemones/banette-mega.png"
+  },
+  {
+    "id": 10057,
+    "name": "mega absol",
+    "types": [
+      "dark"
+    ],
+    "sprite": "./assets/pokemones/absol-mega.png"
+  },
+  {
+    "id": 10058,
+    "name": "mega garchomp",
+    "types": [
+      "dragon",
+      "ground"
+    ],
+    "sprite": "./assets/pokemones/garchomp-mega.png"
+  },
+  {
+    "id": 10059,
+    "name": "mega lucario",
+    "types": [
+      "fighting",
+      "steel"
+    ],
+    "sprite": "./assets/pokemones/lucario-mega.png"
+  },
+  {
+    "id": 10060,
+    "name": "mega abomasnow",
+    "types": [
+      "grass",
+      "ice"
+    ],
+    "sprite": "./assets/pokemones/abomasnow-mega.png"
+  },
+  {
+    "id": 10062,
+    "name": "mega latias",
+    "types": [
+      "dragon",
+      "psychic"
+    ],
+    "sprite": "./assets/pokemones/latias-mega.png"
+  },
+  {
+    "id": 10063,
+    "name": "mega latios",
+    "types": [
+      "dragon",
+      "psychic"
+    ],
+    "sprite": "./assets/pokemones/latios-mega.png"
+  },
+  {
+    "id": 10064,
+    "name": "mega swampert",
+    "types": [
+      "water",
+      "ground"
+    ],
+    "sprite": "./assets/pokemones/swampert-mega.png"
   },
   {
     "id": 10065,
@@ -8832,6 +9033,15 @@
     "sprite": "./assets/pokemones/sceptile-mega.png"
   },
   {
+    "id": 10066,
+    "name": "mega sableye",
+    "types": [
+      "dark",
+      "ghost"
+    ],
+    "sprite": "./assets/pokemones/sableye-mega.png"
+  },
+  {
     "id": 10067,
     "name": "mega altaria",
     "types": [
@@ -8839,6 +9049,15 @@
       "fairy"
     ],
     "sprite": "./assets/pokemones/altaria-mega.png"
+  },
+  {
+    "id": 10068,
+    "name": "mega gallade",
+    "types": [
+      "psychic",
+      "fighting"
+    ],
+    "sprite": "./assets/pokemones/gallade-mega.png"
   },
   {
     "id": 10069,
@@ -8850,6 +9069,77 @@
     "sprite": "./assets/pokemones/audino-mega.png"
   },
   {
+    "id": 10070,
+    "name": "mega sharpedo",
+    "types": [
+      "water",
+      "dark"
+    ],
+    "sprite": "./assets/pokemones/sharpedo-mega.png"
+  },
+  {
+    "id": 10071,
+    "name": "mega slowbro",
+    "types": [
+      "water",
+      "psychic"
+    ],
+    "sprite": "./assets/pokemones/slowbro-mega.png"
+  },
+  {
+    "id": 10072,
+    "name": "mega steelix",
+    "types": [
+      "steel",
+      "ground"
+    ],
+    "sprite": "./assets/pokemones/steelix-mega.png"
+  },
+  {
+    "id": 10073,
+    "name": "mega pidgeot",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "sprite": "./assets/pokemones/pidgeot-mega.png"
+  },
+  {
+    "id": 10074,
+    "name": "mega glalie",
+    "types": [
+      "ice"
+    ],
+    "sprite": "./assets/pokemones/glalie-mega.png"
+  },
+  {
+    "id": 10075,
+    "name": "mega diancie",
+    "types": [
+      "rock",
+      "fairy"
+    ],
+    "sprite": "./assets/pokemones/diancie-mega.png"
+  },
+  {
+    "id": 10076,
+    "name": "mega metagross",
+    "types": [
+      "steel",
+      "psychic"
+    ],
+    "sprite": "./assets/pokemones/metagross-mega.png"
+  },
+  {
+    "id": 10079,
+    "name": "mega rayquaza",
+    "types": [
+      "dragon",
+      "flying"
+    ],
+    "sprite": "./assets/pokemones/rayquaza-mega.png"
+  },
+  {
     "id": 10088,
     "name": "mega lopunny",
     "types": [
@@ -8857,6 +9147,15 @@
       "fighting"
     ],
     "sprite": "./assets/pokemones/lopunny-mega.png"
+  },
+  {
+    "id": 10089,
+    "name": "mega absol",
+    "types": [
+      "dark",
+      "ghost"
+    ],
+    "sprite": "./assets/pokemones/absol-mega.png"
   },
   {
     "id": 10091,
@@ -9325,6 +9624,32 @@
       "fighting"
     ],
     "sprite": "./assets/pokemones/decidueye-hisui.png"
+  },
+  {
+    "id": 10250,
+    "name": "tauros paldea 1",
+    "types": [
+      "fighting"
+    ],
+    "sprite": "./assets/pokemones/tauros-paldea-combat-breed.png"
+  },
+  {
+    "id": 10251,
+    "name": "tauros paldea 2",
+    "types": [
+      "fighting",
+      "fire"
+    ],
+    "sprite": "./assets/pokemones/tauros-paldea-blaze-breed.png"
+  },
+  {
+    "id": 10252,
+    "name": "tauros paldea 3",
+    "types": [
+      "fighting",
+      "water"
+    ],
+    "sprite": "./assets/pokemones/tauros-paldea-aqua-breed.png"
   },
   {
     "id": 10253,

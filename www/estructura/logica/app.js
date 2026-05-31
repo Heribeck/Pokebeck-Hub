@@ -86,76 +86,6 @@ const coloresTipos = {
     "fairy": "#D685AD"
 };
 
-// Lista de los nombres de los Pokémon traducidos de español a inglés. para que la API pueda entender el nombre del pokemon.
-const diccionarioPokemon = {
-    // --- PARADOJAS DEL PASADO (ESCARLATA) ---
-    "colmilargo": "great-tusk",
-    "colacrito": "scream-tail",
-    "furioseta": "brute-bonnet",
-    "melena aleteo": "flutter-mane",
-    "melenaleteo": "flutter-mane",
-    "reptalada": "slither-wing",
-    "pelarena": "sandy-shocks",
-    "bramaluna": "roaring-moon",
-    "ondulagua": "walking-wake",
-    "flamariete": "gouging-fire",
-    "electrofuria": "raging-bolt",
-
-    // --- PARADOJAS DEL FUTURO (PÚRPURA) ---
-    "ferrodada": "iron-treads",
-    "ferrosaco": "iron-bundle",
-    "ferropalmas": "iron-hands",
-    "ferrocuello": "iron-jugulis",
-    "ferropolilla": "iron-moth",
-    "ferropuas": "iron-thorns",
-    "ferropaladin": "iron-valiant",
-    "ferroverdor": "iron-leaves",
-    "ferromole": "iron-boulder",
-    "ferrotesta": "iron-crown",
-
-    // --- LEGENDARIOS Y POKÉMON CON FORMAS ESPECÍFICAS ---
-    "giratina": "giratina-altered",
-    "deoxys": "deoxys-normal",
-    "aegislash": "aegislash-shield",
-    "keldeo": "keldeo-ordinary",
-    "meloetta": "meloetta-aria",
-    "tornadus": "tornadus-incarnate",
-    "thundurus": "thundurus-incarnate",
-    "landorus": "landorus-incarnate",
-    "enamorus": "enamorus-incarnate",
-    "zacian": "zacian-hero",
-    "zamazenta": "zamazenta-hero",
-    "urshifu": "urshifu-single-strike",
-    "morpeko": "morpeko-full-belly",
-    "mimikyu": "mimikyu-disguised",
-    "basculin": "basculin-red-striped",
-    "darmanitan": "darmanitan-standard",
-    
-    // --- EXTRAS QUE A VECES DAN PROBLEMAS ---
-    "mr mime": "mr-mime",
-    "mr. mime": "mr-mime",
-    "tapu koko": "tapu-koko",
-    "tapu lele": "tapu-lele",
-    "tapu bulu": "tapu-bulu",
-    "tapu fini": "tapu-fini",
-    "ting lu": "ting-lu",
-    "chien pao": "chien-pao",
-    "wo chien": "wo-chien",
-    "chi yu": "chi-yu",
-    "frillish": "frillish-male",
-    "jellicent": "jellicent-male",
-
-    // --- DIFERENCIAS DE GÉNERO (Redirigiendo al macho por defecto) ---
-    "pyroar": "pyroar-male",
-    "meowstic": "meowstic-male",
-    "indeedee": "indeedee-male",
-    "basculegion": "basculegion-male",
-    "oinkologne": "oinkologne-male",
-    
-    // El clásico problema de Nidoran (la API usa -m y -f en vez de macho/hembra)
-    "nidoran": "nidoran-m",
-};
-
 // Secciones Principales del DOM
 const splash = document.getElementById("custom-splash");
 const main = document.getElementById("main");
@@ -168,18 +98,13 @@ const campeon = document.getElementById("panel-campeon");
 const notificacion = document.getElementById("notificacion");
 
 // SubSecciones del DOM
-const configuracion = document.getElementById("Configuración");
-const sectionMensajes = document.getElementById("section-mensajes");
 const confirmacionCampista = document.getElementById("ventana-confirmacion-campista");
 const confirmacionAs = document.getElementById("ventana-confirmacion-As");
 const confirmacionCampeon = document.getElementById("ventana-confirmacion-campeon");
 
 // Cajas Especificas del DOM
-const menuDesplegable = document.getElementById("menu-desplegable");
-const barraProgreso = document.getElementById("barra-progreso");
 const cajaOpcionesPokemon = document.getElementById("opciones-pokemon");
 const cajaSelect = document.getElementById("caja-select");
-const datalist = document.getElementById("pokemones");
 const cajainput = document.getElementById("caja-input");
 
 // Elementos Especificos del Apartado de main
@@ -254,8 +179,6 @@ const toastMensaje = document.getElementById("mensaje-notificacion");
 //Variables sin valor Definido
 let type1Value;
 let type2Value;
-let type1Value1;
-let type2Value1;
 let tiempoCampista;
 let tiempoAsDeBatalla;
 let tiempoCampeon;
@@ -458,9 +381,9 @@ async function campistaLogica(){
     const wrongOptions = [];
     while(wrongOptions.length < 3){
 
-        const randomId = Math.floor(Math.random() * 1025) + 1;
+        const randomId = Math.floor(Math.random() * pokedex.length) + 1;
 
-        const randomPokemon = pokedex.find(pokemon => pokemon.id === randomId);
+        const randomPokemon = pokedex[randomId - 1];
 
         const isCorrect = randomPokemon.name === correctPokemon.name;
 
@@ -714,7 +637,6 @@ function logicaNoExisteCampeon() {
         btnRevelarCampeon.style.display = "none";
         btnNoExisteCampeon.style.display = "none";
         cajainput.style.display = "none";
-        clearInterval(tiempoCampeon);
         if (estadoJuego.scoreCampeon > maxCampeon) {
           maxCampeon = estadoJuego.scoreCampeon;
           localStorage.setItem("maxCampeon", maxCampeon);
@@ -812,7 +734,7 @@ btnIniciarJuegoAs.addEventListener("click", () => {
   AsLogica();
 });
 
-//Evento del Boton "Revelar" Del modo As
+//Evento del Boton "Validar" Del modo As
 btnValidarAs.addEventListener("click", () => {
   btnValidarAs.style.display = "none";
   btnNoExisteAs.style.display = "none";
