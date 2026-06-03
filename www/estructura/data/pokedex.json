@@ -8683,30 +8683,12 @@
   },
   {
     "id": 1020,
-    "name": "colmillospiedo",
-    "types": [
-      "fire",
-      "dragon"
-    ],
-    "sprite": "./assets/pokemones/gouging-fire.png"
-  },
-  {
-    "id": 1020,
     "name": "flamariete",
     "types": [
       "fire",
       "dragon"
     ],
     "sprite": "./assets/pokemones/gouging-fire.png"
-  },
-  {
-    "id": 1021,
-    "name": "furiofuego",
-    "types": [
-      "electric",
-      "dragon"
-    ],
-    "sprite": "./assets/pokemones/raging-bolt.png"
   },
   {
     "id": 1021,

@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace = "com.heribeck.poketype"
+    namespace = "com.heribeck.PokeTypeGuess"
     compileSdk = rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.heribeck.poketype"
+        applicationId "com.heribeck.PokeTypeGuess"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 2
