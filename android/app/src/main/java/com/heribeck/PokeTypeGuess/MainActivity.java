@@ -1,4 +1,4 @@
-package com.heribeck.poketype;
+package com.heribeck.PokeTypeGuess;
 
 import com.getcapacitor.BridgeActivity;
 

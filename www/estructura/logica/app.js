@@ -466,7 +466,7 @@ function AsLogica() {
       option.textContent = name.replaceAll("-", " ");
       datalistAs.appendChild(option);
     });
-    tiempoAsDeBatalla = iniciarBarraTiempo(estadoJuego, "scoreAsDeBatalla", pScoreAs, btnIntentoAs, barraTiempoAs, mensajeAciertoAs, 1.5, btnNoExisteAs, btnValidarAs, inputSelectAs, tiempoAsDeBatalla, tiempoAsDeBatallaLeft);
+    tiempoAsDeBatalla = iniciarBarraTiempo(estadoJuego, "scoreAsDeBatalla", pScoreAs, btnIntentoAs, barraTiempoAs, mensajeAciertoAs, 0.7, btnNoExisteAs, btnValidarAs, inputSelectAs, tiempoAsDeBatalla, tiempoAsDeBatallaLeft);
     console.log(pokedex.find(p => p.types.includes(type1Value) && p.types.includes(type2Value)));
 }
 
@@ -816,7 +816,7 @@ btnIniciarJuegoCampeon.addEventListener("click", () => {
   btnNoExisteCampeon.style.display = "flex";
   cajainput.style.display = "block";
   generarTipos(tipo1Campeon, tipo2Campeon);
-  tiempoCampeon = iniciarBarraTiempo(estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, barraTiempoCampeon, mensajeAciertoCampeon, 1, btnNoExisteCampeon, btnRevelarCampeon, cajainput, tiempoCampeon, tiempoCampeonLeft);
+  tiempoCampeon = iniciarBarraTiempo(estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, barraTiempoCampeon, mensajeAciertoCampeon, 0.6, btnNoExisteCampeon, btnRevelarCampeon, cajainput, tiempoCampeon, tiempoCampeonLeft);
 });
 
 //Evento para verificar la respuesta del jugador en el modo Campeon
@@ -837,7 +837,7 @@ btnNextCampeon.addEventListener("click", () => {
   respuestaInputCampeon.value = "";
   respuestaInputCampeon.disabled = false;
   generarTipos(tipo1Campeon, tipo2Campeon);
-  tiempoCampeon = iniciarBarraTiempo(estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, barraTiempoCampeon, mensajeAciertoCampeon, 1, btnNoExisteCampeon, btnRevelarCampeon, cajainput, tiempoCampeon, tiempoCampeonLeft);
+  tiempoCampeon = iniciarBarraTiempo(estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, barraTiempoCampeon, mensajeAciertoCampeon, 0.6, btnNoExisteCampeon, btnRevelarCampeon, cajainput, tiempoCampeon, tiempoCampeonLeft);
 });
 
 //Evento del boton "No Existe" en el modo de Campeon
@@ -855,7 +855,7 @@ btnIntentoCampeon.addEventListener("click", () => {
   btnNoExisteCampeon.style.display = "flex";  
   cajainput.style.display = "block";
   generarTipos(tipo1Campeon, tipo2Campeon);
-  tiempoCampeon = iniciarBarraTiempo(estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, barraTiempoCampeon, mensajeAciertoCampeon, 1, btnNoExisteCampeon, btnRevelarCampeon, cajainput, tiempoCampeon, tiempoCampeonLeft);
+  tiempoCampeon = iniciarBarraTiempo(estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, barraTiempoCampeon, mensajeAciertoCampeon, 0.6, btnNoExisteCampeon, btnRevelarCampeon, cajainput, tiempoCampeon, tiempoCampeonLeft);
 });
 
 //Evento del Boton "Reiniciar Max" en el modo Campeon
