@@ -189,6 +189,11 @@ let tiempoCampistaLeft = 100;
 let tiempoAsDeBatallaLeft = 100;
 let tiempoCampeonLeft = 100;
 
+//Variables de Internet y Banner
+let hayInternet = navigator.onLine;
+let bannerPendiente = false;
+let bannerVisible = false;
+
 //Objeto del score de los modos de juego
 let estadoJuego = { 
   scoreCampista: 0,
@@ -215,6 +220,7 @@ function Aleatoriedad(min, max) {
 
 //Carga inicial
 loadApp();
+InicializarAdMob();
 document.addEventListener("DOMContentLoaded", ()=>{
     if(window.Capacitor){
 
@@ -225,6 +231,84 @@ document.addEventListener("DOMContentLoaded", ()=>{
     }
 });
 cargarPokedex();
+
+//Funcion para inicializar AdMob
+async function InicializarAdMob() {
+    if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.AdMob) {
+      try {
+        await window.Capacitor.Plugins.AdMob.initialize({
+          requestTrackingAuthorization: true,
+          initializeForTesting: true
+        });
+        console.log("AdMob listo")
+        await mostrarBanner("TOP_CENTER");
+      } catch (error) {
+        console.error("Error al inicializar AdMob:", error);
+      }
+    }
+}
+
+//Funcion para mostrar el banner
+async function mostrarBanner(posicionBanner){
+  if (!window.Capacitor?.Plugins?.AdMob)return;
+  if (!hayInternet) return;
+
+  const settingsAdMob = {
+      adId: "ca-app-pub-3940256099942544/6300978111",
+      adSize: "ADAPTIVE_BANNER",
+      position: posicionBanner,
+      margin: 0,
+      isTesting: true
+    };
+
+  try {
+      await window.Capacitor.Plugins.AdMob.showBanner(settingsAdMob);
+      bannerVisible = true;
+      bannerPendiente = false;
+      console.log("Banner mostrado");
+
+    } catch (error) {
+      console.error("Error al mostrar banner:", error);
+    }
+}
+
+//Funcion para hacer que el banner se oculte
+async function ocultarBanner(){
+  if (!window.Capacitor?.Plugins?.AdMob) return;
+  
+  try {
+    await window.Capacitor.Plugins.AdMob.removeBanner();
+    bannerVisible = false;
+      
+  } catch (error) {
+    console.error("Error al ocultar banner:", error);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //Funcion de barra de carga del SplashScreen
 function loadApp() {
@@ -655,6 +739,7 @@ function logicaNoExisteCampeon() {
 btnJuego.addEventListener("click", () => {
   main.style.display = "none";
   dificultad.style.display = "flex";
+  ocultarBanner();
   history.pushState({ screen: "juego" }, "Juego", "#juego");
 });
 
@@ -721,6 +806,7 @@ btnAs.addEventListener("click", () => {
   As.style.display = "flex";
   dificultad.style.display = "none";
   pMaxAs.textContent = maxAsDeBatalla;
+  mostrarBanner("BOTTOM_CENTER");
   history.pushState({ page: "as" }, "Panel As", "#as");
 });
 
@@ -806,6 +892,7 @@ btnCampeon.addEventListener("click", () => {
   dificultad.style.display = "none";
   campeon.style.display = "flex";
   pMaxCampeon.textContent = maxCampeon;
+  mostrarBanner("TOP_CENTER");
   history.pushState({ screen: "campeon" }, "Panel Campeón", "#panel-campeon");
 });
 
@@ -915,11 +1002,26 @@ telegram.addEventListener("click", () => {
 
 // --- |Evento de Retroceder ventana
 window.addEventListener("popstate", () => {
-    main.style.display = "flex";
-    acerca.style.display = "none";
-    dificultad.style.display = "none";
-    generador.style.display = "none";
-    campista.style.display = "none";
-    As.style.display = "none";
-    campeon.style.display = "none";
+  main.style.display = "flex";
+  acerca.style.display = "none";
+  dificultad.style.display = "none";
+  generador.style.display = "none";
+  campista.style.display = "none";
+  As.style.display = "none";
+  campeon.style.display = "none";
+  ocultarBanner();
+  mostrarBanner("TOP_CENTER");
+});
+
+// --- |Eventos de para comprobar conexion a internet
+window.addEventListener("online", () => {
+  hayInternet = true;
+  if (!bannerVisible) {
+    bannerPendiente = true;
+  }
+});
+
+//Evento Offline
+window.addEventListener("offline", () => {
+  hayInternet = false;
 });
