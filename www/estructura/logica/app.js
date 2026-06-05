@@ -905,9 +905,9 @@ btnAcerca.addEventListener("click", () => {
 });
 
 //Evento del boton de "Telegram"
-telegram.addEventListener("click", ()=>{
-    if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Browser) {
-        window.Capacitor.Plugins.Browser.open({ url: 'https://t.me/heribeck' });
+telegram.addEventListener("click", () => {
+    if (window.Capacitor && window.Capacitor.isNative) {
+        window.open('tg://resolve?domain=heribeck', '_system');
     } else {
         window.open('https://t.me/heribeck', '_blank');
     }

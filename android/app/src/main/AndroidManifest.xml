@@ -32,4 +32,8 @@
     <!-- Permissions -->
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <queries>
+        <!-- Permite que tu app detecte y abra Telegram -->
+        <package android:name="org.telegram.messenger" />
+    </queries>
 </manifest>
