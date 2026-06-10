@@ -480,7 +480,33 @@ p {
     transform: translateY(0);
 }
 
+.boton-revivir{
+    display: none;
+    background: white;
+    color: var(--bg-primary);
+    border: none;
+    padding: 0.875rem 1.75rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1rem;
+    width: 100%;
+    justify-content: center;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-glow);
+}
 
+.cuenta-revivir {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4rem;
+    font-weight: 700;
+    color: #FFCB05;
+    text-shadow: 0 0 12px rgba(255, 203, 5, 0.8);
+    min-height: 80px;
+    width: 100%;
+}
 
 .boton-generar {
     background: var(--accent-yellow);

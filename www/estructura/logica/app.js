@@ -133,6 +133,7 @@ const barraTiempoCampista = document.getElementById("tiempo-campista");
 const mensajeAciertoCampista = document.getElementById("mensaje-acierto-campista");
 const btnNextCampista = document.getElementById("btn-next-campista");
 const btnIntentoCampista = document.getElementById("btn-intento-campista");
+const btnRevivirCampista = document.getElementById("revivir-campista");
 
 //Elementos Especificos del Apartado de As de Batalla
 const btnAs = document.getElementById("btn-as");
@@ -151,6 +152,7 @@ const inputSelectAs = document.getElementById("select");
 const datalistAs = document.getElementById("pokemones");
 const btnNextAs = document.getElementById("btn-next-As");
 const btnIntentoAs = document.getElementById("btn-intento-As");
+const btnRevivirAs = document.getElementById("revivir-As");
 const btnValidarAs = document.getElementById("btn-validar-select-As");
 const btnNoExisteAs = document.getElementById("no-existe-As");
 
@@ -170,11 +172,42 @@ const mensajeAciertoCampeon = document.getElementById("mensaje-acierto-campeon")
 const respuestaInputCampeon = document.getElementById("respuesta-input-campeon");
 const btnNextCampeon = document.getElementById("btn-next-campeon");
 const btnIntentoCampeon = document.getElementById("btn-intento-campeon");
+const btnRevivirCampeon = document.getElementById("revivir-campeon");
 const btnNoExisteCampeon = document.getElementById("no-existe-campeon");
 const btnRevelarCampeon = document.getElementById("btn-revelar-campeon");
 
+//Objeto con la configuración de cada modo.
+const configRevivir = {
+  campista: {
+    btn: btnRevivirCampista,
+    btnIntento: btnIntentoCampista,
+    mensaje: mensajeAciertoCampista,
+    scoreKey: "scoreCampista",
+    pScore: pScoreCampista,
+  },
+  as: {
+    btn: btnRevivirAs,
+    btnIntento: btnIntentoAs,
+    mensaje: mensajeAciertoAs,
+    scoreKey: "scoreAsDeBatalla",
+    pScore: pScoreAs,
+  },
+  campeon: {
+    btn: btnRevivirCampeon,
+    btnIntento: btnIntentoCampeon,
+    mensaje: mensajeAciertoCampeon,
+    scoreKey: "scoreCampeon",
+    pScore: pScoreCampeon,
+  },
+};
+
 //Elementos Especificos Generales
 const toastMensaje = document.getElementById("mensaje-notificacion");
+const conteoBtnRevivir = 7;
+
+//IDs de los anuncios
+const idBanner = "ca-app-pub-3940256099942544/6300978111" || "Prueba";
+const idBonificado = "ca-app-pub-3940256099942544/5224354917" || "Prueba";
 
 //Variables sin valor Definido
 let type1Value;
@@ -189,10 +222,28 @@ let tiempoCampistaLeft = 100;
 let tiempoAsDeBatallaLeft = 100;
 let tiempoCampeonLeft = 100;
 
-//Variables de Internet y Banner
+//Variables de Internet y Cargas de los anuncios
 let hayInternet = navigator.onLine;
 let bannerPendiente = false;
 let bannerVisible = false;
+let bonificadoCargado = false;
+let scoreCampistaAntesDePerder = 0;
+let scoreAsAntesDePerder = 0;
+let scoreCampeonAntesDePerder = 0;
+let modoRevivirActivo = null;
+let recompensaGanada = false;
+let intervaloContadorRevivir = null;
+
+
+
+const HTML_BOTON_REVIVIR = 'Revivir Viendo un Video<i class="fa-solid fa-film" style="margin-left: 10px;"></i>';
+
+const EVENTOS_BONIFICADO = {
+  cargado: "onRewardedVideoAdLoaded",
+  falloCarga: "onRewardedVideoAdFailedToLoad",
+  recompensa: "onRewardedVideoAdReward",
+  cerrado: "onRewardedVideoAdDismissed",
+};
 
 //Objeto del score de los modos de juego
 let estadoJuego = { 
@@ -220,7 +271,11 @@ function Aleatoriedad(min, max) {
 
 //Carga inicial
 loadApp();
-InicializarAdMob();
+InicializarAdMob().then(() => {
+  if (hayInternet) {
+    prepararBonificado();
+  }
+});
 document.addEventListener("DOMContentLoaded", ()=>{
     if(window.Capacitor){
 
@@ -234,18 +289,42 @@ cargarPokedex();
 
 //Funcion para inicializar AdMob
 async function InicializarAdMob() {
-    if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.AdMob) {
-      try {
-        await window.Capacitor.Plugins.AdMob.initialize({
-          requestTrackingAuthorization: true,
-          initializeForTesting: true
-        });
-        console.log("AdMob listo")
-        await mostrarBanner("TOP_CENTER");
-      } catch (error) {
-        console.error("Error al inicializar AdMob:", error);
-      }
+  if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.AdMob) {
+    try {
+      await window.Capacitor.Plugins.AdMob.initialize({
+        requestTrackingAuthorization: true,
+        initializeForTesting: true
+      });
+      console.log("AdMob listo")
+      await mostrarBanner("TOP_CENTER");
+    } catch (error) {
+      console.error("Error al inicializar AdMob:", error);
     }
+
+    window.Capacitor.Plugins.AdMob.addListener(EVENTOS_BONIFICADO.cargado, () => {
+      bonificadoCargado = true;
+    });
+
+    window.Capacitor.Plugins.AdMob.addListener(EVENTOS_BONIFICADO.falloCarga, () => {
+      bonificadoCargado = false;
+    });
+
+    window.Capacitor.Plugins.AdMob.addListener(EVENTOS_BONIFICADO.recompensa, () => {
+      recompensaGanada = true;
+    });
+
+    window.Capacitor.Plugins.AdMob.addListener(EVENTOS_BONIFICADO.cerrado, async () => {
+      if (recompensaGanada && modoRevivirActivo) {
+        const config = configRevivir[modoRevivirActivo];
+        ocultarBotonRevivir(modoRevivirActivo);
+        config.btnIntento.style.display = "none";
+        await cuentaRegresivaRevivir(config.mensaje);
+        ejecutarRevivir(modoRevivirActivo);
+        recompensaGanada = false;
+      }
+      prepararBonificado();
+    });
+  }
 }
 
 //Funcion para mostrar el banner
@@ -254,7 +333,7 @@ async function mostrarBanner(posicionBanner){
   if (!hayInternet) return;
 
   const settingsAdMob = {
-      adId: "ca-app-pub-3940256099942544/6300978111",
+      adId: idBanner,
       adSize: "ADAPTIVE_BANNER",
       position: posicionBanner,
       margin: 0,
@@ -284,6 +363,220 @@ async function ocultarBanner(){
     console.error("Error al ocultar banner:", error);
   }
 }
+
+//Prepara el bonificado
+async function prepararBonificado() {
+  if (!window.Capacitor?.Plugins?.AdMob || !hayInternet) {
+    bonificadoCargado = false;
+    return false;
+  }
+
+  try {
+    bonificadoCargado = false;
+    await window.Capacitor.Plugins.AdMob.prepareRewardVideoAd({
+      adId: idBonificado,
+      isTesting: true,
+    });
+    bonificadoCargado = true;
+    console.log("Video bonificado cargado y listo");
+    return true;
+  } catch (error) {
+    bonificadoCargado = false;
+    console.error("Error al cargar el video:", error);
+    return false;
+  }
+}
+
+async function mostrarBonificado() {
+  if (!window.Capacitor?.Plugins?.AdMob) {
+    mostrarNotificacion("Anuncios no disponibles en este dispositivo");
+    return false;
+  }
+
+  if (!hayInternet || !navigator.onLine) {
+    mostrarNotificacion("Sin conexión a internet. Activa WiFi o datos móviles para ver el video y revivir.");
+    return false;
+  }
+
+  if (!bonificadoCargado) {
+    mostrarNotificacion("Cargando anuncio...");
+    const cargado = await prepararBonificado();
+    if (!cargado) {
+      mostrarNotificacion("No se pudo cargar el anuncio. Revisa tu conexión e inténtalo de nuevo.");
+      return false;
+    }
+  }
+
+  try {
+    await window.Capacitor.Plugins.AdMob.showRewardVideoAd();
+    return true;
+  } catch (error) {
+    bonificadoCargado = false;
+    console.error("Error al mostrar el video:", error);
+    mostrarNotificacion("Error al mostrar el anuncio");
+    prepararBonificado();
+    return false;
+  }
+}
+
+
+//Funcion que almacena el score por si el jugador revive
+function guardarScoreAntesDePerder(modo) {
+  if (modo === "campista") scoreCampistaAntesDePerder = estadoJuego.scoreCampista;
+  if (modo === "as") scoreAsAntesDePerder = estadoJuego.scoreAsDeBatalla;
+  if (modo === "campeon") scoreCampeonAntesDePerder = estadoJuego.scoreCampeon;
+}
+
+function restaurarTextoBotonRevivir(btn) {
+  btn.innerHTML = HTML_BOTON_REVIVIR;
+}
+
+function cancelarContadorRevivir() {
+  if (intervaloContadorRevivir) {
+    clearInterval(intervaloContadorRevivir);
+    intervaloContadorRevivir = null;
+  }
+}
+
+function ocultarBotonRevivir(modo) {
+  cancelarContadorRevivir();
+  const config = configRevivir[modo];
+  if (!config) return;
+  config.btn.style.display = "none";
+  config.btn.disabled = false;
+  restaurarTextoBotonRevivir(config.btn);
+}
+
+function mostrarBotonRevivir(modo) {
+  const config = configRevivir[modo];
+  if (!config) return;
+
+  cancelarContadorRevivir();
+  modoRevivirActivo = modo;
+  config.btn.style.display = "flex";
+  config.btn.disabled = false;
+
+  let segundos = conteoBtnRevivir;
+  config.btn.innerHTML = `Revivir Viendo un Video (${segundos})<i class="fa-solid fa-film" style="margin-left: 10px;"></i>`;
+
+  intervaloContadorRevivir = setInterval(() => {
+    segundos--;
+    if (segundos <= 0) {
+      ocultarBotonRevivir(modo);
+      return;
+    }
+    config.btn.innerHTML = `Revivir Viendo un Video (${segundos})<i class="fa-solid fa-film" style="margin-left: 10px;"></i>`;
+  }, 1000);
+}
+
+async function cuentaRegresivaRevivir(elementoMensaje) {
+  for (const numero of [3, 2, 1]) {
+    elementoMensaje.innerHTML = `<span class="cuenta-revivir">${numero}</span>`;
+    await esperar(1000);
+  }
+  elementoMensaje.innerHTML = "";
+}
+
+function ejecutarRevivir(modo) {
+  if (modo === "campista") {
+    estadoJuego.scoreCampista = scoreCampistaAntesDePerder;
+    pScoreCampista.textContent = estadoJuego.scoreCampista;
+    btnRevivirCampista.style.display = "none";
+    btnIntentoCampista.style.display = "none";
+    mensajeAciertoCampista.innerHTML = "";
+    cajaOpcionesPokemon.innerHTML = "";
+    generarTipos(tipo1Campista, tipo2Campista);
+    campistaLogica();
+    mostrarNotificacion("¡Revivido! Sigue jugando");
+    return;
+  }
+
+  if (modo === "as") {
+    estadoJuego.scoreAsDeBatalla = scoreAsAntesDePerder;
+    pScoreAs.textContent = estadoJuego.scoreAsDeBatalla;
+    btnRevivirAs.style.display = "none";
+    btnIntentoAs.style.display = "none";
+    mensajeAciertoAs.innerHTML = "";
+    datalistAs.innerHTML = "";
+    inputSelectAs.value = "";
+    inputSelectAs.disabled = false;
+    cajaSelect.style.display = "block";
+    btnValidarAs.style.display = "flex";
+    btnNoExisteAs.style.display = "flex";
+    generarTipos(tipo1As, tipo2As);
+    AsLogica();
+    mostrarNotificacion("¡Revivido! Sigue jugando");
+    return;
+  }
+
+  if (modo === "campeon") {
+    estadoJuego.scoreCampeon = scoreCampeonAntesDePerder;
+    pScoreCampeon.textContent = estadoJuego.scoreCampeon;
+    btnRevivirCampeon.style.display = "none";
+    btnIntentoCampeon.style.display = "none";
+    mensajeAciertoCampeon.innerHTML = "";
+    respuestaInputCampeon.value = "";
+    respuestaInputCampeon.disabled = false;
+    cajainput.style.display = "block";
+    btnRevelarCampeon.style.display = "flex";
+    btnNoExisteCampeon.style.display = "flex";
+    generarTipos(tipo1Campeon, tipo2Campeon);
+    tiempoCampeon = iniciarBarraTiempo(estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, barraTiempoCampeon, mensajeAciertoCampeon, 0.6, btnNoExisteCampeon, btnRevelarCampeon, cajainput, tiempoCampeon, tiempoCampeonLeft, "campeon");
+    mostrarNotificacion("¡Revivido! Sigue jugando");
+  }
+}
+
+async function clickRevivir(modo) {
+  if (!hayInternet || !navigator.onLine) {
+    mostrarNotificacion("Sin conexión a internet. Activa WiFi o datos móviles para ver el video y revivir.");
+    return;
+  }
+
+  cancelarContadorRevivir();
+  modoRevivirActivo = modo;
+  recompensaGanada = false;
+
+  const config = configRevivir[modo];
+  config.btn.disabled = true;
+  await mostrarBonificado();
+  config.btn.disabled = false;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -404,8 +697,9 @@ async function generarTipos(tipo1Generic, tipo2Generic) {
 }
 
 //Función para iniciar la barra de tiempo
-function iniciarBarraTiempo(estado, modo, parrafo, boton, barra, mensaje, time, noExiste, validar, input, tiempo, left) {
+function iniciarBarraTiempo(estado, modo, parrafo, boton, barra, mensaje, time, noExiste, validar, input, tiempo, left, modoRevivir = null) {
   barra.style.width = "100%";
+  left = 100;
   clearInterval(tiempo);
 
   tiempo = setInterval(()=>{
@@ -417,13 +711,22 @@ function iniciarBarraTiempo(estado, modo, parrafo, boton, barra, mensaje, time, 
     if(left <= 0){
       clearInterval(tiempo);
       mensaje.innerHTML = "😢 ¡Se te acabo el Tiempo! 😢";
+
+      if (modoRevivir) {
+        guardarScoreAntesDePerder(modoRevivir);
+      }
+
       estado[modo] = 0;
-      parrafo.innerHTML = estado[modo];
+      parrafo.textContent = estado[modo];
       boton.style.display = "flex";
+
+      if (modoRevivir) {
+        mostrarBotonRevivir(modoRevivir);
+      }
+
       if(noExiste) noExiste.style.display = "none";
       if(validar) validar.style.display = "none";
       if(input) input.style.display = "none";
-            
 
       const buttons = document.querySelectorAll(".btn-opcion");
 
@@ -487,7 +790,7 @@ async function campistaLogica(){
     allOptions.sort(() => Math.random() - 0.5);
 
     let answered = false;
-    tiempoCampista = iniciarBarraTiempo(estadoJuego, "scoreCampista", pScoreCampista, btnIntentoCampista, barraTiempoCampista, mensajeAciertoCampista, 3, null, null, null, tiempoCampista, tiempoCampistaLeft);
+    tiempoCampista = iniciarBarraTiempo(estadoJuego, "scoreCampista", pScoreCampista, btnIntentoCampista, barraTiempoCampista, mensajeAciertoCampista, 3, null, null, null, tiempoCampista, tiempoCampistaLeft, "campista");
 
     allOptions.forEach(pokemon => {
 
@@ -525,6 +828,8 @@ async function campistaLogica(){
                 btnNextCampista.style.display = "flex";
 
             } else {
+              guardarScoreAntesDePerder("campista");
+              mostrarBotonRevivir("campista");
               mensajeAciertoCampista.innerHTML = "Has Perdido.<br>La respuesa correcta era <strong>" + correctPokemon.name.charAt(0).toUpperCase() + correctPokemon.name.slice(1) + "</strong>";
               estadoJuego.scoreCampista = 0;
               pScoreCampista.textContent = estadoJuego.scoreCampista;
@@ -550,7 +855,7 @@ function AsLogica() {
       option.textContent = name.replaceAll("-", " ");
       datalistAs.appendChild(option);
     });
-    tiempoAsDeBatalla = iniciarBarraTiempo(estadoJuego, "scoreAsDeBatalla", pScoreAs, btnIntentoAs, barraTiempoAs, mensajeAciertoAs, 0.7, btnNoExisteAs, btnValidarAs, inputSelectAs, tiempoAsDeBatalla, tiempoAsDeBatallaLeft);
+    tiempoAsDeBatalla = iniciarBarraTiempo(estadoJuego, "scoreAsDeBatalla", pScoreAs, btnIntentoAs, barraTiempoAs, mensajeAciertoAs, 0.7, btnNoExisteAs, btnValidarAs, cajaSelect, tiempoAsDeBatalla, tiempoAsDeBatallaLeft, "as");
     console.log(pokedex.find(p => p.types.includes(type1Value) && p.types.includes(type2Value)));
 }
 
@@ -599,10 +904,12 @@ function validarSelect() {
           pMaxAs.textContent = maxAsDeBatalla;
         }
     }else {
+        guardarScoreAntesDePerder("as");
         estadoJuego.scoreAsDeBatalla = 0;
         pScoreAs.textContent = estadoJuego.scoreAsDeBatalla;
         datalistAs.innerHTML = "";
         btnIntentoAs.style.display = "flex";
+        mostrarBotonRevivir("as");
         mensajeAciertoAs.innerHTML = "¡Incorrecto! <br/><strong>" + selectedPokemon.charAt(0).toUpperCase() + selectedPokemon.slice(1) + "</strong> no tiene esa combinación de tipos.";
         clearInterval(tiempoAsDeBatalla);
     }
@@ -636,9 +943,16 @@ function logicaNoExisteAs() {
         }
 
     }else if(existeAlguno){
+        guardarScoreAntesDePerder("as");
         mensajeAciertoAs.innerHTML = "¡Te equivocas! <br/> si existe pokemon con esa combinación!";
         estadoJuego.scoreAsDeBatalla = 0;
         pScoreAs.textContent = estadoJuego.scoreAsDeBatalla;
+        btnIntentoAs.style.display = "flex";
+        mostrarBotonRevivir("as");
+        clearInterval(tiempoAsDeBatalla);
+        btnValidarAs.style.display = "none";
+        btnNoExisteAs.style.display = "none";
+        cajaSelect.style.display = "none";
     }
 }
 
@@ -691,9 +1005,11 @@ function CampeonLogica() {
         }
 
     }else{
+        guardarScoreAntesDePerder("campeon");
         estadoJuego.scoreCampeon = 0;
         pScoreCampeon.textContent = estadoJuego.scoreCampeon;
         btnIntentoCampeon.style.display = "flex";
+        mostrarBotonRevivir("campeon");
         btnNextCampeon.style.display = "none";
         respuestaInputCampeon.disabled = true;
         mensajeAciertoCampeon.innerHTML = "¡Te equivocas! <br/>" + pokemonSeleccionado.charAt(0).toUpperCase() + pokemonSeleccionado.slice(1) + " no tiene esa combinación!";
@@ -728,9 +1044,16 @@ function logicaNoExisteCampeon() {
         }
 
     }else if(existeAlguno){
+        guardarScoreAntesDePerder("campeon");
         mensajeAciertoCampeon.innerHTML = "¡Te equivocas! <br/> si existe pokemon con esa combinación!";
         estadoJuego.scoreCampeon = 0;
         pScoreCampeon.textContent = estadoJuego.scoreCampeon;
+        btnIntentoCampeon.style.display = "flex";
+        mostrarBotonRevivir("campeon");
+        clearInterval(tiempoCampeon);
+        btnRevelarCampeon.style.display = "none";
+        btnNoExisteCampeon.style.display = "none";
+        cajainput.style.display = "none";
     }
 }
 
@@ -748,11 +1071,13 @@ btnCampista.addEventListener("click", () => {
   dificultad.style.display = "none";
   campista.style.display = "flex";
   pMaxCampista.textContent = maxCampista;
+  mostrarBanner("TOP_CENTER");
   history.pushState({ screen: "campista" }, "Panel-Campista", "#Panel");
 });
 
 //Evento del boton "Iniciar Juego"
 btnIniciarJuegoCampista.addEventListener("click", () => {
+  ocultarBotonRevivir("campista");
   generarTipos(tipo1Campista, tipo2Campista);
   btnIniciarJuegoCampista.style.display = "none";
   campistaLogica();
@@ -760,6 +1085,7 @@ btnIniciarJuegoCampista.addEventListener("click", () => {
 
 //Evento del boton "Siguiente"
 btnNextCampista.addEventListener("click", () => {
+  ocultarBotonRevivir("campista");
   generarTipos(tipo1Campista, tipo2Campista);
   campistaLogica();
   btnNextCampista.style.display = "none";
@@ -768,10 +1094,16 @@ btnNextCampista.addEventListener("click", () => {
 
 //Evento del boton "Intentar de Nuevo"
 btnIntentoCampista.addEventListener("click", () => {
+  ocultarBotonRevivir("campista");
   generarTipos(tipo1Campista, tipo2Campista);
   campistaLogica();
   btnIntentoCampista.style.display = "none";
   mensajeAciertoCampista.innerHTML=""
+});
+
+//Evento para mostrar el video bonificado
+btnRevivirCampista.addEventListener("click", () => {
+  clickRevivir("campista");
 });
 
 //Evento para reiniciar el score del campista
@@ -812,6 +1144,7 @@ btnAs.addEventListener("click", () => {
 
 //Evento del boton "Iniciar Juego" del modo As
 btnIniciarJuegoAs.addEventListener("click", () => {
+  ocultarBotonRevivir("as");
   btnIniciarJuegoAs.style.display = "none";
   cajaSelect.style.display = "block";
   btnValidarAs.style.display = "flex";
@@ -835,6 +1168,7 @@ btnNoExisteAs.addEventListener("click", () => {
 
 //Evento del Boton "Siguiente" Del modo As
 btnNextAs.addEventListener("click", () => {
+  ocultarBotonRevivir("as");
   btnNextAs.style.display = "none";
   btnValidarAs.style.display = "flex";
   btnNoExisteAs.style.display = "flex";
@@ -849,6 +1183,7 @@ btnNextAs.addEventListener("click", () => {
 
 //Evento del Boton "Volver a intentar" del modo As
 btnIntentoAs.addEventListener("click", () => {
+  ocultarBotonRevivir("as");
   btnIntentoAs.style.display = "none";
   btnValidarAs.style.display = "flex";
   btnNoExisteAs.style.display = "flex";
@@ -860,6 +1195,11 @@ btnIntentoAs.addEventListener("click", () => {
   inputSelectAs.style.display = "block";
   generarTipos(tipo1As, tipo2As);
   AsLogica();
+});
+
+//Evento para mostrar el video bonificado del modo As
+btnRevivirAs.addEventListener("click", () => {
+  clickRevivir("as");
 });
 
 //Evento del boton "Reiniciar Max" del modo As
@@ -898,12 +1238,13 @@ btnCampeon.addEventListener("click", () => {
 
 //Evento Para iniciar el juego en el modo Campeon
 btnIniciarJuegoCampeon.addEventListener("click", () => {
+  ocultarBotonRevivir("campeon");
   btnIniciarJuegoCampeon.style.display = "none";
   btnRevelarCampeon.style.display = "flex";
   btnNoExisteCampeon.style.display = "flex";
   cajainput.style.display = "block";
   generarTipos(tipo1Campeon, tipo2Campeon);
-  tiempoCampeon = iniciarBarraTiempo(estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, barraTiempoCampeon, mensajeAciertoCampeon, 0.6, btnNoExisteCampeon, btnRevelarCampeon, cajainput, tiempoCampeon, tiempoCampeonLeft);
+  tiempoCampeon = iniciarBarraTiempo(estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, barraTiempoCampeon, mensajeAciertoCampeon, 0.6, btnNoExisteCampeon, btnRevelarCampeon, cajainput, tiempoCampeon, tiempoCampeonLeft, "campeon");
 });
 
 //Evento para verificar la respuesta del jugador en el modo Campeon
@@ -916,6 +1257,7 @@ btnRevelarCampeon.addEventListener("click", () => {
 
 //Evento del boton "siguiente" en el modo de Campeon
 btnNextCampeon.addEventListener("click", () => {
+  ocultarBotonRevivir("campeon");
   btnNextCampeon.style.display = "none";
   cajainput.style.display = "block";
   btnNoExisteCampeon.style.display = "flex";
@@ -924,7 +1266,7 @@ btnNextCampeon.addEventListener("click", () => {
   respuestaInputCampeon.value = "";
   respuestaInputCampeon.disabled = false;
   generarTipos(tipo1Campeon, tipo2Campeon);
-  tiempoCampeon = iniciarBarraTiempo(estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, barraTiempoCampeon, mensajeAciertoCampeon, 0.6, btnNoExisteCampeon, btnRevelarCampeon, cajainput, tiempoCampeon, tiempoCampeonLeft);
+  tiempoCampeon = iniciarBarraTiempo(estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, barraTiempoCampeon, mensajeAciertoCampeon, 0.6, btnNoExisteCampeon, btnRevelarCampeon, cajainput, tiempoCampeon, tiempoCampeonLeft, "campeon");
 });
 
 //Evento del boton "No Existe" en el modo de Campeon
@@ -934,6 +1276,7 @@ btnNoExisteCampeon.addEventListener("click", () => {
 
 //Evento del Boton "Volver a intentarlo" en el modo Campeon
 btnIntentoCampeon.addEventListener("click", () => {
+  ocultarBotonRevivir("campeon");
   btnIntentoCampeon.style.display = "none";
   mensajeAciertoCampeon.innerHTML = "";
   respuestaInputCampeon.value = "";
@@ -942,7 +1285,12 @@ btnIntentoCampeon.addEventListener("click", () => {
   btnNoExisteCampeon.style.display = "flex";  
   cajainput.style.display = "block";
   generarTipos(tipo1Campeon, tipo2Campeon);
-  tiempoCampeon = iniciarBarraTiempo(estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, barraTiempoCampeon, mensajeAciertoCampeon, 0.6, btnNoExisteCampeon, btnRevelarCampeon, cajainput, tiempoCampeon, tiempoCampeonLeft);
+  tiempoCampeon = iniciarBarraTiempo(estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, barraTiempoCampeon, mensajeAciertoCampeon, 0.6, btnNoExisteCampeon, btnRevelarCampeon, cajainput, tiempoCampeon, tiempoCampeonLeft, "campeon");
+});
+
+//Evento para mostrar el video bonificado del modo Campeon
+btnRevivirCampeon.addEventListener("click", () => {
+  clickRevivir("campeon");
 });
 
 //Evento del Boton "Reiniciar Max" en el modo Campeon
@@ -1016,6 +1364,7 @@ window.addEventListener("popstate", () => {
 // --- |Eventos de para comprobar conexion a internet
 window.addEventListener("online", () => {
   hayInternet = true;
+  prepararBonificado();
   if (!bannerVisible) {
     bannerPendiente = true;
   }
