@@ -205,9 +205,15 @@ const configRevivir = {
 const toastMensaje = document.getElementById("mensaje-notificacion");
 const conteoBtnRevivir = 7;
 
-//IDs de los anuncios
+//IDs de los anuncios / Eventos
 const idBanner = "ca-app-pub-3940256099942544/6300978111" || "Prueba";
 const idBonificado = "ca-app-pub-3940256099942544/5224354917" || "Prueba";
+const eventosBonificado = {
+  cargado: "onRewardedVideoAdLoaded",
+  falloCarga: "onRewardedVideoAdFailedToLoad",
+  recompensa: "onRewardedVideoAdReward",
+  cerrado: "onRewardedVideoAdDismissed",
+};
 
 //Variables sin valor Definido
 let type1Value;
@@ -233,17 +239,6 @@ let scoreCampeonAntesDePerder = 0;
 let modoRevivirActivo = null;
 let recompensaGanada = false;
 let intervaloContadorRevivir = null;
-
-
-
-const HTML_BOTON_REVIVIR = 'Revivir Viendo un Video<i class="fa-solid fa-film" style="margin-left: 10px;"></i>';
-
-const EVENTOS_BONIFICADO = {
-  cargado: "onRewardedVideoAdLoaded",
-  falloCarga: "onRewardedVideoAdFailedToLoad",
-  recompensa: "onRewardedVideoAdReward",
-  cerrado: "onRewardedVideoAdDismissed",
-};
 
 //Objeto del score de los modos de juego
 let estadoJuego = { 
@@ -301,19 +296,19 @@ async function InicializarAdMob() {
       console.error("Error al inicializar AdMob:", error);
     }
 
-    window.Capacitor.Plugins.AdMob.addListener(EVENTOS_BONIFICADO.cargado, () => {
+    window.Capacitor.Plugins.AdMob.addListener(eventosBonificado.cargado, () => {
       bonificadoCargado = true;
     });
 
-    window.Capacitor.Plugins.AdMob.addListener(EVENTOS_BONIFICADO.falloCarga, () => {
+    window.Capacitor.Plugins.AdMob.addListener(eventosBonificado.falloCarga, () => {
       bonificadoCargado = false;
     });
 
-    window.Capacitor.Plugins.AdMob.addListener(EVENTOS_BONIFICADO.recompensa, () => {
+    window.Capacitor.Plugins.AdMob.addListener(eventosBonificado.recompensa, () => {
       recompensaGanada = true;
     });
 
-    window.Capacitor.Plugins.AdMob.addListener(EVENTOS_BONIFICADO.cerrado, async () => {
+    window.Capacitor.Plugins.AdMob.addListener(eventosBonificado.cerrado, async () => {
       if (recompensaGanada && modoRevivirActivo) {
         const config = configRevivir[modoRevivirActivo];
         ocultarBotonRevivir(modoRevivirActivo);
@@ -387,6 +382,7 @@ async function prepararBonificado() {
   }
 }
 
+//Funcion para mostrar el anuncio Bonificado
 async function mostrarBonificado() {
   if (!window.Capacitor?.Plugins?.AdMob) {
     mostrarNotificacion("Anuncios no disponibles en este dispositivo");
@@ -412,13 +408,11 @@ async function mostrarBonificado() {
     return true;
   } catch (error) {
     bonificadoCargado = false;
-    console.error("Error al mostrar el video:", error);
     mostrarNotificacion("Error al mostrar el anuncio");
     prepararBonificado();
     return false;
   }
 }
-
 
 //Funcion que almacena el score por si el jugador revive
 function guardarScoreAntesDePerder(modo) {
@@ -427,10 +421,7 @@ function guardarScoreAntesDePerder(modo) {
   if (modo === "campeon") scoreCampeonAntesDePerder = estadoJuego.scoreCampeon;
 }
 
-function restaurarTextoBotonRevivir(btn) {
-  btn.innerHTML = HTML_BOTON_REVIVIR;
-}
-
+//Funcion que limpia o reinicia o cancela el contador de 7 segundos del boton Revivir
 function cancelarContadorRevivir() {
   if (intervaloContadorRevivir) {
     clearInterval(intervaloContadorRevivir);
@@ -438,15 +429,16 @@ function cancelarContadorRevivir() {
   }
 }
 
+//Funcion que oculta el boton Revivir
 function ocultarBotonRevivir(modo) {
   cancelarContadorRevivir();
   const config = configRevivir[modo];
   if (!config) return;
   config.btn.style.display = "none";
   config.btn.disabled = false;
-  restaurarTextoBotonRevivir(config.btn);
 }
 
+//Funcion que muestra el boton Revivir e inicia el conteo de 7 segundos
 function mostrarBotonRevivir(modo) {
   const config = configRevivir[modo];
   if (!config) return;
@@ -469,6 +461,7 @@ function mostrarBotonRevivir(modo) {
   }, 1000);
 }
 
+//Contador de segundos despues del bonificado
 async function cuentaRegresivaRevivir(elementoMensaje) {
   for (const numero of [3, 2, 1]) {
     elementoMensaje.innerHTML = `<span class="cuenta-revivir">${numero}</span>`;
@@ -477,6 +470,7 @@ async function cuentaRegresivaRevivir(elementoMensaje) {
   elementoMensaje.innerHTML = "";
 }
 
+//Funcion que se ejecuta cuando el jugador ha revivido dependiendo de cada modo
 function ejecutarRevivir(modo) {
   if (modo === "campista") {
     estadoJuego.scoreCampista = scoreCampistaAntesDePerder;
@@ -526,6 +520,7 @@ function ejecutarRevivir(modo) {
   }
 }
 
+//Funcion para las reacciones al click del boton Revivir
 async function clickRevivir(modo) {
   if (!hayInternet || !navigator.onLine) {
     mostrarNotificacion("Sin conexión a internet. Activa WiFi o datos móviles para ver el video y revivir.");
@@ -541,67 +536,6 @@ async function clickRevivir(modo) {
   await mostrarBonificado();
   config.btn.disabled = false;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //Funcion de barra de carga del SplashScreen
 function loadApp() {
@@ -1056,7 +990,6 @@ function logicaNoExisteCampeon() {
         cajainput.style.display = "none";
     }
 }
-
 
 // --- |Evento de boton de "Juego(Dificultades)"
 btnJuego.addEventListener("click", () => {
