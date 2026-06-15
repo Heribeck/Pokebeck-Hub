@@ -271,15 +271,31 @@ InicializarAdMob().then(() => {
     prepararBonificado();
   }
 });
-document.addEventListener("DOMContentLoaded", ()=>{
-    if(window.Capacitor){
+//Evento para el back de ventana o para volver al main
 
-        const App = window.Capacitor.Plugins.App;
+if(window.Capacitor){
 
-        App.addListener("backButton", ()=>{history.back();});
+  const App = window.Capacitor.Plugins.App;
 
+  App.addListener("backButton", () => {
+    if (main.style.display !== "none" && main.style.display !== ""){
+      if(confirm("¿Seguro que quieres salir del juego?")){
+        App.exitApp();
+      }
+      return;
     }
-});
+
+    main.style.display = "flex";
+    acerca.style.display = "none";
+    dificultad.style.display = "none";
+    generador.style.display = "none";
+    campista.style.display = "none";
+    As.style.display = "none";
+    campeon.style.display = "none";
+    //ocultarBanner();
+    //mostrarBanner("TOP_CENTER");
+  })
+}
 cargarPokedex();
 
 //Funcion para inicializar AdMob
@@ -1279,19 +1295,6 @@ telegram.addEventListener("click", () => {
     } else {
         window.open('https://t.me/heribeck', '_blank');
     }
-});
-
-// --- |Evento de Retroceder ventana
-window.addEventListener("popstate", () => {
-  main.style.display = "flex";
-  acerca.style.display = "none";
-  dificultad.style.display = "none";
-  generador.style.display = "none";
-  campista.style.display = "none";
-  As.style.display = "none";
-  campeon.style.display = "none";
-  ocultarBanner();
-  mostrarBanner("TOP_CENTER");
 });
 
 // --- |Eventos de para comprobar conexion a internet
