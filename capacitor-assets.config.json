@@ -1,9 +1,0 @@
-{
-  "android": {
-    "icon": {
-      "background": "#151515",
-      "foreground": "assets/icon-foreground.png",
-      "iconColor": "#151515"
-    }
-  }
-}
