@@ -24,7 +24,7 @@ Thumbs.db
 *~
 
 # Módulos y empaquetados pesados
-/node_modules/
+node_modules/
 
 # Versiones de la aplicación
 /Versiones
