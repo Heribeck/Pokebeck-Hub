@@ -3,6 +3,13 @@
 .env.local
 .env.*.local
 
+# Claves de firma de Android (MUY IMPORTANTE - NO SUBIR)
+*.jks
+*.keystore
+*.p12
+*.p8
+*.pem
+
 # Reportes que crean algunas funciones
 *.log
 npm-debug.log*
