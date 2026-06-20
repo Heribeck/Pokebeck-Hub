@@ -22,6 +22,8 @@ import {
   cajaSelect,
   btnValidarAs,
   btnNoExisteAs,
+  tipo1As,
+  tipo2As,
   pScoreAs,
   pMaxAs,
   btnNextAs,
@@ -38,6 +40,8 @@ import {
   barraTiempoCampeon,
   pScoreCampeon,
   pMaxCampeon,
+  tipo1Campeon,
+  tipo2Campeon,
   dataState,
   adState
 } from './config.js';
@@ -111,6 +115,7 @@ export function ejecutarRevivir(modo) {
     btnIntentoCampista.style.display = "none";
     mensajeAciertoCampista.innerHTML = "";
     cajaOpcionesPokemon.innerHTML = "";
+    timeState.tiempoCampistaLeft = 100;
     generarTipos(tipo1Campista, tipo2Campista);
     campistaLogica();
     mostrarNotificacion("¡Revivido! Sigue jugando");
@@ -118,8 +123,8 @@ export function ejecutarRevivir(modo) {
   }
 
   if (modo === "as") {
-    scoreState.scoreAsDeBatalla = scoreState.scoreAsAntesDePerder;
-    pScoreAs.textContent = scoreState.scoreAsDeBatalla;
+    scoreState.estadoJuego.scoreAsDeBatalla = scoreState.scoreAsAntesDePerder;
+    pScoreAs.textContent = scoreState.estadoJuego.scoreAsDeBatalla;
     btnRevivirAs.style.display = "none";
     btnIntentoAs.style.display = "none";
     mensajeAciertoAs.innerHTML = "";
@@ -129,6 +134,7 @@ export function ejecutarRevivir(modo) {
     cajaSelect.style.display = "block";
     btnValidarAs.style.display = "flex";
     btnNoExisteAs.style.display = "flex";
+    timeState.tiempoAsDeBatallaLeft = 100;
     generarTipos(tipo1As, tipo2As);
     AsLogica();
     mostrarNotificacion("¡Revivido! Sigue jugando");
@@ -136,8 +142,8 @@ export function ejecutarRevivir(modo) {
   }
 
   if (modo === "campeon") {
-    scoreState.scoreCampeon = scoreState.scoreCampeonAntesDePerder;
-    pScoreCampeon.textContent = scoreState.scoreCampeon;
+    scoreState.estadoJuego.scoreCampeon = scoreState.scoreCampeonAntesDePerder;
+    pScoreCampeon.textContent = scoreState.estadoJuego.scoreCampeon;
     btnRevivirCampeon.style.display = "none";
     btnIntentoCampeon.style.display = "none";
     mensajeAciertoCampeon.innerHTML = "";
@@ -146,8 +152,9 @@ export function ejecutarRevivir(modo) {
     cajainput.style.display = "block";
     btnRevelarCampeon.style.display = "flex";
     btnNoExisteCampeon.style.display = "flex";
+    timeState.tiempoCampeonLeft = 100;
     generarTipos(tipo1Campeon, tipo2Campeon);
-    gameState.tiempoCampeon = iniciarBarraTiempo(scoreState, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, barraTiempoCampeon, mensajeAciertoCampeon, 0.6, btnNoExisteCampeon, btnRevelarCampeon, cajainput, gameState.tiempoCampeon, timeState.tiempoCampeonLeft, "campeon");
+    gameState.tiempoCampeon = iniciarBarraTiempo(scoreState.estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, barraTiempoCampeon, mensajeAciertoCampeon, 0.6, btnNoExisteCampeon, btnRevelarCampeon, cajainput, null, timeState.tiempoCampeonLeft, "campeon");
     mostrarNotificacion("¡Revivido! Sigue jugando");
   }
 }
@@ -201,7 +208,7 @@ export async function campistaLogica(){
     allOptions.sort(() => Math.random() - 0.5);
 
     let answered = false;
-    gameState.tiempoCampista = iniciarBarraTiempo(scoreState, "scoreCampista", pScoreCampista, btnIntentoCampista, barraTiempoCampista, mensajeAciertoCampista, 3, null, null, null, gameState.tiempoCampista, timeState.tiempoCampistaLeft, "campista");
+    gameState.tiempoCampista = iniciarBarraTiempo(scoreState.estadoJuego, "scoreCampista", pScoreCampista, btnIntentoCampista, barraTiempoCampista, mensajeAciertoCampista, 3, null, null, null, gameState.tiempoCampista, timeState.tiempoCampistaLeft, "campista");
 
     allOptions.forEach(pokemon => {
 
@@ -266,7 +273,7 @@ export function AsLogica() {
       option.textContent = name.replaceAll("-", " ");
       datalistAs.appendChild(option);
     });
-    gameState.tiempoAsDeBatalla = iniciarBarraTiempo(scoreState, "scoreAsDeBatalla", pScoreAs, btnIntentoAs, barraTiempoAs, mensajeAciertoAs, 0.7, btnNoExisteAs, btnValidarAs, cajaSelect, gameState.tiempoAsDeBatalla, timeState.tiempoAsDeBatallaLeft, "as");
+    gameState.tiempoAsDeBatalla = iniciarBarraTiempo(scoreState.estadoJuego, "scoreAsDeBatalla", pScoreAs, btnIntentoAs, barraTiempoAs, mensajeAciertoAs, 0.7, btnNoExisteAs, btnValidarAs, cajaSelect, gameState.tiempoAsDeBatalla, timeState.tiempoAsDeBatallaLeft, "as");
     console.log(dataState.pokedex.find(p => p.types.includes(gameState.type1Value) && p.types.includes(gameState.type2Value)));
 }
 

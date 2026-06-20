@@ -203,11 +203,11 @@ export const configRevivir = {
 
 //Elementos Especificos Generales
 export const toastMensaje = document.getElementById("mensaje-notificacion");
-export const conteoBtnRevivir = 7;
+export const conteoBtnRevivir = 3;
 
 //IDs de los anuncios / Eventos
-export const idBanner = "ca-app-pub-3940256099942544/6300978111" || "Prueba";
-export const idBonificado = "ca-app-pub-3940256099942544/5224354917" || "Prueba";
+export const idBanner = "ca-app-pub-1898586331132450/5546962412" || "Real";
+export const idBonificado = "ca-app-pub-1898586331132450/8031266354" || "Real";
 export const eventosBonificado = {
   cargado: "onRewardedVideoAdLoaded",
   falloCarga: "onRewardedVideoAdFailedToLoad",

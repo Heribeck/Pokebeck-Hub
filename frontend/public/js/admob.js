@@ -16,7 +16,7 @@ export async function InicializarAdMob() {
     try {
       await window.Capacitor.Plugins.AdMob.initialize({
         requestTrackingAuthorization: true,
-        initializeForTesting: true
+        initializeForTesting: false
       });
       console.log("AdMob listo")
       await mostrarBanner("TOP_CENTER");
@@ -60,7 +60,7 @@ export async function mostrarBanner(posicionBanner){
       adSize: "ADAPTIVE_BANNER",
       position: posicionBanner,
       margin: 0,
-      isTesting: true
+      isTesting: false
     };
 
   try {
@@ -98,7 +98,7 @@ export async function prepararBonificado() {
     adState.bonificadoCargado = false;
     await window.Capacitor.Plugins.AdMob.prepareRewardVideoAd({
       adId: idBonificado,
-      isTesting: true,
+      isTesting: false,
     });
     adState.bonificadoCargado = true;
     console.log("Video bonificado cargado y listo");

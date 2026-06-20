@@ -69,7 +69,8 @@ import {
   gameState,
   timeState,
   adState,
-  scoreState
+  scoreState,
+  confirmacionAs
 } from './config.js';
 
 // Funciones importadas desde otros archivos
@@ -134,7 +135,7 @@ btnRevivirCampista.addEventListener("click", () => {
 
 //Evento para reiniciar el score del campista
 reinicioScoreCampista.addEventListener("click", () => {
-  estadoJuego.scoreCampista = 0;
+  scoreState.estadoJuego.scoreCampista = 0;
   pScoreCampista.textContent = 0;
   mostrarNotificacion("Score Reiniciado");
 });
@@ -164,7 +165,7 @@ btnAs.addEventListener("click", () => {
   As.style.display = "flex";
   dificultad.style.display = "none";
   pMaxAs.textContent = scoreState.maxAsDeBatalla;
-  mostrarBanner("BOTTOM_CENTER");
+  mostrarBanner("TOP_CENTER");
 });
 
 //Evento del boton "Iniciar Juego" del modo As
@@ -247,7 +248,7 @@ cancelarReinicioAs.addEventListener("click", () => {
 
 //Evento de reinico del Score en As
 reinicioScoreAs.addEventListener("click", () => {
-  estadoJuego.scoreAsDeBatalla = 0;
+  scoreState.estadoJuego.scoreAsDeBatalla = 0;
   pScoreAs.textContent = 0;
   mostrarNotificacion("Score Reiniciado");
 });
@@ -338,8 +339,8 @@ cancelarReinicioCampeon.addEventListener("click", () => {
 
 //Evento del Boton "Reiniciar Score" en el modo Campeon
 reinicioScoreCampeon.addEventListener("click", () => {
-  scoreState.scoreCampeon = 0;
-  pScoreCampeon.textContent = scoreState.scoreCampeon;
+  scoreState.estadoJuego.scoreCampeon = 0;
+  pScoreCampeon.textContent = scoreState.estadoJuego.scoreCampeon;
   mostrarNotificacion("Score Reiniciado");
 });
 
@@ -366,7 +367,7 @@ telegram.addEventListener("click", () => {
     if (window.Capacitor && window.Capacitor.isNative) {
         window.open('tg://resolve?domain=heribeck', '_system');
     } else {
-        window.open('https://t.me/heribeck', '_blank');
+        window.open('https://t.me/pokebeck', '_blank');
     }
 });
 
