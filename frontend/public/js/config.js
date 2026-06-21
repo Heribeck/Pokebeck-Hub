@@ -266,3 +266,28 @@ export const esperar = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 export const dataState = {
   pokedex: []
 };
+
+//Varibales y valores por Defecto del sonido
+export const musicaCampista = new Audio("assets/sonidos/music/musicCampista.mp3");
+export const musicaAsBatalla = new Audio("assets/sonidos/music/musicAs.mp3");
+export const musicaCampeon = new Audio("assets/sonidos/music/musicCampeon.mp3");
+
+export const sonidoGanar = new Audio("assets/sonidos/efectoSound/win.mp3");
+export const sonidoPerder = new Audio("assets/sonidos/efectoSound/lose.mp3");
+
+export const sonidoTouch = new Audio("assets/sonidos/efectoSound/touchButtom.mp3");
+
+musicaCampista.volume = 0.3;
+musicaAsBatalla.volume = 0.3;
+musicaCampeon.volume = 0.3;
+
+sonidoGanar.volume = 0.7;
+sonidoPerder.volume = 0.7;
+
+musicaCampista.loop = true;
+musicaAsBatalla.loop = true;
+musicaCampeon.loop = true;
+
+export const musicActual = {
+  musicActualPlay: null
+}

@@ -11,7 +11,7 @@ import {
 } from './config.js';
 
 // Funciones importadas desde otros archivos
-import { loadApp, cargarPokedex } from './utils.js';
+import { loadApp, cargarPokedex, detenerTodoElAudio } from './utils.js';
 import { InicializarAdMob, prepararBonificado } from './admob.js';
 
 // Cargar eventos.js para que se asignen los event listeners
@@ -45,6 +45,7 @@ if(window.Capacitor){
     campista.style.display = "none";
     As.style.display = "none";
     campeon.style.display = "none";
+    detenerTodoElAudio();
   })
 }
 cargarPokedex();

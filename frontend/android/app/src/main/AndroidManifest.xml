@@ -29,7 +29,7 @@
             <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths" />
         </provider>
 
-        <!-- Configuración de AdMob (EN PRUEBA) -->
+        <!-- Configuración de AdMob (ACTIVO) -->
         <meta-data
         android:name="com.google.android.gms.ads.APPLICATION_ID"
         android:value="ca-app-pub-1898586331132450~3525783822"/>
@@ -39,6 +39,7 @@
     <!-- Permissions -->
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <queries>
         <!-- Permite que tu app detecte y abra Telegram -->
         <package android:name="org.telegram.messenger" />

@@ -43,11 +43,11 @@ import {
   tipo1Campeon,
   tipo2Campeon,
   dataState,
-  adState
+  adState,
 } from './config.js';
 
 import { esperar } from './config.js';
-import { mostrarNotificacion } from './utils.js';
+import { mostrarNotificacion, soundWin, soundLose, cambiarMusicaModes, vibrarWin, vibrarLose } from './utils.js';
 import { generarTipos, iniciarBarraTiempo } from './generador.js';
 
 //Funcion que almacena el score por si el jugador revive
@@ -119,6 +119,8 @@ export function ejecutarRevivir(modo) {
     generarTipos(tipo1Campista, tipo2Campista);
     campistaLogica();
     mostrarNotificacion("¡Revivido! Sigue jugando");
+    vibrarWin();
+    cambiarMusicaModes(musicaCampista);
     return;
   }
 
@@ -138,6 +140,8 @@ export function ejecutarRevivir(modo) {
     generarTipos(tipo1As, tipo2As);
     AsLogica();
     mostrarNotificacion("¡Revivido! Sigue jugando");
+    vibrarWin();
+    cambiarMusicaModes(musicaAs);
     return;
   }
 
@@ -156,6 +160,8 @@ export function ejecutarRevivir(modo) {
     generarTipos(tipo1Campeon, tipo2Campeon);
     gameState.tiempoCampeon = iniciarBarraTiempo(scoreState.estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, barraTiempoCampeon, mensajeAciertoCampeon, 0.6, btnNoExisteCampeon, btnRevelarCampeon, cajainput, null, timeState.tiempoCampeonLeft, "campeon");
     mostrarNotificacion("¡Revivido! Sigue jugando");
+    vibrarWin();
+    cambiarMusicaModes(musicaCampeon);
   }
 }
 
@@ -227,7 +233,8 @@ export async function campistaLogica(){
             
             if (pokemon.name === correctPokemon.name) {
                 console.log("Correcto");
-
+                soundWin();
+                vibrarWin();
                 mensajeAciertoCampista.textContent = "¡Felicidades Sigue Sumando!";
                 scoreState.estadoJuego.scoreCampista++;
                 pScoreCampista.textContent = scoreState.estadoJuego.scoreCampista;
@@ -248,6 +255,8 @@ export async function campistaLogica(){
             } else {
               guardarScoreAntesDePerder("campista");
               mostrarBotonRevivir("campista");
+              soundLose();
+              vibrarLose();
               mensajeAciertoCampista.innerHTML = "Has Perdido.<br>La respuesa correcta era <strong>" + correctPokemon.name.charAt(0).toUpperCase() + correctPokemon.name.slice(1) + "</strong>";
               scoreState.estadoJuego.scoreCampista = 0;
               pScoreCampista.textContent = scoreState.estadoJuego.scoreCampista;
@@ -315,6 +324,8 @@ export function validarSelect() {
         pScoreAs.textContent = scoreState.estadoJuego.scoreAsDeBatalla;
         btnNextAs.style.display = "flex";
         mensajeAciertoAs.textContent = "¡Correcto! Sumas a tu racha.";
+        soundWin();
+        vibrarWin();
         clearInterval(gameState.tiempoAsDeBatalla);
         if (scoreState.estadoJuego.scoreAsDeBatalla > scoreState.maxAsDeBatalla) {
           scoreState.maxAsDeBatalla = scoreState.estadoJuego.scoreAsDeBatalla;
@@ -328,6 +339,8 @@ export function validarSelect() {
         datalistAs.innerHTML = "";
         btnIntentoAs.style.display = "flex";
         mostrarBotonRevivir("as");
+        soundLose();
+        vibrarLose();
         mensajeAciertoAs.innerHTML = "¡Incorrecto! <br/><strong>" + gameState.selectedPokemon.charAt(0).toUpperCase() + gameState.selectedPokemon.slice(1) + "</strong> no tiene esa combinación de tipos.";
         clearInterval(gameState.tiempoAsDeBatalla);
     }
@@ -350,6 +363,8 @@ export function logicaNoExisteAs() {
         scoreState.estadoJuego.scoreAsDeBatalla++;
         pScoreAs.textContent = scoreState.estadoJuego.scoreAsDeBatalla;
         clearInterval(gameState.tiempoAsDeBatalla);
+        soundWin();
+        vibrarWin();
         btnNextAs.style.display = "flex";
         btnValidarAs.style.display = "none";
         btnNoExisteAs.style.display = "none";
@@ -367,6 +382,8 @@ export function logicaNoExisteAs() {
         pScoreAs.textContent = scoreState.estadoJuego.scoreAsDeBatalla;
         btnIntentoAs.style.display = "flex";
         mostrarBotonRevivir("as");
+        soundLose();
+        vibrarLose();
         clearInterval(gameState.tiempoAsDeBatalla);
         btnValidarAs.style.display = "none";
         btnNoExisteAs.style.display = "none";
@@ -416,6 +433,8 @@ export function CampeonLogica() {
         mensajeAciertoCampeon.innerHTML = "¡Correcto! Sumas a tu racha";
         respuestaInputCampeon.disabled = true;
         clearInterval(gameState.tiempoCampeon);        
+        soundWin();
+        vibrarWin();
         if (scoreState.estadoJuego.scoreCampeon > scoreState.maxCampeon) {
           scoreState.maxCampeon = scoreState.estadoJuego.scoreCampeon;
           localStorage.setItem("maxCampeon", scoreState.maxCampeon);
@@ -432,7 +451,9 @@ export function CampeonLogica() {
         respuestaInputCampeon.disabled = true;
         mensajeAciertoCampeon.innerHTML = "¡Te equivocas! <br/>" + pokemonSeleccionado.charAt(0).toUpperCase() + pokemonSeleccionado.slice(1) + " no tiene esa combinación!";
         clearInterval(gameState.tiempoCampeon);
-    }
+        soundLose();
+        vibrarLose();
+      }
 }
 
 //Funcion de la logica del boton "No Existe" en el modo Campeon
@@ -451,6 +472,8 @@ export function logicaNoExisteCampeon() {
         scoreState.estadoJuego.scoreCampeon++;
         pScoreCampeon.textContent = scoreState.estadoJuego.scoreCampeon;
         clearInterval(gameState.tiempoCampeon);
+        soundWin();
+        vibrarWin();
         btnNextCampeon.style.display = "flex";
         btnRevelarCampeon.style.display = "none";
         btnNoExisteCampeon.style.display = "none";
@@ -462,15 +485,17 @@ export function logicaNoExisteCampeon() {
         }
 
     }else if(existeAlguno){
-        guardarScoreAntesDePerder("campeon");
-        mensajeAciertoCampeon.innerHTML = "¡Te equivocas! <br/> si existe pokemon con esa combinación!";
-        scoreState.estadoJuego.scoreCampeon = 0;
-        pScoreCampeon.textContent = scoreState.estadoJuego.scoreCampeon;
-        btnIntentoCampeon.style.display = "flex";
-        mostrarBotonRevivir("campeon");
-        clearInterval(gameState.tiempoCampeon);
-        btnRevelarCampeon.style.display = "none";
-        btnNoExisteCampeon.style.display = "none";
-        cajainput.style.display = "none";
+      guardarScoreAntesDePerder("campeon");
+      mensajeAciertoCampeon.innerHTML = "¡Te equivocas! <br/> si existe pokemon con esa combinación!";
+      scoreState.estadoJuego.scoreCampeon = 0;
+      pScoreCampeon.textContent = scoreState.estadoJuego.scoreCampeon;
+      btnIntentoCampeon.style.display = "flex";
+      mostrarBotonRevivir("campeon");
+      soundLose();
+      vibrarLose();
+      clearInterval(gameState.tiempoCampeon);
+      btnRevelarCampeon.style.display = "none";
+      btnNoExisteCampeon.style.display = "none";
+      cajainput.style.display = "none";
     }
 }

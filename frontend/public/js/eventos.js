@@ -70,7 +70,11 @@ import {
   timeState,
   adState,
   scoreState,
-  confirmacionAs
+  confirmacionAs,
+  musicaCampista,
+  musicaAsBatalla,
+  musicaCampeon,
+  sonidoTouch
 } from './config.js';
 
 // Funciones importadas desde otros archivos
@@ -85,7 +89,7 @@ import {
   logicaNoExisteCampeon 
 } from './modos.js';
 import { iniciarGeneracion, generarTipos, iniciarBarraTiempo } from './generador.js';
-import { mostrarNotificacion } from './utils.js';
+import { mostrarNotificacion, cambiarMusicaModes } from './utils.js';
 
 // --- |Evento de boton de "Juego(Dificultades)"
 btnJuego.addEventListener("click", () => {
@@ -99,6 +103,7 @@ btnCampista.addEventListener("click", () => {
   dificultad.style.display = "none";
   campista.style.display = "flex";
   pMaxCampista.textContent = scoreState.maxCampista;
+  cambiarMusicaModes(musicaCampista);
   mostrarBanner("TOP_CENTER");
 });
 
@@ -122,6 +127,7 @@ btnNextCampista.addEventListener("click", () => {
 //Evento del boton "Intentar de Nuevo"
 btnIntentoCampista.addEventListener("click", () => {
   ocultarBotonRevivir("campista");
+  cambiarMusicaModes(musicaCampista);
   generarTipos(tipo1Campista, tipo2Campista);
   campistaLogica();
   btnIntentoCampista.style.display = "none";
@@ -165,12 +171,14 @@ btnAs.addEventListener("click", () => {
   As.style.display = "flex";
   dificultad.style.display = "none";
   pMaxAs.textContent = scoreState.maxAsDeBatalla;
+  cambiarMusicaModes(musicaAsBatalla);
   mostrarBanner("TOP_CENTER");
 });
 
 //Evento del boton "Iniciar Juego" del modo As
 btnIniciarJuegoAs.addEventListener("click", () => {
   ocultarBotonRevivir("as");
+  cambiarMusicaModes(musicaAsBatalla);
   btnIniciarJuegoAs.style.display = "none";
   cajaSelect.style.display = "block";
   btnValidarAs.style.display = "flex";
@@ -210,6 +218,7 @@ btnNextAs.addEventListener("click", () => {
 //Evento del Boton "Volver a intentar" del modo As
 btnIntentoAs.addEventListener("click", () => {
   ocultarBotonRevivir("as");
+  cambiarMusicaModes(musicaAsBatalla);
   btnIntentoAs.style.display = "none";
   btnValidarAs.style.display = "flex";
   btnNoExisteAs.style.display = "flex";
@@ -258,6 +267,7 @@ btnCampeon.addEventListener("click", () => {
   dificultad.style.display = "none";
   campeon.style.display = "flex";
   pMaxCampeon.textContent = scoreState.maxCampeon;
+  cambiarMusicaModes(musicaCampeon);
   mostrarBanner("TOP_CENTER");
 });
 
@@ -302,6 +312,7 @@ btnNoExisteCampeon.addEventListener("click", () => {
 //Evento del Boton "Volver a intentarlo" en el modo Campeon
 btnIntentoCampeon.addEventListener("click", () => {
   ocultarBotonRevivir("campeon");
+  cambiarMusicaModes(musicaCampeon);
   btnIntentoCampeon.style.display = "none";
   mensajeAciertoCampeon.innerHTML = "";
   respuestaInputCampeon.value = "";
@@ -383,4 +394,12 @@ window.addEventListener("online", () => {
 //Evento Offline
 window.addEventListener("offline", () => {
   adState.hayInternet = false;
+});
+
+//Evento Global sonido de los touch en botones
+document.addEventListener("click", (evento) => {
+  if (evento.target.tagName === "BUTTON") {
+    sonidoTouch.currentTime = 0;
+    sonidoTouch.play();
+  }
 });

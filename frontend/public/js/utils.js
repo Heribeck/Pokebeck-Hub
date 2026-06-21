@@ -1,5 +1,13 @@
 // Variables importadas desde config.js
-import { toastMensaje, notificacion, splash, dataState } from './config.js';
+import { 
+    toastMensaje, 
+    notificacion, 
+    splash, 
+    dataState, 
+    sonidoGanar, 
+    sonidoPerder, 
+    musicActual 
+} from './config.js';
 
 // Función para generar números aleatorios
 export function Aleatoriedad(min, max) {
@@ -61,4 +69,48 @@ export function mostrarNotificacion(mensaje) {
     setTimeout(() => {
         notificacion.classList.remove("mostrar");
     }, 2000);
+}
+
+//Funcion para detener musica de los modos
+export function detenerTodoElAudio() {
+    if (musicActual.musicActualPlay) {
+        musicActual.musicActualPlay.pause();
+        musicActual.musicActualPlay.currentTime = 0;
+        musicActual.musicActualPlay = null;
+    }
+    
+    sonidoGanar.pause();
+    sonidoGanar.currentTime = 0;
+    sonidoPerder.pause();
+    sonidoPerder.currentTime = 0;
+}
+
+//Funcion para cambiarMusicaModes
+export function cambiarMusicaModes(musicModo) {
+    detenerTodoElAudio();
+    musicActual.musicActualPlay = musicModo;
+    musicActual.musicActualPlay.play().catch(error => {
+        mostrarNotificacion("La música no pudo iniciar, hubo algún error: " + error);
+    });
+}
+
+//Funcion que dispare el sonido de ganar
+export function soundWin() {
+    sonidoGanar.play();
+}
+
+//Funcion que dispare el sonido de perder
+export function soundLose() {
+    detenerTodoElAudio();
+    sonidoPerder.play();
+}
+
+//Funcion para vibrar el dispositivo cuando acierte el jugador
+export function vibrarWin() {
+    navigator.vibrate(100);
+}
+
+//Funcion para vibrar el dispositivo cuando se equivoque el jugador
+export function vibrarLose() {
+    navigator.vibrate(200, 100, 200);
 }
