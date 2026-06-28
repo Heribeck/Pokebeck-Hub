@@ -158,7 +158,7 @@ export function ejecutarRevivir(modo) {
     btnNoExisteCampeon.style.display = "flex";
     timeState.tiempoCampeonLeft = 100;
     generarTipos(tipo1Campeon, tipo2Campeon);
-    gameState.tiempoCampeon = iniciarBarraTiempo(scoreState.estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, barraTiempoCampeon, mensajeAciertoCampeon, 0.6, btnNoExisteCampeon, btnRevelarCampeon, cajainput, null, timeState.tiempoCampeonLeft, "campeon");
+    iniciarBarraTiempoCampeon();
     mostrarNotificacion("¡Revivido! Sigue jugando");
     vibrarWin();
     cambiarMusicaModes(musicaCampeon);
@@ -214,7 +214,7 @@ export async function campistaLogica(){
     allOptions.sort(() => Math.random() - 0.5);
 
     let answered = false;
-    gameState.tiempoCampista = iniciarBarraTiempo(scoreState.estadoJuego, "scoreCampista", pScoreCampista, btnIntentoCampista, barraTiempoCampista, mensajeAciertoCampista, 3, null, null, null, gameState.tiempoCampista, timeState.tiempoCampistaLeft, "campista");
+    gameState.tiempoCampista = iniciarBarraTiempo(scoreState.estadoJuego, "scoreCampista", pScoreCampista, btnIntentoCampista, barraTiempoCampista, mensajeAciertoCampista, 3, null, null, null, gameState.tiempoCampista, timeState.tiempoCampistaLeft, "campista", correctPokemon.name);
 
     allOptions.forEach(pokemon => {
 
@@ -282,14 +282,14 @@ export function AsLogica() {
       option.textContent = name.replaceAll("-", " ");
       datalistAs.appendChild(option);
     });
-    gameState.tiempoAsDeBatalla = iniciarBarraTiempo(scoreState.estadoJuego, "scoreAsDeBatalla", pScoreAs, btnIntentoAs, barraTiempoAs, mensajeAciertoAs, 0.7, btnNoExisteAs, btnValidarAs, cajaSelect, gameState.tiempoAsDeBatalla, timeState.tiempoAsDeBatallaLeft, "as");
-    console.log(dataState.pokedex.find(p => p.types.includes(gameState.type1Value) && p.types.includes(gameState.type2Value)));
+    const pokemonCorrect = gameState.pokemonesValidos.find(p => p.types.includes(gameState.type2Value));
+    gameState.tiempoAsDeBatalla = iniciarBarraTiempo(scoreState.estadoJuego, "scoreAsDeBatalla", pScoreAs, btnIntentoAs, barraTiempoAs, mensajeAciertoAs, 0.7, btnNoExisteAs, btnValidarAs, cajaSelect, gameState.tiempoAsDeBatalla, timeState.tiempoAsDeBatallaLeft, "as", pokemonCorrect.name);
+    console.log(pokemonCorrect);
 }
 
 //Funcion que valida la seleccion del usuario en el modo As
 export function validarSelect() {
     gameState.selectedPokemon = inputSelectAs.value;
-    console.log(gameState.selectedPokemon)
 
     if (gameState.selectedPokemon === "") {
       console.log("No se seleccionó ningún pokemon");
@@ -391,69 +391,90 @@ export function logicaNoExisteAs() {
     }
 }
 
+export function seleccionadoVacio(){
+
+  const pokemonSeleccionado = respuestaInputCampeon.value.trim().toLowerCase();
+  const pokemonSeleccionadoTypes = dataState.pokedex.find(pokemon => pokemon.name === pokemonSeleccionado);
+
+  if (pokemonSeleccionado === "") {
+    console.log("No se seleccionó ningún pokemon");
+    mostrarNotificacion("Por favor, selecciona un pokemon");
+    btnNextCampeon.style.display = "none";
+    btnRevelarCampeon.style.display = "flex";
+    btnNoExisteCampeon.style.display = "flex";
+    respuestaInputCampeon.disabled = false;
+    return true;
+  }
+
+  if(!pokemonSeleccionadoTypes) {
+    console.log("El pokemon seleccionado no existe");
+    mostrarNotificacion("El pokemon colocado no Existe");
+    btnNextCampeon.style.display = "none";
+    btnRevelarCampeon.style.display = "flex";
+    btnNoExisteCampeon.style.display = "flex";
+    respuestaInputCampeon.disabled = false;
+    return true;
+  }
+  return false;
+}
+
 //Función para validar la respuesta del usuario en el modo Campeon
 export function CampeonLogica() {
+  
+  const pokemonSeleccionado = respuestaInputCampeon.value.trim().toLowerCase();
+  
+  const pokemonSeleccionadoTypes = dataState.pokedex.find(pokemon => pokemon.name === pokemonSeleccionado);
 
-
-    const pokemonSeleccionado = respuestaInputCampeon.value.trim().toLowerCase();
-    console.log(pokemonSeleccionado)
-
-    if (pokemonSeleccionado === "") {
-        console.log("No se seleccionó ningún pokemon");
-        mostrarNotificacion("Por favor, selecciona un pokemon");
-        btnNextCampeon.style.display = "none";
-        btnRevelarCampeon.style.display = "flex";
-        btnNoExisteCampeon.style.display = "flex";
-        respuestaInputCampeon.disabled = false;
-        return;
-    }
+  let esCorrecto = false;
+  if (gameState.type1Value === gameState.type2Value) {
+    esCorrecto = pokemonSeleccionadoTypes.types.length === 1 && pokemonSeleccionadoTypes.types.includes(gameState.type1Value);  
     
-    const pokemonSeleccionadoTypes = dataState.pokedex.find(pokemon => pokemon.name === pokemonSeleccionado);
+  } else {
+    esCorrecto = pokemonSeleccionadoTypes.types.includes(gameState.type1Value) && pokemonSeleccionadoTypes.types.includes(gameState.type2Value);
+  }
 
-    if(!pokemonSeleccionadoTypes) {
-      console.log("El pokemon seleccionado no existe");
-      mostrarNotificacion("El pokemon colocado no Existe");
-      btnNextCampeon.style.display = "none";
-      btnRevelarCampeon.style.display = "flex";
-      btnNoExisteCampeon.style.display = "flex";
-      respuestaInputCampeon.disabled = false;
-      return;
+  if (esCorrecto) {
+    scoreState.estadoJuego.scoreCampeon++;
+    pScoreCampeon.textContent = scoreState.estadoJuego.scoreCampeon;
+    mensajeAciertoCampeon.innerHTML = "¡Correcto! Sumas a tu racha";
+    respuestaInputCampeon.disabled = true;
+    clearInterval(gameState.tiempoCampeon);        
+    soundWin();
+    vibrarWin();
+    if (scoreState.estadoJuego.scoreCampeon > scoreState.maxCampeon) {
+      scoreState.maxCampeon = scoreState.estadoJuego.scoreCampeon;
+      localStorage.setItem("maxCampeon", scoreState.maxCampeon);
+      pMaxCampeon.textContent = scoreState.maxCampeon;
     }
 
-    let esCorrecto = false;
-    if (gameState.type1Value === gameState.type2Value) {
-        esCorrecto = pokemonSeleccionadoTypes.types.length === 1 && pokemonSeleccionadoTypes.types.includes(gameState.type1Value);
-    } else {
-        esCorrecto = pokemonSeleccionadoTypes.types.includes(gameState.type1Value) && pokemonSeleccionadoTypes.types.includes(gameState.type2Value);
-    }
+  }else{
+    guardarScoreAntesDePerder("campeon");
+    scoreState.estadoJuego.scoreCampeon = 0;
+    pScoreCampeon.textContent = scoreState.estadoJuego.scoreCampeon;
+    btnIntentoCampeon.style.display = "flex";
+    mostrarBotonRevivir("campeon");
+    btnNextCampeon.style.display = "none";
+    respuestaInputCampeon.disabled = true;
+    mensajeAciertoCampeon.innerHTML = "¡Te equivocas! <br/>" + pokemonSeleccionado.charAt(0).toUpperCase() + pokemonSeleccionado.slice(1) + " no tiene esa combinación!";
+    clearInterval(gameState.tiempoCampeon);
+    soundLose();
+    vibrarLose();
+  }
+}
 
-    if (esCorrecto) {
-        scoreState.estadoJuego.scoreCampeon++;
-        pScoreCampeon.textContent = scoreState.estadoJuego.scoreCampeon;
-        mensajeAciertoCampeon.innerHTML = "¡Correcto! Sumas a tu racha";
-        respuestaInputCampeon.disabled = true;
-        clearInterval(gameState.tiempoCampeon);        
-        soundWin();
-        vibrarWin();
-        if (scoreState.estadoJuego.scoreCampeon > scoreState.maxCampeon) {
-          scoreState.maxCampeon = scoreState.estadoJuego.scoreCampeon;
-          localStorage.setItem("maxCampeon", scoreState.maxCampeon);
-          pMaxCampeon.textContent = scoreState.maxCampeon;
-        }
+export function iniciarBarraTiempoCampeon() {
 
-    }else{
-        guardarScoreAntesDePerder("campeon");
-        scoreState.estadoJuego.scoreCampeon = 0;
-        pScoreCampeon.textContent = scoreState.estadoJuego.scoreCampeon;
-        btnIntentoCampeon.style.display = "flex";
-        mostrarBotonRevivir("campeon");
-        btnNextCampeon.style.display = "none";
-        respuestaInputCampeon.disabled = true;
-        mensajeAciertoCampeon.innerHTML = "¡Te equivocas! <br/>" + pokemonSeleccionado.charAt(0).toUpperCase() + pokemonSeleccionado.slice(1) + " no tiene esa combinación!";
-        clearInterval(gameState.tiempoCampeon);
-        soundLose();
-        vibrarLose();
-      }
+  const pokemonCorrect = gameState.type1Value !== gameState.type2Value ?
+    dataState.pokedex.find(pokemon => 
+      pokemon.types.includes(gameState.type1Value) && 
+      pokemon.types.includes(gameState.type2Value)
+    ) :
+    dataState.pokedex.find(pokemon => 
+      pokemon.types.includes(gameState.type1Value) && 
+      pokemon.types.length === 1
+    );
+
+  gameState.tiempoCampeon = iniciarBarraTiempo(scoreState.estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, barraTiempoCampeon, mensajeAciertoCampeon, 0.6, btnNoExisteCampeon, btnRevelarCampeon, cajainput, gameState.tiempoCampeon, timeState.tiempoCampeonLeft, "campeon", pokemonCorrect.name);
 }
 
 //Funcion de la logica del boton "No Existe" en el modo Campeon

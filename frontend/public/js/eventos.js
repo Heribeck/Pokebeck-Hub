@@ -86,7 +86,9 @@ import {
   validarSelect, 
   logicaNoExisteAs, 
   CampeonLogica, 
-  logicaNoExisteCampeon 
+  logicaNoExisteCampeon, 
+  seleccionadoVacio,
+  iniciarBarraTiempoCampeon
 } from './modos.js';
 import { iniciarGeneracion, generarTipos, iniciarBarraTiempo } from './generador.js';
 import { mostrarNotificacion, cambiarMusicaModes } from './utils.js';
@@ -279,7 +281,7 @@ btnIniciarJuegoCampeon.addEventListener("click", () => {
   btnNoExisteCampeon.style.display = "flex";
   cajainput.style.display = "block";
   generarTipos(tipo1Campeon, tipo2Campeon);
-  gameState.tiempoCampeon = iniciarBarraTiempo(scoreState.estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, barraTiempoCampeon, mensajeAciertoCampeon, 0.6, btnNoExisteCampeon, btnRevelarCampeon, cajainput, gameState.tiempoCampeon, timeState.tiempoCampeonLeft, "campeon");
+  iniciarBarraTiempoCampeon();
 });
 
 //Evento para verificar la respuesta del jugador en el modo Campeon
@@ -287,7 +289,7 @@ btnRevelarCampeon.addEventListener("click", () => {
   btnRevelarCampeon.style.display = "none";
   btnNoExisteCampeon.style.display = "none";
   btnNextCampeon.style.display = "flex";
-  CampeonLogica();
+  seleccionadoVacio() || CampeonLogica();
 });
 
 //Evento del boton "siguiente" en el modo de Campeon
@@ -301,7 +303,7 @@ btnNextCampeon.addEventListener("click", () => {
   respuestaInputCampeon.value = "";
   respuestaInputCampeon.disabled = false;
   generarTipos(tipo1Campeon, tipo2Campeon);
-  gameState.tiempoCampeon = iniciarBarraTiempo(scoreState.estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, barraTiempoCampeon, mensajeAciertoCampeon, 0.6, btnNoExisteCampeon, btnRevelarCampeon, cajainput, gameState.tiempoCampeon, timeState.tiempoCampeonLeft, "campeon");
+  iniciarBarraTiempoCampeon();
 });
 
 //Evento del boton "No Existe" en el modo de Campeon
@@ -321,7 +323,7 @@ btnIntentoCampeon.addEventListener("click", () => {
   btnNoExisteCampeon.style.display = "flex";  
   cajainput.style.display = "block";
   generarTipos(tipo1Campeon, tipo2Campeon);
-  gameState.tiempoCampeon = iniciarBarraTiempo(scoreState.estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, barraTiempoCampeon, mensajeAciertoCampeon, 0.6, btnNoExisteCampeon, btnRevelarCampeon, cajainput, gameState.tiempoCampeon, timeState.tiempoCampeonLeft, "campeon");
+  iniciarBarraTiempoCampeon();
 });
 
 //Evento para mostrar el video bonificado del modo Campeon

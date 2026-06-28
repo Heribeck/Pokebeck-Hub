@@ -40,7 +40,7 @@ export async function generarTipos(tipo1Generic, tipo2Generic) {
 }
 
 //Función para iniciar la barra de tiempo
-export function iniciarBarraTiempo(estado, modo, parrafo, boton, barra, mensaje, time, noExiste, validar, input, tiempo, left, modoRevivir = null) {
+export function iniciarBarraTiempo(estado, modo, parrafo, boton, barra, mensaje, time, noExiste, validar, input, tiempo, left, modoRevivir = null, pokemonCorrect) {
   barra.style.width = "100%";
   left = 100;
   clearInterval(tiempo);
@@ -53,7 +53,7 @@ export function iniciarBarraTiempo(estado, modo, parrafo, boton, barra, mensaje,
 
     if(left <= 0){
       clearInterval(tiempo);
-      mensaje.innerHTML = "😢 ¡Se te acabo el Tiempo! 😢";
+      mensaje.innerHTML = "😢 ¡Se te acabo el Tiempo! 😢 </br> Una opción correcta era: " + "<strong>" + pokemonCorrect.charAt(0).toUpperCase() + pokemonCorrect.slice(1) + "</strong>";
       detenerTodoElAudio();
       soundLose();
 
