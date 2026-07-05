@@ -17,8 +17,7 @@ import {
   btnRevivirAs,
   btnIntentoAs,
   mensajeAciertoAs,
-  datalistAs,
-  inputSelectAs,
+  selectAs,
   cajaSelect,
   btnValidarAs,
   btnNoExisteAs,
@@ -130,9 +129,10 @@ export function ejecutarRevivir(modo) {
     btnRevivirAs.style.display = "none";
     btnIntentoAs.style.display = "none";
     mensajeAciertoAs.innerHTML = "";
-    datalistAs.innerHTML = "";
-    inputSelectAs.value = "";
-    inputSelectAs.disabled = false;
+    if (selectAs.tomselect) {
+        selectAs.tomselect.clear();
+    }
+    selectAs.value = "";
     cajaSelect.style.display = "block";
     btnValidarAs.style.display = "flex";
     btnNoExisteAs.style.display = "flex";
@@ -276,12 +276,46 @@ export function AsLogica() {
     gameState.pokemonesValidos = dataState.pokedex.filter(pokemon => pokemon.types.includes(gameState.type1Value));
     const pokemonesName = gameState.pokemonesValidos.map(p => p.name).sort();
     console.log(pokemonesName);
+    
+    // Destruir instancia de Tom Select si existe
+    if (selectAs.tomselect) {
+        selectAs.tomselect.destroy();
+    }
+    
+    // Limpiar y agregar opciones al select nativo
+    selectAs.innerHTML = "";
+    
+    // Agregar opción vacía por defecto
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "Selecciona un Pokémon";
+    defaultOption.disabled = true;
+    defaultOption.selected = true;
+    selectAs.appendChild(defaultOption);
+    
+    // Agregar opciones de Pokémon
     pokemonesName.forEach(name => {
       const option = document.createElement("option");
       option.value = name;
       option.textContent = name.replaceAll("-", " ");
-      datalistAs.appendChild(option);
+      selectAs.appendChild(option);
     });
+    
+    // Inicializar Tom Select
+    new TomSelect(selectAs, {
+        create: false,
+        sortField: {
+            field: "text",
+            direction: "asc"
+        },
+        maxOptions: 1000,
+        render: {
+            option: function(data, escape) {
+                return '<div class="option">' + escape(data.text) + '</div>';
+            }
+        }
+    });
+    
     const pokemonCorrect = gameState.pokemonesValidos.find(p => p.types.includes(gameState.type2Value));
     gameState.tiempoAsDeBatalla = iniciarBarraTiempo(scoreState.estadoJuego, "scoreAsDeBatalla", pScoreAs, btnIntentoAs, barraTiempoAs, mensajeAciertoAs, 0.7, btnNoExisteAs, btnValidarAs, cajaSelect, gameState.tiempoAsDeBatalla, timeState.tiempoAsDeBatallaLeft, "as", pokemonCorrect.name);
     console.log(pokemonCorrect);
@@ -289,14 +323,16 @@ export function AsLogica() {
 
 //Funcion que valida la seleccion del usuario en el modo As
 export function validarSelect() {
-    gameState.selectedPokemon = inputSelectAs.value;
+    gameState.selectedPokemon = selectAs.tomselect ? selectAs.tomselect.getValue() : selectAs.value;
 
     if (gameState.selectedPokemon === "") {
       console.log("No se seleccionó ningún pokemon");
       mostrarNotificacion("Por favor, selecciona un pokemon");
       btnValidarAs.style.display = "flex";
       btnNoExisteAs.style.display = "flex";
-      inputSelectAs.disabled = false;
+      if (selectAs.tomselect) {
+          selectAs.tomselect.enable();
+      }
       return;
     }
 
@@ -309,7 +345,9 @@ export function validarSelect() {
       mostrarNotificacion("El pokemon colocado no Existe o esta Mal escrito");
       btnValidarAs.style.display = "flex";
       btnNoExisteAs.style.display = "flex";
-      inputSelectAs.disabled = false;
+      if (selectAs.tomselect) {
+          selectAs.tomselect.enable();
+      }
       return;
     }
     
@@ -336,7 +374,9 @@ export function validarSelect() {
         guardarScoreAntesDePerder("as");
         scoreState.estadoJuego.scoreAsDeBatalla = 0;
         pScoreAs.textContent = scoreState.estadoJuego.scoreAsDeBatalla;
-        datalistAs.innerHTML = "";
+        if (selectAs.tomselect) {
+            selectAs.tomselect.clear();
+        }
         btnIntentoAs.style.display = "flex";
         mostrarBotonRevivir("as");
         soundLose();

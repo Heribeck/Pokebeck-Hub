@@ -1166,9 +1166,103 @@ p {
     .caja-tipos-generador {
         gap: 3rem;
     }
-    
-    .layout-custom-splash img {
-        max-width: 220px;
-        max-height: 220px;
-    }
+}
+
+/* | --- Tom Select Custom Styles --- | */
+.ts-wrapper {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.ts-wrapper.single .ts-control {
+    padding: 1rem 1.5rem !important;
+    font-size: 1rem !important;
+    text-align: center !important;
+    background: #0a0a0f !important;
+    color: #ffffff !important;
+    border: 2px solid var(--border-subtle) !important;
+    border-radius: 16px !important;
+    outline: none !important;
+    transition: all 0.3s ease !important;
+    font-weight: 500 !important;
+    min-height: 50px !important;
+}
+
+.ts-wrapper.single .ts-control:focus {
+    border-color: var(--accent-yellow) !important;
+    background: #0f0f15 !important;
+}
+
+.ts-wrapper.single .ts-control .ts-input {
+    color: #ffffff !important;
+}
+
+.ts-wrapper.single .ts-control .ts-input::placeholder {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.ts-wrapper.single .ts-control .ts-dropdown {
+    background: #0a0a0f !important;
+    border: 2px solid var(--border-subtle) !important;
+    border-radius: 16px !important;
+    margin-top: 8px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    max-height: 400px !important;
+    overflow-y: auto !important;
+}
+
+.ts-wrapper.single .ts-dropdown .ts-dropdown-content {
+    padding: 8px 0 !important;
+    background: black;
+}
+
+.ts-wrapper.single .ts-dropdown .option {
+    padding: 12px 20px !important;
+    color: #ffffff !important;
+    font-size: 0.95rem !important;
+    font-weight: 400 !important;
+    transition: all 0.2s ease !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.ts-wrapper.single .ts-dropdown .option:last-child {
+    border-bottom: none;
+}
+
+.ts-wrapper.single .ts-dropdown .option:hover,
+.ts-wrapper.single .ts-dropdown .option.active {
+    background: rgba(255, 203, 5, 0.1);
+    color: var(--accent-yellow);
+}
+
+.ts-wrapper.single .ts-dropdown .option.selected {
+    background: rgba(255, 203, 5, 0.15);
+    color: var(--accent-yellow);
+    font-weight: 500;
+}
+
+.ts-wrapper.single .ts-control .ts-clear {
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+}
+
+.ts-wrapper.single .ts-control .ts-clear:hover {
+    color: var(--accent-yellow);
+}
+
+.ts-wrapper.single .ts-control .ts-dropdown-arrow {
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+}
+
+.ts-wrapper.single .ts-control .ts-dropdown-arrow:hover {
+    color: var(--accent-yellow);
+}
+
+.ts-wrapper.single.ts-disabled .ts-control {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.ts-wrapper.single.ts-disabled .ts-control .ts-input {
+    cursor: not-allowed;
 }

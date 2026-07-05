@@ -59,8 +59,7 @@ import {
   tipo1Campeon,
   tipo2Campeon,
   cajaSelect,
-  inputSelectAs,
-  datalistAs,
+  selectAs,
   mensajeAciertoCampista,
   mensajeAciertoAs,
   cajainput,
@@ -193,7 +192,9 @@ btnIniciarJuegoAs.addEventListener("click", () => {
 btnValidarAs.addEventListener("click", () => {
   btnValidarAs.style.display = "none";
   btnNoExisteAs.style.display = "none";
-  inputSelectAs.disabled = true;
+  if (selectAs.tomselect) {
+      selectAs.tomselect.disable();
+  }
   validarSelect();
 });
 
@@ -208,11 +209,13 @@ btnNextAs.addEventListener("click", () => {
   btnNextAs.style.display = "none";
   btnValidarAs.style.display = "flex";
   btnNoExisteAs.style.display = "flex";
-  inputSelectAs.disabled = false;
-  inputSelectAs.value = "";
+  if (selectAs.tomselect) {
+      selectAs.tomselect.clear();
+      selectAs.tomselect.enable();
+  }
+  selectAs.value = "";
   cajaSelect.style.display = "block";
   mensajeAciertoAs.textContent = "";
-  datalistAs.innerHTML = "";
   generarTipos(tipo1As, tipo2As);
   AsLogica();
 });
@@ -224,12 +227,13 @@ btnIntentoAs.addEventListener("click", () => {
   btnIntentoAs.style.display = "none";
   btnValidarAs.style.display = "flex";
   btnNoExisteAs.style.display = "flex";
-  inputSelectAs.disabled = false;
-  inputSelectAs.value = "";
+  if (selectAs.tomselect) {
+      selectAs.tomselect.enable();
+      selectAs.tomselect.clear();
+  }
+  selectAs.value = "";
   mensajeAciertoAs.innerHTML = "";
-  datalistAs.innerHTML = "";
   cajaSelect.style.display = "block";
-  inputSelectAs.style.display = "block";
   generarTipos(tipo1As, tipo2As);
   AsLogica();
 });
