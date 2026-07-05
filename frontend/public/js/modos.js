@@ -47,7 +47,7 @@ import {
 } from './config.js';
 
 import { esperar } from './config.js';
-import { mostrarNotificacion, soundWin, soundLose, cambiarMusicaModes, vibrarWin, vibrarLose } from './utils.js';
+import { mostrarNotificacion, soundWin, soundLose, cambiarMusicaModes, vibrarWin, vibrarLose, validarSimilitudPalabra } from './utils.js';
 import { generarTipos, iniciarBarraTiempo } from './generador.js';
 
 //Funcion que almacena el score por si el jugador revive
@@ -391,52 +391,31 @@ export function logicaNoExisteAs() {
     }
 }
 
-export function seleccionadoVacio(){
-
-  const pokemonSeleccionado = respuestaInputCampeon.value.trim().toLowerCase();
-  const pokemonSeleccionadoTypes = dataState.pokedex.find(pokemon => pokemon.name === pokemonSeleccionado);
-
-  if (pokemonSeleccionado === "") {
-    console.log("No se seleccionó ningún pokemon");
-    mostrarNotificacion("Por favor, selecciona un pokemon");
-    btnNextCampeon.style.display = "none";
-    btnRevelarCampeon.style.display = "flex";
-    btnNoExisteCampeon.style.display = "flex";
-    respuestaInputCampeon.disabled = false;
-    return true;
-  }
-
-  if(!pokemonSeleccionadoTypes) {
-    console.log("El pokemon seleccionado no existe");
-    mostrarNotificacion("El pokemon colocado no Existe");
-    btnNextCampeon.style.display = "none";
-    btnRevelarCampeon.style.display = "flex";
-    btnNoExisteCampeon.style.display = "flex";
-    respuestaInputCampeon.disabled = false;
-    return true;
-  }
-  return false;
-}
-
 //Función para validar la respuesta del usuario en el modo Campeon
 export function CampeonLogica() {
   
   const pokemonSeleccionado = respuestaInputCampeon.value.trim().toLowerCase();
   
-  const pokemonSeleccionadoTypes = dataState.pokedex.find(pokemon => pokemon.name === pokemonSeleccionado);
+  const pokemonCorrecto = dataState.pokedex.find(pokemon =>
+    validarSimilitudPalabra(pokemonSeleccionado,pokemon.name,70)
+  );
 
   let esCorrecto = false;
   if (gameState.type1Value === gameState.type2Value) {
-    esCorrecto = pokemonSeleccionadoTypes.types.length === 1 && pokemonSeleccionadoTypes.types.includes(gameState.type1Value);  
+    esCorrecto = pokemonCorrecto.types.length === 1 && pokemonCorrecto.types.includes(gameState.type1Value);  
     
   } else {
-    esCorrecto = pokemonSeleccionadoTypes.types.includes(gameState.type1Value) && pokemonSeleccionadoTypes.types.includes(gameState.type2Value);
+    esCorrecto = pokemonCorrecto.types.includes(gameState.type1Value) && pokemonCorrecto.types.includes(gameState.type2Value);
   }
 
   if (esCorrecto) {
     scoreState.estadoJuego.scoreCampeon++;
     pScoreCampeon.textContent = scoreState.estadoJuego.scoreCampeon;
-    mensajeAciertoCampeon.innerHTML = "¡Correcto! Sumas a tu racha";
+    if (pokemonSeleccionado !== pokemonCorrecto.name) {
+      mensajeAciertoCampeon.innerHTML = "¡Es valido! <br/> (Seguro Quisiste decir : <strong>" + pokemonCorrecto.name.charAt(0).toUpperCase() + pokemonCorrecto.name.slice(1) + "</strong>)";
+    }else {
+      mensajeAciertoCampeon.innerHTML = "¡Correcto! Sumas a tu racha";
+    }
     respuestaInputCampeon.disabled = true;
     clearInterval(gameState.tiempoCampeon);        
     soundWin();
@@ -460,6 +439,34 @@ export function CampeonLogica() {
     soundLose();
     vibrarLose();
   }
+}
+
+export function seleccionadoVacio(){
+
+  const pokemonSeleccionado = respuestaInputCampeon.value.trim().toLowerCase();
+  const pokemonCorrecto = dataState.pokedex.find(pokemon => 
+    validarSimilitudPalabra(pokemonSeleccionado,pokemon.name,70)
+  );
+
+  if (pokemonSeleccionado === "") {
+    mostrarNotificacion("Por favor, selecciona un pokemon");
+    btnNextCampeon.style.display = "none";
+    btnRevelarCampeon.style.display = "flex";
+    btnNoExisteCampeon.style.display = "flex";
+    respuestaInputCampeon.disabled = false;
+    return true;
+  }
+
+  if(!pokemonCorrecto) {
+    console.log("El pokemon seleccionado no existe");
+    mostrarNotificacion("El pokemon colocado no Existe");
+    btnNextCampeon.style.display = "none";
+    btnRevelarCampeon.style.display = "flex";
+    btnNoExisteCampeon.style.display = "flex";
+    respuestaInputCampeon.disabled = false;
+    return true;
+  }
+  return false;
 }
 
 export function iniciarBarraTiempoCampeon() {

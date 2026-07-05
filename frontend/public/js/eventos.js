@@ -90,8 +90,8 @@ import {
   seleccionadoVacio,
   iniciarBarraTiempoCampeon
 } from './modos.js';
-import { iniciarGeneracion, generarTipos, iniciarBarraTiempo } from './generador.js';
-import { mostrarNotificacion, cambiarMusicaModes } from './utils.js';
+import { iniciarGeneracion, generarTipos } from './generador.js';
+import { mostrarNotificacion, cambiarMusicaModes, validarSimilitudPalabra } from './utils.js';
 
 // --- |Evento de boton de "Juego(Dificultades)"
 btnJuego.addEventListener("click", () => {
@@ -373,6 +373,12 @@ btnGenerar.addEventListener("click", () => {
 btnAcerca.addEventListener("click", () => {
   main.style.display = "none";
   acerca.style.display = "flex";
+  let correct = validarSimilitudPalabra("HeribeckXaliburz", "HeribeckZRubilax");
+  if (correct){
+    console.log("Correcto");
+  }else {
+    console.log("Incorrecto");
+  }
 });
 
 //Evento del boton de "Telegram"

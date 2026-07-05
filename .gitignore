@@ -29,6 +29,9 @@ Thumbs.db
 # Versiones de la aplicación
 /Versiones
 /Roadmap_Definitivo
+/database/scripts
+/database/.venv
+/database/raw
 
 # Capacitor y Android
 **/android/app/build

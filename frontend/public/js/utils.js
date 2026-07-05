@@ -114,3 +114,44 @@ export function vibrarWin() {
 export function vibrarLose() {
     navigator.vibrate(200, 100, 200);
 }
+
+//Funcion para validar la similitud de la palabra del usuario con la palabra correcta
+export function validarSimilitudPalabra(palabraUsuario, palabraCorrecta, porcentajeRequerido = 70) {
+    // Pasar todo a minúsculas y quitar espacios raros para evitar falsos errores
+    const s1 = palabraUsuario.toLowerCase().trim();
+    const s2 = palabraCorrecta.toLowerCase().trim();
+
+    // Si son idénticas, es 100% correcto de una
+    if (s1 === s2) return true;
+    if (s1.length === 0 || s2.length === 0) return false;
+
+    // Crear la matriz para el algoritmo de Levenshtein
+    const matriz = [];
+    for (let i = 0; i <= s1.length; i++) matriz[i] = [i];
+    for (let j = 0; j <= s2.length; j++) matriz[0][j] = j;
+
+    // Llenar la matriz calculando las ediciones (borrar, insertar, sustituir)
+    for (let i = 1; i <= s1.length; i++) {
+        for (let j = 1; j <= s2.length; j++) {
+            if (s1[i - 1] === s2[j - 1]) {
+                matriz[i][j] = matriz[i - 1][j - 1];
+            } else {
+                matriz[i][j] = Math.min(
+                    matriz[i - 1][j] + 1,    // Borrado
+                    matriz[i][j - 1] + 1,    // Inserción
+                    matriz[i - 1][j - 1] + 1 // Sustitución
+                );
+            }
+        }
+    }
+
+    // La distancia final es el último elemento de la matriz
+    const distanciaFinal = matriz[s1.length][s2.length];
+    
+    // Calcular el porcentaje de similitud real basado en la palabra más larga
+    const longitudMaxima = Math.max(s1.length, s2.length);
+    const porcentajeSimilitud = ((longitudMaxima - distanciaFinal) / longitudMaxima) * 100;
+
+    // Retorna true si el porcentaje real es mayor o igual al que tú pides (70)
+    return porcentajeSimilitud >= porcentajeRequerido;
+}
