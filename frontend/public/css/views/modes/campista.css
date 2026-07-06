@@ -1,0 +1,86 @@
+/* | --- Modo Campista --- |*/
+.layout-campista {
+    display: none;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100dvh;
+    padding: 1rem 1rem 2rem 1rem;
+    gap: 1rem;
+    overflow-y: auto;
+}
+
+.caja-configuracion-campista {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 1rem;
+    padding: 0.875rem 1.5rem;
+    background: rgba(67, 160, 71, 0.08);
+    border-radius: 14px;
+    border: 1px solid rgba(67, 160, 71, 0.3);
+    width: 100%;
+    max-width: 20rem;
+}
+
+.caja-configuracion-campista p {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.caja-configuracion-campista span {
+    color: #43a047;
+    font-weight: 700;
+}
+
+.boton-campista {
+    color: var(--text-primary);
+    border: 1px solid rgba(67, 160, 71, 0.3);
+    padding: 0.875rem 1.75rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    width: 10rem;
+    transition: all 0.2s ease;
+    background: rgba(67, 160, 71, 0.05);
+}
+
+.boton-campista:hover {
+    background: rgba(67, 160, 71, 0.2);
+    border-color: #43a047;
+    color: #43a047;
+    transform: translateY(-2px);
+}
+
+.botones-campista {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.caja-tipos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 1.25rem;
+}
+
+.caja-opciones-pokemon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+    margin-top: 0.5rem;
+}

@@ -317,6 +317,7 @@ export function AsLogica() {
     });
     
     const pokemonCorrect = gameState.pokemonesValidos.find(p => p.types.includes(gameState.type2Value));
+    
     gameState.tiempoAsDeBatalla = iniciarBarraTiempo(scoreState.estadoJuego, "scoreAsDeBatalla", pScoreAs, btnIntentoAs, barraTiempoAs, mensajeAciertoAs, 0.7, btnNoExisteAs, btnValidarAs, cajaSelect, gameState.tiempoAsDeBatalla, timeState.tiempoAsDeBatallaLeft, "as", pokemonCorrect.name);
     console.log(pokemonCorrect);
 }

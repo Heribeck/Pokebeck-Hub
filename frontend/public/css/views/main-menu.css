@@ -1,0 +1,83 @@
+/* | --- Main Menu --- |*/
+.layout-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100dvh;
+}
+
+.layout-dificultad {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100dvh;
+}
+
+.icono-main {
+    width: 30vw;
+    height: 30vw;
+    max-width: 120px;
+    max-height: 120px;
+    filter: drop-shadow(0 0 20px rgba(255, 203, 5, 0.4));
+}
+
+.caja-btn-main {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.caja-dificultades {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
+
+.boton-juego,
+.boton-generador,
+.boton-acerca {
+    background: var(--accent-yellow);
+    color: var(--bg-primary);
+    border: none;
+    padding: 0.875rem 1.75rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-glow);
+    width: 12.5rem;
+}
+
+.boton-juego:hover,
+.boton-generador:hover,
+.boton-acerca:hover {
+    background: var(--accent-yellow-dark);
+    transform: translateY(-2px);
+}
+
+.boton-juego:active,
+.boton-generador:active,
+.boton-acerca:active {
+    transform: translateY(0);
+}
+
+.texto-version {
+    position: absolute;   
+    bottom: 1.25rem;         
+    width: 100%;          
+    text-align: center;   
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.75rem;              
+    letter-spacing: 1.5px;         
+    text-transform: uppercase;     
+    font-family: 'Courier New', Courier, monospace; 
+    pointer-events: none;          
+}

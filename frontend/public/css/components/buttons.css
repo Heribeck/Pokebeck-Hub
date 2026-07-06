@@ -1,0 +1,138 @@
+/* | --- Botones Reutilizables --- |*/
+
+.boton-telegram {
+    margin-top: 1.25rem;
+    font-size: 0.9375rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--bg-tertiary);
+    color: var(--accent-yellow);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 600;
+}
+
+.boton-telegram:hover {
+    background: rgba(255, 203, 5, 0.1);
+    border-color: var(--accent-yellow);
+}
+
+.boton-telegram:active {
+    transform: scale(0.96);
+}
+
+.boton-iniciar-juego {
+    background: var(--accent-yellow);
+    color: var(--bg-primary);
+    border: none;
+    padding: 0.875rem 1.75rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-glow);
+}
+
+.boton-iniciar-juego:hover {
+    background: var(--accent-yellow-dark);
+    transform: translateY(-2px);
+}
+
+.boton-iniciar-juego:active {
+    transform: translateY(0);
+}
+
+.boton-reinicio {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: none;
+    border-radius: 10px;
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid var(--border-subtle);
+}
+
+#reinicio-score-campista:hover,
+#reinicio-max-campista:hover {
+    background: rgba(67, 160, 71, 0.15);
+    color: #43a047;
+    border-color: #43a047;
+}
+
+#reinicio-score-As:hover,
+#reinicio-max-As:hover {
+    background: rgba(255, 152, 0, 0.15);
+    color: #ff9800;
+    border-color: #ff9800;
+}
+
+#reinicio-score-campeon:hover,
+#reinicio-max-campeon:hover {
+    background: rgba(244, 67, 54, 0.15);
+    color: #f44336;
+    border-color: #f44336;
+}
+
+.boton-reinicio:active {
+    transform: scale(0.92);
+}
+
+.boton-reinicio i {
+    pointer-events: none;
+}
+
+.boton-intento {
+   display: none;
+    background: var(--accent-yellow);
+    color: var(--bg-primary);
+    border: none;
+    padding: 0.875rem 1.75rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1rem;
+    width: 100%;
+    justify-content: center;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-glow);
+}
+
+.boton-intento:hover {
+    background: var(--accent-yellow-dark);
+    transform: translateY(-2px);
+}
+
+.boton-revivir{
+    display: none;
+    background: white;
+    color: var(--bg-primary);
+    border: none;
+    padding: 0.875rem 1.75rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1rem;
+    width: 100%;
+    justify-content: center;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-glow);
+}
+
+.cuenta-revivir {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4rem;
+    font-weight: 700;
+    color: #FFCB05;
+    text-shadow: 0 0 12px rgba(255, 203, 5, 0.8);
+    min-height: 80px;
+    width: 100%;
+}

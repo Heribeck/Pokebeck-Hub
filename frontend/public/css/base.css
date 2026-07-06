@@ -1,0 +1,64 @@
+/* | --- Etiquetas Globales --- |*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    padding: 1rem;
+    max-width: 100%;
+    margin: 0 auto;
+    background: linear-gradient(180deg, var(--bg-primary), var(--bg-secondary));
+    overflow: hidden;
+    height: 100dvh;
+    color: var(--text-primary);
+}
+
+h1 {
+    color: var(--accent-yellow);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
+    text-shadow: 0 0 20px rgba(255, 203, 5, 0.3);
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+h2 {
+    color: var(--accent-yellow);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-shadow: 0 0 20px rgba(255, 203, 5, 0.3);
+    width: 100%;
+    max-width: 300px;
+    font-weight: 600;
+}
+
+h3 {
+    color: var(--text-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+h4 {
+    color: var(--text-secondary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 400;
+}
+
+p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    text-align: center;
+}

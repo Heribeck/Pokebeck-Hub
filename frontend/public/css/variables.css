@@ -1,0 +1,17 @@
+/* | --- Variables(:root) --- |*/
+:root {
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #121218;
+    --bg-tertiary: #1a1a24;
+    --bg-card: rgba(26, 26, 36, 0.8);
+    --accent-yellow: #FFCB05;
+    --accent-yellow-dark: #E5B004;
+    --accent-yellow-light: #FFD700;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-muted: rgba(255, 255, 255, 0.5);
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-focus: rgba(255, 203, 5, 0.4);
+    --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.3);
+    --shadow-glow: 0 0 20px rgba(255, 203, 5, 0.15);
+}
