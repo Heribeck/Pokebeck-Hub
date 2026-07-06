@@ -316,10 +316,24 @@ export function AsLogica() {
         }
     });
     
-    const pokemonCorrect = gameState.pokemonesValidos.find(p => p.types.includes(gameState.type2Value));
+   const pokemonCorrect = gameState.type1Value !== gameState.type2Value ?
+      dataState.pokedex.find(pokemon => 
+      pokemon.types.includes(gameState.type1Value) && 
+      pokemon.types.includes(gameState.type2Value)
+    ) :
+      dataState.pokedex.find(pokemon => 
+      pokemon.types.includes(gameState.type1Value) && 
+      pokemon.types.length === 1
+    );
+
+    if (pokemonCorrect){
+      gameState.tiempoAsDeBatalla = iniciarBarraTiempo(scoreState.estadoJuego, "scoreAsDeBatalla", pScoreAs, btnIntentoAs, barraTiempoAs, mensajeAciertoAs, 0.7, btnNoExisteAs, btnValidarAs, cajaSelect, gameState.tiempoAsDeBatalla, timeState.tiempoAsDeBatallaLeft, "as", pokemonCorrect.name);
+      console.log(pokemonCorrect);
+    }else {
+      gameState.tiempoAsDeBatalla = iniciarBarraTiempo(scoreState.estadoJuego, "scoreAsDeBatalla", pScoreAs, btnIntentoAs, barraTiempoAs, mensajeAciertoAs, 0.7, btnNoExisteAs, btnValidarAs, cajaSelect, gameState.tiempoAsDeBatalla, timeState.tiempoAsDeBatallaLeft, "as", null);
+      console.log("No se encontró el pokemon correcto");
+    }
     
-    gameState.tiempoAsDeBatalla = iniciarBarraTiempo(scoreState.estadoJuego, "scoreAsDeBatalla", pScoreAs, btnIntentoAs, barraTiempoAs, mensajeAciertoAs, 0.7, btnNoExisteAs, btnValidarAs, cajaSelect, gameState.tiempoAsDeBatalla, timeState.tiempoAsDeBatallaLeft, "as", pokemonCorrect.name);
-    console.log(pokemonCorrect);
 }
 
 //Funcion que valida la seleccion del usuario en el modo As
@@ -475,7 +489,7 @@ export function CampeonLogica() {
     mostrarBotonRevivir("campeon");
     btnNextCampeon.style.display = "none";
     respuestaInputCampeon.disabled = true;
-    mensajeAciertoCampeon.innerHTML = "¡Te equivocas! <br/>" + pokemonSeleccionado.charAt(0).toUpperCase() + pokemonSeleccionado.slice(1) + " no tiene esa combinación!";
+    mensajeAciertoCampeon.innerHTML = "¿Seguro quisiste decir <strong>" + pokemonCorrecto.name.charAt(0).toUpperCase() + pokemonCorrecto.name.slice(1) + "</strong>?" + "<br/>" + "Ese pokemon no tiene esa combinación!";
     clearInterval(gameState.tiempoCampeon);
     soundLose();
     vibrarLose();
@@ -522,7 +536,12 @@ export function iniciarBarraTiempoCampeon() {
       pokemon.types.length === 1
     );
 
-  gameState.tiempoCampeon = iniciarBarraTiempo(scoreState.estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, barraTiempoCampeon, mensajeAciertoCampeon, 0.6, btnNoExisteCampeon, btnRevelarCampeon, cajainput, gameState.tiempoCampeon, timeState.tiempoCampeonLeft, "campeon", pokemonCorrect.name);
+  if (pokemonCorrect){
+    gameState.tiempoCampeon = iniciarBarraTiempo(scoreState.estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, barraTiempoCampeon, mensajeAciertoCampeon, 0.6, btnNoExisteCampeon, btnRevelarCampeon, cajainput, gameState.tiempoCampeon, timeState.tiempoCampeonLeft, "campeon", pokemonCorrect.name);
+  } else {
+    gameState.tiempoCampeon = iniciarBarraTiempo(scoreState.estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, barraTiempoCampeon, mensajeAciertoCampeon, 0.6, btnNoExisteCampeon, btnRevelarCampeon, cajainput, gameState.tiempoCampeon, timeState.tiempoCampeonLeft, "campeon", null);
+  } 
+  
 }
 
 //Funcion de la logica del boton "No Existe" en el modo Campeon
