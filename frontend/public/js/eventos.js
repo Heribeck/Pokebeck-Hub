@@ -105,7 +105,6 @@ btnCampista.addEventListener("click", () => {
   campista.style.display = "flex";
   pMaxCampista.textContent = scoreState.maxCampista;
   cambiarMusicaModes(musicaCampista);
-  mostrarBanner("TOP_CENTER");
 });
 
 //Evento del boton "Iniciar Juego"
@@ -173,7 +172,6 @@ btnAs.addEventListener("click", () => {
   dificultad.style.display = "none";
   pMaxAs.textContent = scoreState.maxAsDeBatalla;
   cambiarMusicaModes(musicaAsBatalla);
-  mostrarBanner("TOP_CENTER");
 });
 
 //Evento del boton "Iniciar Juego" del modo As
@@ -274,7 +272,6 @@ btnCampeon.addEventListener("click", () => {
   campeon.style.display = "flex";
   pMaxCampeon.textContent = scoreState.maxCampeon;
   cambiarMusicaModes(musicaCampeon);
-  mostrarBanner("TOP_CENTER");
 });
 
 //Evento Para iniciar el juego en el modo Campeon
@@ -360,7 +357,6 @@ reinicioScoreCampeon.addEventListener("click", () => {
   pScoreCampeon.textContent = scoreState.estadoJuego.scoreCampeon;
   mostrarNotificacion("Score Reiniciado");
 });
-
 
 // --- |Eventos del Apartado "Generador"| --- //
 btnGenerador.addEventListener("click", () => {
