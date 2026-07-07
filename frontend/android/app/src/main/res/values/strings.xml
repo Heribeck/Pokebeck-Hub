@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Poketype-Guess</string>
-    <string name="title_activity_main">Poketype-Guess</string>
-    <string name="package_name">com.heribeck.poketype</string>
-    <string name="custom_url_scheme">com.heribeck.poketype</string>
+    <string name="app_name">Pokebeck-Hub</string>
+    <string name="title_activity_main">Pokebeck-Hub</string>
+    <string name="package_name">com.heribeck.Poketype</string>
+    <string name="custom_url_scheme">com.heribeck.Poketype</string>
 </resources>
