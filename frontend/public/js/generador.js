@@ -1,5 +1,5 @@
 // Variables importadas desde config.js
-import { types, typesIcono, coloresTipos, gameState, esperar, btnGenerar, tipo1, tipo2, sonidoPerder } from './config.js';
+import { types, typesIcono, coloresTipos, gameState, esperar, btnGenerar, tipo1, tipo2, main } from './config.js';
 import { Aleatoriedad, detenerTodoElAudio, soundLose } from './utils.js';
 import { guardarScoreAntesDePerder, mostrarBotonRevivir } from './modos.js';
 
@@ -54,8 +54,11 @@ export function iniciarBarraTiempo(estado, modo, parrafo, boton, barra, mensaje,
     if(left <= 0){
       clearInterval(tiempo);
       mensaje.innerHTML = "😢 ¡Se te acabo el Tiempo! 😢 </br> Una opción correcta era: " + "<strong>" + pokemonCorrect.charAt(0).toUpperCase() + pokemonCorrect.slice(1) + "</strong>";
-      detenerTodoElAudio();
-      soundLose();
+      detenerTodoElAudio(); 
+
+      if (main.style.display !== "none" && main.style.display !== "") {
+        soundLose();
+      }
 
       if (modoRevivir) {
         guardarScoreAntesDePerder(modoRevivir);

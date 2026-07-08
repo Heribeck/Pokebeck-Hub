@@ -25,7 +25,7 @@ InicializarAdMob().then(() => {
   }
 });
 
-//Evento para el back de ventana o para volver al main
+//Evento para el back de ventana o para volver al main y el caso de segundo plano
 if(window.Capacitor){
 
   const App = window.Capacitor.Plugins.App;
@@ -47,6 +47,12 @@ if(window.Capacitor){
     campeon.style.display = "none";
     mostrarBanner("TOP_CENTER");
     detenerTodoElAudio();
+  })
+
+  App.addListener("appStateChange", (state) => {
+    if (!state.isActive) {
+      detenerTodoElAudio();
+    }
   })
 }
 cargarPokedex();

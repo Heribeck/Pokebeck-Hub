@@ -71,7 +71,7 @@ export function mostrarNotificacion(mensaje) {
     }, 2000);
 }
 
-//Funcion para detener musica de los modos
+//Funcion para detener musica, sonidos y vibracion de los modos
 export function detenerTodoElAudio() {
     if (musicActual.musicActualPlay) {
         musicActual.musicActualPlay.pause();
@@ -83,6 +83,8 @@ export function detenerTodoElAudio() {
     sonidoGanar.currentTime = 0;
     sonidoPerder.pause();
     sonidoPerder.currentTime = 0;
+    navigator.vibrate(0);
+
 }
 
 //Funcion para cambiarMusicaModes
