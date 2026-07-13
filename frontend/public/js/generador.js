@@ -1,6 +1,6 @@
 // Variables importadas desde config.js
 import { types, typesIcono, coloresTipos, gameState, esperar, btnGenerar, tipo1, tipo2, main } from './config.js';
-import { Aleatoriedad, detenerTodoElAudio, soundLose } from './utils.js';
+import { Aleatoriedad, detenerTodoElAudio, soundLose, capitalizarPrimeraLetra } from './utils.js';
 import { guardarScoreAntesDePerder, mostrarBotonRevivir } from './modos.js';
 
 //Función para Iniciar el conteo en el Generador
@@ -53,10 +53,16 @@ export function iniciarBarraTiempo(estado, modo, parrafo, boton, barra, mensaje,
 
     if(left <= 0){
       clearInterval(tiempo);
-      mensaje.innerHTML = "😢 ¡Se te acabo el Tiempo! 😢 </br> Una opción correcta era: " + "<strong>" + pokemonCorrect.charAt(0).toUpperCase() + pokemonCorrect.slice(1) + "</strong>";
-      detenerTodoElAudio(); 
 
-      if (main.style.display !== "none" && main.style.display !== "") {
+      if (pokemonCorrect){
+        mensaje.innerHTML = "😢 ¡Se te acabo el Tiempo! 😢 </br> Una opción correcta era: " + "<strong>" + capitalizarPrimeraLetra(pokemonCorrect) + "</strong>"
+      }else if (!pokemonCorrect){
+        mensaje.innerHTML = "😢 ¡Se te acabo el Tiempo! <br> No hay Pokemon Con esa Combinación"
+      }
+
+      detenerTodoElAudio();
+
+      if (main.style.display !== "none" || main.style.display !== "") {
         soundLose();
       }
 

@@ -46,7 +46,7 @@ import {
 } from './config.js';
 
 import { esperar } from './config.js';
-import { mostrarNotificacion, soundWin, soundLose, cambiarMusicaModes, vibrarWin, vibrarLose, validarSimilitudPalabra } from './utils.js';
+import { mostrarNotificacion, soundWin, soundLose, cambiarMusicaModes, vibrarWin, vibrarLose, validarSimilitudPalabra, validarTiposPokemon, capitalizarPrimeraLetra, buscarPokemonCorrecto } from './utils.js';
 import { generarTipos, iniciarBarraTiempo } from './generador.js';
 
 //Funcion que almacena el score por si el jugador revive
@@ -167,17 +167,13 @@ export function ejecutarRevivir(modo) {
 
 //Funcion de toda la logica de juego del modo Campista
 export async function campistaLogica(){
-
-    let pokemonesValidos;
-    if (gameState.type1Value === gameState.type2Value){
-      pokemonesValidos = dataState.pokedex.filter(pokemon => pokemon.types.includes(gameState.type1Value) && pokemon.types.length === 1);
-    }else {
-      pokemonesValidos = dataState.pokedex.filter(pokemon => pokemon.types.includes(gameState.type1Value) && pokemon.types.includes(gameState.type2Value));
-    }
+    const pokemonesValidos = dataState.pokedex.filter(pokemon => 
+        validarTiposPokemon(pokemon, gameState.type1Value, gameState.type2Value)
+    );
     console.log(pokemonesValidos);
 
     if(pokemonesValidos.length === 0){
-      generarTipos(tipo1Campista, tipo2Campista)
+      generarTipos(tipo1Campista, tipo2Campista);
       campistaLogica();
       console.log("No hay pokemones con esa combinación");
       return;
@@ -186,44 +182,35 @@ export async function campistaLogica(){
     console.log(pokemonesValidos.map(p => p.name));
 
     const correctPokemon = pokemonesValidos[Math.floor(Math.random() * pokemonesValidos.length)];
-
     console.log(correctPokemon.name);
     
     const wrongOptions = [];
     while(wrongOptions.length < 3){
-
-        const randomId = Math.floor(Math.random() * dataState.pokedex.length) + 1;
-
-        const randomPokemon = dataState.pokedex[randomId - 1];
-
+        const randomPokemon = dataState.pokedex[Math.floor(Math.random() * dataState.pokedex.length)];
         const isCorrect = randomPokemon.name === correctPokemon.name;
-
-        const alreadyExists = wrongOptions.some( p => p.name === randomPokemon.name);
-
-        const hasBothTypes = randomPokemon.types.includes(gameState.type1Value) && randomPokemon.types.includes(gameState.type2Value);
+        const alreadyExists = wrongOptions.some(p => p.name === randomPokemon.name);
+        const hasBothTypes = validarTiposPokemon(randomPokemon, gameState.type1Value, gameState.type2Value);
             
         if(!isCorrect && !alreadyExists && !hasBothTypes){
             wrongOptions.push(randomPokemon);
         }
-
     }
     console.log(wrongOptions.map(p => p.name));
 
-    const allOptions = [correctPokemon,...wrongOptions];
-
-    allOptions.sort(() => Math.random() - 0.5);
-
+    const allOptions = [correctPokemon, ...wrongOptions].sort(() => Math.random() - 0.5);
     let answered = false;
-    gameState.tiempoCampista = iniciarBarraTiempo(scoreState.estadoJuego, "scoreCampista", pScoreCampista, btnIntentoCampista, barraTiempoCampista, mensajeAciertoCampista, 3, null, null, null, gameState.tiempoCampista, timeState.tiempoCampistaLeft, "campista", correctPokemon.name);
+    
+    gameState.tiempoCampista = iniciarBarraTiempo(
+        scoreState.estadoJuego, "scoreCampista", pScoreCampista, btnIntentoCampista, 
+        barraTiempoCampista, mensajeAciertoCampista, 3, null, null, null, 
+        gameState.tiempoCampista, timeState.tiempoCampistaLeft, "campista", correctPokemon.name
+    );
 
     allOptions.forEach(pokemon => {
-
         const button = document.createElement("button");
-
         button.textContent = pokemon.name.replaceAll("-"," ");
         button.className = "btn-opcion";
         button.dataset.name = pokemon.name;
-
         cajaOpcionesPokemon.appendChild(button);
         
         button.addEventListener('click', () => {
@@ -232,24 +219,19 @@ export async function campistaLogica(){
             clearInterval(gameState.tiempoCampista);
             
             if (pokemon.name === correctPokemon.name) {
-                console.log("Correcto");
                 soundWin();
                 vibrarWin();
                 mensajeAciertoCampista.textContent = "¡Felicidades Sigue Sumando!";
                 scoreState.estadoJuego.scoreCampista++;
                 pScoreCampista.textContent = scoreState.estadoJuego.scoreCampista;
 
-            if (scoreState.estadoJuego.scoreCampista > scoreState.maxCampista) {
-                scoreState.maxCampista = scoreState.estadoJuego.scoreCampista;
-                localStorage.setItem("maxCampista", scoreState.maxCampista);
-            }
+                if (scoreState.estadoJuego.scoreCampista > scoreState.maxCampista) {
+                    scoreState.maxCampista = scoreState.estadoJuego.scoreCampista;
+                    localStorage.setItem("maxCampista", scoreState.maxCampista);
+                }
                 pMaxCampista.textContent = scoreState.maxCampista;
 
-                const buttons = document.querySelectorAll(".btn-opcion");
-
-                buttons.forEach(btn => {
-                    btn.style.display = "none";
-                });
+                document.querySelectorAll(".btn-opcion").forEach(btn => btn.style.display = "none");
                 btnNextCampista.style.display = "flex";
 
             } else {
@@ -257,35 +239,27 @@ export async function campistaLogica(){
               mostrarBotonRevivir("campista");
               soundLose();
               vibrarLose();
-              mensajeAciertoCampista.innerHTML = "Has Perdido.<br>La respuesa correcta era <strong>" + correctPokemon.name.charAt(0).toUpperCase() + correctPokemon.name.slice(1) + "</strong>";
+              mensajeAciertoCampista.innerHTML = "Has Perdido.<br>La respuesa correcta era <strong>" + capitalizarPrimeraLetra(correctPokemon.name) + "</strong>";
               scoreState.estadoJuego.scoreCampista = 0;
               pScoreCampista.textContent = scoreState.estadoJuego.scoreCampista;
               btnIntentoCampista.style.display = "flex";
-              const buttons = document.querySelectorAll(".btn-opcion");
-
-              buttons.forEach(btn => {
-                  btn.style.display = "none";
-              });
+              document.querySelectorAll(".btn-opcion").forEach(btn => btn.style.display = "none");
             }
         });
-        });
+    });
 }   
 
 //Funcion que crea el listado de los pokemones para el Modo AsDeBatalla
 export function AsLogica() {
     gameState.pokemonesValidos = dataState.pokedex.filter(pokemon => pokemon.types.includes(gameState.type1Value));
     const pokemonesName = gameState.pokemonesValidos.map(p => p.name).sort();
-    console.log(pokemonesName);
     
-    // Destruir instancia de Tom Select si existe
     if (selectAs.tomselect) {
         selectAs.tomselect.destroy();
     }
     
-    // Limpiar y agregar opciones al select nativo
     selectAs.innerHTML = "";
     
-    // Agregar opción vacía por defecto
     const defaultOption = document.createElement("option");
     defaultOption.value = "";
     defaultOption.textContent = "Selecciona un Pokémon";
@@ -293,7 +267,6 @@ export function AsLogica() {
     defaultOption.selected = true;
     selectAs.appendChild(defaultOption);
     
-    // Agregar opciones de Pokémon
     pokemonesName.forEach(name => {
       const option = document.createElement("option");
       option.value = name;
@@ -301,13 +274,9 @@ export function AsLogica() {
       selectAs.appendChild(option);
     });
     
-    // Inicializar Tom Select
     new TomSelect(selectAs, {
         create: false,
-        sortField: {
-            field: "text",
-            direction: "asc"
-        },
+        sortField: { field: "text", direction: "asc" },
         maxOptions: 1000,
         render: {
             option: function(data, escape) {
@@ -316,24 +285,23 @@ export function AsLogica() {
         }
     });
     
-   const pokemonCorrect = gameState.type1Value !== gameState.type2Value ?
-      dataState.pokedex.find(pokemon => 
-      pokemon.types.includes(gameState.type1Value) && 
-      pokemon.types.includes(gameState.type2Value)
-    ) :
-      dataState.pokedex.find(pokemon => 
-      pokemon.types.includes(gameState.type1Value) && 
-      pokemon.types.length === 1
-    );
+   const pokemonCorrect = buscarPokemonCorrecto(dataState.pokedex, gameState.type1Value, gameState.type2Value);
 
     if (pokemonCorrect){
-      gameState.tiempoAsDeBatalla = iniciarBarraTiempo(scoreState.estadoJuego, "scoreAsDeBatalla", pScoreAs, btnIntentoAs, barraTiempoAs, mensajeAciertoAs, 0.7, btnNoExisteAs, btnValidarAs, cajaSelect, gameState.tiempoAsDeBatalla, timeState.tiempoAsDeBatallaLeft, "as", pokemonCorrect.name);
+      gameState.tiempoAsDeBatalla = iniciarBarraTiempo(
+          scoreState.estadoJuego, "scoreAsDeBatalla", pScoreAs, btnIntentoAs, 
+          barraTiempoAs, mensajeAciertoAs, 0.7, btnNoExisteAs, btnValidarAs, cajaSelect, 
+          gameState.tiempoAsDeBatalla, timeState.tiempoAsDeBatallaLeft, "as", pokemonCorrect.name
+      );
       console.log(pokemonCorrect);
     }else {
-      gameState.tiempoAsDeBatalla = iniciarBarraTiempo(scoreState.estadoJuego, "scoreAsDeBatalla", pScoreAs, btnIntentoAs, barraTiempoAs, mensajeAciertoAs, 0.7, btnNoExisteAs, btnValidarAs, cajaSelect, gameState.tiempoAsDeBatalla, timeState.tiempoAsDeBatallaLeft, "as", null);
+      gameState.tiempoAsDeBatalla = iniciarBarraTiempo(
+          scoreState.estadoJuego, "scoreAsDeBatalla", pScoreAs, btnIntentoAs, 
+          barraTiempoAs, mensajeAciertoAs, 0.7, btnNoExisteAs, btnValidarAs, cajaSelect, 
+          gameState.tiempoAsDeBatalla, timeState.tiempoAsDeBatallaLeft, "as", null
+      );
       console.log("No se encontró el pokemon correcto");
     }
-    
 }
 
 //Funcion que valida la seleccion del usuario en el modo As
@@ -352,9 +320,6 @@ export function validarSelect() {
     }
 
     const pokemonSeleccionado = dataState.pokedex.find(p => p.name === gameState.selectedPokemon);
-    console.log(pokemonSeleccionado);
-
-    let ambosTypes = false;
 
     if(!pokemonSeleccionado) {
       mostrarNotificacion("El pokemon colocado no Existe o esta Mal escrito");
@@ -366,11 +331,7 @@ export function validarSelect() {
       return;
     }
     
-    if (gameState.type1Value === gameState.type2Value) {
-        ambosTypes = pokemonSeleccionado.types.length === 1 && pokemonSeleccionado.types.includes(gameState.type1Value);
-    } else {
-        ambosTypes = pokemonSeleccionado.types.includes(gameState.type1Value) && pokemonSeleccionado.types.includes(gameState.type2Value);
-    }
+    const ambosTypes = validarTiposPokemon(pokemonSeleccionado, gameState.type1Value, gameState.type2Value);
     
     if (ambosTypes) {
         scoreState.estadoJuego.scoreAsDeBatalla++;
@@ -396,22 +357,18 @@ export function validarSelect() {
         mostrarBotonRevivir("as");
         soundLose();
         vibrarLose();
-        mensajeAciertoAs.innerHTML = "¡Incorrecto! <br/><strong>" + gameState.selectedPokemon.charAt(0).toUpperCase() + gameState.selectedPokemon.slice(1) + "</strong> no tiene esa combinación de tipos.";
+        mensajeAciertoAs.innerHTML = "¡Incorrecto! <br/><strong>" + capitalizarPrimeraLetra(gameState.selectedPokemon) + "</strong> no tiene esa combinación de tipos.";
         clearInterval(gameState.tiempoAsDeBatalla);
     }
 }
 
 //Funcion que valida si no existe el pokemon con la combinacion de tipos en el modo As
 export function logicaNoExisteAs() {
+    const existeAlguno = dataState.pokedex.some(pokemon => 
+        validarTiposPokemon(pokemon, gameState.type1Value, gameState.type2Value)
+    );
 
-    const existeAlguno = dataState.pokedex.some(pokemon => {
-        const tiposDelPokemon = pokemon.types
-        const tieneTipo1 = tiposDelPokemon.includes(gameState.type1Value);
-        const tieneTipo2 = tiposDelPokemon.includes(gameState.type2Value);
-
-        return tieneTipo1 && tieneTipo2;
-        
-    });
+    const correctPokemon = buscarPokemonCorrecto(dataState.pokedex, gameState.type1Value, gameState.type2Value);
 
     if(!existeAlguno){
         mensajeAciertoAs.textContent = "Bien Visto no hay pokemon con esa combinación!";
@@ -429,58 +386,53 @@ export function logicaNoExisteAs() {
           localStorage.setItem("maxAsDeBatalla", scoreState.maxAsDeBatalla);
           pMaxAs.textContent = scoreState.maxAsDeBatalla;
         }
-
-    }else if(existeAlguno){
-        guardarScoreAntesDePerder("as");
-        mensajeAciertoAs.innerHTML = "¡Te equivocas! <br/> si existe pokemon con esa combinación!";
-        scoreState.estadoJuego.scoreAsDeBatalla = 0;
-        pScoreAs.textContent = scoreState.estadoJuego.scoreAsDeBatalla;
-        btnIntentoAs.style.display = "flex";
-        mostrarBotonRevivir("as");
-        soundLose();
-        vibrarLose();
-        clearInterval(gameState.tiempoAsDeBatalla);
-        btnValidarAs.style.display = "none";
-        btnNoExisteAs.style.display = "none";
-        cajaSelect.style.display = "none";
+    }else {
+      guardarScoreAntesDePerder("as");
+      mensajeAciertoAs.innerHTML = "¡Si hay Pokemon! <br/> <strong>" + capitalizarPrimeraLetra(correctPokemon.name) + "</strong> tiene esa combinación de Tipos!";
+      scoreState.estadoJuego.scoreAsDeBatalla = 0;
+      pScoreAs.textContent = scoreState.estadoJuego.scoreAsDeBatalla;
+      btnIntentoAs.style.display = "flex";
+      mostrarBotonRevivir("as");
+      soundLose();
+      vibrarLose();
+      clearInterval(gameState.tiempoAsDeBatalla);
+      btnValidarAs.style.display = "none";
+      btnNoExisteAs.style.display = "none";
+      cajaSelect.style.display = "none";
     }
 }
 
 //Función para validar la respuesta del usuario en el modo Campeon
 export function CampeonLogica() {
-  
   const pokemonSeleccionado = respuestaInputCampeon.value.trim().toLowerCase();
-  
   const pokemonCorrecto = dataState.pokedex.find(pokemon =>
-    validarSimilitudPalabra(pokemonSeleccionado,pokemon.name,70)
+    validarSimilitudPalabra(pokemonSeleccionado, pokemon.name, 70)
   );
 
-  let esCorrecto = false;
-  if (gameState.type1Value === gameState.type2Value) {
-    esCorrecto = pokemonCorrecto.types.length === 1 && pokemonCorrecto.types.includes(gameState.type1Value);  
-    
-  } else {
-    esCorrecto = pokemonCorrecto.types.includes(gameState.type1Value) && pokemonCorrecto.types.includes(gameState.type2Value);
-  }
+  const esCorrecto = validarTiposPokemon(pokemonCorrecto, gameState.type1Value, gameState.type2Value);
 
   if (esCorrecto) {
     scoreState.estadoJuego.scoreCampeon++;
     pScoreCampeon.textContent = scoreState.estadoJuego.scoreCampeon;
-    if (pokemonSeleccionado !== pokemonCorrecto.name) {
-      mensajeAciertoCampeon.innerHTML = "¡Es valido! <br/> (Seguro Quisiste decir : <strong>" + pokemonCorrecto.name.charAt(0).toUpperCase() + pokemonCorrecto.name.slice(1) + "</strong>)";
-    }else {
-      mensajeAciertoCampeon.innerHTML = "¡Correcto! Sumas a tu racha";
+    const existe = dataState.pokedex.some(pokemon => pokemon.name === pokemonSeleccionado);
+
+    if (existe){
+      mensajeAciertoCampeon.innerHTML = "¡Correcto! Sumas a tu racha"
     }
+    else if (pokemonSeleccionado !== pokemonCorrecto.name) {
+      mensajeAciertoCampeon.innerHTML = "¡Es valido! <br/> (Seguro Quisiste decir : <strong>" + capitalizarPrimeraLetra(pokemonCorrecto.name) + "</strong>)";
+    }
+
     respuestaInputCampeon.disabled = true;
     clearInterval(gameState.tiempoCampeon);        
     soundWin();
     vibrarWin();
+    btnNextCampeon.style.display = "flex";
     if (scoreState.estadoJuego.scoreCampeon > scoreState.maxCampeon) {
       scoreState.maxCampeon = scoreState.estadoJuego.scoreCampeon;
       localStorage.setItem("maxCampeon", scoreState.maxCampeon);
       pMaxCampeon.textContent = scoreState.maxCampeon;
     }
-
   }else{
     guardarScoreAntesDePerder("campeon");
     scoreState.estadoJuego.scoreCampeon = 0;
@@ -489,13 +441,20 @@ export function CampeonLogica() {
     mostrarBotonRevivir("campeon");
     btnNextCampeon.style.display = "none";
     respuestaInputCampeon.disabled = true;
-    mensajeAciertoCampeon.innerHTML = "¿Seguro quisiste decir <strong>" + pokemonCorrecto.name.charAt(0).toUpperCase() + pokemonCorrecto.name.slice(1) + "</strong>?" + "<br/>" + "Ese pokemon no tiene esa combinación!";
+
+    if (pokemonSeleccionado !== pokemonCorrecto.name) {
+      mensajeAciertoCampeon.innerHTML = "¿Seguro quisiste decir <strong>" + capitalizarPrimeraLetra(pokemonCorrecto.name) + "</strong>?" + "<br/>" + "Ese pokemon no tiene esa combinación!";
+    }else {
+      mensajeAciertoCampeon.innerHTML = "¡Piensalo bien!<br/> ⚠️El pokemon <strong>" + capitalizarPrimeraLetra(pokemonSeleccionado) + "</strong> no tiene esa combinación!⚠️";
+    }
+
     clearInterval(gameState.tiempoCampeon);
     soundLose();
     vibrarLose();
   }
 }
 
+//Función que valida si el input está vacío en el modo Campeon
 export function seleccionadoVacio(){
 
   const pokemonSeleccionado = respuestaInputCampeon.value.trim().toLowerCase();
@@ -524,36 +483,32 @@ export function seleccionadoVacio(){
   return false;
 }
 
+//Función que inicia la barra de tiempo en el modo Campeon
 export function iniciarBarraTiempoCampeon() {
-
-  const pokemonCorrect = gameState.type1Value !== gameState.type2Value ?
-    dataState.pokedex.find(pokemon => 
-      pokemon.types.includes(gameState.type1Value) && 
-      pokemon.types.includes(gameState.type2Value)
-    ) :
-    dataState.pokedex.find(pokemon => 
-      pokemon.types.includes(gameState.type1Value) && 
-      pokemon.types.length === 1
-    );
+  const pokemonCorrect = buscarPokemonCorrecto(dataState.pokedex, gameState.type1Value, gameState.type2Value);
 
   if (pokemonCorrect){
-    gameState.tiempoCampeon = iniciarBarraTiempo(scoreState.estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, barraTiempoCampeon, mensajeAciertoCampeon, 0.6, btnNoExisteCampeon, btnRevelarCampeon, cajainput, gameState.tiempoCampeon, timeState.tiempoCampeonLeft, "campeon", pokemonCorrect.name);
+    gameState.tiempoCampeon = iniciarBarraTiempo(
+        scoreState.estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, 
+        barraTiempoCampeon, mensajeAciertoCampeon, 0.6, btnNoExisteCampeon, btnRevelarCampeon, 
+        cajainput, gameState.tiempoCampeon, timeState.tiempoCampeonLeft, "campeon", pokemonCorrect.name
+    );
   } else {
-    gameState.tiempoCampeon = iniciarBarraTiempo(scoreState.estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, barraTiempoCampeon, mensajeAciertoCampeon, 0.6, btnNoExisteCampeon, btnRevelarCampeon, cajainput, gameState.tiempoCampeon, timeState.tiempoCampeonLeft, "campeon", null);
+    gameState.tiempoCampeon = iniciarBarraTiempo(
+        scoreState.estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, 
+        barraTiempoCampeon, mensajeAciertoCampeon, 0.6, btnNoExisteCampeon, btnRevelarCampeon, 
+        cajainput, gameState.tiempoCampeon, timeState.tiempoCampeonLeft, "campeon", null
+    );
   } 
-  
 }
 
 //Funcion de la logica del boton "No Existe" en el modo Campeon
 export function logicaNoExisteCampeon() {
-    const existeAlguno = dataState.pokedex.some(pokemon => {
-        const tiposDelPokemon = pokemon.types
-        const tieneTipo1 = tiposDelPokemon.includes(gameState.type1Value);
-        const tieneTipo2 = tiposDelPokemon.includes(gameState.type2Value);
+    const existeAlguno = dataState.pokedex.some(pokemon => 
+        validarTiposPokemon(pokemon, gameState.type1Value, gameState.type2Value)
+    );
 
-        return tieneTipo1 && tieneTipo2;
-        
-    });
+    const correctPokemon = buscarPokemonCorrecto(dataState.pokedex, gameState.type1Value, gameState.type2Value);
 
     if(!existeAlguno){
         mensajeAciertoCampeon.innerHTML = "Bien Visto no hay pokemon con esa combinación!";
@@ -571,10 +526,9 @@ export function logicaNoExisteCampeon() {
           localStorage.setItem("maxCampeon", scoreState.maxCampeon);
           pMaxCampeon.textContent = scoreState.maxCampeon;
         }
-
-    }else if(existeAlguno){
+    }else {
       guardarScoreAntesDePerder("campeon");
-      mensajeAciertoCampeon.innerHTML = "¡Te equivocas! <br/> si existe pokemon con esa combinación!";
+      mensajeAciertoCampeon.innerHTML = "¡Si Hay pokemon! <br/> <strong>" + capitalizarPrimeraLetra(correctPokemon.name) + "</strong> tiene esa combinación de Tipos!";
       scoreState.estadoJuego.scoreCampeon = 0;
       pScoreCampeon.textContent = scoreState.estadoJuego.scoreCampeon;
       btnIntentoCampeon.style.display = "flex";

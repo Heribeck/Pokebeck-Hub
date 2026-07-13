@@ -63,10 +63,7 @@ import {
   mensajeAciertoCampista,
   mensajeAciertoAs,
   cajainput,
-  barraTiempoCampeon,
   respuestaInputCampeon,
-  gameState,
-  timeState,
   adState,
   scoreState,
   confirmacionAs,
@@ -77,7 +74,7 @@ import {
 } from './config.js';
 
 // Funciones importadas desde otros archivos
-import { ocultarBanner, mostrarBanner, prepararBonificado, clickRevivir } from './admob.js';
+import { ocultarBanner, prepararBonificado, clickRevivir } from './admob.js';
 import { 
   ocultarBotonRevivir, 
   campistaLogica, 
@@ -90,7 +87,89 @@ import {
   iniciarBarraTiempoCampeon
 } from './modos.js';
 import { iniciarGeneracion, generarTipos } from './generador.js';
-import { mostrarNotificacion, cambiarMusicaModes, validarSimilitudPalabra } from './utils.js';
+import { cambiarMusicaModes, validarSimilitudPalabra, reiniciarScoreActual, reiniciarScoreMax } from './utils.js';
+
+//Función auxiliar para configurar modo de juego
+function configurarModo(modoPanel, dificultadPanel, pMaxElement, scoreMaxValue, musica) {
+  dificultadPanel.style.display = "none";
+  modoPanel.style.display = "flex";
+  pMaxElement.textContent = scoreMaxValue;
+  cambiarMusicaModes(musica);
+}
+
+//Función auxiliar para manejar botón "Siguiente"
+function manejarBotonSiguiente(modo, tipo1Element, tipo2Element, logicaFuncion, btnNextElement, mensajeElement, elementosAdicionales = {}) {
+  ocultarBotonRevivir(modo);
+  generarTipos(tipo1Element, tipo2Element);
+  logicaFuncion();
+  btnNextElement.style.display = "none";
+  mensajeElement.innerHTML = "";
+  
+  if (elementosAdicionales.cajaSelect) {
+    elementosAdicionales.cajaSelect.style.display = "block";
+    if (elementosAdicionales.btnValidar) elementosAdicionales.btnValidar.style.display = "flex";
+    if (elementosAdicionales.btnNoExiste) elementosAdicionales.btnNoExiste.style.display = "flex";
+  }
+  
+  if (elementosAdicionales.cajaInput) {
+    elementosAdicionales.cajaInput.style.display = "block";
+    if (elementosAdicionales.btnNoExiste) elementosAdicionales.btnNoExiste.style.display = "flex";
+    if (elementosAdicionales.btnRevelar) elementosAdicionales.btnRevelar.style.display = "flex";
+  }
+  
+  if (elementosAdicionales.inputElement) {
+    elementosAdicionales.inputElement.value = "";
+    elementosAdicionales.inputElement.disabled = false;
+  }
+  
+  if (elementosAdicionales.selectElement && elementosAdicionales.selectElement.tomselect) {
+    elementosAdicionales.selectElement.tomselect.clear();
+    elementosAdicionales.selectElement.tomselect.enable();
+  }
+  
+  if (elementosAdicionales.selectElement) {
+    elementosAdicionales.selectElement.value = "";
+  }
+}
+
+//Función auxiliar para manejar botón "Intentar de Nuevo"
+function manejarBotonIntento(modo, tipo1Element, tipo2Element, logicaFuncion, btnIntentoElement, mensajeElement, musica, elementosAdicionales = {}) {
+  ocultarBotonRevivir(modo);
+  cambiarMusicaModes(musica);
+  generarTipos(tipo1Element, tipo2Element);
+  logicaFuncion();
+  btnIntentoElement.style.display = "none";
+  mensajeElement.innerHTML = "";
+  
+  if (elementosAdicionales.cajaSelect) {
+    elementosAdicionales.cajaSelect.style.display = "block";
+    if (elementosAdicionales.btnValidar) elementosAdicionales.btnValidar.style.display = "flex";
+    if (elementosAdicionales.btnNoExiste) elementosAdicionales.btnNoExiste.style.display = "flex";
+  }
+  
+  if (elementosAdicionales.selectElement && elementosAdicionales.selectElement.tomselect) {
+    elementosAdicionales.selectElement.tomselect.enable();
+    elementosAdicionales.selectElement.tomselect.clear();
+  }
+  
+  if (elementosAdicionales.selectElement) {
+    elementosAdicionales.selectElement.value = "";
+  }
+  
+  if (elementosAdicionales.cajaInput) {
+    elementosAdicionales.cajaInput.style.display = "block";
+    elementosAdicionales.btnNoExiste.style.display = "flex";
+  }
+  
+  if (elementosAdicionales.inputElement) {
+    elementosAdicionales.inputElement.value = "";
+    elementosAdicionales.inputElement.disabled = false;
+  }
+  
+  if (elementosAdicionales.btnRevelar) {
+    elementosAdicionales.btnRevelar.style.display = "flex";
+  }
+}
 
 // --- |Evento de boton de "Juego(Dificultades)"
 btnJuego.addEventListener("click", () => {
@@ -101,10 +180,7 @@ btnJuego.addEventListener("click", () => {
 
 // --- |Eventos del apartado "Panel-Campista"| --- //
 btnCampista.addEventListener("click", () => {
-  dificultad.style.display = "none";
-  campista.style.display = "flex";
-  pMaxCampista.textContent = scoreState.maxCampista;
-  cambiarMusicaModes(musicaCampista);
+  configurarModo(campista, dificultad, pMaxCampista, scoreState.maxCampista, musicaCampista);
 });
 
 //Evento del boton "Iniciar Juego"
@@ -117,21 +193,12 @@ btnIniciarJuegoCampista.addEventListener("click", () => {
 
 //Evento del boton "Siguiente"
 btnNextCampista.addEventListener("click", () => {
-  ocultarBotonRevivir("campista");
-  generarTipos(tipo1Campista, tipo2Campista);
-  campistaLogica();
-  btnNextCampista.style.display = "none";
-  mensajeAciertoCampista.innerHTML=""
+  manejarBotonSiguiente("campista", tipo1Campista, tipo2Campista, campistaLogica, btnNextCampista, mensajeAciertoCampista);
 });
 
 //Evento del boton "Intentar de Nuevo"
 btnIntentoCampista.addEventListener("click", () => {
-  ocultarBotonRevivir("campista");
-  cambiarMusicaModes(musicaCampista);
-  generarTipos(tipo1Campista, tipo2Campista);
-  campistaLogica();
-  btnIntentoCampista.style.display = "none";
-  mensajeAciertoCampista.innerHTML=""
+  manejarBotonIntento("campista", tipo1Campista, tipo2Campista, campistaLogica, btnIntentoCampista, mensajeAciertoCampista, musicaCampista);
 });
 
 //Evento para mostrar el video bonificado
@@ -141,9 +208,7 @@ btnRevivirCampista.addEventListener("click", () => {
 
 //Evento para reiniciar el score del campista
 reinicioScoreCampista.addEventListener("click", () => {
-  scoreState.estadoJuego.scoreCampista = 0;
-  pScoreCampista.textContent = 0;
-  mostrarNotificacion("Score Reiniciado");
+  reiniciarScoreActual("scoreCampista", pScoreCampista, scoreState);
 });
 
 //Evento para aparecer la ventana de "Reiniciar Max"
@@ -153,12 +218,7 @@ btnReinicioMaxCampista.addEventListener("click", () => {
 
 //Evento de la confirmación sobre la eliminación del score Max
 confirmarReinicioCampista.addEventListener("click", () => {
-  localStorage.removeItem("maxCampista");
-  scoreState.maxCampista = 0;
-  pMaxCampista.textContent = 0;
-  confirmacionCampista.style.display = "none";
-  mostrarNotificacion("Score Máximo Reiniciado");
-  location.reload();
+  reiniciarScoreMax("maxCampista", "maxCampista", pMaxCampista, scoreState, confirmacionCampista);
 });
 
 //Evento para cancelar la eliminación del score Max
@@ -168,10 +228,7 @@ cancelarReinicioCampista.addEventListener("click", () => {
 
 // --- |Eventos del Apartado "Panel-As"| --- //
 btnAs.addEventListener("click", () => {
-  As.style.display = "flex";
-  dificultad.style.display = "none";
-  pMaxAs.textContent = scoreState.maxAsDeBatalla;
-  cambiarMusicaModes(musicaAsBatalla);
+  configurarModo(As, dificultad, pMaxAs, scoreState.maxAsDeBatalla, musicaAsBatalla);
 });
 
 //Evento del boton "Iniciar Juego" del modo As
@@ -203,37 +260,22 @@ btnNoExisteAs.addEventListener("click", () => {
 
 //Evento del Boton "Siguiente" Del modo As
 btnNextAs.addEventListener("click", () => {
-  ocultarBotonRevivir("as");
-  btnNextAs.style.display = "none";
-  btnValidarAs.style.display = "flex";
-  btnNoExisteAs.style.display = "flex";
-  if (selectAs.tomselect) {
-      selectAs.tomselect.clear();
-      selectAs.tomselect.enable();
-  }
-  selectAs.value = "";
-  cajaSelect.style.display = "block";
-  mensajeAciertoAs.textContent = "";
-  generarTipos(tipo1As, tipo2As);
-  AsLogica();
+  manejarBotonSiguiente("as", tipo1As, tipo2As, AsLogica, btnNextAs, mensajeAciertoAs, {
+    cajaSelect,
+    btnValidar: btnValidarAs,
+    btnNoExiste: btnNoExisteAs,
+    selectElement: selectAs
+  });
 });
 
 //Evento del Boton "Volver a intentar" del modo As
 btnIntentoAs.addEventListener("click", () => {
-  ocultarBotonRevivir("as");
-  cambiarMusicaModes(musicaAsBatalla);
-  btnIntentoAs.style.display = "none";
-  btnValidarAs.style.display = "flex";
-  btnNoExisteAs.style.display = "flex";
-  if (selectAs.tomselect) {
-      selectAs.tomselect.enable();
-      selectAs.tomselect.clear();
-  }
-  selectAs.value = "";
-  mensajeAciertoAs.innerHTML = "";
-  cajaSelect.style.display = "block";
-  generarTipos(tipo1As, tipo2As);
-  AsLogica();
+  manejarBotonIntento("as", tipo1As, tipo2As, AsLogica, btnIntentoAs, mensajeAciertoAs, musicaAsBatalla, {
+    cajaSelect,
+    btnValidar: btnValidarAs,
+    btnNoExiste: btnNoExisteAs,
+    selectElement: selectAs
+  });
 });
 
 //Evento para mostrar el video bonificado del modo As
@@ -248,10 +290,7 @@ btnReinicioMaxAs.addEventListener("click", () => {
 
 //Evento de la confirmación de reinicio Max As
 confirmarReinicioAs.addEventListener("click", () => {
-  confirmacionAs.style.display = "none";
-  localStorage.removeItem("maxAsDeBatalla");
-  mostrarNotificacion("Score Máximo Reiniciado");
-  location.reload();
+  reiniciarScoreMax("maxAsDeBatalla", "maxAsDeBatalla", pMaxAs, scoreState, confirmacionAs);
 });
 
 //Evento de la cancelación de reinicio Max As
@@ -261,17 +300,12 @@ cancelarReinicioAs.addEventListener("click", () => {
 
 //Evento de reinico del Score en As
 reinicioScoreAs.addEventListener("click", () => {
-  scoreState.estadoJuego.scoreAsDeBatalla = 0;
-  pScoreAs.textContent = 0;
-  mostrarNotificacion("Score Reiniciado");
+  reiniciarScoreActual("scoreAsDeBatalla", pScoreAs, scoreState);
 });
 
 // --- |Eventos del Apartado "Panel-Campeon"| --- //
 btnCampeon.addEventListener("click", () => {
-  dificultad.style.display = "none";
-  campeon.style.display = "flex";
-  pMaxCampeon.textContent = scoreState.maxCampeon;
-  cambiarMusicaModes(musicaCampeon);
+  configurarModo(campeon, dificultad, pMaxCampeon, scoreState.maxCampeon, musicaCampeon);
 });
 
 //Evento Para iniciar el juego en el modo Campeon
@@ -295,16 +329,12 @@ btnRevelarCampeon.addEventListener("click", () => {
 
 //Evento del boton "siguiente" en el modo de Campeon
 btnNextCampeon.addEventListener("click", () => {
-  ocultarBotonRevivir("campeon");
-  btnNextCampeon.style.display = "none";
-  cajainput.style.display = "block";
-  btnNoExisteCampeon.style.display = "flex";
-  btnRevelarCampeon.style.display = "flex";
-  mensajeAciertoCampeon.innerHTML = "";
-  respuestaInputCampeon.value = "";
-  respuestaInputCampeon.disabled = false;
-  generarTipos(tipo1Campeon, tipo2Campeon);
-  iniciarBarraTiempoCampeon();
+  manejarBotonSiguiente("campeon", tipo1Campeon, tipo2Campeon, iniciarBarraTiempoCampeon, btnNextCampeon, mensajeAciertoCampeon, {
+    cajaInput: cajainput,
+    btnNoExiste: btnNoExisteCampeon,
+    btnRevelar: btnRevelarCampeon,
+    inputElement: respuestaInputCampeon
+  });
 });
 
 //Evento del boton "No Existe" en el modo de Campeon
@@ -314,17 +344,12 @@ btnNoExisteCampeon.addEventListener("click", () => {
 
 //Evento del Boton "Volver a intentarlo" en el modo Campeon
 btnIntentoCampeon.addEventListener("click", () => {
-  ocultarBotonRevivir("campeon");
-  cambiarMusicaModes(musicaCampeon);
-  btnIntentoCampeon.style.display = "none";
-  mensajeAciertoCampeon.innerHTML = "";
-  respuestaInputCampeon.value = "";
-  respuestaInputCampeon.disabled = false;
-  btnRevelarCampeon.style.display = "flex";
-  btnNoExisteCampeon.style.display = "flex";  
-  cajainput.style.display = "block";
-  generarTipos(tipo1Campeon, tipo2Campeon);
-  iniciarBarraTiempoCampeon();
+  manejarBotonIntento("campeon", tipo1Campeon, tipo2Campeon, iniciarBarraTiempoCampeon, btnIntentoCampeon, mensajeAciertoCampeon, musicaCampeon, {
+    cajaInput: cajainput,
+    btnNoExiste: btnNoExisteCampeon,
+    btnRevelar: btnRevelarCampeon,
+    inputElement: respuestaInputCampeon
+  });
 });
 
 //Evento para mostrar el video bonificado del modo Campeon
@@ -339,11 +364,7 @@ btnReinicioMaxCampeon.addEventListener("click", () => {
 
 //Evento del Boton "Confirmar Reinicio" en el modo Campeon
 confirmarReinicioCampeon.addEventListener("click", () => {
-  confirmacionCampeon.style.display = "none";
-  localStorage.removeItem("maxCampeon");
-  pMaxCampeon.textContent = "0";
-  mostrarNotificacion("Score Máximo Reiniciado");
-  location.reload();
+  reiniciarScoreMax("maxCampeon", "maxCampeon", pMaxCampeon, scoreState, confirmacionCampeon);
 });
 
 //Evento del Boton "Cancelar Reinicio" en el modo Campeon
@@ -353,9 +374,7 @@ cancelarReinicioCampeon.addEventListener("click", () => {
 
 //Evento del Boton "Reiniciar Score" en el modo Campeon
 reinicioScoreCampeon.addEventListener("click", () => {
-  scoreState.estadoJuego.scoreCampeon = 0;
-  pScoreCampeon.textContent = scoreState.estadoJuego.scoreCampeon;
-  mostrarNotificacion("Score Reiniciado");
+  reiniciarScoreActual("scoreCampeon", pScoreCampeon, scoreState);
 });
 
 // --- |Eventos del Apartado "Generador"| --- //
