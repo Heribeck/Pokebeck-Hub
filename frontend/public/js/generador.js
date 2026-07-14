@@ -62,7 +62,7 @@ export function iniciarBarraTiempo(estado, modo, parrafo, boton, barra, mensaje,
 
       detenerTodoElAudio();
 
-      if (main.style.display !== "none" || main.style.display !== "") {
+      if (main.style.display == "none") {
         soundLose();
       }
 

@@ -1,3 +1,6 @@
+//conexion de firebase con pokebeck
+import './firebase-config.js';
+
 // Variables importadas desde config.js (solo las necesarias para inicialización)
 import {
   main,
