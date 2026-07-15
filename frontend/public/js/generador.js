@@ -29,8 +29,8 @@ export async function iniciarGeneracion() {
 
 //Función para generar tipos aleatorios
 export async function generarTipos(tipo1Generic, tipo2Generic) {
-    gameState.type1Value = types[Aleatoriedad(0, types.length - 1)];
-    gameState.type2Value = types[Aleatoriedad(0, types.length - 1)];
+    gameState.type1Value = "electric"//types[Aleatoriedad(0, types.length - 1)];
+    gameState.type2Value = "fighting"//types[Aleatoriedad(0, types.length - 1)];
     
     tipo1Generic.src = typesIcono[gameState.type1Value];
     tipo2Generic.src = typesIcono[gameState.type2Value];

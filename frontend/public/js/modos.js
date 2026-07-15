@@ -405,16 +405,22 @@ export function logicaNoExisteAs() {
 //Función para validar la respuesta del usuario en el modo Campeon
 export function CampeonLogica() {
   const pokemonSeleccionado = respuestaInputCampeon.value.trim().toLowerCase();
-  const pokemonCorrecto = dataState.pokedex.find(pokemon =>
-    validarSimilitudPalabra(pokemonSeleccionado, pokemon.name, 70)
-  );
 
-  const esCorrecto = validarTiposPokemon(pokemonCorrecto, gameState.type1Value, gameState.type2Value);
+  const existe = dataState.pokedex.some(pokemon => pokemon.name === pokemonSeleccionado);
+
+  const pokemonCorrecto = dataState.pokedex.find(pokemon => validarSimilitudPalabra(pokemonSeleccionado, pokemon.name, 70));
+
+  const pokemonCorrectoSinValidar = dataState.pokedex.find(pokemon => pokemon.name === pokemonSeleccionado);
+
+  if (pokemonCorrectoSinValidar) {
+    console.log("este es el pokemon sin validar", pokemonCorrectoSinValidar)
+  }
+
+  const esCorrecto = pokemonCorrectoSinValidar ? validarTiposPokemon(pokemonCorrectoSinValidar, gameState.type1Value, gameState.type2Value) : pokemonCorrecto ? validarTiposPokemon(pokemonCorrecto, gameState.type1Value, gameState.type2Value) : false;
 
   if (esCorrecto) {
     scoreState.estadoJuego.scoreCampeon++;
     pScoreCampeon.textContent = scoreState.estadoJuego.scoreCampeon;
-    const existe = dataState.pokedex.some(pokemon => pokemon.name === pokemonSeleccionado);
 
     if (existe){
       mensajeAciertoCampeon.innerHTML = "¡Correcto! Sumas a tu racha"
@@ -435,17 +441,22 @@ export function CampeonLogica() {
     }
   }else{
     guardarScoreAntesDePerder("campeon");
-    scoreState.estadoJuego.scoreCampeon = 0;
-    pScoreCampeon.textContent = scoreState.estadoJuego.scoreCampeon;
     btnIntentoCampeon.style.display = "flex";
     mostrarBotonRevivir("campeon");
     btnNextCampeon.style.display = "none";
     respuestaInputCampeon.disabled = true;
 
-    if (pokemonSeleccionado !== pokemonCorrecto.name) {
-      mensajeAciertoCampeon.innerHTML = "¿Seguro quisiste decir <strong>" + capitalizarPrimeraLetra(pokemonCorrecto.name) + "</strong>?" + "<br/>" + "Ese pokemon no tiene esa combinación!";
-    }else {
-      mensajeAciertoCampeon.innerHTML = "¡Piensalo bien!<br/> ⚠️El pokemon <strong>" + capitalizarPrimeraLetra(pokemonSeleccionado) + "</strong> no tiene esa combinación!⚠️";
+    if (!esCorrecto){
+      const existe = dataState.pokedex.some(pokemon => pokemon.name === pokemonSeleccionado);
+      scoreState.estadoJuego.scoreCampeon = 0;
+      pScoreCampeon.textContent = scoreState.estadoJuego.scoreCampeon;
+
+      if (existe){
+        mensajeAciertoCampeon.innerHTML = "¡Piensalo bien!<br/> ⚠️El pokemon <strong>" + capitalizarPrimeraLetra(pokemonSeleccionado) + "</strong> no tiene esa combinación!⚠️";
+      }
+      else if (pokemonSeleccionado !== pokemonCorrecto.name) {
+        mensajeAciertoCampeon.innerHTML = "¿Seguro quisiste decir <strong>" + capitalizarPrimeraLetra(pokemonCorrecto.name) + "</strong>?" + "<br/>" + "Ese pokemon no tiene esa combinación!";
+      }
     }
 
     clearInterval(gameState.tiempoCampeon);
