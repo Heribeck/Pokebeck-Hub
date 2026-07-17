@@ -41,6 +41,7 @@
 
         <div class="caja-btn-main">
             <button id="btn-juego" class="boton-juego">Jugar</button>
+            <button id="btn-desafio">Desafío del Día</button>
             <button id="btn-generador" class="boton-generador">Generador</button>
             <button id="btn-acerca" class="boton-acerca">Acerca del Juego</button>
         </div>
@@ -97,6 +98,48 @@
 
         <p class="texto-version">Versión 2.0.4 | © 2026 Pokebeck Hub</p> 
 
+    </section>
+
+    <section id="panel-desafio" style="display: none;">
+        <div class="cabecera-desafio">
+            <p id="ronda-actual-desafio">Ronda 1 de 10</p>
+            <p id="intentos-restantes-desafio">Intentos hoy: 2</p>
+        </div>
+
+        <div class="tipos-desafio">
+            <img id="type1-icon-desafio" src="" alt="Tipo 1">
+            <img id="type2-icon-desafio" src="" alt="Tipo 2">
+        </div>
+
+        <div id="tiempo-desafio" class="barra-tiempo"></div>
+        <p id="mensaje-acierto-desafio"></p>
+
+        <!-- Sub-UI: mecánica Campista (opción múltiple) -->
+        <div id="desafio-ui-campista" style="display: none;">
+            <div id="opciones-pokemon-desafio"></div>
+        </div>
+
+        <!-- Sub-UI: mecánica As de Batalla (select/autocompletado) -->
+        <div id="desafio-ui-as" style="display: none;">
+            <div id="caja-select-desafio">
+            <select id="select-desafio"></select>
+            </div>
+            <button id="btn-validar-select-desafio">Validar</button>
+            <button id="no-existe-desafio">No Existe</button>
+        </div>
+
+        <!-- Sub-UI: mecánica Campeón (texto libre) -->
+        <div id="desafio-ui-campeon" style="display: none;">
+            <div id="caja-input-desafio">
+            <input type="text" id="respuesta-input-desafio" placeholder="Escribe el nombre del Pokémon">
+            </div>
+            <button id="btn-revelar-desafio">Revelar</button>
+            <button id="no-existe-campeon-desafio">No Existe</button>
+        </div>
+
+        <button id="btn-next-desafio" style="display: none;">Siguiente</button>
+        <button id="btn-intento-desafio" style="display: none;">Intentar de Nuevo</button>
+        <button id="revivir-desafio" style="display: none;">Revivir Viendo un Video</button>
     </section>
 
     <section id="panel-campista" class="layout-campista">

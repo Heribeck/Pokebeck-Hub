@@ -95,6 +95,7 @@ export const domElements = {
     dificultad: document.getElementById("dificultad"),
     generador: document.getElementById("generador"),
     acerca: document.getElementById("acerca"),
+    desafio: document.getElementById("panel-desafio"),
     campista: document.getElementById("panel-campista"),
     as: document.getElementById("panel-As"),
     campeon: document.getElementById("panel-campeon"),
@@ -128,6 +129,37 @@ export const domElements = {
     tipo1: document.getElementById("tipo1"),
     tipo2: document.getElementById("tipo2"),
     btnGenerar: document.getElementById("btn-generar"),
+  },
+
+  desafio: {
+    rondaActualTexto: document.getElementById("ronda-actual-desafio"),
+    intentosRestantesTexto: document.getElementById("intentos-restantes-desafio"),
+    tipo1: document.getElementById("type1-icon-desafio"),
+    tipo2: document.getElementById("type2-icon-desafio"),
+    barraTiempo: document.getElementById("tiempo-desafio"),
+    mensajeAcierto: document.getElementById("mensaje-acierto-desafio"),
+    btnNext: document.getElementById("btn-next-desafio"),
+    btnIntento: document.getElementById("btn-intento-desafio"),
+    btnRevivir: document.getElementById("revivir-desafio"),
+    btnDesafio: document.getElementById("btn-desafio"),
+
+    // Sub-UI Campista
+    uiCampista: document.getElementById("desafio-ui-campista"),
+    cajaOpcionesPokemon: document.getElementById("opciones-pokemon-desafio"),
+
+    // Sub-UI As
+    uiAs: document.getElementById("desafio-ui-as"),
+    cajaSelect: document.getElementById("caja-select-desafio"),
+    select: document.getElementById("select-desafio"),
+    btnValidar: document.getElementById("btn-validar-select-desafio"),
+    btnNoExiste: document.getElementById("no-existe-desafio"),
+
+    // Sub-UI Campeón
+    uiCampeon: document.getElementById("desafio-ui-campeon"),
+    cajaInput: document.getElementById("caja-input-desafio"),
+    respuestaInput: document.getElementById("respuesta-input-desafio"),
+    btnRevelar: document.getElementById("btn-revelar-desafio"),
+    btnNoExisteCampeon: document.getElementById("no-existe-campeon-desafio"),
   },
   
   // Elementos del modo Campista
@@ -227,6 +259,38 @@ export const tipo1 = domElements.generador.tipo1;
 export const tipo2 = domElements.generador.tipo2;
 export const btnGenerar = domElements.generador.btnGenerar;
 
+export const desafio = domElements.secciones.desafio;
+
+//Elementos del Dom del Desafio
+export const rondaActualTextoDesafio = domElements.desafio.rondaActualTexto;
+export const intentosRestantesTextoDesafio = domElements.desafio.intentosRestantesTexto;
+export const tipo1Desafio = domElements.desafio.tipo1;
+export const tipo2Desafio = domElements.desafio.tipo2;
+export const barraTiempoDesafio = domElements.desafio.barraTiempo;
+export const mensajeAciertoDesafio = domElements.desafio.mensajeAcierto;
+export const btnDesafio = domElements.desafio.btnDesafio;
+export const btnNextDesafio = domElements.desafio.btnNext;
+export const btnIntentoDesafio = domElements.desafio.btnIntento;
+export const btnRevivirDesafio = domElements.desafio.btnRevivir;
+
+//Elementos del DOM del SubModo campista en el desafio
+export const uiCampistaDesafio = domElements.desafio.uiCampista;
+export const cajaOpcionesPokemonDesafio = domElements.desafio.cajaOpcionesPokemon;
+
+//Elementos del Dom del subModo As en el desafio
+export const uiAsDesafio = domElements.desafio.uiAs;
+export const cajaSelectDesafio = domElements.desafio.cajaSelect;
+export const selectDesafio = domElements.desafio.select;
+export const btnValidarDesafio = domElements.desafio.btnValidar;
+export const btnNoExisteDesafio = domElements.desafio.btnNoExiste;
+
+//Elementos del Dom del subModo Campeon en el desafio
+export const uiCampeonDesafio = domElements.desafio.uiCampeon;
+export const cajaInputDesafio = domElements.desafio.cajaInput;
+export const respuestaInputDesafio = domElements.desafio.respuestaInput;
+export const btnRevelarDesafio = domElements.desafio.btnRevelar;
+export const btnNoExisteCampeonDesafio = domElements.desafio.btnNoExisteCampeon;
+
 export const btnCampista = domElements.campista.btnCampista;
 export const btnIniciarJuegoCampista = domElements.campista.btnIniciarJuego;
 export const pScoreCampista = domElements.campista.pScore;
@@ -285,6 +349,13 @@ export const toastMensaje = domElements.notificacion.toastMensaje;
 
 //Objeto con la configuración de cada modo.
 export const configRevivir = {
+  desafio: {
+  btn: btnRevivirDesafio,
+  btnIntento: btnIntentoDesafio,
+  mensaje: mensajeAciertoDesafio,
+  scoreKey: null,
+  pScore: null,
+  },
   campista: {
     btn: btnRevivirCampista,
     btnIntento: btnIntentoCampista,
@@ -325,6 +396,9 @@ export const eventosBonificado = {
 export const gameState = {
   type1Value: "",
   type2Value: "",
+  type1ValueDesafio: "",
+  type2ValueDesafio: "",
+  tiempoDesafio: null,
   tiempoCampista: null,
   tiempoAsDeBatalla: null,
   tiempoCampeon: null,
@@ -334,6 +408,7 @@ export const gameState = {
 
 //Variables Del Tiempo de los Modos y los contadores - Agrupadas en timeState
 export const timeState = {
+  tiempoDesafioLeft: 100,
   tiempoCampistaLeft: 100,
   tiempoAsDeBatallaLeft: 100,
   tiempoCampeonLeft: 100,

@@ -70,7 +70,8 @@ import {
   musicaCampista,
   musicaAsBatalla,
   musicaCampeon,
-  sonidoTouch
+  sonidoTouch,
+  btnDesafio
 } from './config.js';
 
 // Funciones importadas desde otros archivos
@@ -88,6 +89,7 @@ import {
 } from './modos.js';
 import { iniciarGeneracion, generarTipos } from './generador.js';
 import { cambiarMusicaModes, validarSimilitudPalabra, reiniciarScoreActual, reiniciarScoreMax } from './utils.js';
+import { iniciarDesafioDelDia } from './desafio-dia.js';
 
 //Función auxiliar para configurar modo de juego
 function configurarModo(modoPanel, dificultadPanel, pMaxElement, scoreMaxValue, musica) {
@@ -177,6 +179,9 @@ btnJuego.addEventListener("click", () => {
   dificultad.style.display = "flex";
   ocultarBanner();
 });
+
+// --- |Evento del Apartado del Desafio Del Dia| -- //
+btnDesafio.addEventListener('click', iniciarDesafioDelDia);
 
 // --- |Eventos del apartado "Panel-Campista"| --- //
 btnCampista.addEventListener("click", () => {
