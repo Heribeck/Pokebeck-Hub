@@ -318,7 +318,7 @@ function iniciarBarraTiempoDesafio(alAgotarseElTiempo, time = 3) {
   clearInterval(gameState.tiempoDesafio);
 
   gameState.tiempoDesafio = setInterval(() => {
-    timeState.tiempoDesafioLeft -= 0.00005//time;
+    timeState.tiempoDesafioLeft -= time;
     barraTiempoDesafio.style.width = timeState.tiempoDesafioLeft + '%';
 
     if (timeState.tiempoDesafioLeft <= 0) {

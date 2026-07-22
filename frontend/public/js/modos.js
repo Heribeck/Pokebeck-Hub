@@ -411,7 +411,7 @@ export function CampeonLogica() {
   const pokemonCorrecto = dataState.pokedex.find(pokemon => validarSimilitudPalabra(pokemonSeleccionado, pokemon.name, 70));
 
   const pokemonCorrectoSinValidar = dataState.pokedex.find(pokemon => pokemon.name === pokemonSeleccionado);
-
+  
   if (pokemonCorrectoSinValidar) {
     console.log("este es el pokemon sin validar", pokemonCorrectoSinValidar)
   }

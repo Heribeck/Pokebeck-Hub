@@ -8734,6 +8734,49 @@
     ],
     "sprite": "./assets/img/pokemones/pecharunt.png"
   },
+  { "id": 10008, 
+    "name": "Rotom-Heat", 
+    "types": [
+      "electric", 
+      "fire"
+    ] 
+  },
+  { "id": 10009, 
+    "name": "Rotom-Wash", 
+    "types": [
+      "electric", 
+      "water"
+    ] 
+  },
+  { "id": 10010, 
+    "name": "Rotom-Frost", 
+    "types": [
+      "electric", 
+      "ice"
+    ] 
+  },
+  { "id": 10011, 
+    "name": "Rotom-Fan", 
+    "types": [
+      "electric", 
+      "flying"
+    ] 
+  },
+  { "id": 10012, 
+    "name": "Rotom-Mow", 
+    "types": [
+      "electric", 
+      "grass"
+    ] 
+  },
+  {
+    "id": 10017,
+    "name": "Darmanitan-Zen",
+    "types": [
+      "fire",
+      "psychic"
+    ]
+  },
   {
     "id": 10033,
     "name": "mega venusaur",
@@ -9446,6 +9489,21 @@
     "sprite": "./assets/img/pokemones/darumaka-galar.png"
   },
   {
+    "id": 10177,
+    "name": "darmanitan-galar",
+    "types": [
+      "ice"
+    ]
+  },
+  {
+    "id": 10178,
+    "name": "darmanitan-galar-zen",
+    "types": [
+      "ice",
+      "fire"
+    ]
+  },
+  {
     "id": 10179,
     "name": "yamask galar",
     "types": [
@@ -9609,7 +9667,7 @@
   },
   {
     "id": 10250,
-    "name": "tauros paldea 1",
+    "name": "tauros combat",
     "types": [
       "fighting"
     ],
@@ -9617,7 +9675,7 @@
   },
   {
     "id": 10251,
-    "name": "tauros paldea 2",
+    "name": "tauros blaze",
     "types": [
       "fighting",
       "fire"
@@ -9626,7 +9684,7 @@
   },
   {
     "id": 10252,
-    "name": "tauros paldea 3",
+    "name": "tauros aqua",
     "types": [
       "fighting",
       "water"
