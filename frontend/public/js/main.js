@@ -2,23 +2,17 @@
 import './firebase-config.js';
 
 // Variables importadas desde config.js (solo las necesarias para inicialización)
-import {
-  main,
-  dificultad,
-  generador,
-  acerca,
-  campista,
-  As,
-  campeon,
-  adState
-} from './config.js';
+import { main, adState } from './config.js';
 
 // Funciones importadas desde otros archivos
-import { loadApp, cargarPokedex, detenerTodoElAudio } from './utils.js';
-import { InicializarAdMob, mostrarBanner, prepararBonificado } from './admob.js';
+import { loadApp, cargarPokedex, detenerTodoElAudio, volverAlMenu } from './utils.js';
+import { InicializarAdMob, prepararBonificado } from './admob.js';
 
 // Cargar eventos.js para que se asignen los event listeners
 import './eventos.js';
+
+//Actualizar La racha del Usuario
+import { actualizarRachaEnMenu } from './desafio-dia.js';
 
 //Carga inicial
 loadApp();
@@ -41,15 +35,7 @@ if(window.Capacitor){
       return;
     }
 
-    main.style.display = "flex";
-    acerca.style.display = "none";
-    dificultad.style.display = "none";
-    generador.style.display = "none";
-    campista.style.display = "none";
-    As.style.display = "none";
-    campeon.style.display = "none";
-    mostrarBanner("TOP_CENTER");
-    detenerTodoElAudio();
+    volverAlMenu()
   })
 
   App.addListener("appStateChange", (state) => {
@@ -59,3 +45,4 @@ if(window.Capacitor){
   })
 }
 cargarPokedex();
+actualizarRachaEnMenu();

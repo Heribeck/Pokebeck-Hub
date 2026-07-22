@@ -6,8 +6,19 @@ import {
     dataState, 
     sonidoGanar, 
     sonidoPerder, 
-    musicActual 
+    musicActual, 
+    campista,
+    As,
+    campeon,
+    acerca,
+    generador,
+    dificultad,
+    main,
+    desafio
 } from './config.js';
+
+import { mostrarBanner } from './admob.js';
+import { actualizarRachaEnMenu } from './desafio-dia.js';
 
 // Función para generar números aleatorios
 export function Aleatoriedad(min, max) {
@@ -185,4 +196,19 @@ export function reiniciarScoreMax(maxKey, localStorageKey, pMaxElement, scoreSta
     confirmacionElement.style.display = "none";
     mostrarNotificacion("Score Máximo Reiniciado");
     location.reload();
+}
+
+//Funcion para regresar al panel de Main
+export function volverAlMenu(){
+    main.style.display = "flex";
+    if (acerca) {acerca.style.display = "none";}
+    if (dificultad) {dificultad.style.display = "none";}
+    if (generador) {generador.style.display = "none";}
+    if (campista) {campista.style.display = "none";}
+    if (As) {As.style.display = "none";}
+    if (campeon) {campeon.style.display = "none";}
+    if (desafio) {desafio.style.display = "none"}
+    mostrarBanner("TOP_CENTER");
+    detenerTodoElAudio();
+    actualizarRachaEnMenu()
 }

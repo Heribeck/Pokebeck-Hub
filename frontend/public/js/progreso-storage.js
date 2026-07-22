@@ -3,14 +3,29 @@
 //
 // Nota: sin bundler, los plugins de Capacitor se acceden vía window.Capacitor.Plugins
 // (mismo patrón que ya usas para "App" en main.js), no con un import de npm.
-const Preferences = window.Capacitor?.Plugins?.Preferences;
+//
+// Respaldo automático: si el plugin nativo no está disponible (por ejemplo, probando
+// en el navegador normal en vez de un emulador/dispositivo), se usa localStorage
+// con la misma forma de API, para poder seguir probando sin instalar el emulador.
+const PreferencesNativo = window.Capacitor?.Plugins?.Preferences;
 
-if (!Preferences) {
-  console.error(
-    'El plugin Preferences de Capacitor no está disponible. ' +
-    'Verifica que @capacitor/preferences esté instalado y que hayas corrido "npx cap sync".'
+const PreferencesLocalStorage = {
+  async get({ key }) {
+    return { value: localStorage.getItem(key) };
+  },
+  async set({ key, value }) {
+    localStorage.setItem(key, value);
+  },
+};
+
+if (!PreferencesNativo) {
+  console.warn(
+    'El plugin nativo Preferences no está disponible (probablemente estás en el navegador, ' +
+    'no en un emulador/dispositivo). Usando localStorage como respaldo temporal para pruebas.'
   );
 }
+
+const Preferences = PreferencesNativo || PreferencesLocalStorage;
 
 const CLAVE_PROGRESO = 'pokebeck_progreso';
 

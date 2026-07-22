@@ -122,6 +122,7 @@ export const domElements = {
     btnGenerador: document.getElementById("btn-generador"),
     btnAcerca: document.getElementById("btn-acerca"),
     telegram: document.getElementById("telegram"),
+    rachaTexto: document.getElementById("racha-actual"),
   },
   
   // Elementos del generador
@@ -139,6 +140,8 @@ export const domElements = {
     barraTiempo: document.getElementById("tiempo-desafio"),
     mensajeAcierto: document.getElementById("mensaje-acierto-desafio"),
     btnNext: document.getElementById("btn-next-desafio"),
+    btnJugarDeNuevo: document.getElementById("btn-jugar-de-nuevo-desafio"),
+    btnVolverAlMenu: document.getElementById("btn-menu-desafio"),
     btnIntento: document.getElementById("btn-intento-desafio"),
     btnRevivir: document.getElementById("revivir-desafio"),
     btnDesafio: document.getElementById("btn-desafio"),
@@ -241,6 +244,7 @@ export const campista = domElements.secciones.campista;
 export const As = domElements.secciones.as;
 export const campeon = domElements.secciones.campeon;
 export const notificacion = domElements.secciones.notificacion;
+export const rachaTexto = domElements.main.rachaTexto;
 
 export const confirmacionCampista = domElements.confirmaciones.campista;
 export const confirmacionAs = domElements.confirmaciones.as;
@@ -272,6 +276,8 @@ export const btnDesafio = domElements.desafio.btnDesafio;
 export const btnNextDesafio = domElements.desafio.btnNext;
 export const btnIntentoDesafio = domElements.desafio.btnIntento;
 export const btnRevivirDesafio = domElements.desafio.btnRevivir;
+export const btnVolverAlMenu = domElements.desafio.btnVolverAlMenu;
+export const btnJugarDeNuevoDesafio = domElements.desafio.btnJugarDeNuevo;
 
 //Elementos del DOM del SubModo campista en el desafio
 export const uiCampistaDesafio = domElements.desafio.uiCampista;

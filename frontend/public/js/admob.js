@@ -42,7 +42,14 @@ export async function InicializarAdMob() {
         ocultarBotonRevivir(adState.modoRevivirActivo);
         config.btnIntento.style.display = "none";
         await cuentaRegresivaRevivir(config.mensaje);
-        ejecutarRevivir(adState.modoRevivirActivo);
+        
+        if (adState.modoRevivirActivo === 'desafio') {
+          const { continuarDesafioTrasRevivir } = await import('./desafio-dia.js');
+          continuarDesafioTrasRevivir();
+        } else {
+          ejecutarRevivir(adState.modoRevivirActivo);
+        }
+
         adState.recompensaGanada = false;
       }
       prepararBonificado();

@@ -34,6 +34,8 @@
     <main id="main" class="layout-main">
 
         <h1>Pokebeck Hub</h1>
+
+        <p id="racha-actual">🔥 0 días</p>
         
         <img src="assets/img/icons/icono-only.png" alt="Icono Pokebeck Hub" class="icono-main">
 
@@ -41,7 +43,7 @@
 
         <div class="caja-btn-main">
             <button id="btn-juego" class="boton-juego">Jugar</button>
-            <button id="btn-desafio">Desafío del Día</button>
+            <button id="btn-desafio" class="boton-desafio">Desafío del Día</button>
             <button id="btn-generador" class="boton-generador">Generador</button>
             <button id="btn-acerca" class="boton-acerca">Acerca del Juego</button>
         </div>
@@ -100,7 +102,7 @@
 
     </section>
 
-    <section id="panel-desafio" style="display: none;">
+    <section id="panel-desafio" class="layout-desafio" style="display: none;">
         <div class="cabecera-desafio">
             <p id="ronda-actual-desafio">Ronda 1 de 10</p>
             <p id="intentos-restantes-desafio">Intentos hoy: 2</p>
@@ -111,7 +113,7 @@
             <img id="type2-icon-desafio" src="" alt="Tipo 2">
         </div>
 
-        <div id="tiempo-desafio" class="barra-tiempo"></div>
+        <div id="tiempo-desafio"></div>
         <p id="mensaje-acierto-desafio"></p>
 
         <!-- Sub-UI: mecánica Campista (opción múltiple) -->
@@ -137,9 +139,11 @@
             <button id="no-existe-campeon-desafio">No Existe</button>
         </div>
 
-        <button id="btn-next-desafio" style="display: none;">Siguiente</button>
-        <button id="btn-intento-desafio" style="display: none;">Intentar de Nuevo</button>
-        <button id="revivir-desafio" style="display: none;">Revivir Viendo un Video</button>
+        <button id="btn-jugar-de-nuevo-desafio" style="display: none;">Jugar de Nuevo</button>
+        <button id="btn-menu-desafio" style="display: none;">Volver al Menú</button>
+        <button id="btn-next-desafio">Siguiente</button>
+        <button id="btn-intento-desafio">Continuar</button>
+        <button id="revivir-desafio">Revivir Viendo un Video</button>
     </section>
 
     <section id="panel-campista" class="layout-campista">

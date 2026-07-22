@@ -71,7 +71,7 @@ import {
   musicaAsBatalla,
   musicaCampeon,
   sonidoTouch,
-  btnDesafio
+  btnDesafio,
 } from './config.js';
 
 // Funciones importadas desde otros archivos
@@ -88,7 +88,7 @@ import {
   iniciarBarraTiempoCampeon
 } from './modos.js';
 import { iniciarGeneracion, generarTipos } from './generador.js';
-import { cambiarMusicaModes, validarSimilitudPalabra, reiniciarScoreActual, reiniciarScoreMax } from './utils.js';
+import { cambiarMusicaModes, reiniciarScoreActual, reiniciarScoreMax } from './utils.js';
 import { iniciarDesafioDelDia } from './desafio-dia.js';
 
 //Función auxiliar para configurar modo de juego
@@ -181,7 +181,10 @@ btnJuego.addEventListener("click", () => {
 });
 
 // --- |Evento del Apartado del Desafio Del Dia| -- //
-btnDesafio.addEventListener('click', iniciarDesafioDelDia);
+btnDesafio.addEventListener('click', () => {
+  iniciarDesafioDelDia()
+  ocultarBanner();
+});
 
 // --- |Eventos del apartado "Panel-Campista"| --- //
 btnCampista.addEventListener("click", () => {
@@ -397,12 +400,6 @@ btnGenerar.addEventListener("click", () => {
 btnAcerca.addEventListener("click", () => {
   main.style.display = "none";
   acerca.style.display = "flex";
-  let correct = validarSimilitudPalabra("HeribeckXaliburz", "HeribeckZRubilax");
-  if (correct){
-    console.log("Correcto");
-  }else {
-    console.log("Incorrecto");
-  }
 });
 
 //Evento del boton de "Telegram"
