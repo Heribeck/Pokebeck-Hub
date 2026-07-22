@@ -68,6 +68,7 @@ import {
   registrarDesafioFallido,
   obtenerMecanicaSegunRacha,
   yaCompletoDesafioHoy,
+  verificarRachaVigente,
 } from './progreso-storage.js';
 import { buscarPokemonCorrecto, validarTiposPokemon, validarSimilitudPalabra } from './utils.js';
 
@@ -91,7 +92,7 @@ export async function iniciarDesafioDelDia() {
     return;
   }
 
-  const progreso = await obtenerProgreso();
+  const progreso = await verificarRachaVigente();
   const mecanica = obtenerMecanicaSegunRacha(progreso.racha);
   
   if (mecanica === 'campista') {
@@ -458,6 +459,6 @@ async function finalizarSesion() {
 }
 
 export async function actualizarRachaEnMenu() {
-  const progreso = await obtenerProgreso();
+  const progreso = await verificarRachaVigente();
   rachaTexto.textContent = `🔥 ${progreso.racha} días`;
 }

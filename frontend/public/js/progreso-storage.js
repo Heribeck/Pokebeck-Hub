@@ -82,6 +82,27 @@ async function guardarProgreso(progreso) {
   }
 }
 
+// Revisa si la racha sigue vigente. Si el jugador se saltó un día completo
+// (no jugó ni ayer ni hoy), la racha se reinicia a 0 de inmediato — sin esperar
+// a que vuelva a intentar el Desafío del Día. Se debe llamar cada vez que se
+// muestra la racha en pantalla (menú principal, al abrir la app, etc.)
+export async function verificarRachaVigente() {
+  const progreso = await obtenerProgreso();
+  const hoy = obtenerFechaDeHoy();
+  const ayer = obtenerFechaDeAyer();
+
+  const rachaSigueVigente =
+    progreso.ultimoDiaDesafioCompletado === hoy ||
+    progreso.ultimoDiaDesafioCompletado === ayer;
+
+  if (progreso.racha > 0 && !rachaSigueVigente) {
+    progreso.racha = 0;
+    await guardarProgreso(progreso);
+  }
+
+  return progreso;
+}
+
 // Cuántos intentos del Desafío del Día lleva usados HOY (máximo 2).
 // Si cambió el día desde la última vez, resetea el contador automáticamente.
 export async function obtenerIntentosDisponiblesHoy() {
@@ -89,7 +110,6 @@ export async function obtenerIntentosDisponiblesHoy() {
   const hoy = obtenerFechaDeHoy();
 
   if (progreso.fechaIntentosHoy !== hoy) {
-    // Es un día distinto al último registrado, el contador se reinicia solo
     return 2;
   }
 
@@ -97,13 +117,11 @@ export async function obtenerIntentosDisponiblesHoy() {
 }
 
 // Registra que el jugador usó un intento del Desafío del Día hoy (haya pasado o no).
-// Devuelve cuántos intentos le quedan después de este.
 export async function consumirIntentoDeHoy() {
   const progreso = await obtenerProgreso();
   const hoy = obtenerFechaDeHoy();
 
   if (progreso.fechaIntentosHoy !== hoy) {
-    // Primer intento de un día nuevo, reinicia el contador antes de sumar
     progreso.fechaIntentosHoy = hoy;
     progreso.intentosUsadosHoy = 0;
   }
@@ -115,21 +133,19 @@ export async function consumirIntentoDeHoy() {
 }
 
 // Se llama cuando el jugador APRUEBA el Desafío del Día (≥70% de aciertos).
-// Suma la racha correctamente sea cual sea el último día que jugó.
 export async function registrarDesafioAprobado() {
   const progreso = await obtenerProgreso();
   const hoy = obtenerFechaDeHoy();
   const ayer = obtenerFechaDeAyer();
 
   if (progreso.ultimoDiaDesafioCompletado === hoy) {
-    // Ya lo había aprobado hoy (no debería pasar si se oculta tras aprobar, pero por seguridad no duplica)
     return progreso;
   }
 
   if (progreso.ultimoDiaDesafioCompletado === ayer) {
-    progreso.racha += 1; // jugó ayer y hoy, la racha continúa
+    progreso.racha += 1;
   } else {
-    progreso.racha = 1; // no jugó ayer (o es la primera vez), la racha arranca de nuevo
+    progreso.racha = 1;
   }
 
   progreso.mejorRacha = Math.max(progreso.mejorRacha, progreso.racha);
@@ -140,7 +156,6 @@ export async function registrarDesafioAprobado() {
 }
 
 // Se llama cuando el jugador AGOTA sus 2 intentos del día sin aprobar el 70%.
-// La racha se reinicia a 0 inmediatamente (no espera a que pase el día).
 export async function registrarDesafioFallido() {
   const progreso = await obtenerProgreso();
   progreso.racha = 0;
@@ -157,7 +172,6 @@ export function obtenerMecanicaSegunRacha(racha) {
 }
 
 // Indica si el jugador YA aprobó el Desafío del Día de hoy
-// (para decidir si se le sigue mostrando el modo o no)
 export async function yaCompletoDesafioHoy() {
   const progreso = await obtenerProgreso();
   return progreso.ultimoDiaDesafioCompletado === obtenerFechaDeHoy();
