@@ -9,6 +9,8 @@
 // con la misma forma de API, para poder seguir probando sin instalar el emulador.
 const PreferencesNativo = window.Capacitor?.Plugins?.Preferences;
 
+// Importar sistema de notificaciones locales
+
 const PreferencesLocalStorage = {
   async get({ key }) {
     return { value: localStorage.getItem(key) };
@@ -28,6 +30,7 @@ if (!PreferencesNativo) {
 const Preferences = PreferencesNativo || PreferencesLocalStorage;
 
 const CLAVE_PROGRESO = 'pokebeck_progreso';
+const CLAVE_NOTIFICACION_PROGRAMADA = 'pokebeck_notificacion_programada';
 
 // Estructura por defecto si el jugador nunca ha guardado progreso todavía
 function progresoPorDefecto() {

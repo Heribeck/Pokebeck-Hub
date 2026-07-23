@@ -90,6 +90,8 @@ import {
 import { iniciarGeneracion, generarTipos } from './generador.js';
 import { cambiarMusicaModes, reiniciarScoreActual, reiniciarScoreMax } from './utils.js';
 import { iniciarDesafioDelDia } from './desafio-dia.js';
+import { reiniciarUsados } from './control-repeticion.js';
+import { programarNotificacionDePrueba } from './notificaciones-locales.js';
 
 //Función auxiliar para configurar modo de juego
 function configurarModo(modoPanel, dificultadPanel, pMaxElement, scoreMaxValue, musica) {
@@ -197,6 +199,7 @@ btnIniciarJuegoCampista.addEventListener("click", () => {
   generarTipos(tipo1Campista, tipo2Campista);
   btnIniciarJuegoCampista.style.display = "none";
   campistaLogica();
+  reiniciarUsados("campista");
 });
 
 //Evento del boton "Siguiente"
@@ -207,6 +210,7 @@ btnNextCampista.addEventListener("click", () => {
 //Evento del boton "Intentar de Nuevo"
 btnIntentoCampista.addEventListener("click", () => {
   manejarBotonIntento("campista", tipo1Campista, tipo2Campista, campistaLogica, btnIntentoCampista, mensajeAciertoCampista, musicaCampista);
+  reiniciarUsados("campista");
 });
 
 //Evento para mostrar el video bonificado
@@ -249,6 +253,7 @@ btnIniciarJuegoAs.addEventListener("click", () => {
   btnNoExisteAs.style.display = "flex";
   generarTipos(tipo1As, tipo2As);
   AsLogica();
+  reiniciarUsados("as")
 });
 
 //Evento del Boton "Validar" Del modo As
@@ -284,6 +289,7 @@ btnIntentoAs.addEventListener("click", () => {
     btnNoExiste: btnNoExisteAs,
     selectElement: selectAs
   });
+  reiniciarUsados("as")
 });
 
 //Evento para mostrar el video bonificado del modo As
@@ -325,6 +331,7 @@ btnIniciarJuegoCampeon.addEventListener("click", () => {
   cajainput.style.display = "block";
   generarTipos(tipo1Campeon, tipo2Campeon);
   iniciarBarraTiempoCampeon();
+  reiniciarUsados("campeon")
 });
 
 //Evento para verificar la respuesta del jugador en el modo Campeon
@@ -358,6 +365,7 @@ btnIntentoCampeon.addEventListener("click", () => {
     btnRevelar: btnRevelarCampeon,
     inputElement: respuestaInputCampeon
   });
+  reiniciarUsados("campeon")
 });
 
 //Evento para mostrar el video bonificado del modo Campeon

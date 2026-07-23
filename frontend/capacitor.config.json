@@ -1,5 +1,10 @@
 {
   "appId": "com.heribeck.poketype",
   "appName": "Poketype-Guess",
-  "webDir": "public"
+  "webDir": "public",
+  "plugins": {
+    "LocalNotifications": {
+      "displayInForeground": true
+    }
+  }
 }

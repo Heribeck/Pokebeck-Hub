@@ -72,6 +72,8 @@ import {
 } from './progreso-storage.js';
 import { buscarPokemonCorrecto, validarTiposPokemon, validarSimilitudPalabra } from './utils.js';
 
+import { cancelarNotificacionRacha } from './notificaciones-locales.js';
+
 // Estado interno de la sesión en curso (vive solo mientras el jugador está en el Desafío)
 let sesionActual = null;
 let generadorDelDia = null;
@@ -425,6 +427,7 @@ async function finalizarSesion() {
 
   if (resultado.aprobado) {
     const progreso = await registrarDesafioAprobado();
+    cancelarNotificacionRacha();
     mensajeAciertoDesafio.innerHTML =
       `¡Desafío superado! ${resultado.porcentaje}% de aciertos.<br>🔥 Racha: ${progreso.racha} días`;
   } else if (intentosRestantesAlIniciar <= 0) {

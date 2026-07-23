@@ -43,11 +43,14 @@ import {
   tipo2Campeon,
   dataState,
   adState,
+  esperar
 } from './config.js';
 
-import { esperar } from './config.js';
-import { mostrarNotificacion, soundWin, soundLose, cambiarMusicaModes, vibrarWin, vibrarLose, validarSimilitudPalabra, validarTiposPokemon, capitalizarPrimeraLetra, buscarPokemonCorrecto } from './utils.js';
+import { yaFueUsado, registrarUsado, hayOpcionesNoUsadas, buscarPokemonCorrectoEvitandoRepetidos } from './control-repeticion.js';
+import { mostrarNotificacion, soundWin, soundLose, cambiarMusicaModes, vibrarWin, vibrarLose, validarSimilitudPalabra, validarTiposPokemon, capitalizarPrimeraLetra } from './utils.js';
 import { generarTipos, iniciarBarraTiempo } from './generador.js';
+import { calcularVelocidadTiempo, elegirDistractoresDificiles } from './dificultad-progresiva.js';
+import { celebrarHito } from './celebracion.js';
 
 //Funcion que almacena el score por si el jugador revive
 export function guardarScoreAntesDePerder(modo) {
@@ -179,31 +182,24 @@ export async function campistaLogica(){
       return;
     }
         
-    console.log(pokemonesValidos.map(p => p.name));
-
-    const correctPokemon = pokemonesValidos[Math.floor(Math.random() * pokemonesValidos.length)];
-    console.log(correctPokemon.name);
+    const noUsados = pokemonesValidos.filter(p => !yaFueUsado('campista', p.name));
+    const poolFinal = noUsados.length > 0 ? noUsados : pokemonesValidos; // si se agotó el pool, permite repetir
+    const correctPokemon = poolFinal[Math.floor(Math.random() * poolFinal.length)];
+    registrarUsado('campista', correctPokemon.name);
     
-    const wrongOptions = [];
-    while(wrongOptions.length < 3){
-        const randomPokemon = dataState.pokedex[Math.floor(Math.random() * dataState.pokedex.length)];
-        const isCorrect = randomPokemon.name === correctPokemon.name;
-        const alreadyExists = wrongOptions.some(p => p.name === randomPokemon.name);
-        const hasBothTypes = validarTiposPokemon(randomPokemon, gameState.type1Value, gameState.type2Value);
-            
-        if(!isCorrect && !alreadyExists && !hasBothTypes){
-            wrongOptions.push(randomPokemon);
-        }
-    }
+    
+    const wrongOptions = elegirDistractoresDificiles(
+    dataState.pokedex, correctPokemon, gameState.type1Value, gameState.type2Value, scoreState.estadoJuego.scoreCampista, 3, validarTiposPokemon);
+
     console.log(wrongOptions.map(p => p.name));
 
     const allOptions = [correctPokemon, ...wrongOptions].sort(() => Math.random() - 0.5);
     let answered = false;
     
     gameState.tiempoCampista = iniciarBarraTiempo(
-        scoreState.estadoJuego, "scoreCampista", pScoreCampista, btnIntentoCampista, 
-        barraTiempoCampista, mensajeAciertoCampista, 3, null, null, null, 
-        gameState.tiempoCampista, timeState.tiempoCampistaLeft, "campista", correctPokemon.name
+      scoreState.estadoJuego, "scoreCampista", pScoreCampista, btnIntentoCampista, 
+      barraTiempoCampista, mensajeAciertoCampista, calcularVelocidadTiempo(3, scoreState.estadoJuego.scoreCampista, 0.15, 0.45), null, null, null, 
+      gameState.tiempoCampista, timeState.tiempoCampistaLeft, "campista", correctPokemon.name
     );
 
     allOptions.forEach(pokemon => {
@@ -224,6 +220,8 @@ export async function campistaLogica(){
                 mensajeAciertoCampista.textContent = "¡Felicidades Sigue Sumando!";
                 scoreState.estadoJuego.scoreCampista++;
                 pScoreCampista.textContent = scoreState.estadoJuego.scoreCampista;
+                
+                celebrarHito(scoreState.estadoJuego.scoreCampista);
 
                 if (scoreState.estadoJuego.scoreCampista > scoreState.maxCampista) {
                     scoreState.maxCampista = scoreState.estadoJuego.scoreCampista;
@@ -285,13 +283,14 @@ export function AsLogica() {
         }
     });
     
-   const pokemonCorrect = buscarPokemonCorrecto(dataState.pokedex, gameState.type1Value, gameState.type2Value);
+    const pokemonCorrect = buscarPokemonCorrectoEvitandoRepetidos(
+    dataState.pokedex, gameState.type1Value, gameState.type2Value, 'as', validarTiposPokemon);
 
     if (pokemonCorrect){
       gameState.tiempoAsDeBatalla = iniciarBarraTiempo(
-          scoreState.estadoJuego, "scoreAsDeBatalla", pScoreAs, btnIntentoAs, 
-          barraTiempoAs, mensajeAciertoAs, 0.7, btnNoExisteAs, btnValidarAs, cajaSelect, 
-          gameState.tiempoAsDeBatalla, timeState.tiempoAsDeBatallaLeft, "as", pokemonCorrect.name
+        scoreState.estadoJuego, "scoreAsDeBatalla", pScoreAs, btnIntentoAs, 
+        barraTiempoAs, mensajeAciertoAs, calcularVelocidadTiempo(0.7, scoreState.estadoJuego.scoreAsDeBatalla, 0.3, 0.9), btnNoExisteAs, btnValidarAs, cajaSelect, 
+        gameState.tiempoAsDeBatalla, timeState.tiempoAsDeBatallaLeft, "as", pokemonCorrect.name
       );
       console.log(pokemonCorrect);
     }else {
@@ -330,22 +329,39 @@ export function validarSelect() {
       }
       return;
     }
-    
+
+    const pokemonesValidosParaEstaCombinacion = dataState.pokedex.filter(p =>
+    validarTiposPokemon(p, gameState.type1Value, gameState.type2Value));
+
+    const quedanOpcionesNuevas = hayOpcionesNoUsadas('as', pokemonesValidosParaEstaCombinacion);
+
+    if (quedanOpcionesNuevas && yaFueUsado('as', pokemonSeleccionado.name)) {
+      mostrarNotificacion("Ese Pokémon ya fue elegido antes en esta sesión, piensa en otro");
+      btnValidarAs.style.display = "flex";
+      btnNoExisteAs.style.display = "flex";
+      if (selectAs.tomselect) selectAs.tomselect.enable();
+      return;
+    }// si NO quedan opciones nuevas, no bloquea — deja pasar el repetido como válido
+        
     const ambosTypes = validarTiposPokemon(pokemonSeleccionado, gameState.type1Value, gameState.type2Value);
     
     if (ambosTypes) {
-        scoreState.estadoJuego.scoreAsDeBatalla++;
-        pScoreAs.textContent = scoreState.estadoJuego.scoreAsDeBatalla;
-        btnNextAs.style.display = "flex";
-        mensajeAciertoAs.textContent = "¡Correcto! Sumas a tu racha.";
-        soundWin();
-        vibrarWin();
-        clearInterval(gameState.tiempoAsDeBatalla);
-        if (scoreState.estadoJuego.scoreAsDeBatalla > scoreState.maxAsDeBatalla) {
-          scoreState.maxAsDeBatalla = scoreState.estadoJuego.scoreAsDeBatalla;
-          localStorage.setItem("maxAsDeBatalla", scoreState.maxAsDeBatalla);
-          pMaxAs.textContent = scoreState.maxAsDeBatalla;
-        }
+      scoreState.estadoJuego.scoreAsDeBatalla++;
+      registrarUsado('as', pokemonSeleccionado.name);
+      pScoreAs.textContent = scoreState.estadoJuego.scoreAsDeBatalla;
+      
+      celebrarHito(scoreState.estadoJuego.scoreAsDeBatalla);
+      
+      btnNextAs.style.display = "flex";
+      mensajeAciertoAs.textContent = "¡Correcto! Sumas a tu racha.";
+      soundWin();
+      vibrarWin();
+      clearInterval(gameState.tiempoAsDeBatalla);
+      if (scoreState.estadoJuego.scoreAsDeBatalla > scoreState.maxAsDeBatalla) {
+        scoreState.maxAsDeBatalla = scoreState.estadoJuego.scoreAsDeBatalla;
+        localStorage.setItem("maxAsDeBatalla", scoreState.maxAsDeBatalla);
+        pMaxAs.textContent = scoreState.maxAsDeBatalla;
+      }
     }else {
         guardarScoreAntesDePerder("as");
         scoreState.estadoJuego.scoreAsDeBatalla = 0;
@@ -368,7 +384,8 @@ export function logicaNoExisteAs() {
         validarTiposPokemon(pokemon, gameState.type1Value, gameState.type2Value)
     );
 
-    const correctPokemon = buscarPokemonCorrecto(dataState.pokedex, gameState.type1Value, gameState.type2Value);
+    const correctPokemon = buscarPokemonCorrectoEvitandoRepetidos(
+    dataState.pokedex, gameState.type1Value, gameState.type2Value, 'as', validarTiposPokemon);
 
     if(!existeAlguno){
         mensajeAciertoAs.textContent = "Bien Visto no hay pokemon con esa combinación!";
@@ -411,6 +428,23 @@ export function CampeonLogica() {
   const pokemonCorrecto = dataState.pokedex.find(pokemon => validarSimilitudPalabra(pokemonSeleccionado, pokemon.name, 70));
 
   const pokemonCorrectoSinValidar = dataState.pokedex.find(pokemon => pokemon.name === pokemonSeleccionado);
+
+  const nombreParaValidarRepeticion = pokemonCorrectoSinValidar?.name || pokemonCorrecto?.name;
+
+  const pokemonesValidosParaEstaCombinacion = dataState.pokedex.filter(p =>
+  validarTiposPokemon(p, gameState.type1Value, gameState.type2Value));
+
+  const quedanOpcionesNuevas = hayOpcionesNoUsadas('campeon', pokemonesValidosParaEstaCombinacion);
+
+  if(quedanOpcionesNuevas && nombreParaValidarRepeticion && yaFueUsado('campeon', nombreParaValidarRepeticion)){
+  mostrarNotificacion("Ese Pokémon ya fue elegido antes en esta sesión, piensa en otro");
+  respuestaInputCampeon.value = "";
+  respuestaInputCampeon.disabled = false;
+  btnNextCampeon.style.display = "none";
+  btnRevelarCampeon.style.display = "flex";
+  btnNoExisteCampeon.style.display = "flex";
+  return; // no cuenta como acierto ni como error
+  }
   
   if (pokemonCorrectoSinValidar) {
     console.log("este es el pokemon sin validar", pokemonCorrectoSinValidar)
@@ -420,7 +454,10 @@ export function CampeonLogica() {
 
   if (esCorrecto) {
     scoreState.estadoJuego.scoreCampeon++;
+    registrarUsado('campeon', nombreParaValidarRepeticion);
     pScoreCampeon.textContent = scoreState.estadoJuego.scoreCampeon;
+    
+    celebrarHito(scoreState.estadoJuego.scoreCampeon);
 
     if (existe){
       mensajeAciertoCampeon.innerHTML = "¡Correcto! Sumas a tu racha"
@@ -496,13 +533,13 @@ export function seleccionadoVacio(){
 
 //Función que inicia la barra de tiempo en el modo Campeon
 export function iniciarBarraTiempoCampeon() {
-  const pokemonCorrect = buscarPokemonCorrecto(dataState.pokedex, gameState.type1Value, gameState.type2Value);
+  const pokemonCorrect = buscarPokemonCorrectoEvitandoRepetidos(dataState.pokedex, gameState.type1Value, gameState.type2Value, 'campeon', validarTiposPokemon);
 
   if (pokemonCorrect){
     gameState.tiempoCampeon = iniciarBarraTiempo(
-        scoreState.estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, 
-        barraTiempoCampeon, mensajeAciertoCampeon, 0.6, btnNoExisteCampeon, btnRevelarCampeon, 
-        cajainput, gameState.tiempoCampeon, timeState.tiempoCampeonLeft, "campeon", pokemonCorrect.name
+      scoreState.estadoJuego, "scoreCampeon", pScoreCampeon, btnIntentoCampeon, 
+      barraTiempoCampeon, mensajeAciertoCampeon, calcularVelocidadTiempo(0.6, scoreState.estadoJuego.scoreCampeon, 0.20, 0.6), btnNoExisteCampeon, btnRevelarCampeon, 
+      cajainput, gameState.tiempoCampeon, timeState.tiempoCampeonLeft, "campeon", pokemonCorrect.name
     );
   } else {
     gameState.tiempoCampeon = iniciarBarraTiempo(
@@ -519,7 +556,7 @@ export function logicaNoExisteCampeon() {
         validarTiposPokemon(pokemon, gameState.type1Value, gameState.type2Value)
     );
 
-    const correctPokemon = buscarPokemonCorrecto(dataState.pokedex, gameState.type1Value, gameState.type2Value);
+    const correctPokemon = buscarPokemonCorrectoEvitandoRepetidos(dataState.pokedex, gameState.type1Value, gameState.type2Value, 'campeon', validarTiposPokemon); 
 
     if(!existeAlguno){
         mensajeAciertoCampeon.innerHTML = "Bien Visto no hay pokemon con esa combinación!";
@@ -551,4 +588,4 @@ export function logicaNoExisteCampeon() {
       btnNoExisteCampeon.style.display = "none";
       cajainput.style.display = "none";
     }
-}
+} 

@@ -14,8 +14,13 @@ import './eventos.js';
 //Actualizar La racha del Usuario
 import { actualizarRachaEnMenu } from './desafio-dia.js';
 
+import { solicitarPermisoNotificaciones, programarNotificacionRacha } from './notificaciones-locales.js';
+
+import { obtenerProgreso, yaCompletoDesafioHoy } from './progreso-storage.js';
+
 //Carga inicial
 loadApp();
+
 InicializarAdMob().then(() => {
   if (adState.hayInternet) {
     prepararBonificado();
@@ -38,11 +43,30 @@ if(window.Capacitor){
     volverAlMenu()
   })
 
-  App.addListener("appStateChange", (state) => {
+  App.addListener("appStateChange", async (state) => {
     if (!state.isActive) {
       detenerTodoElAudio();
+    } else {
+      // Al volver a primer plano, verificar y reprogramar notificaciones
+      try {
+        const { verificarRachaVigente } = await import('./progreso-storage.js');
+        const progreso = await verificarRachaVigente();
+        if (progreso.racha > 0) {
+          await programarNotificacionRacha();
+        }
+      } catch (error) {
+        console.error('Error reprogramando notificaciones al volver de segundo plano:', error);
+      }
     }
   })
 }
 cargarPokedex();
 actualizarRachaEnMenu();
+
+solicitarPermisoNotificaciones().then(async () => {
+  const completoHoy = await yaCompletoDesafioHoy();
+  if (!completoHoy) {
+    const progreso = await obtenerProgreso();
+    programarNotificacionRacha(progreso.racha);
+  }
+});
