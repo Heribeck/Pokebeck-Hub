@@ -46,6 +46,9 @@ export async function InicializarAdMob() {
         if (adState.modoRevivirActivo === 'desafio') {
           const { continuarDesafioTrasRevivir } = await import('./desafio-dia.js');
           continuarDesafioTrasRevivir();
+        } else if (adState.modoRevivirActivo === 'reto') {
+          const { continuarRetoTrasRevivir } = await import('./reto.js');
+          continuarRetoTrasRevivir();
         } else {
           ejecutarRevivir(adState.modoRevivirActivo);
         }

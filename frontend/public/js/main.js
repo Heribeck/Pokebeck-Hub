@@ -17,6 +17,21 @@ import { actualizarRachaEnMenu } from './desafio-dia.js';
 import { solicitarPermisoNotificaciones, programarNotificacionRacha } from './notificaciones-locales.js';
 
 import { obtenerProgreso, yaCompletoDesafioHoy } from './progreso-storage.js';
+import { obtenerHX } from './hx-storage.js';
+import { hxActualTexto } from './config.js';
+
+// Funcion global o expuesta para recargar los stats del menu
+export async function actualizarStatsMenu() {
+    actualizarRachaEnMenu();
+    try {
+        const hx = await obtenerHX();
+        if (hxActualTexto) {
+            hxActualTexto.textContent = `⚡ ${hx} HX`;
+        }
+    } catch (e) {
+        console.error("Error actualizando HX:", e);
+    }
+}
 
 //Carga inicial
 loadApp();
@@ -61,7 +76,7 @@ if(window.Capacitor){
   })
 }
 cargarPokedex();
-actualizarRachaEnMenu();
+actualizarStatsMenu();
 
 solicitarPermisoNotificaciones().then(async () => {
   const completoHoy = await yaCompletoDesafioHoy();

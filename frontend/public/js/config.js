@@ -96,6 +96,7 @@ export const domElements = {
     generador: document.getElementById("generador"),
     acerca: document.getElementById("acerca"),
     desafio: document.getElementById("panel-desafio"),
+    reto: document.getElementById("panel-reto"),
     campista: document.getElementById("panel-campista"),
     as: document.getElementById("panel-As"),
     campeon: document.getElementById("panel-campeon"),
@@ -118,7 +119,8 @@ export const domElements = {
   
   // Elementos del menú principal
   main: {
-    btnJuego: document.getElementById("btn-juego"),
+    btnReto: document.getElementById("btn-reto"),
+    btnEntrenamiento: document.getElementById("btn-entrenamiento"),
     btnGenerador: document.getElementById("btn-generador"),
     btnAcerca: document.getElementById("btn-acerca"),
     telegram: document.getElementById("telegram"),
@@ -163,6 +165,40 @@ export const domElements = {
     respuestaInput: document.getElementById("respuesta-input-desafio"),
     btnRevelar: document.getElementById("btn-revelar-desafio"),
     btnNoExisteCampeon: document.getElementById("no-existe-campeon-desafio"),
+  },
+
+  // Elementos del modo Reto
+  reto: {
+    rondaActualTexto: document.getElementById("ronda-actual-reto"),
+    hxGanadoTexto: document.getElementById("hx-ganado-reto"),
+    tipo1: document.getElementById("tipo1-reto"),
+    tipo2: document.getElementById("tipo2-reto"),
+    barraTiempo: document.getElementById("tiempo-reto"),
+    mensajeAcierto: document.getElementById("mensaje-acierto-reto"),
+    btnNext: document.getElementById("btn-next-reto"),
+    btnIntento: document.getElementById("btn-intento-reto"),
+    btnRevivir: document.getElementById("revivir-reto"),
+    btnIniciarJuego: document.getElementById("btn-iniciar-juego-reto"),
+     btnJugarDeNuevo: document.getElementById("btn-jugar-de-nuevo-reto"),
+    btnVolverAlMenu: document.getElementById("btn-volver-menu-reto"),
+
+    // Sub-UI Campista
+    uiCampista: document.getElementById("reto-ui-campista"),
+    cajaOpcionesPokemon: document.getElementById("opciones-pokemon-reto"),
+
+    // Sub-UI As
+    uiAs: document.getElementById("reto-ui-as"),
+    cajaSelect: document.getElementById("caja-select-reto"),
+    select: document.getElementById("select-reto"),
+    btnValidar: document.getElementById("btn-validar-reto"),
+    btnNoExiste: document.getElementById("btn-no-existe-reto"),
+
+    // Sub-UI Campeón
+    uiCampeon: document.getElementById("reto-ui-campeon"),
+    cajaInput: document.getElementById("caja-input-reto"),
+    respuestaInput: document.getElementById("respuesta-input-reto"),
+    btnRevelar: document.getElementById("btn-revelar-reto"),
+    btnNoExisteCampeon: document.getElementById("btn-no-existe-campeon-reto"),
   },
   
   // Elementos del modo Campista
@@ -240,11 +276,14 @@ export const main = domElements.secciones.main;
 export const dificultad = domElements.secciones.dificultad;
 export const generador = domElements.secciones.generador;
 export const acerca = domElements.secciones.acerca;
+export const desafio = domElements.secciones.desafio;
+export const panelReto = domElements.secciones.reto;
 export const campista = domElements.secciones.campista;
 export const As = domElements.secciones.as;
 export const campeon = domElements.secciones.campeon;
 export const notificacion = domElements.secciones.notificacion;
 export const rachaTexto = domElements.main.rachaTexto;
+export const hxActualTexto = document.getElementById("hx-actual");
 
 export const confirmacionCampista = domElements.confirmaciones.campista;
 export const confirmacionAs = domElements.confirmaciones.as;
@@ -254,7 +293,8 @@ export const cajaOpcionesPokemon = domElements.cajas.opcionesPokemon;
 export const cajaSelect = domElements.cajas.select;
 export const cajainput = domElements.cajas.input;
 
-export const btnJuego = domElements.main.btnJuego;
+export const btnReto = domElements.main.btnReto;
+export const btnEntrenamiento = domElements.main.btnEntrenamiento;
 export const btnGenerador = domElements.main.btnGenerador;
 export const btnAcerca = domElements.main.btnAcerca;
 export const telegram = domElements.main.telegram;
@@ -262,8 +302,6 @@ export const telegram = domElements.main.telegram;
 export const tipo1 = domElements.generador.tipo1;
 export const tipo2 = domElements.generador.tipo2;
 export const btnGenerar = domElements.generador.btnGenerar;
-
-export const desafio = domElements.secciones.desafio;
 
 //Elementos del Dom del Desafio
 export const rondaActualTextoDesafio = domElements.desafio.rondaActualTexto;
@@ -279,7 +317,32 @@ export const btnRevivirDesafio = domElements.desafio.btnRevivir;
 export const btnVolverAlMenu = domElements.desafio.btnVolverAlMenu;
 export const btnJugarDeNuevoDesafio = domElements.desafio.btnJugarDeNuevo;
 
-//Elementos del DOM del SubModo campista en el desafio
+//Elementos del Dom del Reto
+export const rondaActualTextoReto = domElements.reto.rondaActualTexto;
+export const hxGanadoTextoReto = domElements.reto.hxGanadoTexto;
+export const tipo1Reto = domElements.reto.tipo1;
+export const tipo2Reto = domElements.reto.tipo2;
+export const barraTiempoReto = domElements.reto.barraTiempo;
+export const mensajeAciertoReto = domElements.reto.mensajeAcierto;
+export const btnIniciarJuegoReto = domElements.reto.btnIniciarJuego;
+export const btnNextReto = domElements.reto.btnNext;
+export const btnIntentoReto = domElements.reto.btnIntento;
+export const btnRevivirReto = domElements.reto.btnRevivir;
+export const btnJugarDeNuevoReto = domElements.reto.btnJugarDeNuevo;
+export const btnVolverAlMenuReto = domElements.reto.btnVolverAlMenu;
+export const uiCampistaReto = domElements.reto.uiCampista;
+export const cajaOpcionesPokemonReto = domElements.reto.cajaOpcionesPokemon;
+export const uiAsReto = domElements.reto.uiAs;
+export const cajaSelectReto = domElements.reto.cajaSelect;
+export const selectReto = domElements.reto.select;
+export const btnValidarReto = domElements.reto.btnValidar;
+export const btnNoExisteReto = domElements.reto.btnNoExiste;
+export const uiCampeonReto = domElements.reto.uiCampeon;
+export const cajaInputReto = domElements.reto.cajaInput;
+export const respuestaInputReto = domElements.reto.respuestaInput;
+export const btnRevelarReto = domElements.reto.btnRevelar;
+export const btnNoExisteCampeonReto = domElements.reto.btnNoExisteCampeon;
+
 export const uiCampistaDesafio = domElements.desafio.uiCampista;
 export const cajaOpcionesPokemonDesafio = domElements.desafio.cajaOpcionesPokemon;
 
@@ -355,6 +418,13 @@ export const toastMensaje = domElements.notificacion.toastMensaje;
 
 //Objeto con la configuración de cada modo.
 export const configRevivir = {
+  reto: {
+    btn: btnRevivirReto,
+    btnIntento: btnIntentoReto,
+    mensaje: mensajeAciertoReto,
+    scoreKey: null,
+    pScore: null,
+  },
   desafio: {
   btn: btnRevivirDesafio,
   btnIntento: btnIntentoDesafio,

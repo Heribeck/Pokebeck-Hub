@@ -7,7 +7,7 @@ import {
   campista,
   As,
   campeon,
-  btnJuego,
+  btnEntrenamiento,
   btnGenerador,
   btnAcerca,
   telegram,
@@ -72,18 +72,19 @@ import {
   musicaCampeon,
   sonidoTouch,
   btnDesafio,
+  btnReto,
 } from './config.js';
 
 // Funciones importadas desde otros archivos
 import { ocultarBanner, prepararBonificado, clickRevivir } from './admob.js';
-import { 
-  ocultarBotonRevivir, 
-  campistaLogica, 
-  AsLogica, 
-  validarSelect, 
-  logicaNoExisteAs, 
-  CampeonLogica, 
-  logicaNoExisteCampeon, 
+import {
+  ocultarBotonRevivir,
+  campistaLogica,
+  AsLogica,
+  validarSelect,
+  logicaNoExisteAs,
+  CampeonLogica,
+  logicaNoExisteCampeon,
   seleccionadoVacio,
   iniciarBarraTiempoCampeon
 } from './modos.js';
@@ -92,6 +93,10 @@ import { cambiarMusicaModes, reiniciarScoreActual, reiniciarScoreMax } from './u
 import { iniciarDesafioDelDia } from './desafio-dia.js';
 import { reiniciarUsados } from './control-repeticion.js';
 import { programarNotificacionDePrueba } from './notificaciones-locales.js';
+import { iniciarReto } from './reto.js';
+
+// Variable de estado para diferenciar Reto de Entrenamiento
+let modoJuegoSeleccionado = 'entrenamiento'; // 'entrenamiento' o 'reto'
 
 //Función auxiliar para configurar modo de juego
 function configurarModo(modoPanel, dificultadPanel, pMaxElement, scoreMaxValue, musica) {
@@ -108,29 +113,29 @@ function manejarBotonSiguiente(modo, tipo1Element, tipo2Element, logicaFuncion, 
   logicaFuncion();
   btnNextElement.style.display = "none";
   mensajeElement.innerHTML = "";
-  
+
   if (elementosAdicionales.cajaSelect) {
     elementosAdicionales.cajaSelect.style.display = "block";
     if (elementosAdicionales.btnValidar) elementosAdicionales.btnValidar.style.display = "flex";
     if (elementosAdicionales.btnNoExiste) elementosAdicionales.btnNoExiste.style.display = "flex";
   }
-  
+
   if (elementosAdicionales.cajaInput) {
     elementosAdicionales.cajaInput.style.display = "block";
     if (elementosAdicionales.btnNoExiste) elementosAdicionales.btnNoExiste.style.display = "flex";
     if (elementosAdicionales.btnRevelar) elementosAdicionales.btnRevelar.style.display = "flex";
   }
-  
+
   if (elementosAdicionales.inputElement) {
     elementosAdicionales.inputElement.value = "";
     elementosAdicionales.inputElement.disabled = false;
   }
-  
+
   if (elementosAdicionales.selectElement && elementosAdicionales.selectElement.tomselect) {
     elementosAdicionales.selectElement.tomselect.clear();
     elementosAdicionales.selectElement.tomselect.enable();
   }
-  
+
   if (elementosAdicionales.selectElement) {
     elementosAdicionales.selectElement.value = "";
   }
@@ -144,39 +149,48 @@ function manejarBotonIntento(modo, tipo1Element, tipo2Element, logicaFuncion, bt
   logicaFuncion();
   btnIntentoElement.style.display = "none";
   mensajeElement.innerHTML = "";
-  
+
   if (elementosAdicionales.cajaSelect) {
     elementosAdicionales.cajaSelect.style.display = "block";
     if (elementosAdicionales.btnValidar) elementosAdicionales.btnValidar.style.display = "flex";
     if (elementosAdicionales.btnNoExiste) elementosAdicionales.btnNoExiste.style.display = "flex";
   }
-  
+
   if (elementosAdicionales.selectElement && elementosAdicionales.selectElement.tomselect) {
     elementosAdicionales.selectElement.tomselect.enable();
     elementosAdicionales.selectElement.tomselect.clear();
   }
-  
+
   if (elementosAdicionales.selectElement) {
     elementosAdicionales.selectElement.value = "";
   }
-  
+
   if (elementosAdicionales.cajaInput) {
     elementosAdicionales.cajaInput.style.display = "block";
     elementosAdicionales.btnNoExiste.style.display = "flex";
   }
-  
+
   if (elementosAdicionales.inputElement) {
     elementosAdicionales.inputElement.value = "";
     elementosAdicionales.inputElement.disabled = false;
   }
-  
+
   if (elementosAdicionales.btnRevelar) {
     elementosAdicionales.btnRevelar.style.display = "flex";
   }
 }
 
-// --- |Evento de boton de "Juego(Dificultades)"
-btnJuego.addEventListener("click", () => {
+// --- |Evento de boton de "Entrenamiento(Dificultades)"
+btnEntrenamiento.addEventListener("click", () => {
+  modoJuegoSeleccionado = 'entrenamiento';
+  main.style.display = "none";
+  dificultad.style.display = "flex";
+  ocultarBanner();
+});
+
+// --- |Evento de boton de "Reto(Dificultades)"
+btnReto.addEventListener("click", () => {
+  modoJuegoSeleccionado = 'reto';
   main.style.display = "none";
   dificultad.style.display = "flex";
   ocultarBanner();
@@ -190,7 +204,11 @@ btnDesafio.addEventListener('click', () => {
 
 // --- |Eventos del apartado "Panel-Campista"| --- //
 btnCampista.addEventListener("click", () => {
-  configurarModo(campista, dificultad, pMaxCampista, scoreState.maxCampista, musicaCampista);
+  if (modoJuegoSeleccionado === 'reto') {
+    iniciarReto('campista');
+  } else {
+    configurarModo(campista, dificultad, pMaxCampista, scoreState.maxCampista, musicaCampista);
+  }
 });
 
 //Evento del boton "Iniciar Juego"
@@ -240,7 +258,11 @@ cancelarReinicioCampista.addEventListener("click", () => {
 
 // --- |Eventos del Apartado "Panel-As"| --- //
 btnAs.addEventListener("click", () => {
-  configurarModo(As, dificultad, pMaxAs, scoreState.maxAsDeBatalla, musicaAsBatalla);
+  if (modoJuegoSeleccionado === 'reto') {
+    iniciarReto('as');
+  } else {
+    configurarModo(As, dificultad, pMaxAs, scoreState.maxAsDeBatalla, musicaAsBatalla);
+  }
 });
 
 //Evento del boton "Iniciar Juego" del modo As
@@ -319,7 +341,11 @@ reinicioScoreAs.addEventListener("click", () => {
 
 // --- |Eventos del Apartado "Panel-Campeon"| --- //
 btnCampeon.addEventListener("click", () => {
-  configurarModo(campeon, dificultad, pMaxCampeon, scoreState.maxCampeon, musicaCampeon);
+  if (modoJuegoSeleccionado === 'reto') {
+    iniciarReto('campeon');
+  } else {
+    configurarModo(campeon, dificultad, pMaxCampeon, scoreState.maxCampeon, musicaCampeon);
+  }
 });
 
 //Evento Para iniciar el juego en el modo Campeon

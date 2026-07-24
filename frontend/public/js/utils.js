@@ -19,6 +19,8 @@ import {
 
 import { mostrarBanner } from './admob.js';
 import { actualizarRachaEnMenu } from './desafio-dia.js';
+import { obtenerHX } from './hx-storage.js';
+import { hxActualTexto, panelReto } from './config.js';
 
 // Función para generar números aleatorios
 export function Aleatoriedad(min, max) {
@@ -208,7 +210,11 @@ export function volverAlMenu(){
     if (As) {As.style.display = "none";}
     if (campeon) {campeon.style.display = "none";}
     if (desafio) {desafio.style.display = "none"}
+    if (panelReto) {panelReto.style.display = "none"}
     mostrarBanner("TOP_CENTER");
     detenerTodoElAudio();
-    actualizarRachaEnMenu()
+    actualizarRachaEnMenu();
+    obtenerHX().then(hx => {
+        if (hxActualTexto) hxActualTexto.textContent = `⚡ ${hx} HX`;
+    }).catch(e => console.error(e));
 }

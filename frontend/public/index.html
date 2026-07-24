@@ -36,13 +36,15 @@
         <h1>Pokebeck Hub</h1>
 
         <p id="racha-actual">🔥 0 días</p>
+        <p id="hx-actual">⚡ 0 HX</p>
         
         <img src="assets/img/icons/icono-only.png" alt="Icono Pokebeck Hub" class="icono-main">
 
         <p>¿Puedes reconocerlos a todos?</p>
 
         <div class="caja-btn-main">
-            <button id="btn-juego" class="boton-juego">Jugar</button>
+            <button id="btn-reto" class="boton-reto">Reto</button>
+            <button id="btn-entrenamiento" class="boton-entrenamiento">Entrenamiento</button>
             <button id="btn-desafio" class="boton-desafio">Desafío del Día</button>
             <button id="btn-generador" class="boton-generador">Generador</button>
             <button id="btn-acerca" class="boton-acerca">Acerca del Juego</button>
@@ -144,6 +146,60 @@
         <button id="btn-next-desafio">Siguiente</button>
         <button id="btn-intento-desafio">Continuar</button>
         <button id="revivir-desafio">Revivir Viendo un Video</button>
+    </section>
+
+    <section id="panel-reto" class="layout-reto" style="display: none;">
+        <div class="cabecera-reto">
+            <p id="ronda-actual-reto">Ronda 1 de 10</p>
+            <p id="hx-ganado-reto">HX ganado: 0</p>
+        </div>
+
+        <div class="tipos-reto">
+            <img id="tipo1-reto" class="type-icon" src="" alt="Tipo 1">
+            <img id="tipo2-reto" class="type-icon" src="" alt="Tipo 2">
+        </div>
+
+        <div class="caja-barra-tiempo">
+            <div id="tiempo-reto" class="barra-tiempo"></div>
+        </div>
+        
+        <p id="mensaje-acierto-reto"></p>
+
+        <!-- Sub-UI: mecánica Campista (opción múltiple) -->
+        <div id="reto-ui-campista" style="display: none;">
+            <div id="opciones-pokemon-reto" class="caja-opciones-pokemon"></div>
+        </div>
+
+        <!-- Sub-UI: mecánica As de Batalla (select/autocompletado) -->
+        <div id="reto-ui-as" style="display: none;">
+            <div id="caja-select-reto" class="caja-select">
+                <select id="select-reto"></select>
+            </div>
+            <button id="btn-validar-reto" class="boton-validar-select">Validar</button>
+            <button id="btn-no-existe-reto" class="boton-no-existe">No Existe</button>
+        </div>
+
+        <!-- Sub-UI: mecánica Campeón (texto libre) -->
+        <div id="reto-ui-campeon" style="display: none;">
+            <div id="caja-input-reto">
+                <h3>Escribe Tu Respuesta</h3>  
+                <input type="text" class="input-pokemon" id="respuesta-input-reto" placeholder="Nombre del Pokémon">
+            </div>
+            <button id="btn-revelar-reto" class="btn-revelar-campeon">Revelar</button>
+            <button id="btn-no-existe-campeon-reto" class="boton-no-existe">No Existe</button>
+        </div>
+
+        <div class="botones-reto">
+            <button id="btn-iniciar-juego-reto" class="boton-iniciar-juego">Iniciar Juego</button>
+            <button id="btn-next-reto" class="boton-next" style="display: none;">Siguiente</button>
+            <button id="btn-intento-reto" class="boton-intento" style="display: none;">Continuar</button>
+            <button id="revivir-reto" class="boton-revivir" style="display: none;">
+                Revivir Viendo un Video
+                <i class="fa-solid fa-film" style="margin-left: 10px;"></i>
+            </button>
+            <button id="btn-jugar-de-nuevo-reto" class="boton-iniciar-juego" style="display: none;">Jugar de Nuevo</button>
+            <button id="btn-volver-menu-reto" class="boton-iniciar-juego" style="display: none;">Volver al Menú</button>
+        </div>
     </section>
 
     <section id="panel-campista" class="layout-campista">

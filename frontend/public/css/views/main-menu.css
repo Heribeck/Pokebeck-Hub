@@ -62,7 +62,8 @@
     width: 100%;
 }
 
-.boton-juego,
+.boton-reto,
+.boton-entrenamiento,
 .boton-generador,
 .boton-acerca,
 .boton-desafio {
@@ -78,7 +79,7 @@
     width: 12.5rem;
 }
 
-.boton-juego:hover,
+.boton-entrenamiento:hover,
 .boton-generador:hover,
 .boton-acerca:hover,
 .boton-desafio:hover {
@@ -86,7 +87,7 @@
     transform: translateY(-2px);
 }
 
-.boton-juego:active,
+.boton-entrenamiento:active,
 .boton-generador:active,
 .boton-acerca:active,
 .boton-desafio:active {
