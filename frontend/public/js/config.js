@@ -461,6 +461,7 @@ export const conteoBtnRevivir = 3;
 //IDs de los anuncios / Eventos
 export const idBanner = "ca-app-pub-1898586331132450/5546962412" || "Real";
 export const idBonificado = "ca-app-pub-1898586331132450/8031266354" || "Real";
+export const idIntersticial = "ca-app-pub-1898586331132450/4178291414" || "Real"
 export const eventosBonificado = {
   cargado: "onRewardedVideoAdLoaded",
   falloCarga: "onRewardedVideoAdFailedToLoad",

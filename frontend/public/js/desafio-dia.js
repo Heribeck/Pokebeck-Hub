@@ -47,7 +47,7 @@ import {
   musicaCampeon
 } from './config.js';
 
-import { clickRevivir } from './admob.js';
+import { clickRevivir, mostrarIntersticial } from './admob.js';
 import { mostrarBotonRevivir } from './modos.js';
 import { mostrarNotificacion, soundWin, soundLose, vibrarWin, vibrarLose, capitalizarPrimeraLetra, volverAlMenu, cambiarMusicaModes, detenerTodoElAudio } from './utils.js';
 import { crearGeneradorDelDia } from './prng-semilla.js';
@@ -459,6 +459,7 @@ async function finalizarSesion() {
   };
 
   sesionActual = null;
+  mostrarIntersticial();
 }
 
 export async function actualizarRachaEnMenu() {

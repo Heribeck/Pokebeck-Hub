@@ -5,6 +5,7 @@ import {
   eventosBonificado, 
   adState,
   configRevivir,
+  idIntersticial,
 } from './config.js';
 
 import { mostrarNotificacion } from './utils.js';
@@ -20,6 +21,7 @@ export async function InicializarAdMob() {
       });
       console.log("AdMob listo")
       await mostrarBanner("TOP_CENTER");
+      await prepararIntersticial()
     } catch (error) {
       console.error("Error al inicializar AdMob:", error);
     }
@@ -167,4 +169,47 @@ export async function clickRevivir(modo) {
   config.btn.disabled = true;
   await mostrarBonificado();
   config.btn.disabled = false;
+}
+
+let intersticialCargado = false;
+
+export async function prepararIntersticial() {
+  if (!window.Capacitor?.Plugins?.AdMob || !adState.hayInternet) {
+    intersticialCargado = false;
+    return false;
+  }
+
+  try {
+    intersticialCargado = false;
+    await window.Capacitor.Plugins.AdMob.prepareInterstitial({
+      adId: idIntersticial,
+      isTesting: false,
+    });
+    intersticialCargado = true;
+    return true;
+  } catch (error) {
+    intersticialCargado = false;
+    console.error("Error al cargar el intersticial:", error);
+    return false;
+  }
+}
+
+export async function mostrarIntersticial() {
+  if (!window.Capacitor?.Plugins?.AdMob || !adState.hayInternet) return false;
+
+  if (!intersticialCargado) {
+    const cargado = await prepararIntersticial();
+    if (!cargado) return false;
+  }
+
+  try {
+    await window.Capacitor.Plugins.AdMob.showInterstitial();
+    intersticialCargado = false;
+    prepararIntersticial(); // deja uno nuevo listo para la próxima vez
+    return true;
+  } catch (error) {
+    console.error("Error al mostrar el intersticial:", error);
+    intersticialCargado = false;
+    return false;
+  }
 }

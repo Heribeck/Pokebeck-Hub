@@ -47,7 +47,7 @@ import { generarTiposDelDia, generarRondaCampista } from './desafio-generador.js
 import { crearSesionDesafio, procesarRespuesta, confirmarRevivir, rechazarRevivir, calcularResultadoFinal } from './desafio-motor.js';
 import { esMecanicaDesbloqueada, hxFaltanteParaDesbloquear, obtenerHXPorAcierto } from './hx-sistema.js';
 import { obtenerHX, sumarHX } from './hx-storage.js';
-import { clickRevivir } from './admob.js';
+import { clickRevivir, mostrarIntersticial } from './admob.js';
 import { mostrarBotonRevivir, ocultarBotonRevivir } from './modos.js';
 
 // Estado interno de la sesión de Reto en curso
@@ -55,6 +55,7 @@ let sesionActual = null;
 let correctPokemonRondaActual = null;
 let hxGanadoEnEstaSesion = 0;
 let hxPerdidoEnEstaSesion = 0;
+let sesionesDesdeUltimoIntersticial = 0;
 
 // Punto de entrada: se llama al elegir una dificultad en el menú de Reto
 export async function iniciarReto(mecanica) {
@@ -440,4 +441,9 @@ async function finalizarSesion() {
   btnVolverAlMenuReto.onclick = () => volverAlMenu();
 
   sesionActual = null;
+  sesionesDesdeUltimoIntersticial++;
+  if (sesionesDesdeUltimoIntersticial >= 3) {
+    mostrarIntersticial();
+    sesionesDesdeUltimoIntersticial = 0;
+  }
 }
