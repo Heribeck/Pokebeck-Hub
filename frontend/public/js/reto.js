@@ -43,7 +43,7 @@ import {
 
 import { mostrarNotificacion, soundWin, soundLose, vibrarWin, vibrarLose, capitalizarPrimeraLetra, buscarPokemonCorrecto, validarTiposPokemon, validarSimilitudPalabra, volverAlMenu } from './utils.js';
 import { generarTiposDelDia, generarRondaCampista } from './desafio-generador.js';
-import { crearSesionDesafio, procesarRespuesta, calcularResultadoFinal } from './desafio-motor.js';
+import { crearSesionDesafio, procesarRespuesta, calcularResultadoFinal, rechazarRevivir } from './desafio-motor.js';
 import { esMecanicaDesbloqueada, hxFaltanteParaDesbloquear, obtenerHXPorAcierto } from './hx-sistema.js';
 import { obtenerHX, sumarHX } from './hx-storage.js';
 import { mostrarIntersticial } from './admob.js';
@@ -267,7 +267,7 @@ function detenerBarraTiempoReto() {
 async function procesarResultadoDeRonda(esCorrecta) {
   const paso = procesarRespuesta(sesionActual, esCorrecta);
 
-    btnValidarReto.style.display = 'none';
+  btnValidarReto.style.display = 'none';
   btnNoExisteReto.style.display = 'none';
   btnRevelarReto.style.display = 'none';
   btnNoExisteCampeonReto.style.display = 'none';
@@ -295,6 +295,12 @@ async function procesarResultadoDeRonda(esCorrecta) {
     return;
   }
 
+  let sesionTerminada = paso.sesionTerminada;
+  if (paso.resultado === "fallo_pendiente_revivir"){
+    const resultado = rechazarRevivir(sesionActual);
+    sesionTerminada = resultado.sesionTerminada;
+  }
+
   soundLose();
   vibrarLose();
 
@@ -302,13 +308,13 @@ async function procesarResultadoDeRonda(esCorrecta) {
   const hxPerdido = Math.floor(hxQueGanaria / 2);
   hxPerdidoEnEstaSesion += hxPerdido;
   await sumarHX(-hxPerdido);
-  actualizarTextoProgreso();
 
   const nombreRespuestaCorrecta = correctPokemonRondaActual
-    ? capitalizarPrimeraLetra(correctPokemonRondaActual.name)
-    : 'Ninguno (no existía esa combinación)';
+  ? capitalizarPrimeraLetra(correctPokemonRondaActual.name)
+  : 'Ninguno (no existía esa combinación)';
 
   mensajeAciertoReto.innerHTML = `Fallaste. La respuesta correcta era <strong>${nombreRespuestaCorrecta}</strong>.<br><span style="color: #d32f2f;">-${hxPerdido} HX</span>`;
+  actualizarTextoProgreso();
 
   if (paso.sesionTerminada) {
     finalizarSesion();
