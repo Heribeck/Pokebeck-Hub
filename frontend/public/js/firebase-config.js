@@ -20,5 +20,5 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const analytics = initializeAnalytics(app, {
     config: {debug_mode: true},
-    app_version: "2.0.4"
+    app_version: "2.1.4"
 });
