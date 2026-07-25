@@ -178,7 +178,7 @@ function prepararRondaCampista(type1, type2) {
     if (respondida) return;
     respondida = true;
     procesarResultadoDeRonda(false);
-  });
+  }, 3);
 }
 
 function prepararRondaAs(type1, type2) {
@@ -222,7 +222,7 @@ function prepararRondaAs(type1, type2) {
 
   iniciarBarraTiempoReto(() => {
     procesarResultadoDeRonda(false);
-  });
+  },0.7);
 }
 
 function prepararRondaCampeon(type1, type2) {
@@ -239,17 +239,17 @@ function prepararRondaCampeon(type1, type2) {
 
   iniciarBarraTiempoReto(() => {
     procesarResultadoDeRonda(false);
-  });
+  }, 0.6);
 }
 
 // Temporizador aislado para Reto (mismo patrón que en el Desafío del Día)
-function iniciarBarraTiempoReto(alAgotarseElTiempo) {
+function iniciarBarraTiempoReto(alAgotarseElTiempo, time = 3) {
   barraTiempoReto.style.width = '100%';
   timeState.tiempoRetoLeft = 100;
   clearInterval(gameState.tiempoReto);
 
   gameState.tiempoReto = setInterval(() => {
-    timeState.tiempoRetoLeft -= 1;
+    timeState.tiempoRetoLeft -= time;
     barraTiempoReto.style.width = timeState.tiempoRetoLeft + '%';
 
     if (timeState.tiempoRetoLeft <= 0) {
