@@ -177,7 +177,6 @@ export const domElements = {
     mensajeAcierto: document.getElementById("mensaje-acierto-reto"),
     btnNext: document.getElementById("btn-next-reto"),
     btnIntento: document.getElementById("btn-intento-reto"),
-    btnRevivir: document.getElementById("revivir-reto"),
     btnIniciarJuego: document.getElementById("btn-iniciar-juego-reto"),
      btnJugarDeNuevo: document.getElementById("btn-jugar-de-nuevo-reto"),
     btnVolverAlMenu: document.getElementById("btn-volver-menu-reto"),
@@ -327,7 +326,6 @@ export const mensajeAciertoReto = domElements.reto.mensajeAcierto;
 export const btnIniciarJuegoReto = domElements.reto.btnIniciarJuego;
 export const btnNextReto = domElements.reto.btnNext;
 export const btnIntentoReto = domElements.reto.btnIntento;
-export const btnRevivirReto = domElements.reto.btnRevivir;
 export const btnJugarDeNuevoReto = domElements.reto.btnJugarDeNuevo;
 export const btnVolverAlMenuReto = domElements.reto.btnVolverAlMenu;
 export const uiCampistaReto = domElements.reto.uiCampista;
@@ -418,13 +416,6 @@ export const toastMensaje = domElements.notificacion.toastMensaje;
 
 //Objeto con la configuración de cada modo.
 export const configRevivir = {
-  reto: {
-    btn: btnRevivirReto,
-    btnIntento: btnIntentoReto,
-    mensaje: mensajeAciertoReto,
-    scoreKey: null,
-    pScore: null,
-  },
   desafio: {
   btn: btnRevivirDesafio,
   btnIntento: btnIntentoDesafio,

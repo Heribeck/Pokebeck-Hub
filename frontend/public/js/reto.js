@@ -23,7 +23,6 @@ import {
   btnIniciarJuegoReto,
   btnNextReto,
   btnIntentoReto,
-  btnRevivirReto,
   btnJugarDeNuevoReto,
   btnVolverAlMenuReto,
   rondaActualTextoReto,
@@ -44,11 +43,10 @@ import {
 
 import { mostrarNotificacion, soundWin, soundLose, vibrarWin, vibrarLose, capitalizarPrimeraLetra, buscarPokemonCorrecto, validarTiposPokemon, validarSimilitudPalabra, volverAlMenu } from './utils.js';
 import { generarTiposDelDia, generarRondaCampista } from './desafio-generador.js';
-import { crearSesionDesafio, procesarRespuesta, confirmarRevivir, rechazarRevivir, calcularResultadoFinal } from './desafio-motor.js';
+import { crearSesionDesafio, procesarRespuesta, calcularResultadoFinal } from './desafio-motor.js';
 import { esMecanicaDesbloqueada, hxFaltanteParaDesbloquear, obtenerHXPorAcierto } from './hx-sistema.js';
 import { obtenerHX, sumarHX } from './hx-storage.js';
-import { clickRevivir, mostrarIntersticial } from './admob.js';
-import { mostrarBotonRevivir, ocultarBotonRevivir } from './modos.js';
+import { mostrarIntersticial } from './admob.js';
 
 // Estado interno de la sesión de Reto en curso
 let sesionActual = null;
@@ -87,7 +85,6 @@ export async function iniciarReto(mecanica) {
   
   btnNextReto.style.display = 'none';
   btnIntentoReto.style.display = 'none';
-  ocultarBotonRevivir('reto');
   btnJugarDeNuevoReto.style.display = 'none';
   btnVolverAlMenuReto.style.display = 'none';
 
@@ -126,7 +123,6 @@ function siguienteRonda() {
 
   btnNextReto.style.display = 'none';
   btnIntentoReto.style.display = 'none';
-  ocultarBotonRevivir('reto');
   mensajeAciertoReto.innerHTML = '';
   cajaOpcionesPokemonReto.innerHTML = '';
 
@@ -314,38 +310,11 @@ async function procesarResultadoDeRonda(esCorrecta) {
 
   mensajeAciertoReto.innerHTML = `Fallaste. La respuesta correcta era <strong>${nombreRespuestaCorrecta}</strong>.<br><span style="color: #d32f2f;">-${hxPerdido} HX</span>`;
 
-  if (paso.resultado === 'fallo_pendiente_revivir') {
-    mostrarBotonRevivir('reto');
-    btnRevivirReto.onclick = () => clickRevivir('reto');
-
-    btnIntentoReto.textContent = 'Continuar sin revivir';
-    btnIntentoReto.style.display = 'flex';
-    btnIntentoReto.onclick = () => {
-      const { sesionTerminada } = rechazarRevivir(sesionActual);
-      if (sesionTerminada) {
-        finalizarSesion();
-      } else {
-        siguienteRonda();
-      }
-    };
-    return;
-  }
-
   if (paso.sesionTerminada) {
     finalizarSesion();
   } else {
     btnNextReto.style.display = 'flex';
     btnNextReto.onclick = () => siguienteRonda();
-  }
-}
-
-// Se llama cuando el jugador revivió viendo el anuncio (invocado desde admob.js)
-export function continuarRetoTrasRevivir() {
-  const { sesionTerminada } = confirmarRevivir(sesionActual);
-  if (sesionTerminada) {
-    finalizarSesion();
-  } else {
-    siguienteRonda();
   }
 }
 
@@ -426,7 +395,6 @@ async function finalizarSesion() {
 
   btnNextReto.style.display = 'none';
   btnIntentoReto.style.display = 'none';
-  ocultarBotonRevivir('reto');
   cajaOpcionesPokemonReto.innerHTML = '';
 
   btnJugarDeNuevoReto.style.display = 'flex';

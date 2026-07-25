@@ -84,7 +84,7 @@
 }
 
 .btn-opcion {
-    width: 100%;
+    width: 100dvw;
     max-width: 20rem;
     padding: 1rem 1.5rem;
     background: rgba(255, 203, 5, 0.05);
