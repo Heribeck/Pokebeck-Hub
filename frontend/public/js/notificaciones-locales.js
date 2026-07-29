@@ -50,7 +50,7 @@ export async function programarNotificacionRacha(racha) {
   const mensaje =
     racha > 0
       ? `🔥 Tu racha de ${racha} días está en riesgo. ¡Juega el Desafío del Día antes de que termine hoy!`
-      : '¡Juega el Desafío del Día de hoy y empieza tu racha!';
+      : "🌙 Antes de que acabe el día, date una vuelta por la app. Repasa un poco y cierra tu jornada con buen ritmo.";
 
   try {
     await LocalNotifications.schedule({
