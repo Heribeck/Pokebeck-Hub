@@ -266,6 +266,9 @@ function detenerBarraTiempoReto() {
 // Procesa el resultado de una ronda (correcto/incorrecto), común a las 3 mecánicas
 async function procesarResultadoDeRonda(esCorrecta) {
   const paso = procesarRespuesta(sesionActual, esCorrecta);
+  const hxQueGanaria = obtenerHXPorAcierto(sesionActual.mecanica);
+  const hxGanado = obtenerHXPorAcierto(sesionActual.mecanica);
+  const hxPerdido = Math.floor(hxQueGanaria / 2);
 
   btnValidarReto.style.display = 'none';
   btnNoExisteReto.style.display = 'none';
@@ -279,8 +282,6 @@ async function procesarResultadoDeRonda(esCorrecta) {
     soundWin();
     vibrarWin();
 
-    const hxGanado = obtenerHXPorAcierto(sesionActual.mecanica);
-    await sumarHX(hxGanado);
     hxGanadoEnEstaSesion += hxGanado;
 
     mensajeAciertoReto.innerHTML = `¡Correcto! +${hxGanado} HX`;
@@ -304,10 +305,7 @@ async function procesarResultadoDeRonda(esCorrecta) {
   soundLose();
   vibrarLose();
 
-  const hxQueGanaria = obtenerHXPorAcierto(sesionActual.mecanica);
-  const hxPerdido = Math.floor(hxQueGanaria / 2);
   hxPerdidoEnEstaSesion += hxPerdido;
-  await sumarHX(-hxPerdido);
 
   const nombreRespuestaCorrecta = correctPokemonRondaActual
   ? capitalizarPrimeraLetra(correctPokemonRondaActual.name)
@@ -390,8 +388,11 @@ async function finalizarSesion() {
   
   if (balanceFinal > 0) {
     mensajeBalance = `<span style="color: #43a047;">⚡ Balance positivo: ganaste ${balanceFinal} HX limpios en total.</span>`;
+    await sumarHX(balanceFinal);
   } else if (balanceFinal < 0) {
     mensajeBalance = `<span style="color: #d32f2f;">⚠️ Balance negativo: perdiste ${Math.abs(balanceFinal)} HX en total.</span>`;
+    await sumarHX(balanceFinal);
+
   } else {
     mensajeBalance = `<span style="color: #ff9800;">⚖️ Balance neutro: no ganaste ni perdiste HX.</span>`;
   }
