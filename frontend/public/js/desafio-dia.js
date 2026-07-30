@@ -35,7 +35,6 @@ import {
   coloresTipos,
   btnVolverAlMenu,
   btnJugarDeNuevoDesafio,
-  rachaTexto,
   selectDesafio,
   btnValidarDesafio,
   btnNoExisteDesafio,
@@ -44,7 +43,8 @@ import {
   btnNoExisteCampeonDesafio,
   musicaCampista,
   musicaAsBatalla,
-  musicaCampeon
+  musicaCampeon,
+  rachaTextoPoketype
 } from './config.js';
 
 import { clickRevivir, mostrarIntersticial } from './admob.js';
@@ -464,5 +464,8 @@ async function finalizarSesion() {
 
 export async function actualizarRachaEnMenu() {
   const progreso = await verificarRachaVigente();
-  rachaTexto.textContent = `🔥 ${progreso.racha} días`;
+
+  if (rachaTextoPoketype) {
+    rachaTextoPoketype.textContent = `🔥 ${progreso.racha} días`;
+  }
 }

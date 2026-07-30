@@ -20,7 +20,7 @@ import {
 import { mostrarBanner } from './admob.js';
 import { actualizarRachaEnMenu } from './desafio-dia.js';
 import { obtenerHX } from './hx-storage.js';
-import { hxActualTexto, panelReto } from './config.js';
+import { hxGlobal, panelReto } from './config.js';
 
 // Función para generar números aleatorios
 export function Aleatoriedad(min, max) {
@@ -215,6 +215,6 @@ export function volverAlMenu(){
     detenerTodoElAudio();
     actualizarRachaEnMenu();
     obtenerHX().then(hx => {
-        if (hxActualTexto) hxActualTexto.textContent = `⚡ ${hx} HX`;
+        if (hxGlobal) hxGlobal.textContent = `⚡ ${hx} HX`;
     }).catch(e => console.error(e));
 }

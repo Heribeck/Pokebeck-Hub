@@ -1,16 +1,24 @@
 // Elementos del DOM importados desde config.js
 import {
   main,
+  poketype,
   dificultad,
   generador,
   acerca,
   campista,
   As,
   campeon,
+  btnPoketype,
+  btnReto,
   btnEntrenamiento,
+  btnDesafio,
   btnGenerador,
   btnAcerca,
+  btnVolverMenuPoketype,
   telegram,
+  hxGlobal,
+  hxGlobalPoketype,
+  rachaTextoPoketype,
   btnCampista,
   btnIniciarJuegoCampista,
   pMaxCampista,
@@ -70,9 +78,7 @@ import {
   musicaCampista,
   musicaAsBatalla,
   musicaCampeon,
-  sonidoTouch,
-  btnDesafio,
-  btnReto,
+  sonidoTouch
 } from './config.js';
 
 // Funciones importadas desde otros archivos
@@ -180,26 +186,46 @@ function manejarBotonIntento(modo, tipo1Element, tipo2Element, logicaFuncion, bt
   }
 }
 
-// --- |Evento de boton de "Entrenamiento(Dificultades)"
+// --- |Evento de boton de "PokeType Guess"|
+btnPoketype.addEventListener("click", () => {
+  main.style.display = "none";
+  poketype.style.display = "flex";
+  ocultarBanner();
+});
+
+// --- |Evento de boton de "Volver al Menú" desde PokeType|
+btnVolverMenuPoketype.addEventListener("click", () => {
+  poketype.style.display = "none";
+  main.style.display = "flex";
+});
+
+// --- |Evento de boton de "Entrenamiento(Dificultades)" desde PokeType|
 btnEntrenamiento.addEventListener("click", () => {
   modoJuegoSeleccionado = 'entrenamiento';
-  main.style.display = "none";
+  poketype.style.display = "none";
   dificultad.style.display = "flex";
   ocultarBanner();
 });
 
-// --- |Evento de boton de "Reto(Dificultades)"
+// --- |Evento de boton de "Reto(Dificultades)" desde PokeType|
 btnReto.addEventListener("click", () => {
   modoJuegoSeleccionado = 'reto';
-  main.style.display = "none";
+  poketype.style.display = "none";
   dificultad.style.display = "flex";
   ocultarBanner();
 });
 
-// --- |Evento del Apartado del Desafio Del Dia| -- //
+// --- |Evento del Apartado del Desafio Del Dia desde PokeType| -- //
 btnDesafio.addEventListener('click', () => {
+  poketype.style.display = "none";
   iniciarDesafioDelDia()
   ocultarBanner();
+});
+
+// --- |Evento del Generador desde PokeType|
+btnGenerador.addEventListener("click", () => {
+  poketype.style.display = "none";
+  generador.style.display = "flex";
 });
 
 // --- |Eventos del apartado "Panel-Campista"| --- //

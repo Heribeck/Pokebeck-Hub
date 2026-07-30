@@ -5,8 +5,10 @@
 @import 'components/ui-elements.css';
 @import 'components/modals.css';
 @import 'components/celebracion.css';
+@import 'components/cabecera-global.css';
 @import 'views/splash.css';
 @import 'views/main-menu.css';
+@import 'views/poketype.css';
 @import 'views/modes/campista.css';
 @import 'views/modes/as.css';
 @import 'views/modes/campeon.css';

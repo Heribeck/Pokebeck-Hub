@@ -23,27 +23,6 @@
     filter: drop-shadow(0 0 20px rgba(255, 203, 5, 0.4));
 }
 
-#racha-actual {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--accent-yellow);
-    text-shadow: 0 0 15px rgba(255, 203, 5, 0.5);
-    margin-bottom: 0.5rem;
-    letter-spacing: 1px;
-    animation: pulse-glow 2s ease-in-out infinite;
-}
-
-@keyframes pulse-glow {
-    0%, 100% {
-        text-shadow: 0 0 15px rgba(255, 203, 5, 0.5);
-        transform: scale(1);
-    }
-    50% {
-        text-shadow: 0 0 25px rgba(255, 203, 5, 0.8);
-        transform: scale(1.05);
-    }
-}
-
 .caja-btn-main {
     margin-top: 1.5rem;
     display: flex;
@@ -62,11 +41,8 @@
     width: 100%;
 }
 
-.boton-reto,
-.boton-entrenamiento,
-.boton-generador,
-.boton-acerca,
-.boton-desafio {
+.boton-poketype,
+.boton-acerca {
     background: var(--accent-yellow);
     color: var(--bg-primary);
     border: none;
@@ -79,18 +55,14 @@
     width: 12.5rem;
 }
 
-.boton-entrenamiento:hover,
-.boton-generador:hover,
-.boton-acerca:hover,
-.boton-desafio:hover {
+.boton-poketype:hover,
+.boton-acerca:hover {
     background: var(--accent-yellow-dark);
     transform: translateY(-2px);
 }
 
-.boton-entrenamiento:active,
-.boton-generador:active,
-.boton-acerca:active,
-.boton-desafio:active {
+.boton-poketype:active,
+.boton-acerca:active {
     transform: translateY(0);
 }
 

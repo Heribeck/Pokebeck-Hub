@@ -1,0 +1,98 @@
+/* | --- Panel PokeType Guess --- |*/
+.layout-poketype {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100dvh;
+    padding: 1rem;
+}
+
+.titulo-juego {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent-yellow);
+    text-shadow: 0 0 15px rgba(255, 203, 5, 0.5);
+    margin: 1rem 0;
+}
+
+.racha-poketype {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent-yellow);
+    text-shadow: 0 0 15px rgba(255, 203, 5, 0.5);
+    margin-bottom: 1.5rem;
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        text-shadow: 0 0 15px rgba(255, 203, 5, 0.5);
+        transform: scale(1);
+    }
+    50% {
+        text-shadow: 0 0 25px rgba(255, 203, 5, 0.8);
+        transform: scale(1.05);
+    }
+}
+
+.caja-btn-poketype {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.boton-poketype,
+.boton-reto,
+.boton-entrenamiento,
+.boton-desafio,
+.boton-generador {
+    background: var(--accent-yellow);
+    color: var(--bg-primary);
+    border: none;
+    padding: 0.875rem 1.75rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-glow);
+    width: 12.5rem;
+}
+
+.boton-poketype:hover,
+.boton-reto:hover,
+.boton-entrenamiento:hover,
+.boton-desafio:hover,
+.boton-generador:hover {
+    background: var(--accent-yellow-dark);
+    transform: translateY(-2px);
+}
+
+.boton-poketype:active,
+.boton-reto:active,
+.boton-entrenamiento:active,
+.boton-desafio:active,
+.boton-generador:active {
+    transform: translateY(0);
+}
+
+.boton-volver {
+    margin-top: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--accent-yellow);
+    border: 2px solid var(--accent-yellow);
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.boton-volver:hover {
+    background: var(--accent-yellow);
+    color: var(--bg-primary);
+}

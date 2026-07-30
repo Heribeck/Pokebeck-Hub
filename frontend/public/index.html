@@ -33,20 +33,18 @@
 
     <main id="main" class="layout-main">
 
-        <h1>Pokebeck Hub</h1>
+        <!-- Cabecera Global -->
+        <div class="cabecera-global">
+            <h1 class="titulo-hub">Pokebeck Hub</h1>
+            <p id="hx-global" class="hx-global">⚡ 0 HX</p>
+        </div>
 
-        <p id="racha-actual">🔥 0 días</p>
-        <p id="hx-actual">⚡ 0 HX</p>
-        
         <img src="assets/img/icons/icono-only.png" alt="Icono Pokebeck Hub" class="icono-main">
 
         <p>¿Puedes reconocerlos a todos?</p>
 
         <div class="caja-btn-main">
-            <button id="btn-reto" class="boton-reto">Reto</button>
-            <button id="btn-entrenamiento" class="boton-entrenamiento">Entrenamiento</button>
-            <button id="btn-desafio" class="boton-desafio">Desafío del Día</button>
-            <button id="btn-generador" class="boton-generador">Generador</button>
+            <button id="btn-poketype" class="boton-poketype">PokeType Guess</button>
             <button id="btn-acerca" class="boton-acerca">Acerca del Juego</button>
         </div>
 
@@ -63,6 +61,24 @@
             <button id="btn-as" class="boton-as"> <i class="fas fa-user-tie"></i> As de Batalla</button>
             <button id="btn-campeon" class="boton-campeon"> <i class="fas fa-crown"></i> Campeón</button>
         </div>
+
+    </section>
+
+    <section id="panel-poketype" class="layout-poketype" style="display: none;">
+
+        <h2 class="titulo-juego">PokeType Guess</h2>
+
+        <p id="racha-poketype" class="racha-poketype">🔥 0 días</p>
+        <p id="hx-global-poketype" class="hx-global">⚡ 0 HX</p>
+
+        <div class="caja-btn-poketype">
+            <button id="btn-reto-poketype" class="boton-reto">Reto</button>
+            <button id="btn-entrenamiento-poketype" class="boton-entrenamiento">Entrenamiento</button>
+            <button id="btn-desafio-poketype" class="boton-desafio">Desafío del Día</button>
+            <button id="btn-generador-poketype" class="boton-generador">Generador</button>
+        </div>
+
+        <button id="btn-volver-menu-poketype" class="boton-volver">Volver al Menú</button>
 
     </section>
 

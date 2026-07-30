@@ -18,15 +18,18 @@ import { solicitarPermisoNotificaciones, programarNotificacionRacha } from './no
 
 import { obtenerProgreso, yaCompletoDesafioHoy } from './progreso-storage.js';
 import { obtenerHX } from './hx-storage.js';
-import { hxActualTexto } from './config.js';
+import { hxGlobal, hxGlobalPoketype, rachaTextoPoketype } from './config.js';
 
 // Funcion global o expuesta para recargar los stats del menu
 export async function actualizarStatsMenu() {
     actualizarRachaEnMenu();
     try {
         const hx = await obtenerHX();
-        if (hxActualTexto) {
-            hxActualTexto.textContent = `⚡ ${hx} HX`;
+        if (hxGlobal) {
+            hxGlobal.textContent = `⚡ ${hx} HX`;
+        }
+        if (hxGlobalPoketype) {
+            hxGlobalPoketype.textContent = `⚡ ${hx} HX`;
         }
     } catch (e) {
         console.error("Error actualizando HX:", e);

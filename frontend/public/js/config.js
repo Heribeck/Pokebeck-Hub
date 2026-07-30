@@ -92,6 +92,7 @@ export const domElements = {
   secciones: {
     splash: document.getElementById("custom-splash"),
     main: document.getElementById("main"),
+    poketype: document.getElementById("panel-poketype"),
     dificultad: document.getElementById("dificultad"),
     generador: document.getElementById("generador"),
     acerca: document.getElementById("acerca"),
@@ -119,12 +120,25 @@ export const domElements = {
   
   // Elementos del menú principal
   main: {
-    btnReto: document.getElementById("btn-reto"),
-    btnEntrenamiento: document.getElementById("btn-entrenamiento"),
-    btnGenerador: document.getElementById("btn-generador"),
+    btnPoketype: document.getElementById("btn-poketype"),
     btnAcerca: document.getElementById("btn-acerca"),
     telegram: document.getElementById("telegram"),
-    rachaTexto: document.getElementById("racha-actual"),
+  },
+
+  // Elementos globales (cabecera)
+  global: {
+    hxGlobal: document.getElementById("hx-global"),
+  },
+
+  // Elementos del panel PokeType
+  poketype: {
+    btnReto: document.getElementById("btn-reto-poketype"),
+    btnEntrenamiento: document.getElementById("btn-entrenamiento-poketype"),
+    btnDesafio: document.getElementById("btn-desafio-poketype"),
+    btnGenerador: document.getElementById("btn-generador-poketype"),
+    btnVolverAlMenu: document.getElementById("btn-volver-menu-poketype"),
+    rachaTexto: document.getElementById("racha-poketype"),
+    hxGlobal: document.getElementById("hx-global-poketype"),
   },
   
   // Elementos del generador
@@ -146,7 +160,6 @@ export const domElements = {
     btnVolverAlMenu: document.getElementById("btn-menu-desafio"),
     btnIntento: document.getElementById("btn-intento-desafio"),
     btnRevivir: document.getElementById("revivir-desafio"),
-    btnDesafio: document.getElementById("btn-desafio"),
 
     // Sub-UI Campista
     uiCampista: document.getElementById("desafio-ui-campista"),
@@ -277,12 +290,11 @@ export const generador = domElements.secciones.generador;
 export const acerca = domElements.secciones.acerca;
 export const desafio = domElements.secciones.desafio;
 export const panelReto = domElements.secciones.reto;
+export const poketype = domElements.secciones.poketype;
 export const campista = domElements.secciones.campista;
 export const As = domElements.secciones.as;
 export const campeon = domElements.secciones.campeon;
 export const notificacion = domElements.secciones.notificacion;
-export const rachaTexto = domElements.main.rachaTexto;
-export const hxActualTexto = document.getElementById("hx-actual");
 
 export const confirmacionCampista = domElements.confirmaciones.campista;
 export const confirmacionAs = domElements.confirmaciones.as;
@@ -292,11 +304,19 @@ export const cajaOpcionesPokemon = domElements.cajas.opcionesPokemon;
 export const cajaSelect = domElements.cajas.select;
 export const cajainput = domElements.cajas.input;
 
-export const btnReto = domElements.main.btnReto;
-export const btnEntrenamiento = domElements.main.btnEntrenamiento;
-export const btnGenerador = domElements.main.btnGenerador;
+export const btnPoketype = domElements.main.btnPoketype;
 export const btnAcerca = domElements.main.btnAcerca;
 export const telegram = domElements.main.telegram;
+
+export const hxGlobal = domElements.global.hxGlobal;
+
+export const btnReto = domElements.poketype.btnReto;
+export const btnEntrenamiento = domElements.poketype.btnEntrenamiento;
+export const btnDesafio = domElements.poketype.btnDesafio;
+export const btnGenerador = domElements.poketype.btnGenerador;
+export const btnVolverMenuPoketype = domElements.poketype.btnVolverAlMenu;
+export const rachaTextoPoketype = domElements.poketype.rachaTexto;
+export const hxGlobalPoketype = domElements.poketype.hxGlobal;
 
 export const tipo1 = domElements.generador.tipo1;
 export const tipo2 = domElements.generador.tipo2;
@@ -309,7 +329,7 @@ export const tipo1Desafio = domElements.desafio.tipo1;
 export const tipo2Desafio = domElements.desafio.tipo2;
 export const barraTiempoDesafio = domElements.desafio.barraTiempo;
 export const mensajeAciertoDesafio = domElements.desafio.mensajeAcierto;
-export const btnDesafio = domElements.desafio.btnDesafio;
+//export const btnDesafio = domElements.desafio.btnDesafio;
 export const btnNextDesafio = domElements.desafio.btnNext;
 export const btnIntentoDesafio = domElements.desafio.btnIntento;
 export const btnRevivirDesafio = domElements.desafio.btnRevivir;

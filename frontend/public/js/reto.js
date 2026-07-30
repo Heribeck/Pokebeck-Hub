@@ -396,7 +396,7 @@ async function finalizarSesion() {
       balanceFinal += puntuacionPerfecta;
       mensajeBalance = `<span style="color: #43a047;">⚡ ¡Increible!<br/> Bono por Puntuación Perfecta: ${puntuacionPerfecta} HX <br/> Ganaste en Total <strong>${balanceFinal} HX <strong/> </span>`;
       await sumarHX(balanceFinal);
-    } else{
+    } else {
       mensajeBalance = `<span style="color: #43a047;">⚡ Balance positivo: ganaste ${balanceFinal} HX limpios en total.</span>`;}
       await sumarHX(balanceFinal);
 
