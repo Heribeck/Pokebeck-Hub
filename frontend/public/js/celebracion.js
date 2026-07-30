@@ -7,7 +7,7 @@
  */
 export function celebrarHito(scoreActual) {
   if (scoreActual % 5 === 0 && scoreActual > 0) {
-    mostrarCelebracion(scoreActual);
+    mostrarCelebracion(`¡Racha de ${scoreActual}!`);
   }
 }
 
@@ -15,7 +15,7 @@ export function celebrarHito(scoreActual) {
  * Muestra la celebración visual con mensaje, confeti y vibración
  * @param {number} score - Score actual para mostrar en el mensaje
  */
-function mostrarCelebracion(score) {
+export function mostrarCelebracion(anuncio) {
   // Vibración especial más larga
   vibrarCelebracion();
 
@@ -27,7 +27,7 @@ function mostrarCelebracion(score) {
   // Crear mensaje
   const mensaje = document.createElement('div');
   mensaje.className = 'celebracion-mensaje';
-  mensaje.textContent = `¡Racha de ${score}!`;
+  mensaje.textContent = anuncio;
   celebracionContainer.appendChild(mensaje);
 
   // Crear confeti

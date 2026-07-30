@@ -47,6 +47,7 @@ import { crearSesionDesafio, procesarRespuesta, calcularResultadoFinal, rechazar
 import { esMecanicaDesbloqueada, hxFaltanteParaDesbloquear, obtenerHXPorAcierto } from './hx-sistema.js';
 import { obtenerHX, sumarHX } from './hx-storage.js';
 import { mostrarIntersticial } from './admob.js';
+import { mostrarCelebracion } from './celebracion.js';
 
 // Estado interno de la sesión de Reto en curso
 let sesionActual = null;
@@ -383,12 +384,22 @@ btnNoExisteCampeonReto.onclick = () => {
 async function finalizarSesion() {
   const resultado = calcularResultadoFinal(sesionActual);
 
-  const balanceFinal = hxGanadoEnEstaSesion - hxPerdidoEnEstaSesion;
+  let balanceFinal = hxGanadoEnEstaSesion - hxPerdidoEnEstaSesion;
   let mensajeBalance = "";
-  
+
+  const hxPorRonda = obtenerHXPorAcierto(sesionActual.mecanica);
+  const puntuacionPerfecta = hxPorRonda * 10
+
   if (balanceFinal > 0) {
-    mensajeBalance = `<span style="color: #43a047;">⚡ Balance positivo: ganaste ${balanceFinal} HX limpios en total.</span>`;
-    await sumarHX(balanceFinal);
+    if (hxGanadoEnEstaSesion === puntuacionPerfecta){
+      mostrarCelebracion("¡Puntuación Perfecta!")
+      balanceFinal += puntuacionPerfecta;
+      mensajeBalance = `<span style="color: #43a047;">⚡ ¡Increible!<br/> Bono por Puntuación Perfecta: ${puntuacionPerfecta} HX <br/> Ganaste en Total <strong>${balanceFinal} HX <strong/> </span>`;
+      await sumarHX(balanceFinal);
+    } else{
+      mensajeBalance = `<span style="color: #43a047;">⚡ Balance positivo: ganaste ${balanceFinal} HX limpios en total.</span>`;}
+      await sumarHX(balanceFinal);
+
   } else if (balanceFinal < 0) {
     mensajeBalance = `<span style="color: #d32f2f;">⚠️ Balance negativo: perdiste ${Math.abs(balanceFinal)} HX en total.</span>`;
     await sumarHX(balanceFinal);
