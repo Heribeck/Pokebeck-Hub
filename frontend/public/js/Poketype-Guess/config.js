@@ -66,24 +66,24 @@ export const typesIcono = {
 
 // Lista de los colores de tipos de Pokémon
 export const coloresTipos = {
-    "normal": "#A8A77A",
-    "fire": "#EE8130",
-    "water": "#6390F0",
-    "electric": "#F7D02C",
-    "grass": "#7AC74C",
-    "ice": "#96D9D6",
-    "fighting": "#C22E28",
-    "poison": "#A33EA1",
-    "ground": "#E2BF65",
-    "flying": "#A98FF3",
-    "psychic": "#F95587",
-    "bug": "#A6B91A",
-    "rock": "#B6A136",
-    "ghost": "#735797",
-    "dragon": "#6F35FC",
-    "dark": "#383838",
-    "steel": "#B7B7CE",
-    "fairy": "#D685AD"
+  "normal": "#A8A77A",
+  "fire": "#EE8130",
+  "water": "#6390F0",
+  "electric": "#F7D02C",
+  "grass": "#7AC74C",
+  "ice": "#96D9D6",
+  "fighting": "#C22E28",
+  "poison": "#A33EA1",
+  "ground": "#E2BF65",
+  "flying": "#A98FF3",
+  "psychic": "#F95587",
+  "bug": "#A6B91A",
+  "rock": "#B6A136",
+  "ghost": "#735797",
+  "dragon": "#6F35FC",
+  "dark": "#383838",
+  "steel": "#B7B7CE",
+  "fairy": "#D685AD"
 };
 
 // Elementos DOM agrupados por sección para mejor organización
@@ -99,23 +99,17 @@ export const domElements = {
     desafio: document.getElementById("panel-desafio"),
     reto: document.getElementById("panel-reto"),
     campista: document.getElementById("panel-campista"),
-    as: document.getElementById("panel-As"),
-    campeon: document.getElementById("panel-campeon"),
     notificacion: document.getElementById("notificacion"),
   },
   
   // SubSecciones de confirmación
   confirmaciones: {
     campista: document.getElementById("ventana-confirmacion-campista"),
-    as: document.getElementById("ventana-confirmacion-As"),
-    campeon: document.getElementById("ventana-confirmacion-campeon"),
   },
   
   // Cajas contenedoras
   cajas: {
     opcionesPokemon: document.getElementById("opciones-pokemon"),
-    select: document.getElementById("caja-select"),
-    input: document.getElementById("caja-input"),
   },
   
   // Elementos del menú principal
@@ -164,20 +158,6 @@ export const domElements = {
     // Sub-UI Campista
     uiCampista: document.getElementById("desafio-ui-campista"),
     cajaOpcionesPokemon: document.getElementById("opciones-pokemon-desafio"),
-
-    // Sub-UI As
-    uiAs: document.getElementById("desafio-ui-as"),
-    cajaSelect: document.getElementById("caja-select-desafio"),
-    select: document.getElementById("select-desafio"),
-    btnValidar: document.getElementById("btn-validar-select-desafio"),
-    btnNoExiste: document.getElementById("no-existe-desafio"),
-
-    // Sub-UI Campeón
-    uiCampeon: document.getElementById("desafio-ui-campeon"),
-    cajaInput: document.getElementById("caja-input-desafio"),
-    respuestaInput: document.getElementById("respuesta-input-desafio"),
-    btnRevelar: document.getElementById("btn-revelar-desafio"),
-    btnNoExisteCampeon: document.getElementById("no-existe-campeon-desafio"),
   },
 
   // Elementos del modo Reto
@@ -197,20 +177,6 @@ export const domElements = {
     // Sub-UI Campista
     uiCampista: document.getElementById("reto-ui-campista"),
     cajaOpcionesPokemon: document.getElementById("opciones-pokemon-reto"),
-
-    // Sub-UI As
-    uiAs: document.getElementById("reto-ui-as"),
-    cajaSelect: document.getElementById("caja-select-reto"),
-    select: document.getElementById("select-reto"),
-    btnValidar: document.getElementById("btn-validar-reto"),
-    btnNoExiste: document.getElementById("btn-no-existe-reto"),
-
-    // Sub-UI Campeón
-    uiCampeon: document.getElementById("reto-ui-campeon"),
-    cajaInput: document.getElementById("caja-input-reto"),
-    respuestaInput: document.getElementById("respuesta-input-reto"),
-    btnRevelar: document.getElementById("btn-revelar-reto"),
-    btnNoExisteCampeon: document.getElementById("btn-no-existe-campeon-reto"),
   },
   
   // Elementos del modo Campista
@@ -232,50 +198,6 @@ export const domElements = {
     btnRevivir: document.getElementById("revivir-campista"),
   },
   
-  // Elementos del modo As de Batalla
-  as: {
-    btnAs: document.getElementById("btn-as"),
-    btnIniciarJuego: document.getElementById("iniciar-juego-As"),
-    pScore: document.getElementById("score-As"),
-    pMax: document.getElementById("max-As"),
-    reinicioScore: document.getElementById("reinicio-score-As"),
-    btnReinicioMax: document.getElementById("reinicio-max-As"),
-    confirmarReinicio: document.getElementById("btn-confirmar-reinicio-As"),
-    cancelarReinicio: document.getElementById("btn-cancelar-reinicio-As"),
-    tipo1: document.getElementById("type1-icon-As"),
-    tipo2: document.getElementById("type2-icon-As"),
-    barraTiempo: document.getElementById("tiempo-As"),
-    mensajeAcierto: document.getElementById("mensaje-acierto-As"),
-    select: document.getElementById("select"),
-    btnNext: document.getElementById("btn-next-As"),
-    btnIntento: document.getElementById("btn-intento-As"),
-    btnRevivir: document.getElementById("revivir-As"),
-    btnValidar: document.getElementById("btn-validar-select-As"),
-    btnNoExiste: document.getElementById("no-existe-As"),
-  },
-  
-  // Elementos del modo Campeon
-  campeon: {
-    btnCampeon: document.getElementById("btn-campeon"),
-    btnIniciarJuego: document.getElementById("iniciar-juego-campeon"),
-    pScore: document.getElementById("score-campeon"),
-    pMax: document.getElementById("max-campeon"),
-    reinicioScore: document.getElementById("reinicio-score-campeon"),
-    btnReinicioMax: document.getElementById("reinicio-max-campeon"),
-    confirmarReinicio: document.getElementById("btn-confirmar-reinicio-campeon"),
-    cancelarReinicio: document.getElementById("btn-cancelar-reinicio-campeon"),
-    tipo1: document.getElementById("type1-icon-campeon"),
-    tipo2: document.getElementById("type2-icon-campeon"),
-    barraTiempo: document.getElementById("tiempo-campeon"),
-    mensajeAcierto: document.getElementById("mensaje-acierto-campeon"),
-    respuestaInput: document.getElementById("respuesta-input-campeon"),
-    btnNext: document.getElementById("btn-next-campeon"),
-    btnIntento: document.getElementById("btn-intento-campeon"),
-    btnRevivir: document.getElementById("revivir-campeon"),
-    btnNoExiste: document.getElementById("no-existe-campeon"),
-    btnRevelar: document.getElementById("btn-revelar-campeon"),
-  },
-  
   // Elementos de notificación
   notificacion: {
     toastMensaje: document.getElementById("mensaje-notificacion"),
@@ -292,17 +214,11 @@ export const desafio = domElements.secciones.desafio;
 export const panelReto = domElements.secciones.reto;
 export const poketype = domElements.secciones.poketype;
 export const campista = domElements.secciones.campista;
-export const As = domElements.secciones.as;
-export const campeon = domElements.secciones.campeon;
 export const notificacion = domElements.secciones.notificacion;
 
 export const confirmacionCampista = domElements.confirmaciones.campista;
-export const confirmacionAs = domElements.confirmaciones.as;
-export const confirmacionCampeon = domElements.confirmaciones.campeon;
 
 export const cajaOpcionesPokemon = domElements.cajas.opcionesPokemon;
-export const cajaSelect = domElements.cajas.select;
-export const cajainput = domElements.cajas.input;
 
 export const btnPoketype = domElements.main.btnPoketype;
 export const btnAcerca = domElements.main.btnAcerca;
@@ -350,33 +266,9 @@ export const btnJugarDeNuevoReto = domElements.reto.btnJugarDeNuevo;
 export const btnVolverAlMenuReto = domElements.reto.btnVolverAlMenu;
 export const uiCampistaReto = domElements.reto.uiCampista;
 export const cajaOpcionesPokemonReto = domElements.reto.cajaOpcionesPokemon;
-export const uiAsReto = domElements.reto.uiAs;
-export const cajaSelectReto = domElements.reto.cajaSelect;
-export const selectReto = domElements.reto.select;
-export const btnValidarReto = domElements.reto.btnValidar;
-export const btnNoExisteReto = domElements.reto.btnNoExiste;
-export const uiCampeonReto = domElements.reto.uiCampeon;
-export const cajaInputReto = domElements.reto.cajaInput;
-export const respuestaInputReto = domElements.reto.respuestaInput;
-export const btnRevelarReto = domElements.reto.btnRevelar;
-export const btnNoExisteCampeonReto = domElements.reto.btnNoExisteCampeon;
 
 export const uiCampistaDesafio = domElements.desafio.uiCampista;
 export const cajaOpcionesPokemonDesafio = domElements.desafio.cajaOpcionesPokemon;
-
-//Elementos del Dom del subModo As en el desafio
-export const uiAsDesafio = domElements.desafio.uiAs;
-export const cajaSelectDesafio = domElements.desafio.cajaSelect;
-export const selectDesafio = domElements.desafio.select;
-export const btnValidarDesafio = domElements.desafio.btnValidar;
-export const btnNoExisteDesafio = domElements.desafio.btnNoExiste;
-
-//Elementos del Dom del subModo Campeon en el desafio
-export const uiCampeonDesafio = domElements.desafio.uiCampeon;
-export const cajaInputDesafio = domElements.desafio.cajaInput;
-export const respuestaInputDesafio = domElements.desafio.respuestaInput;
-export const btnRevelarDesafio = domElements.desafio.btnRevelar;
-export const btnNoExisteCampeonDesafio = domElements.desafio.btnNoExisteCampeon;
 
 export const btnCampista = domElements.campista.btnCampista;
 export const btnIniciarJuegoCampista = domElements.campista.btnIniciarJuego;
@@ -393,44 +285,6 @@ export const mensajeAciertoCampista = domElements.campista.mensajeAcierto;
 export const btnNextCampista = domElements.campista.btnNext;
 export const btnIntentoCampista = domElements.campista.btnIntento;
 export const btnRevivirCampista = domElements.campista.btnRevivir;
-
-export const btnAs = domElements.as.btnAs;
-export const btnIniciarJuegoAs = domElements.as.btnIniciarJuego;
-export const pScoreAs = domElements.as.pScore;
-export const pMaxAs = domElements.as.pMax;
-export const reinicioScoreAs = domElements.as.reinicioScore;
-export const btnReinicioMaxAs = domElements.as.btnReinicioMax;
-export const confirmarReinicioAs = domElements.as.confirmarReinicio;
-export const cancelarReinicioAs = domElements.as.cancelarReinicio;
-export const tipo1As = domElements.as.tipo1;
-export const tipo2As = domElements.as.tipo2;
-export const barraTiempoAs = domElements.as.barraTiempo;
-export const mensajeAciertoAs = domElements.as.mensajeAcierto;
-export const selectAs = domElements.as.select;
-export const btnNextAs = domElements.as.btnNext;
-export const btnIntentoAs = domElements.as.btnIntento;
-export const btnRevivirAs = domElements.as.btnRevivir;
-export const btnValidarAs = domElements.as.btnValidar;
-export const btnNoExisteAs = domElements.as.btnNoExiste;
-
-export const btnCampeon = domElements.campeon.btnCampeon;
-export const btnIniciarJuegoCampeon = domElements.campeon.btnIniciarJuego;
-export const pScoreCampeon = domElements.campeon.pScore;
-export const pMaxCampeon = domElements.campeon.pMax;
-export const reinicioScoreCampeon = domElements.campeon.reinicioScore;
-export const btnReinicioMaxCampeon = domElements.campeon.btnReinicioMax;
-export const confirmarReinicioCampeon = domElements.campeon.confirmarReinicio;
-export const cancelarReinicioCampeon = domElements.campeon.cancelarReinicio;
-export const tipo1Campeon = domElements.campeon.tipo1;
-export const tipo2Campeon = domElements.campeon.tipo2;
-export const barraTiempoCampeon = domElements.campeon.barraTiempo;
-export const mensajeAciertoCampeon = domElements.campeon.mensajeAcierto;
-export const respuestaInputCampeon = domElements.campeon.respuestaInput;
-export const btnNextCampeon = domElements.campeon.btnNext;
-export const btnIntentoCampeon = domElements.campeon.btnIntento;
-export const btnRevivirCampeon = domElements.campeon.btnRevivir;
-export const btnNoExisteCampeon = domElements.campeon.btnNoExiste;
-export const btnRevelarCampeon = domElements.campeon.btnRevelar;
 
 export const toastMensaje = domElements.notificacion.toastMensaje;
 
@@ -449,20 +303,6 @@ export const configRevivir = {
     mensaje: mensajeAciertoCampista,
     scoreKey: "scoreCampista",
     pScore: pScoreCampista,
-  },
-  as: {
-    btn: btnRevivirAs,
-    btnIntento: btnIntentoAs,
-    mensaje: mensajeAciertoAs,
-    scoreKey: "scoreAsDeBatalla",
-    pScore: pScoreAs,
-  },
-  campeon: {
-    btn: btnRevivirCampeon,
-    btnIntento: btnIntentoCampeon,
-    mensaje: mensajeAciertoCampeon,
-    scoreKey: "scoreCampeon",
-    pScore: pScoreCampeon,
   },
 };
 
@@ -488,9 +328,6 @@ export const gameState = {
   type2ValueDesafio: "",
   tiempoDesafio: null,
   tiempoCampista: null,
-  tiempoAsDeBatalla: null,
-  tiempoCampeon: null,
-  selectedPokemon: "",
   pokemonesValidos: []
 };
 
@@ -498,8 +335,6 @@ export const gameState = {
 export const timeState = {
   tiempoDesafioLeft: 100,
   tiempoCampistaLeft: 100,
-  tiempoAsDeBatallaLeft: 100,
-  tiempoCampeonLeft: 100,
   intervaloContadorRevivir: null
 };
 
@@ -516,15 +351,9 @@ export const adState = {
 //Objeto del score de los modos de juego - Agrupado en scoreState
 export const scoreState = {
   maxCampista: localStorage.getItem("maxCampista") || 0,
-  maxAsDeBatalla: localStorage.getItem("maxAsDeBatalla") || 0,
-  maxCampeon: localStorage.getItem("maxCampeon") || 0,
   scoreCampistaAntesDePerder: 0,
-  scoreAsAntesDePerder: 0,
-  scoreCampeonAntesDePerder: 0,
   estadoJuego: {
     scoreCampista: 0,
-    scoreAsDeBatalla: 0,
-    scoreCampeon: 0
   }
 };
 
@@ -538,8 +367,8 @@ export const dataState = {
 
 //Varibales y valores por Defecto del sonido
 export const musicaCampista = new Audio("assets/sonidos/music/musicCampista.mp3");
-export const musicaAsBatalla = new Audio("assets/sonidos/music/musicAs.mp3");
-export const musicaCampeon = new Audio("assets/sonidos/music/musicCampeon.mp3");
+const musicaAsBatalla = new Audio("assets/sonidos/music/musicAs.mp3");
+const musicaCampeon = new Audio("assets/sonidos/music/musicCampeon.mp3");
 
 export const sonidoGanar = new Audio("assets/sonidos/efectoSound/win.mp3");
 export const sonidoPerder = new Audio("assets/sonidos/efectoSound/lose.mp3");
@@ -547,15 +376,11 @@ export const sonidoPerder = new Audio("assets/sonidos/efectoSound/lose.mp3");
 export const sonidoTouch = new Audio("assets/sonidos/efectoSound/touchButtom.mp3");
 
 musicaCampista.volume = 0.3;
-musicaAsBatalla.volume = 0.3;
-musicaCampeon.volume = 0.3;
 
 sonidoGanar.volume = 0.7;
 sonidoPerder.volume = 0.7;
 
 musicaCampista.loop = true;
-musicaAsBatalla.loop = true;
-musicaCampeon.loop = true;
 
 export const musicActual = {
   musicActualPlay: null

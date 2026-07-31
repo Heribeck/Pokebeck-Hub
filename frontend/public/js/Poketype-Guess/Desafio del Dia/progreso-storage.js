@@ -1,15 +1,4 @@
-// Módulo encargado de guardar y leer el progreso persistente del jugador:
-// racha de Desafíos del Día completados, mejor racha histórica, e intentos usados hoy.
-//
-// Nota: sin bundler, los plugins de Capacitor se acceden vía window.Capacitor.Plugins
-// (mismo patrón que ya usas para "App" en main.js), no con un import de npm.
-//
-// Respaldo automático: si el plugin nativo no está disponible (por ejemplo, probando
-// en el navegador normal en vez de un emulador/dispositivo), se usa localStorage
-// con la misma forma de API, para poder seguir probando sin instalar el emulador.
 const PreferencesNativo = window.Capacitor?.Plugins?.Preferences;
-
-// Importar sistema de notificaciones locales
 
 const PreferencesLocalStorage = {
   async get({ key }) {
@@ -169,8 +158,6 @@ export async function registrarDesafioFallido() {
 // Determina qué mecánica de juego corresponde al Desafío del Día,
 // según la racha ACTUAL del jugador.
 export function obtenerMecanicaSegunRacha(racha) {
-  if (racha >= 30) return 'campeon';
-  if (racha >= 10) return 'as';
   return 'campista';
 }
 

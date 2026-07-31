@@ -6,10 +6,10 @@ import {
   adState,
   configRevivir,
   idIntersticial,
-} from './config.js';
+} from './Poketype-Guess/config.js';
 
-import { mostrarNotificacion } from './utils.js';
-import { ocultarBotonRevivir, cuentaRegresivaRevivir, ejecutarRevivir, cancelarContadorRevivir } from './modos.js';
+import { mostrarNotificacion } from './Poketype-Guess/utils.js';
+import { ocultarBotonRevivir, cuentaRegresivaRevivir, ejecutarRevivir, cancelarContadorRevivir } from './Poketype-Guess/Modo Entrenamiento/entrenamiento.js';
 
 //Funcion para inicializar AdMob
 export async function InicializarAdMob() {
@@ -46,10 +46,10 @@ export async function InicializarAdMob() {
         await cuentaRegresivaRevivir(config.mensaje);
         
         if (adState.modoRevivirActivo === 'desafio') {
-          const { continuarDesafioTrasRevivir } = await import('./desafio-dia.js');
+          const { continuarDesafioTrasRevivir } = await import('./Poketype-Guess/Desafio del Dia/desafio-dia.js');
           continuarDesafioTrasRevivir();
         } else if (adState.modoRevivirActivo === 'reto') {
-          const { continuarRetoTrasRevivir } = await import('./reto.js');
+          const { continuarRetoTrasRevivir } = await import('./Poketype-Guess/Modo Estudio/estudio.js');
           continuarRetoTrasRevivir();
         } else {
           ejecutarRevivir(adState.modoRevivirActivo);
@@ -205,7 +205,7 @@ export async function mostrarIntersticial() {
   try {
     await window.Capacitor.Plugins.AdMob.showInterstitial();
     intersticialCargado = false;
-    prepararIntersticial(); // deja uno nuevo listo para la próxima vez
+    prepararIntersticial();
     return true;
   } catch (error) {
     console.error("Error al mostrar el intersticial:", error);

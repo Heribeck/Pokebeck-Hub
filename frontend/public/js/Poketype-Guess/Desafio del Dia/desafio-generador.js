@@ -1,8 +1,5 @@
-// Lógica pura para generar cada ronda del Desafío del Día.
-// Reutiliza validarTiposPokemon de utils.js (sin duplicarla), pero usa el generador
-// CON SEMILLA en vez de Math.random(), para que el desafío sea igual todos los reintentos del mismo día.
-import { validarTiposPokemon } from './utils.js';
-import { types } from './config.js';
+import { validarTiposPokemon } from '../utils.js';
+import { types } from '../config.js';
 import { elegirAlAzar, mezclarConGenerador } from './prng-semilla.js';
 
 // Elige dos tipos al azar (con semilla) y confirma que exista al menos

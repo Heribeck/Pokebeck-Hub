@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     
@@ -58,8 +58,6 @@
 
         <div class="caja-dificultades">
             <button id="btn-campista" class="boton-campista"> <i class="fas fa-user"></i> Campista</button>
-            <button id="btn-as" class="boton-as"> <i class="fas fa-user-tie"></i> As de Batalla</button>
-            <button id="btn-campeon" class="boton-campeon"> <i class="fas fa-crown"></i> Campeón</button>
         </div>
 
     </section>
@@ -268,146 +266,6 @@
                     <button id="btn-confirmar-reinicio-campista" class="btn-confirmar">Confirmar</button>
 
                     <button id="btn-cancelar-reinicio-campista" class="btn-cancelar">Cancelar</button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <section id="panel-As" class="layout-As">
-
-        <h2 style="color: #ff9800;">Nivel As De Batalla</h2>
-
-        <div id="configuracion-As" class="caja-configuracion-As">
-
-            <button id="reinicio-score-As" class="boton-reinicio"><i class="fa-solid fa-rotate-right"></i></button>
-
-            <p>Score: <span id="score-As">0</span> || MAX: <span id="max-As">0</span></p>
-                
-            <button id="reinicio-max-As" class="boton-reinicio"><i class="fa-solid fa-rotate-right"></i></button>
-
-        </div>
-
-        <div class="caja-tipos">
-
-            <img id="type1-icon-As" class="type-icon" src="assets/img/icons/icono-only.png" alt="Normal">
-            <img id="type2-icon-As" class="type-icon" src="assets/img/icons/icono-only.png" alt="Normal">
-
-        </div>
-
-        <p id="mensaje-acierto-As"></p>
-
-
-        <div class="caja-barra-tiempo">
-            <div id="tiempo-As" class="barra-tiempo"></div>
-        </div>
-
-        <div class="caja-select" style="display: none;" id="caja-select">
-
-            <select id="select"></select>
-
-        </div>
-
-        <div class="botones-As">
-            <button id="iniciar-juego-As" class="boton-iniciar-juego">Iniciar Juego</button>
-            <button id="btn-next-As" class="boton-next">Siguiente</button>
-            <button id="btn-intento-As" class="boton-intento">Volver a Intentarlo</button>
-            <button id="revivir-As" class="boton-revivir">
-                Revivir Viendo un Video
-                <i class="fa-solid fa-film" style="margin-left: 10px;"></i>
-            </button>
-            <button id="btn-validar-select-As" class="boton-validar-select">Validar</button>
-            <button id="no-existe-As" class="boton-no-existe">No Existe</button>
-        </div>
-        
-        <div id="ventana-confirmacion-As" class="layout-confirmacion-ventana">
-
-            <div class="caja-confirmacion">
-
-                <h3>Reiniciar Score Máximo</h3>
-
-                <p>¿Seguro que deseas reiniciar tu récord?</p>
-
-                <div class="caja-botones-confirmacion">
-
-                    <button id="btn-confirmar-reinicio-As" class="btn-confirmar">Confirmar</button>
-
-                    <button id="btn-cancelar-reinicio-As" class="btn-cancelar">Cancelar</button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <section id="panel-campeon" class="layout-campeon">
-
-        <h2 style="color: #f44336;">Nivel Campeón</h2>
-
-        <div id="configuracion-campeon" class="caja-configuracion-campeon">
-
-            <button id="reinicio-score-campeon" class="boton-reinicio"><i class="fa-solid fa-rotate-right"></i></button>
-
-            <p>Score: <span id="score-campeon">0</span> || MAX: <span id="max-campeon">0</span></p>
-                
-            <button id="reinicio-max-campeon" class="boton-reinicio"><i class="fa-solid fa-rotate-right"></i></button>
-
-        </div>
-
-        <div class="caja-tipos">
-
-            <img id="type1-icon-campeon" class="type-icon" src="assets/img/icons/icono-only.png" alt="Normal">
-            <img id="type2-icon-campeon" class="type-icon" src="assets/img/icons/icono-only.png" alt="Normal">
-
-        </div>
-
-        <p id="mensaje-acierto-campeon"></p>
-
-
-        <div class="caja-barra-tiempo">
-            <div class="barra-tiempo" id="tiempo-campeon"></div>
-        </div>
-
-        <div id="caja-input" style="display: none;">
-
-            <h3>Escribe Tu Respuesta</h3>  
-
-            <input type="text" class="input-pokemon" id="respuesta-input-campeon" placeholder="Nombre del Pokémon">
-            
-        </div>
-    
-        <div class="botones-campeon">
-
-            <button id="iniciar-juego-campeon" class="boton-iniciar-juego">Iniciar Juego</button>
-            <button id="btn-next-campeon" class="boton-next" >Siguiente</button>
-            <button id="btn-intento-campeon" class="boton-intento" >Volver a Intentarlo</button>
-            <button id="revivir-campeon" class="boton-revivir">
-                Revivir Viendo un Video
-                <i class="fa-solid fa-film" style="margin-left: 10px;"></i>
-            </button>
-            <button class="btn-revelar-campeon" id="btn-revelar-campeon">Revelar</button>
-            <button id="no-existe-campeon" class="boton-no-existe">No Existe</button>
-
-        </div>
-
-        <div id="ventana-confirmacion-campeon" class="layout-confirmacion-ventana">
-
-            <div class="caja-confirmacion">
-
-                <h3>Reiniciar Score Máximo</h3>
-
-                <p>¿Seguro que deseas reiniciar tu récord?</p>
-
-                <div class="caja-botones-confirmacion">
-
-                    <button id="btn-confirmar-reinicio-campeon" class="btn-confirmar">Confirmar</button>
-
-                    <button id="btn-cancelar-reinicio-campeon" class="btn-cancelar">Cancelar</button>
 
                 </div>
 

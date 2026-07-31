@@ -8,8 +8,6 @@ import {
     sonidoPerder, 
     musicActual, 
     campista,
-    As,
-    campeon,
     acerca,
     generador,
     dificultad,
@@ -17,8 +15,8 @@ import {
     desafio
 } from './config.js';
 
-import { mostrarBanner } from './admob.js';
-import { actualizarRachaEnMenu } from './desafio-dia.js';
+import { mostrarBanner } from '../admob.js';
+import { actualizarRachaEnMenu } from './Desafio del Dia/desafio-dia.js';
 import { obtenerHX } from './hx-storage.js';
 import { hxGlobal, panelReto } from './config.js';
 
@@ -207,8 +205,6 @@ export function volverAlMenu(){
     if (dificultad) {dificultad.style.display = "none";}
     if (generador) {generador.style.display = "none";}
     if (campista) {campista.style.display = "none";}
-    if (As) {As.style.display = "none";}
-    if (campeon) {campeon.style.display = "none";}
     if (desafio) {desafio.style.display = "none"}
     if (panelReto) {panelReto.style.display = "none"}
     mostrarBanner("TOP_CENTER");

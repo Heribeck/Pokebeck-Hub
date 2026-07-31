@@ -1,10 +1,4 @@
-// Generador de números "aleatorios" pero deterministas, basado en una semilla numérica.
-// Mismo semilla = exactamente la misma secuencia de números siempre.
-// Se usa para que el Desafío del Día sea igual para todos los jugadores ese día,
-// y para que un reintento (dentro del mismo día) repita el mismo desafío.
-
-// Algoritmo mulberry32: rápido, buena distribución, suficiente para generar preguntas de juego
-// (no se necesita para nada criptográfico, solo para reproducibilidad)
+//no entiendo esta funcion todavia...
 function crearMulberry32(semilla) {
   return function siguienteNumero() {
     semilla |= 0;
@@ -42,8 +36,7 @@ export function crearGeneradorDelDia() {
   return crearMulberry32(semilla);
 }
 
-// Utilidad: elige un elemento al azar de un array, usando un generador dado
-// (mismo patrón que Math.random(), pero recibe el generador como parámetro)
+// Utilidad: elige un elemento al azar de un array, usando un generador dado (mismo patrón que Math.random(), pero recibe el generador como parámetro)
 export function elegirAlAzar(array, generador) {
   const indice = Math.floor(generador() * array.length);
   return array[indice];

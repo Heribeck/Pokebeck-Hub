@@ -1,8 +1,3 @@
-// Orquestador del modo Reto: sesión de 10 rondas, jugable ilimitadamente,
-// otorga HX por cada acierto según la mecánica elegida. Reutiliza el mismo
-// motor de sesión y generador de rondas que el Desafío del Día, pero con
-// Math.random() normal (no hay semilla por fecha, no es "una vez al día").
-
 import {
   panelReto,
   main,
@@ -10,8 +5,6 @@ import {
   generador as panelGenerador,
   acerca,
   campista,
-  As,
-  campeon,
   desafio,
   gameState,
   timeState,
@@ -28,26 +21,18 @@ import {
   rondaActualTextoReto,
   hxGanadoTextoReto,
   uiCampistaReto,
-  uiAsReto,
-  uiCampeonReto,
   cajaOpcionesPokemonReto,
-  selectReto,
-  btnValidarReto,
-  btnNoExisteReto,
-  respuestaInputReto,
-  btnRevelarReto,
-  btnNoExisteCampeonReto,
   typesIcono,
   coloresTipos,
-} from './config.js';
+} from '../config.js';
 
-import { mostrarNotificacion, soundWin, soundLose, vibrarWin, vibrarLose, capitalizarPrimeraLetra, buscarPokemonCorrecto, validarTiposPokemon, validarSimilitudPalabra, volverAlMenu } from './utils.js';
-import { generarTiposDelDia, generarRondaCampista } from './desafio-generador.js';
-import { crearSesionDesafio, procesarRespuesta, calcularResultadoFinal, rechazarRevivir } from './desafio-motor.js';
-import { esMecanicaDesbloqueada, hxFaltanteParaDesbloquear, obtenerHXPorAcierto } from './hx-sistema.js';
-import { obtenerHX, sumarHX } from './hx-storage.js';
-import { mostrarIntersticial } from './admob.js';
-import { mostrarCelebracion } from './celebracion.js';
+import { mostrarNotificacion, soundWin, soundLose, vibrarWin, vibrarLose, capitalizarPrimeraLetra, buscarPokemonCorrecto, validarTiposPokemon, validarSimilitudPalabra, volverAlMenu } from '../utils.js';
+import { generarTiposDelDia, generarRondaCampista } from '../Desafio del Dia/desafio-generador.js';
+import { crearSesionDesafio, procesarRespuesta, calcularResultadoFinal, rechazarRevivir } from '../Desafio del Dia/desafio-motor.js';
+import { esMecanicaDesbloqueada, hxFaltanteParaDesbloquear, obtenerHXPorAcierto } from '../hx-sistema.js';
+import { obtenerHX, sumarHX } from '../hx-storage.js';
+import { mostrarIntersticial } from '../../admob.js';
+import { mostrarCelebracion } from '../../celebracion.js';
 
 // Estado interno de la sesión de Reto en curso
 let sesionActual = null;
@@ -79,8 +64,6 @@ export async function iniciarReto(mecanica) {
   tipo2Reto.style.backgroundColor = "transparent";
 
   uiCampistaReto.style.display = 'none';
-  uiAsReto.style.display = 'none';
-  uiCampeonReto.style.display = 'none';
   mensajeAciertoReto.innerHTML = '';
   cajaOpcionesPokemonReto.innerHTML = '';
   
@@ -103,10 +86,7 @@ function mostrarPanelReto() {
   panelGenerador.style.display = 'none';
   acerca.style.display = 'none';
   campista.style.display = 'none';
-  As.style.display = 'none';
-  campeon.style.display = 'none';
   desafio.style.display = 'none';
-
   panelReto.style.display = 'flex';
 }
 
@@ -140,10 +120,6 @@ function siguienteRonda() {
 
   if (sesionActual.mecanica === 'campista') {
     prepararRondaCampista(type1, type2);
-  } else if (sesionActual.mecanica === 'as') {
-    prepararRondaAs(type1, type2);
-  } else if (sesionActual.mecanica === 'campeon') {
-    prepararRondaCampeon(type1, type2);
   }
 
   actualizarTextoProgreso();
@@ -151,8 +127,6 @@ function siguienteRonda() {
 
 function prepararRondaCampista(type1, type2) {
   uiCampistaReto.style.display = 'flex';
-  uiAsReto.style.display = 'none';
-  uiCampeonReto.style.display = 'none';
 
   const { correctPokemon, opciones } = generarRondaCampista(dataState.pokedex, type1, type2, Math.random);
   correctPokemonRondaActual = correctPokemon;
@@ -180,67 +154,6 @@ function prepararRondaCampista(type1, type2) {
     respondida = true;
     procesarResultadoDeRonda(false);
   }, 3);
-}
-
-function prepararRondaAs(type1, type2) {
-  uiCampistaReto.style.display = 'none';
-  uiAsReto.style.display = 'flex';
-  btnValidarReto.style.display = 'flex';
-  btnNoExisteReto.style.display = 'flex';
-  uiCampeonReto.style.display = 'none';
-
-  const nombresValidos = dataState.pokedex
-    .filter(p => p.types.includes(type1))
-    .map(p => p.name)
-    .sort();
-
-  if (selectReto.tomselect) {
-    selectReto.tomselect.destroy();
-  }
-  selectReto.innerHTML = '';
-
-  const opcionDefault = document.createElement('option');
-  opcionDefault.value = '';
-  opcionDefault.textContent = 'Selecciona un Pokémon';
-  opcionDefault.disabled = true;
-  opcionDefault.selected = true;
-  selectReto.appendChild(opcionDefault);
-
-  nombresValidos.forEach(name => {
-    const opcion = document.createElement('option');
-    opcion.value = name;
-    opcion.textContent = name.replaceAll('-', ' ');
-    selectReto.appendChild(opcion);
-  });
-
-  new TomSelect(selectReto, {
-    create: false,
-    sortField: { field: 'text', direction: 'asc' },
-    maxOptions: 1000,
-  });
-
-  correctPokemonRondaActual = buscarPokemonCorrecto(dataState.pokedex, type1, type2);
-
-  iniciarBarraTiempoReto(() => {
-    procesarResultadoDeRonda(false);
-  },0.7);
-}
-
-function prepararRondaCampeon(type1, type2) {
-  uiCampistaReto.style.display = 'none';
-  uiAsReto.style.display = 'none';
-  uiCampeonReto.style.display = 'flex';
-  btnRevelarReto.style.display = 'flex';
-  btnNoExisteCampeonReto.style.display = 'flex';
-
-  respuestaInputReto.value = '';
-  respuestaInputReto.disabled = false;
-
-  correctPokemonRondaActual = buscarPokemonCorrecto(dataState.pokedex, type1, type2);
-
-  iniciarBarraTiempoReto(() => {
-    procesarResultadoDeRonda(false);
-  }, 0.6);
 }
 
 // Temporizador aislado para Reto (mismo patrón que en el Desafío del Día)
@@ -271,10 +184,6 @@ async function procesarResultadoDeRonda(esCorrecta) {
   const hxGanado = obtenerHXPorAcierto(sesionActual.mecanica);
   const hxPerdido = Math.floor(hxQueGanaria / 2);
 
-  btnValidarReto.style.display = 'none';
-  btnNoExisteReto.style.display = 'none';
-  btnRevelarReto.style.display = 'none';
-  btnNoExisteCampeonReto.style.display = 'none';
   document.querySelectorAll('#opciones-pokemon-reto .btn-opcion').forEach(btn => {
     btn.style.display = 'none';
   });
@@ -322,63 +231,6 @@ async function procesarResultadoDeRonda(esCorrecta) {
     btnNextReto.onclick = () => siguienteRonda();
   }
 }
-
-// Eventos de As/Campeón (se registran una sola vez, fuera de las funciones)
-btnValidarReto.onclick = () => {
-  const seleccionado = selectReto.tomselect ? selectReto.tomselect.getValue() : selectReto.value;
-
-  if (!seleccionado) {
-    mostrarNotificacion('Por favor, selecciona un Pokémon');
-    return;
-  }
-
-  const pokemon = dataState.pokedex.find(p => p.name === seleccionado);
-  if (!pokemon) {
-    mostrarNotificacion('El Pokémon colocado no existe o está mal escrito');
-    return;
-  }
-
-  detenerBarraTiempoReto();
-  const esCorrecta = validarTiposPokemon(pokemon, gameState.type1ValueReto, gameState.type2ValueReto);
-  procesarResultadoDeRonda(esCorrecta);
-};
-
-btnNoExisteReto.onclick = () => {
-  detenerBarraTiempoReto();
-  const existeAlguno = dataState.pokedex.some(p =>
-    validarTiposPokemon(p, gameState.type1ValueReto, gameState.type2ValueReto)
-  );
-  procesarResultadoDeRonda(!existeAlguno);
-};
-
-btnRevelarReto.onclick = () => {
-  const valor = respuestaInputReto.value.trim().toLowerCase();
-
-  if (!valor) {
-    mostrarNotificacion('Por favor, escribe un Pokémon');
-    return;
-  }
-
-  detenerBarraTiempoReto();
-
-  const pokemonExacto = dataState.pokedex.find(p => p.name === valor);
-  const pokemonSimilar = dataState.pokedex.find(p => validarSimilitudPalabra(valor, p.name, 70));
-  const pokemonEncontrado = pokemonExacto || pokemonSimilar;
-
-  const esCorrecta = pokemonEncontrado
-    ? validarTiposPokemon(pokemonEncontrado, gameState.type1ValueReto, gameState.type2ValueReto)
-    : false;
-
-  procesarResultadoDeRonda(esCorrecta);
-};
-
-btnNoExisteCampeonReto.onclick = () => {
-  detenerBarraTiempoReto();
-  const existeAlguno = dataState.pokedex.some(p =>
-    validarTiposPokemon(p, gameState.type1ValueReto, gameState.type2ValueReto)
-  );
-  procesarResultadoDeRonda(!existeAlguno);
-};
 
 // Se llama cuando la sesión de 10 rondas terminó
 async function finalizarSesion() {

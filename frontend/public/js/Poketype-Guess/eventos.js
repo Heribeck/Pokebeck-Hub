@@ -6,8 +6,6 @@ import {
   generador,
   acerca,
   campista,
-  As,
-  campeon,
   btnPoketype,
   btnReto,
   btnEntrenamiento,
@@ -31,75 +29,25 @@ import {
   confirmarReinicioCampista,
   confirmacionCampista,
   cancelarReinicioCampista,
-  btnAs,
-  btnIniciarJuegoAs,
-  pMaxAs,
-  pScoreAs,
-  btnNextAs,
-  btnIntentoAs,
-  btnRevivirAs,
-  reinicioScoreAs,
-  btnReinicioMaxAs,
-  confirmarReinicioAs,
-  cancelarReinicioAs,
-  btnCampeon,
-  btnIniciarJuegoCampeon,
-  pMaxCampeon,
-  pScoreCampeon,
-  btnNextCampeon,
-  btnIntentoCampeon,
-  btnRevivirCampeon,
-  reinicioScoreCampeon,
-  btnReinicioMaxCampeon,
-  confirmarReinicioCampeon,
-  cancelarReinicioCampeon,
-  mensajeAciertoCampeon,
-  confirmacionCampeon,
-  btnValidarAs,
-  btnNoExisteAs,
-  btnNoExisteCampeon,
-  btnRevelarCampeon,
   btnGenerar,
   tipo1Campista,
   tipo2Campista,
-  tipo1As,
-  tipo2As,
-  tipo1Campeon,
-  tipo2Campeon,
-  cajaSelect,
-  selectAs,
   mensajeAciertoCampista,
-  mensajeAciertoAs,
-  cajainput,
-  respuestaInputCampeon,
   adState,
   scoreState,
-  confirmacionAs,
   musicaCampista,
-  musicaAsBatalla,
-  musicaCampeon,
   sonidoTouch
 } from './config.js';
 
 // Funciones importadas desde otros archivos
-import { ocultarBanner, prepararBonificado, clickRevivir } from './admob.js';
-import {
-  ocultarBotonRevivir,
-  campistaLogica,
-  AsLogica,
-  validarSelect,
-  logicaNoExisteAs,
-  CampeonLogica,
-  logicaNoExisteCampeon,
-  seleccionadoVacio,
-  iniciarBarraTiempoCampeon
-} from './modos.js';
-import { iniciarGeneracion, generarTipos } from './generador.js';
+import { ocultarBanner, prepararBonificado, clickRevivir } from '../admob.js';
+import { ocultarBotonRevivir, campistaLogica,} from './Modo Entrenamiento/entrenamiento.js';
+import { iniciarGeneracion, generarTipos } from './Generador/generador.js';
 import { cambiarMusicaModes, reiniciarScoreActual, reiniciarScoreMax } from './utils.js';
-import { iniciarDesafioDelDia } from './desafio-dia.js';
+import { iniciarDesafioDelDia } from './Desafio del Dia/desafio-dia.js';
 import { reiniciarUsados } from './control-repeticion.js';
 import { programarNotificacionDePrueba } from './notificaciones-locales.js';
-import { iniciarReto } from './reto.js';
+import { iniciarReto } from './Modo Estudio/estudio.js';
 
 // Variable de estado para diferenciar Reto de Entrenamiento
 let modoJuegoSeleccionado = 'entrenamiento'; // 'entrenamiento' o 'reto'
@@ -217,7 +165,6 @@ btnReto.addEventListener("click", () => {
 
 // --- |Evento del Apartado del Desafio Del Dia desde PokeType| -- //
 btnDesafio.addEventListener('click', () => {
-  poketype.style.display = "none";
   iniciarDesafioDelDia()
   ocultarBanner();
 });
@@ -280,169 +227,6 @@ confirmarReinicioCampista.addEventListener("click", () => {
 //Evento para cancelar la eliminación del score Max
 cancelarReinicioCampista.addEventListener("click", () => {
   confirmacionCampista.style.display = "none";
-});
-
-// --- |Eventos del Apartado "Panel-As"| --- //
-btnAs.addEventListener("click", () => {
-  if (modoJuegoSeleccionado === 'reto') {
-    iniciarReto('as');
-  } else {
-    configurarModo(As, dificultad, pMaxAs, scoreState.maxAsDeBatalla, musicaAsBatalla);
-  }
-});
-
-//Evento del boton "Iniciar Juego" del modo As
-btnIniciarJuegoAs.addEventListener("click", () => {
-  ocultarBotonRevivir("as");
-  cambiarMusicaModes(musicaAsBatalla);
-  btnIniciarJuegoAs.style.display = "none";
-  cajaSelect.style.display = "block";
-  btnValidarAs.style.display = "flex";
-  btnNoExisteAs.style.display = "flex";
-  generarTipos(tipo1As, tipo2As);
-  AsLogica();
-  reiniciarUsados("as")
-});
-
-//Evento del Boton "Validar" Del modo As
-btnValidarAs.addEventListener("click", () => {
-  btnValidarAs.style.display = "none";
-  btnNoExisteAs.style.display = "none";
-  if (selectAs.tomselect) {
-      selectAs.tomselect.disable();
-  }
-  validarSelect();
-});
-
-//Evento del Boton "No Existe" Del modo As
-btnNoExisteAs.addEventListener("click", () => {
-  logicaNoExisteAs();
-});
-
-//Evento del Boton "Siguiente" Del modo As
-btnNextAs.addEventListener("click", () => {
-  manejarBotonSiguiente("as", tipo1As, tipo2As, AsLogica, btnNextAs, mensajeAciertoAs, {
-    cajaSelect,
-    btnValidar: btnValidarAs,
-    btnNoExiste: btnNoExisteAs,
-    selectElement: selectAs
-  });
-});
-
-//Evento del Boton "Volver a intentar" del modo As
-btnIntentoAs.addEventListener("click", () => {
-  manejarBotonIntento("as", tipo1As, tipo2As, AsLogica, btnIntentoAs, mensajeAciertoAs, musicaAsBatalla, {
-    cajaSelect,
-    btnValidar: btnValidarAs,
-    btnNoExiste: btnNoExisteAs,
-    selectElement: selectAs
-  });
-  reiniciarUsados("as")
-});
-
-//Evento para mostrar el video bonificado del modo As
-btnRevivirAs.addEventListener("click", () => {
-  clickRevivir("as");
-});
-
-//Evento del boton "Reiniciar Max" del modo As
-btnReinicioMaxAs.addEventListener("click", () => {
-  confirmacionAs.style.display = "flex";
-});
-
-//Evento de la confirmación de reinicio Max As
-confirmarReinicioAs.addEventListener("click", () => {
-  reiniciarScoreMax("maxAsDeBatalla", "maxAsDeBatalla", pMaxAs, scoreState, confirmacionAs);
-});
-
-//Evento de la cancelación de reinicio Max As
-cancelarReinicioAs.addEventListener("click", () => {
-  confirmacionAs.style.display = "none";
-});
-
-//Evento de reinico del Score en As
-reinicioScoreAs.addEventListener("click", () => {
-  reiniciarScoreActual("scoreAsDeBatalla", pScoreAs, scoreState);
-});
-
-// --- |Eventos del Apartado "Panel-Campeon"| --- //
-btnCampeon.addEventListener("click", () => {
-  if (modoJuegoSeleccionado === 'reto') {
-    iniciarReto('campeon');
-  } else {
-    configurarModo(campeon, dificultad, pMaxCampeon, scoreState.maxCampeon, musicaCampeon);
-  }
-});
-
-//Evento Para iniciar el juego en el modo Campeon
-btnIniciarJuegoCampeon.addEventListener("click", () => {
-  ocultarBotonRevivir("campeon");
-  btnIniciarJuegoCampeon.style.display = "none";
-  btnRevelarCampeon.style.display = "flex";
-  btnNoExisteCampeon.style.display = "flex";
-  cajainput.style.display = "block";
-  generarTipos(tipo1Campeon, tipo2Campeon);
-  iniciarBarraTiempoCampeon();
-  reiniciarUsados("campeon")
-});
-
-//Evento para verificar la respuesta del jugador en el modo Campeon
-btnRevelarCampeon.addEventListener("click", () => {
-  btnRevelarCampeon.style.display = "none";
-  btnNoExisteCampeon.style.display = "none";
-  btnNextCampeon.style.display = "flex";
-  seleccionadoVacio() || CampeonLogica();
-});
-
-//Evento del boton "siguiente" en el modo de Campeon
-btnNextCampeon.addEventListener("click", () => {
-  manejarBotonSiguiente("campeon", tipo1Campeon, tipo2Campeon, iniciarBarraTiempoCampeon, btnNextCampeon, mensajeAciertoCampeon, {
-    cajaInput: cajainput,
-    btnNoExiste: btnNoExisteCampeon,
-    btnRevelar: btnRevelarCampeon,
-    inputElement: respuestaInputCampeon
-  });
-});
-
-//Evento del boton "No Existe" en el modo de Campeon
-btnNoExisteCampeon.addEventListener("click", () => {
-  logicaNoExisteCampeon();
-});
-
-//Evento del Boton "Volver a intentarlo" en el modo Campeon
-btnIntentoCampeon.addEventListener("click", () => {
-  manejarBotonIntento("campeon", tipo1Campeon, tipo2Campeon, iniciarBarraTiempoCampeon, btnIntentoCampeon, mensajeAciertoCampeon, musicaCampeon, {
-    cajaInput: cajainput,
-    btnNoExiste: btnNoExisteCampeon,
-    btnRevelar: btnRevelarCampeon,
-    inputElement: respuestaInputCampeon
-  });
-  reiniciarUsados("campeon")
-});
-
-//Evento para mostrar el video bonificado del modo Campeon
-btnRevivirCampeon.addEventListener("click", () => {
-  clickRevivir("campeon");
-});
-
-//Evento del Boton "Reiniciar Max" en el modo Campeon
-btnReinicioMaxCampeon.addEventListener("click", () => {
-  confirmacionCampeon.style.display = "flex";
-});
-
-//Evento del Boton "Confirmar Reinicio" en el modo Campeon
-confirmarReinicioCampeon.addEventListener("click", () => {
-  reiniciarScoreMax("maxCampeon", "maxCampeon", pMaxCampeon, scoreState, confirmacionCampeon);
-});
-
-//Evento del Boton "Cancelar Reinicio" en el modo Campeon
-cancelarReinicioCampeon.addEventListener("click", () => {
-  confirmacionCampeon.style.display = "none";
-});
-
-//Evento del Boton "Reiniciar Score" en el modo Campeon
-reinicioScoreCampeon.addEventListener("click", () => {
-  reiniciarScoreActual("scoreCampeon", pScoreCampeon, scoreState);
 });
 
 // --- |Eventos del Apartado "Generador"| --- //

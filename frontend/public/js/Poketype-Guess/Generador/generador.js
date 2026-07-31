@@ -1,7 +1,7 @@
 // Variables importadas desde config.js
-import { types, typesIcono, coloresTipos, gameState, esperar, btnGenerar, tipo1, tipo2, main } from './config.js';
-import { Aleatoriedad, detenerTodoElAudio, soundLose, capitalizarPrimeraLetra } from './utils.js';
-import { guardarScoreAntesDePerder, mostrarBotonRevivir } from './modos.js';
+import { types, typesIcono, coloresTipos, gameState, esperar, btnGenerar, tipo1, tipo2, main } from '../config.js';
+import { Aleatoriedad, detenerTodoElAudio, soundLose, capitalizarPrimeraLetra } from '../utils.js';
+import { guardarScoreAntesDePerder, mostrarBotonRevivir } from '../Modo Entrenamiento/entrenamiento.js';
 
 //Función para Iniciar el conteo en el Generador
 export async function iniciarGeneracion() {
@@ -29,14 +29,14 @@ export async function iniciarGeneracion() {
 
 //Función para generar tipos aleatorios
 export async function generarTipos(tipo1Generic, tipo2Generic) {
-    gameState.type1Value = types[Aleatoriedad(0, types.length - 1)];
-    gameState.type2Value = types[Aleatoriedad(0, types.length - 1)];
-    
-    tipo1Generic.src = typesIcono[gameState.type1Value];
-    tipo2Generic.src = typesIcono[gameState.type2Value];
-    
-    tipo1Generic.style.backgroundColor = coloresTipos[gameState.type1Value];
-    tipo2Generic.style.backgroundColor = coloresTipos[gameState.type2Value];
+  gameState.type1Value = types[Aleatoriedad(0, types.length - 1)];
+  gameState.type2Value = types[Aleatoriedad(0, types.length - 1)];
+  
+  tipo1Generic.src = typesIcono[gameState.type1Value];
+  tipo2Generic.src = typesIcono[gameState.type2Value];
+  
+  tipo1Generic.style.backgroundColor = coloresTipos[gameState.type1Value];
+  tipo2Generic.style.backgroundColor = coloresTipos[gameState.type2Value];
 }
 
 //Función para iniciar la barra de tiempo

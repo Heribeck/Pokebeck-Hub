@@ -4,15 +4,11 @@
 export const HX_INICIAL = 700;
 
 const UMBRALES_DESBLOQUEO = {
-  campista: 0,     // siempre disponible
-  as: 2000,
-  campeon: 3000,
+  campista: 0,
 };
 
 const HX_POR_ACIERTO = {
   campista: 10,
-  as: 20,
-  campeon: 35,
 };
 
 // ¿Está desbloqueada esta mecánica con el HX actual del jugador?

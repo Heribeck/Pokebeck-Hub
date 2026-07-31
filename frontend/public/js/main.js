@@ -2,23 +2,23 @@
 import './firebase-config.js';
 
 // Variables importadas desde config.js (solo las necesarias para inicialización)
-import { main, adState } from './config.js';
+import { main, adState } from './Poketype-Guess/config.js';
 
 // Funciones importadas desde otros archivos
-import { loadApp, cargarPokedex, detenerTodoElAudio, volverAlMenu } from './utils.js';
+import { loadApp, cargarPokedex, detenerTodoElAudio, volverAlMenu } from './Poketype-Guess/utils.js';
 import { InicializarAdMob, prepararBonificado } from './admob.js';
 
 // Cargar eventos.js para que se asignen los event listeners
-import './eventos.js';
+import './Poketype-Guess/eventos.js';
 
 //Actualizar La racha del Usuario
-import { actualizarRachaEnMenu } from './desafio-dia.js';
+import { actualizarRachaEnMenu } from './Poketype-Guess/Desafio del Dia/desafio-dia.js';
 
-import { solicitarPermisoNotificaciones, programarNotificacionRacha } from './notificaciones-locales.js';
+import { solicitarPermisoNotificaciones, programarNotificacionRacha } from './Poketype-Guess/notificaciones-locales.js';
 
-import { obtenerProgreso, yaCompletoDesafioHoy } from './progreso-storage.js';
-import { obtenerHX } from './hx-storage.js';
-import { hxGlobal, hxGlobalPoketype, rachaTextoPoketype } from './config.js';
+import { obtenerProgreso, yaCompletoDesafioHoy } from './Poketype-Guess/Desafio del Dia/progreso-storage.js';
+import { obtenerHX } from './Poketype-Guess/hx-storage.js';
+import { hxGlobal, hxGlobalPoketype, rachaTextoPoketype } from './Poketype-Guess/config.js';
 
 // Funcion global o expuesta para recargar los stats del menu
 export async function actualizarStatsMenu() {
