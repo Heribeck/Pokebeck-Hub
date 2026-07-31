@@ -9,7 +9,10 @@ import { loadApp, cargarPokedex, detenerTodoElAudio, volverAlMenu } from './Poke
 import { InicializarAdMob, prepararBonificado } from './admob.js';
 
 // Cargar eventos.js para que se asignen los event listeners
-import './Poketype-Guess/eventos.js';
+import './eventosMain.js';
+import './Poketype-Guess/eventosPoketype.js'
+import './Poketype-Guess/Modo Estudio/eventosEstudio.js'
+import './Poketype-Guess/Modo Entrenamiento/eventosEntrenamiento.js'
 
 //Actualizar La racha del Usuario
 import { actualizarRachaEnMenu } from './Poketype-Guess/Desafio del Dia/desafio-dia.js';
@@ -18,7 +21,7 @@ import { solicitarPermisoNotificaciones, programarNotificacionRacha } from './Po
 
 import { obtenerProgreso, yaCompletoDesafioHoy } from './Poketype-Guess/Desafio del Dia/progreso-storage.js';
 import { obtenerHX } from './Poketype-Guess/hx-storage.js';
-import { hxGlobal, hxGlobalPoketype, rachaTextoPoketype } from './Poketype-Guess/config.js';
+import { hxGlobal, hxGlobalPoketype } from './Poketype-Guess/config.js';
 
 // Funcion global o expuesta para recargar los stats del menu
 export async function actualizarStatsMenu() {

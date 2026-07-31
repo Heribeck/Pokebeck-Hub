@@ -3,27 +3,29 @@ import { types, typesIcono, coloresTipos, gameState, esperar, btnGenerar, tipo1,
 import { Aleatoriedad, detenerTodoElAudio, soundLose, capitalizarPrimeraLetra } from '../utils.js';
 import { guardarScoreAntesDePerder, mostrarBotonRevivir } from '../Modo Entrenamiento/entrenamiento.js';
 
+btnGenerar.onclick = () => iniciarGeneracion();
+
 //Función para Iniciar el conteo en el Generador
 export async function iniciarGeneracion() {
   
-    btnGenerar.disabled = true;
-   
-    btnGenerar.textContent = "3...";
-    await esperar(1000); 
-    
-    btnGenerar.textContent = "2...";
-    await esperar(1000);
-    
-    btnGenerar.textContent = "1...";
-    await esperar(1000);    
-    
-    btnGenerar.textContent = "¡Generando!";
-    
-    generarTipos(tipo1, tipo2);
-    
-    await esperar(500); 
-    btnGenerar.textContent = "Generar";
-    btnGenerar.disabled = false;
+  btnGenerar.disabled = true;
+  
+  btnGenerar.textContent = "3...";
+  await esperar(1000); 
+  
+  btnGenerar.textContent = "2...";
+  await esperar(1000);
+  
+  btnGenerar.textContent = "1...";
+  await esperar(1000);    
+  
+  btnGenerar.textContent = "¡Generando!";
+  
+  generarTipos(tipo1, tipo2);
+  
+  await esperar(500); 
+  btnGenerar.textContent = "Generar";
+  btnGenerar.disabled = false;
     
 }
 

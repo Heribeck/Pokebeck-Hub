@@ -114,7 +114,7 @@ export async function campistaLogica(){
   }
       
   const noUsados = pokemonesValidos.filter(p => !yaFueUsado('campista', p.name));
-  const poolFinal = noUsados.length > 0 ? noUsados : pokemonesValidos; // si se agotó el pool, permite repetir
+  const poolFinal = noUsados.length > 0 ? noUsados : pokemonesValidos;
   const correctPokemon = poolFinal[Math.floor(Math.random() * poolFinal.length)];
   registrarUsado('campista', correctPokemon.name);
   

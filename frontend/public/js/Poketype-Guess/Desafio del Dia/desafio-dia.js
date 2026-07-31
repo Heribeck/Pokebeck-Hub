@@ -1,7 +1,6 @@
 import {
   desafio,
   main,
-  dificultad,
   generador as panelGenerador,
   acerca,
   campista,
@@ -96,7 +95,6 @@ export async function iniciarDesafioDelDia() {
 // Oculta el resto de paneles y muestra el del Desafío (mismo patrón que los otros modos)
 function mostrarPanelDesafio() {
   main.style.display = 'none';
-  dificultad.style.display = 'none';
   panelGenerador.style.display = 'none';
   acerca.style.display = 'none';
   campista.style.display = 'none';

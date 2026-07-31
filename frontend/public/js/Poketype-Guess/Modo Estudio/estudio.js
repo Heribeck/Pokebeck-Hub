@@ -1,7 +1,6 @@
 import {
-  panelReto,
+  panelEstudio,
   main,
-  dificultad,
   generador as panelGenerador,
   acerca,
   campista,
@@ -9,19 +8,19 @@ import {
   gameState,
   timeState,
   dataState,
-  tipo1Reto,
-  tipo2Reto,
-  barraTiempoReto,
-  mensajeAciertoReto,
-  btnIniciarJuegoReto,
-  btnNextReto,
-  btnIntentoReto,
-  btnJugarDeNuevoReto,
-  btnVolverAlMenuReto,
-  rondaActualTextoReto,
-  hxGanadoTextoReto,
-  uiCampistaReto,
-  cajaOpcionesPokemonReto,
+  tipo1Estudio,
+  tipo2Estudio,
+  barraTiempoEstudio,
+  mensajeAciertoEstudio,
+  btnIniciarJuegoEstudio,
+  btnNextEstudio,
+  btnIntentoEstudio,
+  btnJugarDeNuevoEstudio,
+  btnVolverAlMenuEstudio,
+  rondaActualTextoEstudio,
+  hxGanadoTextoEstudio,
+  uiCampistaEstudio,
+  cajaOpcionesPokemonEstudio,
   typesIcono,
   coloresTipos,
 } from '../config.js';
@@ -34,15 +33,15 @@ import { obtenerHX, sumarHX } from '../hx-storage.js';
 import { mostrarIntersticial } from '../../admob.js';
 import { mostrarCelebracion } from '../../celebracion.js';
 
-// Estado interno de la sesión de Reto en curso
+// Estado interno de la sesión de Estudio en curso
 let sesionActual = null;
 let correctPokemonRondaActual = null;
 let hxGanadoEnEstaSesion = 0;
 let hxPerdidoEnEstaSesion = 0;
 let sesionesDesdeUltimoIntersticial = 0;
 
-// Punto de entrada: se llama al elegir una dificultad en el menú de Reto
-export async function iniciarReto(mecanica) {
+// Punto de entrada: se llama al elegir una dificultad en el menú de Estudio
+export async function iniciarEstudio(mecanica) {
   const hxActual = await obtenerHX();
 
   if (!esMecanicaDesbloqueada(mecanica, hxActual)) {
@@ -55,45 +54,44 @@ export async function iniciarReto(mecanica) {
   hxGanadoEnEstaSesion = 0;
   hxPerdidoEnEstaSesion = 0;
 
-  mostrarPanelReto();
+  mostrarPanelEstudio();
   actualizarTextoProgreso();
   
-  tipo1Reto.src = "assets/img/icons/icono-only.png";
-  tipo2Reto.src = "assets/img/icons/icono-only.png";
-  tipo1Reto.style.backgroundColor = "transparent";
-  tipo2Reto.style.backgroundColor = "transparent";
+  tipo1Estudio.src = "assets/img/icons/icono-only.png";
+  tipo2Estudio.src = "assets/img/icons/icono-only.png";
+  tipo1Estudio.style.backgroundColor = "transparent";
+  tipo2Estudio.style.backgroundColor = "transparent";
 
-  uiCampistaReto.style.display = 'none';
-  mensajeAciertoReto.innerHTML = '';
-  cajaOpcionesPokemonReto.innerHTML = '';
+  uiCampistaEstudio.style.display = 'none';
+  mensajeAciertoEstudio.innerHTML = '';
+  cajaOpcionesPokemonEstudio.innerHTML = '';
   
-  btnNextReto.style.display = 'none';
-  btnIntentoReto.style.display = 'none';
-  btnJugarDeNuevoReto.style.display = 'none';
-  btnVolverAlMenuReto.style.display = 'none';
+  btnNextEstudio.style.display = 'none';
+  btnIntentoEstudio.style.display = 'none';
+  btnJugarDeNuevoEstudio.style.display = 'none';
+  btnVolverAlMenuEstudio.style.display = 'none';
 
-  btnIniciarJuegoReto.style.display = 'flex';
+  btnIniciarJuegoEstudio.style.display = 'flex';
   
-  btnIniciarJuegoReto.onclick = () => {
-    btnIniciarJuegoReto.style.display = 'none';
+  btnIniciarJuegoEstudio.onclick = () => {
+    btnIniciarJuegoEstudio.style.display = 'none';
     siguienteRonda();
   };
 }
 
-function mostrarPanelReto() {
+function mostrarPanelEstudio() {
   main.style.display = 'none';
-  dificultad.style.display = 'none';
   panelGenerador.style.display = 'none';
   acerca.style.display = 'none';
   campista.style.display = 'none';
   desafio.style.display = 'none';
-  panelReto.style.display = 'flex';
+  panelEstudio.style.display = 'flex';
 }
 
 function actualizarTextoProgreso() {
-  rondaActualTextoReto.textContent = `Ronda ${Math.min(sesionActual.rondaActual + 1, 10)} de 10`;
+  rondaActualTextoEstudio.textContent = `Ronda ${Math.min(sesionActual.rondaActual + 1, 10)} de 10`;
   const balance = hxGanadoEnEstaSesion - hxPerdidoEnEstaSesion;
-  hxGanadoTextoReto.textContent = `Balance HX: ${balance > 0 ? '+' : ''}${balance}`;
+  hxGanadoTextoEstudio.textContent = `Balance HX: ${balance > 0 ? '+' : ''}${balance}`;
 }
 
 function siguienteRonda() {
@@ -102,21 +100,21 @@ function siguienteRonda() {
     return;
   }
 
-  btnNextReto.style.display = 'none';
-  btnIntentoReto.style.display = 'none';
-  mensajeAciertoReto.innerHTML = '';
-  cajaOpcionesPokemonReto.innerHTML = '';
+  btnNextEstudio.style.display = 'none';
+  btnIntentoEstudio.style.display = 'none';
+  mensajeAciertoEstudio.innerHTML = '';
+  cajaOpcionesPokemonEstudio.innerHTML = '';
 
-  // Reto usa Math.random() normal: no hace falta semilla por fecha,
+  // Estudio usa Math.random() normal: no hace falta semilla por fecha,
   // ya que se puede jugar las veces que se quiera.
   const { type1, type2 } = generarTiposDelDia(dataState.pokedex, Math.random);
-  gameState.type1ValueReto = type1;
-  gameState.type2ValueReto = type2;
+  gameState.type1ValueEstudio = type1;
+  gameState.type2ValueEstudio = type2;
 
-  tipo1Reto.src = typesIcono[type1];
-  tipo2Reto.src = typesIcono[type2];
-  tipo1Reto.style.backgroundColor = coloresTipos[type1];
-  tipo2Reto.style.backgroundColor = coloresTipos[type2];
+  tipo1Estudio.src = typesIcono[type1];
+  tipo2Estudio.src = typesIcono[type2];
+  tipo1Estudio.style.backgroundColor = coloresTipos[type1];
+  tipo2Estudio.style.backgroundColor = coloresTipos[type2];
 
   if (sesionActual.mecanica === 'campista') {
     prepararRondaCampista(type1, type2);
@@ -126,7 +124,7 @@ function siguienteRonda() {
 }
 
 function prepararRondaCampista(type1, type2) {
-  uiCampistaReto.style.display = 'flex';
+  uiCampistaEstudio.style.display = 'flex';
 
   const { correctPokemon, opciones } = generarRondaCampista(dataState.pokedex, type1, type2, Math.random);
   correctPokemonRondaActual = correctPokemon;
@@ -138,43 +136,43 @@ function prepararRondaCampista(type1, type2) {
     boton.textContent = pokemon.name.replaceAll('-', ' ');
     boton.className = 'btn-opcion';
     boton.dataset.name = pokemon.name;
-    cajaOpcionesPokemonReto.appendChild(boton);
+    cajaOpcionesPokemonEstudio.appendChild(boton);
 
     boton.addEventListener('click', () => {
       if (respondida) return;
       respondida = true;
-      detenerBarraTiempoReto();
+      detenerBarraTiempoEstudio();
       const esCorrecta = pokemon.name === correctPokemonRondaActual.name;
       procesarResultadoDeRonda(esCorrecta);
     });
   });
 
-  iniciarBarraTiempoReto(() => {
+  iniciarBarraTiempoEstudio(() => {
     if (respondida) return;
     respondida = true;
     procesarResultadoDeRonda(false);
   }, 3);
 }
 
-// Temporizador aislado para Reto (mismo patrón que en el Desafío del Día)
-function iniciarBarraTiempoReto(alAgotarseElTiempo, time = 3) {
-  barraTiempoReto.style.width = '100%';
-  timeState.tiempoRetoLeft = 100;
-  clearInterval(gameState.tiempoReto);
+// Temporizador aislado para Estudio (mismo patrón que en el Desafío del Día)
+function iniciarBarraTiempoEstudio(alAgotarseElTiempo, time = 3) {
+  barraTiempoEstudio.style.width = '100%';
+  timeState.tiempoEstudioLeft = 100;
+  clearInterval(gameState.tiempoEstudio);
 
-  gameState.tiempoReto = setInterval(() => {
-    timeState.tiempoRetoLeft -= time;
-    barraTiempoReto.style.width = timeState.tiempoRetoLeft + '%';
+  gameState.tiempoEstudio = setInterval(() => {
+    timeState.tiempoEstudioLeft -= time;
+    barraTiempoEstudio.style.width = timeState.tiempoEstudioLeft + '%';
 
-    if (timeState.tiempoRetoLeft <= 0) {
-      clearInterval(gameState.tiempoReto);
+    if (timeState.tiempoEstudioLeft <= 0) {
+      clearInterval(gameState.tiempoEstudio);
       alAgotarseElTiempo();
     }
   }, 100);
 }
 
-function detenerBarraTiempoReto() {
-  clearInterval(gameState.tiempoReto);
+function detenerBarraTiempoEstudio() {
+  clearInterval(gameState.tiempoEstudio);
 }
 
 // Procesa el resultado de una ronda (correcto/incorrecto), común a las 3 mecánicas
@@ -184,7 +182,7 @@ async function procesarResultadoDeRonda(esCorrecta) {
   const hxGanado = obtenerHXPorAcierto(sesionActual.mecanica);
   const hxPerdido = Math.floor(hxQueGanaria / 2);
 
-  document.querySelectorAll('#opciones-pokemon-reto .btn-opcion').forEach(btn => {
+  document.querySelectorAll('#opciones-pokemon-Estudio .btn-opcion').forEach(btn => {
     btn.style.display = 'none';
   });
 
@@ -194,9 +192,9 @@ async function procesarResultadoDeRonda(esCorrecta) {
 
     hxGanadoEnEstaSesion += hxGanado;
 
-    mensajeAciertoReto.innerHTML = `¡Correcto! +${hxGanado} HX`;
-    btnNextReto.style.display = 'flex';
-    btnNextReto.onclick = () => siguienteRonda();
+    mensajeAciertoEstudio.innerHTML = `¡Correcto! +${hxGanado} HX`;
+    btnNextEstudio.style.display = 'flex';
+    btnNextEstudio.onclick = () => siguienteRonda();
 
     actualizarTextoProgreso();
 
@@ -221,14 +219,14 @@ async function procesarResultadoDeRonda(esCorrecta) {
   ? capitalizarPrimeraLetra(correctPokemonRondaActual.name)
   : 'Ninguno (no existía esa combinación)';
 
-  mensajeAciertoReto.innerHTML = `Fallaste. La respuesta correcta era <strong>${nombreRespuestaCorrecta}</strong>.<br><span style="color: #d32f2f;">-${hxPerdido} HX</span>`;
+  mensajeAciertoEstudio.innerHTML = `Fallaste. La respuesta correcta era <strong>${nombreRespuestaCorrecta}</strong>.<br><span style="color: #d32f2f;">-${hxPerdido} HX</span>`;
   actualizarTextoProgreso();
 
   if (paso.sesionTerminada) {
     finalizarSesion();
   } else {
-    btnNextReto.style.display = 'flex';
-    btnNextReto.onclick = () => siguienteRonda();
+    btnNextEstudio.style.display = 'flex';
+    btnNextEstudio.onclick = () => siguienteRonda();
   }
 }
 
@@ -260,23 +258,23 @@ async function finalizarSesion() {
     mensajeBalance = `<span style="color: #ff9800;">⚖️ Balance neutro: no ganaste ni perdiste HX.</span>`;
   }
 
-  mensajeAciertoReto.innerHTML =
-    `Reto terminado: ${resultado.aciertos}/10 aciertos.<br>(${hxGanadoEnEstaSesion} ganados - ${hxPerdidoEnEstaSesion} perdidos)<br><br>${mensajeBalance}`;
+  mensajeAciertoEstudio.innerHTML =
+    `Estudio terminado: ${resultado.aciertos}/10 aciertos.<br>(${hxGanadoEnEstaSesion} ganados - ${hxPerdidoEnEstaSesion} perdidos)<br><br>${mensajeBalance}`;
 
-  btnNextReto.style.display = 'none';
-  btnIntentoReto.style.display = 'none';
-  cajaOpcionesPokemonReto.innerHTML = '';
+  btnNextEstudio.style.display = 'none';
+  btnIntentoEstudio.style.display = 'none';
+  cajaOpcionesPokemonEstudio.innerHTML = '';
 
-  btnJugarDeNuevoReto.style.display = 'flex';
-  btnVolverAlMenuReto.style.display = 'flex';
+  btnJugarDeNuevoEstudio.style.display = 'flex';
+  btnVolverAlMenuEstudio.style.display = 'flex';
 
   const mecanicaDeEstaSesion = sesionActual.mecanica;
 
-  btnJugarDeNuevoReto.onclick = () => {
-    btnJugarDeNuevoReto.style.display = 'none';
-    iniciarReto(mecanicaDeEstaSesion);
+  btnJugarDeNuevoEstudio.onclick = () => {
+    btnJugarDeNuevoEstudio.style.display = 'none';
+    iniciarEstudio(mecanicaDeEstaSesion);
   };
-  btnVolverAlMenuReto.onclick = () => volverAlMenu();
+  btnVolverAlMenuEstudio.onclick = () => volverAlMenu();
 
   sesionActual = null;
   sesionesDesdeUltimoIntersticial++;

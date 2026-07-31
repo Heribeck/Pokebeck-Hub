@@ -93,11 +93,11 @@ export const domElements = {
     splash: document.getElementById("custom-splash"),
     main: document.getElementById("main"),
     poketype: document.getElementById("panel-poketype"),
-    dificultad: document.getElementById("dificultad"),
+    ligas: document.getElementById("panel-ligas"),
     generador: document.getElementById("generador"),
     acerca: document.getElementById("acerca"),
     desafio: document.getElementById("panel-desafio"),
-    reto: document.getElementById("panel-reto"),
+    estudio: document.getElementById("panel-reto"),
     campista: document.getElementById("panel-campista"),
     notificacion: document.getElementById("notificacion"),
   },
@@ -126,7 +126,7 @@ export const domElements = {
 
   // Elementos del panel PokeType
   poketype: {
-    btnReto: document.getElementById("btn-reto-poketype"),
+    btnEstudio: document.getElementById("btn-reto-poketype"),
     btnEntrenamiento: document.getElementById("btn-entrenamiento-poketype"),
     btnDesafio: document.getElementById("btn-desafio-poketype"),
     btnGenerador: document.getElementById("btn-generador-poketype"),
@@ -160,8 +160,8 @@ export const domElements = {
     cajaOpcionesPokemon: document.getElementById("opciones-pokemon-desafio"),
   },
 
-  // Elementos del modo Reto
-  reto: {
+  // Elementos del modo Estudio
+  estudio: {
     rondaActualTexto: document.getElementById("ronda-actual-reto"),
     hxGanadoTexto: document.getElementById("hx-ganado-reto"),
     tipo1: document.getElementById("tipo1-reto"),
@@ -171,12 +171,30 @@ export const domElements = {
     btnNext: document.getElementById("btn-next-reto"),
     btnIntento: document.getElementById("btn-intento-reto"),
     btnIniciarJuego: document.getElementById("btn-iniciar-juego-reto"),
-     btnJugarDeNuevo: document.getElementById("btn-jugar-de-nuevo-reto"),
+    btnJugarDeNuevo: document.getElementById("btn-jugar-de-nuevo-reto"),
     btnVolverAlMenu: document.getElementById("btn-volver-menu-reto"),
 
     // Sub-UI Campista
     uiCampista: document.getElementById("reto-ui-campista"),
     cajaOpcionesPokemon: document.getElementById("opciones-pokemon-reto"),
+  },
+
+  // Elementos del panel de Ligas
+  ligas: {
+    scrollCampista: document.getElementById("scroll-campista"),
+    scrollAs: document.getElementById("scroll-as"),
+    scrollCampeon: document.getElementById("scroll-campeon"),
+    btnVolver: document.getElementById("btn-volver-ligas"),
+  },
+
+  // Elementos del modal de detalles
+  modalDetalles: {
+    modal: document.getElementById("modal-detalles-nivel"),
+    titulo: document.getElementById("modal-titulo-nivel"),
+    descripcion: document.getElementById("modal-descripcion-nivel"),
+    especificaciones: document.getElementById("modal-especificaciones-nivel"),
+    btnCerrar: document.getElementById("btn-cerrar-modal"),
+    btnIniciar: document.getElementById("btn-iniciar-nivel"),
   },
   
   // Elementos del modo Campista
@@ -207,11 +225,10 @@ export const domElements = {
 // Exportaciones individuales para compatibilidad con código existente
 export const splash = domElements.secciones.splash;
 export const main = domElements.secciones.main;
-export const dificultad = domElements.secciones.dificultad;
 export const generador = domElements.secciones.generador;
 export const acerca = domElements.secciones.acerca;
 export const desafio = domElements.secciones.desafio;
-export const panelReto = domElements.secciones.reto;
+export const panelEstudio = domElements.secciones.reto;
 export const poketype = domElements.secciones.poketype;
 export const campista = domElements.secciones.campista;
 export const notificacion = domElements.secciones.notificacion;
@@ -226,7 +243,7 @@ export const telegram = domElements.main.telegram;
 
 export const hxGlobal = domElements.global.hxGlobal;
 
-export const btnReto = domElements.poketype.btnReto;
+export const btnEstudio = domElements.poketype.btnEstudio;
 export const btnEntrenamiento = domElements.poketype.btnEntrenamiento;
 export const btnDesafio = domElements.poketype.btnDesafio;
 export const btnGenerador = domElements.poketype.btnGenerador;
@@ -252,23 +269,36 @@ export const btnRevivirDesafio = domElements.desafio.btnRevivir;
 export const btnVolverAlMenu = domElements.desafio.btnVolverAlMenu;
 export const btnJugarDeNuevoDesafio = domElements.desafio.btnJugarDeNuevo;
 
-//Elementos del Dom del Reto
-export const rondaActualTextoReto = domElements.reto.rondaActualTexto;
-export const hxGanadoTextoReto = domElements.reto.hxGanadoTexto;
-export const tipo1Reto = domElements.reto.tipo1;
-export const tipo2Reto = domElements.reto.tipo2;
-export const barraTiempoReto = domElements.reto.barraTiempo;
-export const mensajeAciertoReto = domElements.reto.mensajeAcierto;
-export const btnIniciarJuegoReto = domElements.reto.btnIniciarJuego;
-export const btnNextReto = domElements.reto.btnNext;
-export const btnIntentoReto = domElements.reto.btnIntento;
-export const btnJugarDeNuevoReto = domElements.reto.btnJugarDeNuevo;
-export const btnVolverAlMenuReto = domElements.reto.btnVolverAlMenu;
-export const uiCampistaReto = domElements.reto.uiCampista;
-export const cajaOpcionesPokemonReto = domElements.reto.cajaOpcionesPokemon;
+//Elementos del Dom del Estudio
+export const rondaActualTextoEstudio = domElements.estudio.rondaActualTexto;
+export const hxGanadoTextoEstudio = domElements.estudio.hxGanadoTexto;
+export const tipo1Estudio = domElements.estudio.tipo1;
+export const tipo2Estudio = domElements.estudio.tipo2;
+export const barraTiempoEstudio = domElements.estudio.barraTiempo;
+export const mensajeAciertoEstudio = domElements.estudio.mensajeAcierto;
+export const btnIniciarJuegoEstudio = domElements.estudio.btnIniciarJuego;
+export const btnNextEstudio = domElements.estudio.btnNext;
+export const btnIntentoEstudio = domElements.estudio.btnIntento;
+export const btnJugarDeNuevoEstudio = domElements.estudio.btnJugarDeNuevo;
+export const btnVolverAlMenuEstudio = domElements.estudio.btnVolverAlMenu;
+export const uiCampistaEstudio = domElements.estudio.uiCampista;
+export const cajaOpcionesPokemonEstudio = domElements.estudio.cajaOpcionesPokemon;
 
 export const uiCampistaDesafio = domElements.desafio.uiCampista;
 export const cajaOpcionesPokemonDesafio = domElements.desafio.cajaOpcionesPokemon;
+
+export const ligas = domElements.secciones.ligas;
+export const scrollCampista = domElements.ligas.scrollCampista;
+export const scrollAs = domElements.ligas.scrollAs;
+export const scrollCampeon = domElements.ligas.scrollCampeon;
+export const btnVolverLigas = domElements.ligas.btnVolver;
+
+export const modalDetalles = domElements.modalDetalles.modal;
+export const modalTituloNivel = domElements.modalDetalles.titulo;
+export const modalDescripcionNivel = domElements.modalDetalles.descripcion;
+export const modalEspecificacionesNivel = domElements.modalDetalles.especificaciones;
+export const btnCerrarModal = domElements.modalDetalles.btnCerrar;
+export const btnIniciarNivel = domElements.modalDetalles.btnIniciar;
 
 export const btnCampista = domElements.campista.btnCampista;
 export const btnIniciarJuegoCampista = domElements.campista.btnIniciarJuego;

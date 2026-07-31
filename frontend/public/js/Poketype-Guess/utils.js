@@ -1,16 +1,15 @@
 // Variables importadas desde config.js
-import { 
-    toastMensaje, 
-    notificacion, 
-    splash, 
-    dataState, 
-    sonidoGanar, 
-    sonidoPerder, 
-    musicActual, 
+import {
+    toastMensaje,
+    notificacion,
+    splash,
+    dataState,
+    sonidoGanar,
+    sonidoPerder,
+    musicActual,
     campista,
     acerca,
     generador,
-    dificultad,
     main,
     desafio
 } from './config.js';
@@ -18,7 +17,7 @@ import {
 import { mostrarBanner } from '../admob.js';
 import { actualizarRachaEnMenu } from './Desafio del Dia/desafio-dia.js';
 import { obtenerHX } from './hx-storage.js';
-import { hxGlobal, panelReto } from './config.js';
+import { hxGlobal, panelEstudio } from './config.js';
 
 // Función para generar números aleatorios
 export function Aleatoriedad(min, max) {
@@ -202,11 +201,10 @@ export function reiniciarScoreMax(maxKey, localStorageKey, pMaxElement, scoreSta
 export function volverAlMenu(){
     main.style.display = "flex";
     if (acerca) {acerca.style.display = "none";}
-    if (dificultad) {dificultad.style.display = "none";}
     if (generador) {generador.style.display = "none";}
     if (campista) {campista.style.display = "none";}
     if (desafio) {desafio.style.display = "none"}
-    if (panelReto) {panelReto.style.display = "none"}
+    if (panelEstudio) {panelEstudio.style.display = "none"}
     mostrarBanner("TOP_CENTER");
     detenerTodoElAudio();
     actualizarRachaEnMenu();

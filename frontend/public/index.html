@@ -50,16 +50,48 @@
 
     </main>
 
-    <section id="dificultad" class="layout-dificultad">
+    <section id="panel-ligas" class="layout-ligas" style="display: none;">
 
-        <h2>DIFICULTAD DE JUEGO</h2>
+        <h2 class="titulo-ligas">Ligas de Maestría</h2>
 
-        <h4>Elige tu nivel de entrenamiento</h4>
-
-        <div class="caja-dificultades">
-            <button id="btn-campista" class="boton-campista"> <i class="fas fa-user"></i> Campista</button>
+        <!-- Liga Campista -->
+        <div class="seccion-liga">
+            <h3 class="titulo-liga liga-campista">🏆 Liga 1: Campista (La Base)</h3>
+            <div class="scroll-tarjetas" id="scroll-campista">
+                <!-- Tarjetas generadas dinámicamente -->
+            </div>
         </div>
 
+        <!-- Liga As -->
+        <div class="seccion-liga">
+            <h3 class="titulo-liga liga-as">🌟 Liga 2: As (El Desafío Técnico)</h3>
+            <div class="scroll-tarjetas" id="scroll-as">
+                <!-- Tarjetas generadas dinámicamente -->
+            </div>
+        </div>
+
+        <!-- Liga Campeón -->
+        <div class="seccion-liga">
+            <h3 class="titulo-liga liga-campeon">🔥 Liga 3: Campeón (La Cima Absoluta)</h3>
+            <div class="scroll-tarjetas" id="scroll-campeon">
+                <!-- Tarjetas generadas dinámicamente -->
+            </div>
+        </div>
+
+        <button id="btn-volver-ligas" class="boton-volver">Volver</button>
+
+    </section>
+
+    <section id="modal-detalles-nivel" class="modal-detalles" style="display: none;">
+        <div class="modal-contenido">
+            <button id="btn-cerrar-modal" class="btn-cerrar-modal">✕</button>
+            <h2 id="modal-titulo-nivel" class="modal-titulo">Título del Nivel</h2>
+            <p id="modal-descripcion-nivel" class="modal-descripcion">Descripción del nivel</p>
+            <div class="modal-especificaciones">
+                <p id="modal-especificaciones-nivel">Especificaciones</p>
+            </div>
+            <button id="btn-iniciar-nivel" class="boton-iniciar-nivel">Iniciar Nivel</button>
+        </div>
     </section>
 
     <section id="panel-poketype" class="layout-poketype" style="display: none;">
@@ -70,7 +102,7 @@
         <p id="hx-global-poketype" class="hx-global">⚡ 0 HX</p>
 
         <div class="caja-btn-poketype">
-            <button id="btn-reto-poketype" class="boton-reto">Reto</button>
+            <button id="btn-reto-poketype" class="boton-reto">Estudio</button>
             <button id="btn-entrenamiento-poketype" class="boton-entrenamiento">Entrenamiento</button>
             <button id="btn-desafio-poketype" class="boton-desafio">Desafío del Día</button>
             <button id="btn-generador-poketype" class="boton-generador">Generador</button>
@@ -215,6 +247,12 @@
     <section id="panel-campista" class="layout-campista">
 
         <h2 style="color: #43a047;">Nivel Campista</h2>
+
+        <div>
+            <h3>Facil</h3>
+            <h3>Normal</h3>
+            <h3>Dificil</h3>
+        </div>
 
         <div id="configuracion-campista" class="caja-configuracion-campista">
 
