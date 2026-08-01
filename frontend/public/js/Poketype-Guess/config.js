@@ -199,7 +199,11 @@ export const domElements = {
   
   // Elementos del modo Campista
   campista: {
+    dificultad: document.getElementById("dificultad"),
     btnCampista: document.getElementById("btn-campista"),
+    btnFacilEntrenamiento: document.getElementById("btn-facil-entrenamiento"),
+    btnNormalEntrenamiento: document.getElementById("btn-normal-entrenamiento"),
+    btnDificilEntrenamiento: document.getElementById("btn-dificil-entrenamiento"),
     btnIniciarJuego: document.getElementById("btn-iniciar-juego-campista"),
     pScore: document.getElementById("score-campista"),
     pMax: document.getElementById("max-campista"),
@@ -301,6 +305,10 @@ export const btnCerrarModal = domElements.modalDetalles.btnCerrar;
 export const btnIniciarNivel = domElements.modalDetalles.btnIniciar;
 
 export const btnCampista = domElements.campista.btnCampista;
+export const dificultadCampista = domElements.campista.dificultad;
+export const btnFacilEntrenamiento = domElements.campista.btnFacilEntrenamiento;
+export const btnNormalEntrenamiento = domElements.campista.btnNormalEntrenamiento;
+export const btnDificilEntrenamiento = domElements.campista.btnDificilEntrenamiento;
 export const btnIniciarJuegoCampista = domElements.campista.btnIniciarJuego;
 export const pScoreCampista = domElements.campista.pScore;
 export const pMaxCampista = domElements.campista.pMax;

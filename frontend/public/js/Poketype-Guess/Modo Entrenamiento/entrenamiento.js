@@ -1,4 +1,3 @@
-// Variables importadas desde config.js
 import {
   configRevivir,
   conteoBtnRevivir,
@@ -20,11 +19,22 @@ import {
   esperar
 } from '../config.js';
 
-import { yaFueUsado, registrarUsado, hayOpcionesNoUsadas, buscarPokemonCorrectoEvitandoRepetidos } from '../control-repeticion.js';
-import { mostrarNotificacion, soundWin, soundLose, cambiarMusicaModes, vibrarWin, vibrarLose, validarSimilitudPalabra, validarTiposPokemon, capitalizarPrimeraLetra } from '../utils.js';
+import { yaFueUsado, registrarUsado, reiniciarUsados } from '../control-repeticion.js';
+import { mostrarNotificacion, soundWin, soundLose, cambiarMusicaModes, vibrarWin, vibrarLose, validarTiposPokemon, capitalizarPrimeraLetra } from '../utils.js';
 import { generarTipos, iniciarBarraTiempo } from '../Generador/generador.js';
-import { calcularVelocidadTiempo, elegirDistractoresDificiles } from '../dificultad-progresiva.js';
+import { calcularVelocidadEntrenamiento, permiteRepetirPokemon } from './entrenamientoDificultad.js';
+import { filtrarPokedexPorDificultad, elegirPokemonConPrioridadFormas } from './pokedexDificultad.js';
 import { celebrarHito } from '../../celebracion.js';
+
+// Dificultad actual de Entrenamiento ('facil' | 'normal' | 'dificil').
+// Se actualiza al elegir el modo en la UI, antes de iniciar la sesión.
+let dificultadEntrenamientoActual = 'normal';
+
+// Se llama al elegir Fácil/Normal/Difícil en la pantalla de selección
+export function establecerDificultadEntrenamiento(modo) {
+  dificultadEntrenamientoActual = modo;
+  reiniciarUsados('campista'); // nueva dificultad = sesión nueva, limpia el historial de repetidos
+}
 
 //Funcion que almacena el score por si el jugador revive
 export function guardarScoreAntesDePerder(modo) {
@@ -99,37 +109,59 @@ export function ejecutarRevivir(modo) {
   }
 }
 
-//Funcion de toda la logica de juego del modo Campista
+//Funcion de toda la logica de juego del modo Campista (Entrenamiento)
 export async function campistaLogica(){
-  const pokemonesValidos = dataState.pokedex.filter(pokemon => 
-      validarTiposPokemon(pokemon, gameState.type1Value, gameState.type2Value)
-  );
-  console.log(pokemonesValidos);
+  // 1. Filtra el pool de Pokémon según la dificultad elegida (Fácil/Normal/Difícil)
+  const poolPorDificultad = filtrarPokedexPorDificultad(dataState.pokedex, dificultadEntrenamientoActual);
 
-  if(pokemonesValidos.length === 0){
+  // 2. De ese pool, cuáles tienen la combinación de tipos actual
+  const pokemonesValidos = poolPorDificultad.filter(pokemon =>
+    validarTiposPokemon(pokemon, gameState.type1Value, gameState.type2Value)
+  );
+
+  if (pokemonesValidos.length === 0) {
     generarTipos(tipo1Campista, tipo2Campista);
     campistaLogica();
-    console.log("No hay pokemones con esa combinación");
+    console.log("No hay pokemones con esa combinación para esta dificultad");
     return;
   }
-      
-  const noUsados = pokemonesValidos.filter(p => !yaFueUsado('campista', p.name));
-  const poolFinal = noUsados.length > 0 ? noUsados : pokemonesValidos;
-  const correctPokemon = poolFinal[Math.floor(Math.random() * poolFinal.length)];
-  registrarUsado('campista', correctPokemon.name);
-  
-  
-  const wrongOptions = elegirDistractoresDificiles(
-  dataState.pokedex, correctPokemon, gameState.type1Value, gameState.type2Value, scoreState.estadoJuego.scoreCampista, 3, validarTiposPokemon);
 
-  console.log(wrongOptions.map(p => p.name));
+  // 3. Filtra los ya usados en esta sesión, salvo que la dificultad permita repetir (Fácil)
+  const noUsados = permiteRepetirPokemon(dificultadEntrenamientoActual)
+    ? pokemonesValidos
+    : pokemonesValidos.filter(p => !yaFueUsado('campista', p.name));
+
+  const poolFinal = noUsados.length > 0 ? noUsados : pokemonesValidos;
+
+  // 4. Elige el correcto, priorizando formas/variantes si la dificultad es "dificil"
+  const correctPokemon = elegirPokemonConPrioridadFormas(poolFinal, dificultadEntrenamientoActual);
+
+  if (!permiteRepetirPokemon(dificultadEntrenamientoActual)) {
+    registrarUsado('campista', correctPokemon.name);
+  }
+
+  // 5. Elige 3 distractores incorrectos, del MISMO pool filtrado por dificultad
+  // (para no mostrar, por ejemplo, un Pokémon de Gen 9 como opción en modo Fácil)
+  const wrongOptions = [];
+  while (wrongOptions.length < 3) {
+    const candidato = poolPorDificultad[Math.floor(Math.random() * poolPorDificultad.length)];
+    const esCorrecto = candidato.name === correctPokemon.name;
+    const yaEnLista = wrongOptions.some(p => p.name === candidato.name);
+    const tieneLaMismaCombinacion = validarTiposPokemon(candidato, gameState.type1Value, gameState.type2Value);
+
+    if (!esCorrecto && !yaEnLista && !tieneLaMismaCombinacion) {
+      wrongOptions.push(candidato);
+    }
+  }
 
   const allOptions = [correctPokemon, ...wrongOptions].sort(() => Math.random() - 0.5);
   let answered = false;
-  
+
   gameState.tiempoCampista = iniciarBarraTiempo(
-    scoreState.estadoJuego, "scoreCampista", pScoreCampista, btnIntentoCampista, 
-    barraTiempoCampista, mensajeAciertoCampista, calcularVelocidadTiempo(3, scoreState.estadoJuego.scoreCampista, 0.15, 0.45), null, null, null, 
+    scoreState.estadoJuego, "scoreCampista", pScoreCampista, btnIntentoCampista,
+    barraTiempoCampista, mensajeAciertoCampista,
+    calcularVelocidadEntrenamiento(dificultadEntrenamientoActual, scoreState.estadoJuego.scoreCampista),
+    null, null, null,
     gameState.tiempoCampista, timeState.tiempoCampistaLeft, "campista", correctPokemon.name
   );
 
@@ -139,19 +171,19 @@ export async function campistaLogica(){
       button.className = "btn-opcion";
       button.dataset.name = pokemon.name;
       cajaOpcionesPokemon.appendChild(button);
-      
+
       button.addEventListener('click', () => {
           if(answered) return;
           answered = true;
           clearInterval(gameState.tiempoCampista);
-          
+
           if (pokemon.name === correctPokemon.name) {
               soundWin();
               vibrarWin();
               mensajeAciertoCampista.textContent = "¡Felicidades Sigue Sumando!";
               scoreState.estadoJuego.scoreCampista++;
               pScoreCampista.textContent = scoreState.estadoJuego.scoreCampista;
-              
+
               celebrarHito(scoreState.estadoJuego.scoreCampista);
 
               if (scoreState.estadoJuego.scoreCampista > scoreState.maxCampista) {
