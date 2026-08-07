@@ -6,6 +6,7 @@ import {
   timeState,
   btnRevivirCampista,
   btnIntentoCampista,
+  btnVolverDificultadCampista,
   mensajeAciertoCampista,
   cajaOpcionesPokemon,
   tipo1Campista,
@@ -204,6 +205,7 @@ export async function campistaLogica(){
             scoreState.estadoJuego.scoreCampista = 0;
             pScoreCampista.textContent = scoreState.estadoJuego.scoreCampista;
             btnIntentoCampista.style.display = "flex";
+            btnVolverDificultadCampista.style.display = "flex";
             document.querySelectorAll(".btn-opcion").forEach(btn => btn.style.display = "none");
           }
       });

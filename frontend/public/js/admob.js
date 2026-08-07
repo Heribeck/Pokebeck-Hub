@@ -39,6 +39,19 @@ export async function InicializarAdMob() {
     });
 
     window.Capacitor.Plugins.AdMob.addListener(eventosBonificado.cerrado, async () => {
+
+      if (adState.recompensaGanada && adState.modoRevivirActivo === 'vidas-generales') {
+        const { restaurarVidaPorAnuncio } = await import('./Modo Estudio/vidas-generales-storage.js');
+        const { actualizarIndicadorVidas } = await import('./Modo Estudio/vidas-ui.js');
+        await restaurarVidaPorAnuncio();
+        await actualizarIndicadorVidas();
+        mostrarNotificacion('¡Vida recuperada!');
+        adState.recompensaGanada = false;
+        adState.modoRevivirActivo = null;
+        prepararBonificado();
+        return; // corta aquí, no sigue a la lógica de desafío/reto
+      }
+
       if (adState.recompensaGanada && adState.modoRevivirActivo) {
         const config = configRevivir[adState.modoRevivirActivo];
         ocultarBotonRevivir(adState.modoRevivirActivo);
@@ -49,7 +62,7 @@ export async function InicializarAdMob() {
           const { continuarDesafioTrasRevivir } = await import('./Poketype-Guess/Desafio del Dia/desafio-dia.js');
           continuarDesafioTrasRevivir();
         } else if (adState.modoRevivirActivo === 'reto') {
-          const { continuarRetoTrasRevivir } = await import('./Poketype-Guess/Modo Estudio/estudio.js');
+          const { continuarRetoTrasRevivir } = await import('./Poketype-Guess/Modo-Estudio/estudio.js');
           continuarRetoTrasRevivir();
         } else {
           ejecutarRevivir(adState.modoRevivirActivo);

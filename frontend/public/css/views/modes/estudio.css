@@ -1,0 +1,794 @@
+/* | --- Modo Estudio (Ligas de Maestría) --- |*/
+
+/* Variables de color por liga */
+:root {
+    --color-campista: #43a047;
+    --color-as: #fbc02d;
+    --color-campeon: #d32f2f;
+    --color-bloqueado: #666;
+}
+
+/* Layout principal del panel de juego */
+.layout-estudio {
+    display: none;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100dvh;
+    padding: 1rem 1rem 2rem 1rem;
+    gap: 1rem;
+    overflow-y: auto;
+}
+
+.cabecera-estudio {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 20rem;
+    padding: 0.875rem 1.5rem;
+    background: rgba(255, 203, 5, 0.08);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 203, 5, 0.3);
+}
+
+.cabecera-estudio p {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.tipos-estudio {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 1.25rem;
+}
+
+.tipos-estudio img {
+    width: 80px;
+    height: 80px;
+    border-radius: 12px;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.tipos-estudio img:hover {
+    transform: scale(1.05);
+}
+
+#tiempo-estudio {
+    width: 100%;
+    max-width: 20rem;
+    height: 0.5rem;
+    background: var(--accent-yellow);
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+}
+
+#mensaje-acierto-estudio {
+    text-align: center;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    min-height: 3rem;
+    margin-top: 1rem;
+}
+
+/* Sub-UI: Campista */
+#opciones-pokemon-estudio {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+.btn-opcion {
+    width: 100dvw;
+    max-width: 20rem;
+    padding: 1rem 1.5rem;
+    background: rgba(255, 203, 5, 0.05);
+    border: 2px solid rgba(255, 203, 5, 0.3);
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.btn-opcion:hover {
+    background: rgba(255, 203, 5, 0.2);
+    border-color: var(--accent-yellow);
+    color: var(--accent-yellow);
+    transform: translateY(-2px);
+}
+
+.btn-opcion:active {
+    transform: translateY(0);
+}
+
+.botones-estudio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+#btn-next-estudio {
+    display: none;
+    justify-content: center;
+    background: rgba(67, 160, 71, 0.2);
+    border-color: #43a047;
+    color: #43a047;
+    width: 8.125rem;
+    padding: 0.875rem 1.5rem;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    margin: 0.5rem auto;
+}
+
+#btn-next-estudio:hover {
+    background: #43a047;
+    color: white;
+}
+
+#btn-intento-estudio {
+    display: none;
+    justify-content: center;
+    background: rgba(255, 152, 0, 0.2);
+    border-color: #ff9800;
+    color: #ff9800;
+    width: 8.125rem;
+    padding: 0.875rem 1.5rem;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    margin: 0.5rem auto;
+}
+
+#btn-intento-estudio:hover {
+    background: #ff9800;
+    color: white;
+}
+
+#btn-volver-ligas-estudio {
+    display: none;
+    justify-content: center;
+    background: rgba(255, 203, 5, 0.2);
+    border-color: var(--accent-yellow);
+    color: var(--accent-yellow);
+    width: 10rem;
+    padding: 0.875rem 1.5rem;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    margin: 0.5rem auto;
+    border: 1px solid var(--accent-yellow);
+}
+
+#btn-volver-ligas-estudio:hover {
+    background: var(--accent-yellow);
+    color: var(--bg-primary);
+}
+
+#btn-jugar-de-nuevo-estudio {
+    display: none;
+    justify-content: center;
+    background: rgba(67, 160, 71, 0.2);
+    border-color: #43a047;
+    color: #43a047;
+    width: 10rem;
+    padding: 0.875rem 1.5rem;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    margin: 0.5rem auto;
+    border: 1px solid #43a047;
+}
+
+#btn-jugar-de-nuevo-estudio:hover {
+    background: #43a047;
+    color: white;
+}
+
+#btn-volver-menu-estudio {
+    display: none;
+    justify-content: center;
+    background: rgba(255, 203, 5, 0.2);
+    border-color: var(--accent-yellow);
+    color: var(--accent-yellow);
+    width: 10rem;
+    padding: 0.875rem 1.5rem;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    margin: 0.5rem auto;
+    border: 1px solid var(--accent-yellow);
+}
+
+#btn-volver-menu-estudio:hover {
+    background: var(--accent-yellow);
+    color: var(--bg-primary);
+}
+
+/* Layout principal de ligas */
+.layout-ligas {
+    display: none;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100dvh;
+    padding: 1rem 1rem 2rem 1rem;
+    gap: 1rem;
+    overflow-y: auto;
+}
+
+/* Vista de selección de ligas */
+.vista-ligas {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.titulo-ligas {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--accent-yellow);
+    text-align: center;
+    margin: 0.5rem 0;
+    text-shadow: 0 0 15px rgba(255, 203, 5, 0.3);
+}
+
+.contenedor-ligas {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    max-width: 20rem;
+}
+
+/* Tarjeta de liga */
+.tarjeta-liga {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border-radius: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    padding: 1.25rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.tarjeta-liga:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.tarjeta-liga:active {
+    transform: translateY(-2px);
+}
+
+/* Colores específicos por liga */
+.tarjeta-liga[data-liga="campista"] {
+    border-color: rgba(67, 160, 71, 0.3);
+    background: linear-gradient(135deg, rgba(67, 160, 71, 0.1) 0%, rgba(67, 160, 71, 0.05) 100%);
+}
+
+.tarjeta-liga[data-liga="campista"]:hover {
+    border-color: #43a047;
+    background: linear-gradient(135deg, rgba(67, 160, 71, 0.2) 0%, rgba(67, 160, 71, 0.1) 100%);
+}
+
+.tarjeta-liga[data-liga="as"] {
+    border-color: rgba(251, 192, 45, 0.3);
+    background: linear-gradient(135deg, rgba(251, 192, 45, 0.1) 0%, rgba(251, 192, 45, 0.05) 100%);
+}
+
+.tarjeta-liga[data-liga="as"]:hover {
+    border-color: #fbc02d;
+    background: linear-gradient(135deg, rgba(251, 192, 45, 0.2) 0%, rgba(251, 192, 45, 0.1) 100%);
+}
+
+.tarjeta-liga[data-liga="campeon"] {
+    border-color: rgba(211, 47, 47, 0.3);
+    background: linear-gradient(135deg, rgba(211, 47, 47, 0.1) 0%, rgba(211, 47, 47, 0.05) 100%);
+}
+
+.tarjeta-liga[data-liga="campeon"]:hover {
+    border-color: #d32f2f;
+    background: linear-gradient(135deg, rgba(211, 47, 47, 0.2) 0%, rgba(211, 47, 47, 0.1) 100%);
+}
+
+.tarjeta-liga-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.liga-emoji {
+    font-size: 2rem;
+}
+
+.liga-nombre {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.liga-subtitulo {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.tarjeta-liga-progreso {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.barra-progreso-liga {
+    flex: 1;
+    height: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.barra-progreso-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+.tarjeta-liga[data-liga="campista"] .barra-progreso-fill {
+    background: linear-gradient(90deg, #43a047, #66bb6a);
+}
+
+.tarjeta-liga[data-liga="as"] .barra-progreso-fill {
+    background: linear-gradient(90deg, #fbc02d, #ffeb3b);
+}
+
+.tarjeta-liga[data-liga="campeon"] .barra-progreso-fill {
+    background: linear-gradient(90deg, #d32f2f, #ef5350);
+}
+
+.texto-progreso {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.tarjeta-liga-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.estado-liga {
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 8px;
+}
+
+.estado-liga.estado-desbloqueado {
+    color: #43a047;
+    background: rgba(67, 160, 71, 0.1);
+}
+
+.estado-liga.estado-bloqueado {
+    color: var(--color-bloqueado);
+    background: rgba(102, 102, 102, 0.1);
+}
+
+/* Overlay para ligas bloqueadas */
+.tarjeta-liga-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.tarjeta-liga-overlay.bloqueado {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.tarjeta-liga-overlay .candado {
+    font-size: 2rem;
+}
+
+.tarjeta-liga-overlay .texto-bloqueo {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    text-align: center;
+}
+
+/* Vista de niveles de liga */
+.vista-niveles-liga {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.cabecera-liga {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 0.5rem;
+}
+
+.btn-volver-liga {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 0.75rem;
+}
+
+.btn-volver-liga:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(-2px);
+}
+
+.liga-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.liga-info .liga-emoji {
+    font-size: 1.75rem;
+}
+
+.liga-titulo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.liga-descripcion {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.contenedor-niveles {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 20rem;
+    padding-bottom: 1rem;
+}
+
+/* Tarjeta de nivel */
+.tarjeta-nivel {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border-radius: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.tarjeta-nivel:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.tarjeta-nivel:active {
+    transform: translateY(0);
+}
+
+/* Estados de nivel */
+.tarjeta-nivel[data-estado="completado"] {
+    border-color: rgba(67, 160, 71, 0.3);
+    background: linear-gradient(135deg, rgba(67, 160, 71, 0.1) 0%, rgba(67, 160, 71, 0.05) 100%);
+}
+
+.tarjeta-nivel[data-estado="completado"]:hover {
+    border-color: #43a047;
+}
+
+.tarjeta-nivel[data-estado="desbloqueado"] {
+    border-color: rgba(255, 203, 5, 0.3);
+    background: linear-gradient(135deg, rgba(255, 203, 5, 0.1) 0%, rgba(255, 203, 5, 0.05) 100%);
+}
+
+.tarjeta-nivel[data-estado="desbloqueado"]:hover {
+    border-color: var(--accent-yellow);
+}
+
+.tarjeta-nivel[data-estado="bloqueado"] {
+    border-color: rgba(102, 102, 102, 0.3);
+    background: linear-gradient(135deg, rgba(102, 102, 102, 0.1) 0%, rgba(102, 102, 102, 0.05) 100%);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.tarjeta-nivel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.nivel-numero {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.nivel-estado-icono {
+    font-size: 1.25rem;
+}
+
+.nivel-titulo {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 0.5rem 0;
+}
+
+.nivel-etiquetas {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.etiqueta {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+}
+
+.etiqueta.especial {
+    background: rgba(255, 203, 5, 0.2);
+    color: var(--accent-yellow);
+    border: 1px solid rgba(255, 203, 5, 0.3);
+}
+
+.etiqueta.riesgo-critico {
+    background: rgba(211, 47, 47, 0.2);
+    color: #d32f2f;
+    border: 1px solid rgba(211, 47, 47, 0.3);
+}
+
+/* Información de bloqueo de nivel */
+.nivel-bloqueo-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nivel-bloqueo-info .candado {
+    font-size: 1rem;
+}
+
+.nivel-bloqueo-info .hx-faltante {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* Modal de detalles */
+.modal-detalles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 1rem;
+}
+
+.modal-contenido {
+    background: var(--bg-secondary);
+    border-radius: 16px;
+    padding: 1.5rem;
+    max-width: 20rem;
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.btn-cerrar-modal {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-cerrar-modal:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(90deg);
+}
+
+.modal-estado {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border-radius: 8px;
+    background: rgba(67, 160, 71, 0.1);
+}
+
+.modal-estado-icono {
+    font-size: 1.25rem;
+}
+
+.modal-estado-texto {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #43a047;
+}
+
+.modal-titulo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 0.75rem 0;
+}
+
+.modal-descripcion {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+.modal-requisitos {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    border-radius: 8px;
+    background: rgba(102, 102, 102, 0.1);
+    margin-bottom: 1rem;
+}
+
+.modal-requisitos .candado {
+    font-size: 1.25rem;
+}
+
+.modal-requisitos #modal-hx-faltante {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.modal-especificaciones {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.modal-especificaciones p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.boton-iniciar-nivel {
+    justify-content: center;
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    background: linear-gradient(135deg, rgba(67, 160, 71, 0.2) 0%, rgba(67, 160, 71, 0.1) 100%);
+    border: 2px solid #43a047;
+    color: #43a047;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.boton-iniciar-nivel:hover {
+    background: #43a047;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.boton-iniciar-nivel:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Responsive */
+@media (max-width: 420px) {
+    .layout-ligas {
+        padding: 0.75rem 0.75rem 1.5rem 0.75rem;
+    }
+
+    .indicador-vidas {
+        padding: 0.75rem 1rem;
+    }
+
+    .tarjeta-liga {
+        padding: 1rem;
+    }
+
+    .tarjeta-nivel {
+        padding: 0.875rem;
+    }
+
+    .modal-contenido {
+        padding: 1.25rem;
+    }
+}

@@ -11,7 +11,7 @@ import { InicializarAdMob, prepararBonificado } from './admob.js';
 // Cargar eventos.js para que se asignen los event listeners
 import './eventosMain.js';
 import './Poketype-Guess/eventosPoketype.js'
-import './Poketype-Guess/Modo Estudio/eventosEstudio.js'
+import './Poketype-Guess/Modo-Estudio/eventosEstudio.js'
 import './Poketype-Guess/Modo Entrenamiento/eventosEntrenamiento.js'
 
 //Actualizar La racha del Usuario

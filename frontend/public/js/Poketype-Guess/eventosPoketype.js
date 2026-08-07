@@ -9,16 +9,38 @@ import {
   btnDesafio,
   btnGenerador,
   btnVolverMenuPoketype,
-  campista
+  campista,
+  btnRecuperarVidaPoketype,
+  adState
 } from './config.js';
 
 // Funciones importadas desde otros archivos
-import { ocultarBanner } from '../admob.js';
+import { mostrarBonificado, ocultarBanner } from '../admob.js';
 import { iniciarDesafioDelDia } from './Desafio del Dia/desafio-dia.js';
-import './Modo Estudio/ligas-ui.js';
+import { iniciarContadorRegeneracion, obtenerVidasGenerales } from './vidasGeneralesStorage.js';
+import './Modo-Estudio/ligas-ui.js';
+import { actualizarIndicadorVidas } from './vidaUi.js';
+import { mostrarNotificacion } from './utils.js';
+
+// Iniciar contador de regeneración de vidas
+iniciarContadorRegeneracion();
 
 // Variable de estado para diferenciar Estudio de Entrenamiento
 let modoJuegoSeleccionado = 'entrenamiento'; 
+
+btnRecuperarVidaPoketype.addEventListener('click', async () => {
+  const vidas = await obtenerVidasGenerales();
+  if (vidas >= 3) {
+    mostrarNotificacion('Ya tienes el máximo de vidas');
+    return;
+  }
+  adState.modoRevivirActivo = 'vidas-generales';
+  adState.recompensaGanada = false;
+  await mostrarBonificado();
+});
+
+// Muestra el estado real de las vidas apenas carga el panel
+actualizarIndicadorVidas();
 
 // --- |Evento de boton de "Estudio(Ligas)" desde PokeType|
 btnEstudio.addEventListener("click", () => {

@@ -1,7 +1,7 @@
 // Reglas puras del sistema HX (Hexium): cuánto se gana por acierto en cada
 // mecánica, y qué mecánicas están desbloqueadas según el HX actual del jugador.
 
-export const HX_INICIAL = 700;
+export const HX_INICIAL = 0;
 
 const UMBRALES_DESBLOQUEO = {
   campista: 0,

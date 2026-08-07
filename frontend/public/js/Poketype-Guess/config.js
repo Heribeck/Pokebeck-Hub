@@ -97,7 +97,7 @@ export const domElements = {
     generador: document.getElementById("generador"),
     acerca: document.getElementById("acerca"),
     desafio: document.getElementById("panel-desafio"),
-    estudio: document.getElementById("panel-reto"),
+    estudio: document.getElementById("panel-estudio"),
     campista: document.getElementById("panel-campista"),
     notificacion: document.getElementById("notificacion"),
   },
@@ -126,13 +126,19 @@ export const domElements = {
 
   // Elementos del panel PokeType
   poketype: {
-    btnEstudio: document.getElementById("btn-reto-poketype"),
+    btnEstudio: document.getElementById("btn-estudio-poketype"),
     btnEntrenamiento: document.getElementById("btn-entrenamiento-poketype"),
     btnDesafio: document.getElementById("btn-desafio-poketype"),
     btnGenerador: document.getElementById("btn-generador-poketype"),
     btnVolverAlMenu: document.getElementById("btn-volver-menu-poketype"),
     rachaTexto: document.getElementById("racha-poketype"),
     hxGlobal: document.getElementById("hx-global-poketype"),
+    // Indicador de vidas generales
+    corazon1: document.getElementById("corazon-1-poketype"),
+    corazon2: document.getElementById("corazon-2-poketype"),
+    corazon3: document.getElementById("corazon-3-poketype"),
+    btnRecuperarVida: document.getElementById("btn-recuperar-vida-poketype"),
+    tiempoRegeneracion: document.getElementById("tiempo-regeneracion-poketype"),
   },
   
   // Elementos del generador
@@ -162,28 +168,38 @@ export const domElements = {
 
   // Elementos del modo Estudio
   estudio: {
-    rondaActualTexto: document.getElementById("ronda-actual-reto"),
-    hxGanadoTexto: document.getElementById("hx-ganado-reto"),
-    tipo1: document.getElementById("tipo1-reto"),
-    tipo2: document.getElementById("tipo2-reto"),
-    barraTiempo: document.getElementById("tiempo-reto"),
-    mensajeAcierto: document.getElementById("mensaje-acierto-reto"),
-    btnNext: document.getElementById("btn-next-reto"),
-    btnIntento: document.getElementById("btn-intento-reto"),
-    btnIniciarJuego: document.getElementById("btn-iniciar-juego-reto"),
-    btnJugarDeNuevo: document.getElementById("btn-jugar-de-nuevo-reto"),
-    btnVolverAlMenu: document.getElementById("btn-volver-menu-reto"),
+    rondaActualTexto: document.getElementById("ronda-actual-estudio"),
+    hxGanadoTexto: document.getElementById("hx-ganado-estudio"),
+    tipo1: document.getElementById("tipo1-estudio"),
+    tipo2: document.getElementById("tipo2-estudio"),
+    barraTiempo: document.getElementById("tiempo-estudio"),
+    mensajeAcierto: document.getElementById("mensaje-acierto-estudio"),
+    btnIniciarJuego: document.getElementById("btn-iniciar-juego-estudio"),
+    btnNext: document.getElementById("btn-next-estudio"),
+    btnIntento: document.getElementById("btn-intento-estudio"),
+    btnVolverLigas: document.getElementById("btn-volver-ligas-estudio"),
+    btnJugarDeNuevo: document.getElementById("btn-jugar-de-nuevo-estudio"),
+    btnVolverAlMenu: document.getElementById("btn-volver-menu-estudio"),
 
     // Sub-UI Campista
-    uiCampista: document.getElementById("reto-ui-campista"),
-    cajaOpcionesPokemon: document.getElementById("opciones-pokemon-reto"),
+    uiCampista: document.getElementById("estudio-ui-campista"),
+    cajaOpcionesPokemon: document.getElementById("opciones-pokemon-estudio"),
   },
 
   // Elementos del panel de Ligas
   ligas: {
-    scrollCampista: document.getElementById("scroll-campista"),
-    scrollAs: document.getElementById("scroll-as"),
-    scrollCampeon: document.getElementById("scroll-campeon"),
+    // Vista de ligas
+    vistaLigas: document.getElementById("vista-ligas"),
+    contenedorLigas: document.getElementById("contenedor-ligas"),
+    btnVolverPoketype: document.getElementById("btn-volver-poketype-ligas"),
+    // Vista de niveles
+    vistaNivelesLiga: document.getElementById("vista-niveles-liga"),
+    cabeceraLiga: document.getElementById("cabecera-liga"),
+    ligaEmoji: document.getElementById("liga-emoji"),
+    ligaTitulo: document.getElementById("liga-titulo"),
+    ligaDescripcion: document.getElementById("liga-descripcion"),
+    contenedorNiveles: document.getElementById("contenedor-niveles"),
+    // Navegación
     btnVolver: document.getElementById("btn-volver-ligas"),
   },
 
@@ -195,6 +211,12 @@ export const domElements = {
     especificaciones: document.getElementById("modal-especificaciones-nivel"),
     btnCerrar: document.getElementById("btn-cerrar-modal"),
     btnIniciar: document.getElementById("btn-iniciar-nivel"),
+    // Campos nuevos
+    estadoNivel: document.getElementById("modal-estado-nivel"),
+    estadoIcono: document.getElementById("modal-estado-icono"),
+    estadoTexto: document.getElementById("modal-estado-texto"),
+    requisitos: document.getElementById("modal-requisitos"),
+    hxFaltante: document.getElementById("modal-hx-faltante"),
   },
   
   // Elementos del modo Campista
@@ -205,6 +227,8 @@ export const domElements = {
     btnNormalEntrenamiento: document.getElementById("btn-normal-entrenamiento"),
     btnDificilEntrenamiento: document.getElementById("btn-dificil-entrenamiento"),
     btnIniciarJuego: document.getElementById("btn-iniciar-juego-campista"),
+    btnVolverDificultad: document.getElementById("btn-volver-dificultad-campista"),
+    btnVolverPoketypeDificultad: document.getElementById("btn-volver-poketype-dificultad"),
     pScore: document.getElementById("score-campista"),
     pMax: document.getElementById("max-campista"),
     reinicioScore: document.getElementById("reinicio-score-campista"),
@@ -232,7 +256,7 @@ export const main = domElements.secciones.main;
 export const generador = domElements.secciones.generador;
 export const acerca = domElements.secciones.acerca;
 export const desafio = domElements.secciones.desafio;
-export const panelEstudio = domElements.secciones.reto;
+export const panelEstudio = domElements.secciones.estudio;
 export const poketype = domElements.secciones.poketype;
 export const campista = domElements.secciones.campista;
 export const notificacion = domElements.secciones.notificacion;
@@ -254,6 +278,11 @@ export const btnGenerador = domElements.poketype.btnGenerador;
 export const btnVolverMenuPoketype = domElements.poketype.btnVolverAlMenu;
 export const rachaTextoPoketype = domElements.poketype.rachaTexto;
 export const hxGlobalPoketype = domElements.poketype.hxGlobal;
+// Indicador de vidas generales en poketype
+export const corazon1Poketype = domElements.poketype.corazon1;
+export const corazon2Poketype = domElements.poketype.corazon2;
+export const corazon3Poketype = domElements.poketype.corazon3;
+export const btnRecuperarVidaPoketype = domElements.poketype.btnRecuperarVida;
 
 export const tipo1 = domElements.generador.tipo1;
 export const tipo2 = domElements.generador.tipo2;
@@ -283,6 +312,7 @@ export const mensajeAciertoEstudio = domElements.estudio.mensajeAcierto;
 export const btnIniciarJuegoEstudio = domElements.estudio.btnIniciarJuego;
 export const btnNextEstudio = domElements.estudio.btnNext;
 export const btnIntentoEstudio = domElements.estudio.btnIntento;
+export const btnVolverLigasEstudio = domElements.estudio.btnVolverLigas;
 export const btnJugarDeNuevoEstudio = domElements.estudio.btnJugarDeNuevo;
 export const btnVolverAlMenuEstudio = domElements.estudio.btnVolverAlMenu;
 export const uiCampistaEstudio = domElements.estudio.uiCampista;
@@ -292,9 +322,17 @@ export const uiCampistaDesafio = domElements.desafio.uiCampista;
 export const cajaOpcionesPokemonDesafio = domElements.desafio.cajaOpcionesPokemon;
 
 export const ligas = domElements.secciones.ligas;
-export const scrollCampista = domElements.ligas.scrollCampista;
-export const scrollAs = domElements.ligas.scrollAs;
-export const scrollCampeon = domElements.ligas.scrollCampeon;
+
+// Elementos del panel de Ligas
+export const vistaLigas = domElements.ligas.vistaLigas;
+export const contenedorLigas = domElements.ligas.contenedorLigas;
+export const btnVolverPoketypeLigas = domElements.ligas.btnVolverPoketype;
+export const vistaNivelesLiga = domElements.ligas.vistaNivelesLiga;
+export const cabeceraLiga = domElements.ligas.cabeceraLiga;
+export const ligaEmoji = domElements.ligas.ligaEmoji;
+export const ligaTitulo = domElements.ligas.ligaTitulo;
+export const ligaDescripcion = domElements.ligas.ligaDescripcion;
+export const contenedorNiveles = domElements.ligas.contenedorNiveles;
 export const btnVolverLigas = domElements.ligas.btnVolver;
 
 export const modalDetalles = domElements.modalDetalles.modal;
@@ -303,6 +341,12 @@ export const modalDescripcionNivel = domElements.modalDetalles.descripcion;
 export const modalEspecificacionesNivel = domElements.modalDetalles.especificaciones;
 export const btnCerrarModal = domElements.modalDetalles.btnCerrar;
 export const btnIniciarNivel = domElements.modalDetalles.btnIniciar;
+// Campos nuevos del modal
+export const modalEstadoNivel = domElements.modalDetalles.estadoNivel;
+export const modalEstadoIcono = domElements.modalDetalles.estadoIcono;
+export const modalEstadoTexto = domElements.modalDetalles.estadoTexto;
+export const modalRequisitos = domElements.modalDetalles.requisitos;
+export const modalHxFaltante = domElements.modalDetalles.hxFaltante;
 
 export const btnCampista = domElements.campista.btnCampista;
 export const dificultadCampista = domElements.campista.dificultad;
@@ -310,6 +354,8 @@ export const btnFacilEntrenamiento = domElements.campista.btnFacilEntrenamiento;
 export const btnNormalEntrenamiento = domElements.campista.btnNormalEntrenamiento;
 export const btnDificilEntrenamiento = domElements.campista.btnDificilEntrenamiento;
 export const btnIniciarJuegoCampista = domElements.campista.btnIniciarJuego;
+export const btnVolverDificultadCampista = domElements.campista.btnVolverDificultad;
+export const btnVolverPoketypeDificultad = domElements.campista.btnVolverPoketypeDificultad;
 export const pScoreCampista = domElements.campista.pScore;
 export const pMaxCampista = domElements.campista.pMax;
 export const reinicioScoreCampista = domElements.campista.reinicioScore;

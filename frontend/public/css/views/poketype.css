@@ -16,6 +16,114 @@
     margin: 1rem 0;
 }
 
+/* Mini caja horizontal de estadísticas */
+.caja-estadisticas-poketype {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 22rem;
+    padding: 1rem 1.25rem;
+    background: linear-gradient(135deg, rgba(255, 203, 5, 0.08) 0%, rgba(255, 203, 5, 0.04) 100%);
+    border: 1px solid rgba(255, 203, 5, 0.2);
+    border-radius: 16px;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(10px);
+}
+
+.estadisticas-superior {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.estadistica-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    flex: 1;
+    min-width: 0;
+}
+
+.corazones-item {
+    justify-content: space-between;
+}
+
+.estadistica-icono {
+    font-size: 1.125rem;
+    flex-shrink: 0;
+}
+
+.estadistica-valor {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--accent-yellow);
+    white-space: nowrap;
+}
+
+/* Corazones mini */
+.corazones-mini {
+    display: flex;
+    gap: 0.375rem;
+    align-items: center;
+}
+
+.corazon-mini {
+    font-size: 1.125rem;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.corazon-mini.vacio {
+    filter: grayscale(100%);
+    opacity: 0.4;
+}
+
+/* Botón recuperar mini */
+.btn-recuperar-mini {
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 203, 5, 0.3);
+    background: rgba(255, 203, 5, 0.1);
+    color: var(--accent-yellow);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 0.5rem;
+    flex-shrink: 0;
+}
+
+.btn-recuperar-mini:hover {
+    background: rgba(255, 203, 5, 0.2);
+    border-color: var(--accent-yellow);
+    transform: scale(1.1);
+}
+
+.btn-recuperar-mini:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Tiempo de regeneración */
+.tiempo-regeneracion {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin-left: 0.5rem;
+    white-space: nowrap;
+}
+
 .racha-poketype {
     font-size: 1.5rem;
     font-weight: 700;
@@ -47,7 +155,7 @@
 }
 
 .boton-poketype,
-.boton-reto,
+.boton-estudio,
 .boton-entrenamiento,
 .boton-desafio,
 .boton-generador {
@@ -64,7 +172,7 @@
 }
 
 .boton-poketype:hover,
-.boton-reto:hover,
+.boton-estudio:hover,
 .boton-entrenamiento:hover,
 .boton-desafio:hover,
 .boton-generador:hover {
@@ -73,7 +181,7 @@
 }
 
 .boton-poketype:active,
-.boton-reto:active,
+.boton-estudio:active,
 .boton-entrenamiento:active,
 .boton-desafio:active,
 .boton-generador:active {

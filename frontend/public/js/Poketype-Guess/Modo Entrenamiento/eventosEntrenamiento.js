@@ -9,6 +9,8 @@ import{
   btnNextCampista,
   btnIntentoCampista,
   btnRevivirCampista,
+  btnVolverDificultadCampista,
+  btnVolverPoketypeDificultad,
   reinicioScoreCampista,
   btnReinicioMaxCampista,
   confirmarReinicioCampista,
@@ -21,6 +23,7 @@ import{
   musicaCampista,
   dificultadCampista,
   campista,
+  poketype,
   cajaOpcionesPokemon,
 } from '../config.js';
 import { reiniciarUsados } from '../control-repeticion.js';
@@ -126,4 +129,18 @@ confirmarReinicioCampista.addEventListener("click", () => {
 //Evento para cancelar la eliminación del score Max
 cancelarReinicioCampista.addEventListener("click", () => {
   confirmacionCampista.style.display = "none";
+});
+
+//Evento para volver a la selección de dificultad desde el juego
+btnVolverDificultadCampista.addEventListener("click", () => {
+  campista.style.display = "none";
+  dificultadCampista.style.display = "flex";
+  btnVolverDificultadCampista.style.display = "none";
+  btnIniciarJuegoCampista.style.display = "block";
+});
+
+//Evento para volver a Poketype desde la selección de dificultad
+btnVolverPoketypeDificultad.addEventListener("click", () => {
+  dificultadCampista.style.display = "none";
+  poketype.style.display = "flex";
 });
