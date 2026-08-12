@@ -9165,6 +9165,15 @@
     "sprite": "./assets/img/pokemones/rayquaza-mega.png"
   },
   {
+    "id": 10087,
+    "name": "mega camerupt",
+    "types": [
+      "fire",
+      "ground"
+    ],
+    "sprite": "./assets/img/pokemones/camerupt-mega.png"
+  },
+  {
     "id": 10088,
     "name": "mega lopunny",
     "types": [
@@ -9175,12 +9184,21 @@
   },
   {
     "id": 10089,
-    "name": "mega absol",
+    "name": "mega salamence",
     "types": [
-      "dark",
-      "ghost"
+      "dragon",
+      "flying"
     ],
-    "sprite": "./assets/img/pokemones/absol-mega.png"
+    "sprite": "./assets/img/pokemones/salamence-mega.png"
+  },
+  {
+    "id": 10090,
+    "name": "mega beedrill",
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "sprite": "./assets/img/pokemones/beedrill-mega.png"
   },
   {
     "id": 10091,
@@ -9699,5 +9717,266 @@
       "ground"
     ],
     "sprite": "./assets/img/pokemones/wooper-paldea.png"
+  },
+  {
+    "id": 10301,
+    "name": "mega raichu x",
+    "types": [
+      "electric"
+    ],
+    "sprite": "./assets/img/pokemones/raichu-mega-x.png"
+  },
+  {
+    "id": 10302,
+    "name": "mega raichu y",
+    "types": [
+      "electric",
+      "fighting"
+    ],
+    "sprite": "./assets/img/pokemones/raichu-mega-y.png"
+  },
+  {
+    "id": 10303,
+    "name": "mega lucario z",
+    "types": [
+      "fighting",
+      "steel"
+    ],
+    "sprite": "./assets/img/pokemones/lucario-mega-z.png"
+  },
+  {
+    "id": 10304,
+    "name": "mega absol z",
+    "types": [
+      "dark"
+    ],
+    "sprite": "./assets/img/pokemones/absol-mega-z.png"
+  },
+  {
+    "id": 10305,
+    "name": "mega garchomp z",
+    "types": [
+      "dragon",
+      "ground"
+    ],
+    "sprite": "./assets/img/pokemones/garchomp-mega-z.png"
+  },
+  {
+    "id": 10306,
+    "name": "mega zeraora",
+    "types": [
+      "electric"
+    ],
+    "sprite": "./assets/img/pokemones/zeraora-mega.png"
+  },
+  {
+    "id": 10307,
+    "name": "mega baxcalibur",
+    "types": [
+      "dragon",
+      "ice"
+    ],
+    "sprite": "./assets/img/pokemones/baxcalibur-mega.png"
+  },
+  {
+    "id": 10308,
+    "name": "mega chimecho",
+    "types": [
+      "psychic"
+    ],
+    "sprite": "./assets/img/pokemones/chimecho-mega.png"
+  },
+  {
+    "id": 10309,
+    "name": "mega staraptor",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "sprite": "./assets/img/pokemones/staraptor-mega.png"
+  },
+  {
+    "id": 10310,
+    "name": "mega heatran",
+    "types": [
+      "fire",
+      "steel"
+    ],
+    "sprite": "./assets/img/pokemones/heatran-mega.png"
+  },
+  {
+    "id": 10311,
+    "name": "mega darkrai",
+    "types": [
+      "dark"
+    ],
+    "sprite": "./assets/img/pokemones/darkrai-mega.png"
+  },
+  {
+    "id": 10312,
+    "name": "mega golurk",
+    "types": [
+      "ground",
+      "ghost"
+    ],
+    "sprite": "./assets/img/pokemones/golurk-mega.png"
+  },
+  {
+    "id": 10313,
+    "name": "mega meowstic",
+    "types": [
+      "psychic"
+    ],
+    "sprite": "./assets/img/pokemones/meowstic-mega.png"
+  },
+  {
+    "id": 10314,
+    "name": "mega crabominable",
+    "types": [
+      "ice",
+      "fighting"
+    ],
+    "sprite": "./assets/img/pokemones/crabominable-mega.png"
+  },
+  {
+    "id": 10315,
+    "name": "mega golisopod",
+    "types": [
+      "bug",
+      "water"
+    ],
+    "sprite": "./assets/img/pokemones/golisopod-mega.png"
+  },
+  {
+    "id": 10316,
+    "name": "mega magearna",
+    "types": [
+      "steel",
+      "fairy"
+    ],
+    "sprite": "./assets/img/pokemones/magearna-mega.png"
+  },
+  {
+    "id": 10317,
+    "name": "mega scovillain",
+    "types": [
+      "grass",
+      "fire"
+    ],
+    "sprite": "./assets/img/pokemones/scovillain-mega.png"
+  },
+  {
+    "id": 10318,
+    "name": "mega glimmora",
+    "types": [
+      "rock",
+      "poison"
+    ],
+    "sprite": "./assets/img/pokemones/glimmora-mega.png"
+  },
+  {
+    "id": 10319,
+    "name": "mega tatsugiri",
+    "types": [
+      "dragon",
+      "water"
+    ],
+    "sprite": "./assets/img/pokemones/tatsugiri-mega.png"
+  },
+  {
+    "id": 10320,
+    "name": "mega meganium",
+    "types": [
+      "grass"
+    ],
+    "sprite": "./assets/img/pokemones/meganium-mega.png"
+  },
+  {
+    "id": 10321,
+    "name": "mega feraligatr",
+    "types": [
+      "water"
+    ],
+    "sprite": "./assets/img/pokemones/feraligatr-mega.png"
+  },
+  {
+    "id": 10322,
+    "name": "mega chesnaught",
+    "types": [
+      "grass",
+      "fighting"
+    ],
+    "sprite": "./assets/img/pokemones/chesnaught-mega.png"
+  },
+  {
+    "id": 10323,
+    "name": "mega delphox",
+    "types": [
+      "fire",
+      "psychic"
+    ],
+    "sprite": "./assets/img/pokemones/delphox-mega.png"
+  },
+  {
+    "id": 10324,
+    "name": "mega greninja",
+    "types": [
+      "water",
+      "dark"
+    ],
+    "sprite": "./assets/img/pokemones/greninja-mega.png"
+  },
+  {
+    "id": 10325,
+    "name": "mega hawlucha",
+    "types": [
+      "fighting",
+      "flying"
+    ],
+    "sprite": "./assets/img/pokemones/hawlucha-mega.png"
+  },
+  {
+    "id": 10326,
+    "name": "mega drampa",
+    "types": [
+      "normal",
+      "dragon"
+    ],
+    "sprite": "./assets/img/pokemones/drampa-mega.png"
+  },
+  {
+    "id": 10327,
+    "name": "mega excadrill",
+    "types": [
+      "ground",
+      "steel"
+    ],
+    "sprite": "./assets/img/pokemones/excadrill-mega.png"
+  },
+  {
+    "id": 10328,
+    "name": "mega eelektross",
+    "types": [
+      "electric"
+    ],
+    "sprite": "./assets/img/pokemones/eelektross-mega.png"
+  },
+  {
+    "id": 10329,
+    "name": "mega chandelure",
+    "types": [
+      "ghost",
+      "fire"
+    ],
+    "sprite": "./assets/img/pokemones/chandelure-mega.png"
+  },
+  {
+    "id": 10330,
+    "name": "mega zygarde",
+    "types": [
+      "dragon",
+      "ground"
+    ],
+    "sprite": "./assets/img/pokemones/zygarde-mega.png"
   }
 ]

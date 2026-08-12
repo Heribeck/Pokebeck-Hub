@@ -108,6 +108,7 @@ async function mostrarVistaNiveles(ligaKey) {
     const estado = calcularEstadoNivel(nivel, hxActual, idsCompletados);
     const esExamen = nivel.especial === 'jefe-liga';
     const esRiesgoCritico = nivel.especial === 'riesgo-critico';
+    const esTiempoDinamico = nivel.tiempoDinamico === true || nivel.tiempoDinamico === 'true';
 
     const tarjeta = document.createElement('div');
     tarjeta.className = `tarjeta-nivel ${esExamen ? 'tarjeta-nivel-examen' : ''} ${esRiesgoCritico ? 'tarjeta-nivel-riesgo' : ''} tarjeta-nivel-${estado}`;
@@ -153,6 +154,7 @@ async function mostrarVistaNiveles(ligaKey) {
       <div class="nivel-etiquetas">
         ${esExamen ? '<span class="etiqueta especial">🏆 Jefe de Liga</span>' : ''}
         ${esRiesgoCritico ? '<span class="etiqueta riesgo-critico">⚠️ Riesgo Crítico</span>' : ''}
+        ${esTiempoDinamico ? '<span class="etiqueta tiempo-dinamico">⚡ Tiempo Dinámico</span>' : ''}
       </div>
       ${infoBloqueo}
     `;

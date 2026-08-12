@@ -4,12 +4,29 @@
 // generadora de rondas, y arma la configuración que el motor necesita.
 
 import { datosLigas } from './ligas-datos.js';
-import { generarColaRondasNivel1 } from './Liga-Campista/campista-1.js';
+import { generarColaRondasCampista1 } from './Liga-Campista/campista-1.js';
+import { generarColaRondasCampista2 } from './Liga-Campista/campista-2.js';
+import { generarColaRondasCampista3 } from './Liga-Campista/campista-3.js';
+import { generarColaRondasCampista4 } from './Liga-Campista/campista-4.js';
+import { generarColaRondasCampista5 } from './Liga-Campista/campista-5.js';
+import { generarColaRondasCampista6 } from './Liga-Campista/campista-6.js';
+import { generarColaRondasCampista7 } from './Liga-Campista/campista-7.js';
+import { generarColaRondasCampista8 } from './Liga-Campista/campista-8.js';
+import { generarColaRondasCampista9 } from './Liga-Campista/campista-9.js';
 
 // Mapa de funciones generadoras de rondas, una por cada "receta" ya implementada.
 // Los niveles que no aparecen aquí todavía muestran "en construcción" en el juego.
 const generadoresDeRondas = {
-  'campista-1': generarColaRondasNivel1,
+  'campista-1': generarColaRondasCampista1,
+  'campista-2': generarColaRondasCampista2,
+  'campista-3': generarColaRondasCampista3,
+  'campista-4': generarColaRondasCampista4,
+  'campista-5': generarColaRondasCampista5,
+  'campista-6': generarColaRondasCampista6,
+  'campista-7': generarColaRondasCampista7,
+  'campista-8': generarColaRondasCampista8,
+  'campista-9': generarColaRondasCampista9,
+
 };
 
 // Busca los datos de un nivel específico dentro de las 3 ligas
@@ -37,6 +54,9 @@ export function obtenerConfiguracionNivel(nivelId) {
     totalRondas: datosNivel.rondas,
     corazonesPorError: datosNivel.corazonesError,
     requierePuntuacionPerfecta: datosNivel.requierePerfeccion,
+    filtroGeneracion: datosNivel.filtroGeneracion,
+    tiempo: datosNivel.tiempo,
+    repeticion: datosNivel.repeticion, 
     generarColaRondas,
   };
 }

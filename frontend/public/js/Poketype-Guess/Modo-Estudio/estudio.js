@@ -59,13 +59,17 @@ import {
   restarVidaGeneral,
   actualizarCorazonesUI,
 } from "../vidasGeneralesStorage.js";
+import { filtrarPokedexPorGeneracionEstudio } from "./filtroGeneracionEstudio.js";
+import { obtenerVelocidadTiempo } from "./tiempoEstudio.js";
 
 // Estado interno del intento de nivel en curso
 let intentoActual = null;
 let colaRondas = [];
+let pokemonesUsadosEnIntento = new Set();
 let indiceRondaActual = 0;
 let correctPokemonRondaActual = null;
 let nivelIdActual = null;
+let configActual = null;
 
 // Punto de entrada: se llama desde ligas-ui.js al tocar "Iniciar Nivel" en el modal
 export async function iniciarNivelEstudio(nivelId) {
@@ -95,6 +99,8 @@ export async function iniciarNivelEstudio(nivelId) {
 
   nivelIdActual = nivelId;
   intentoActual = crearIntentoNivel(config);
+  configActual = config;
+  pokemonesUsadosEnIntento = new Set();
   colaRondas = config.generarColaRondas(Math.random);
   indiceRondaActual = 0;
 
@@ -151,17 +157,25 @@ function siguienteRonda() {
 function prepararOpciones(type1, type2) {
   uiCampistaEstudio.style.display = "flex";
 
-  const pokemonesValidos = dataState.pokedex.filter((p) =>
-    validarTiposPokemon(p, type1, type2),
-  );
-  const correctPokemon =
-    pokemonesValidos[Math.floor(Math.random() * pokemonesValidos.length)];
+  const poolFiltrado = filtrarPokedexPorGeneracionEstudio(dataState.pokedex, configActual.filtroGeneracion);
+  
+  const pokemonesValidos = poolFiltrado.filter(p => validarTiposPokemon(p, type1, type2));
+
+  const noUsados = configActual.repeticion ? pokemonesValidos : pokemonesValidos.filter(p => !pokemonesUsadosEnIntento.has(p.name));
+
+  const poolFinal = noUsados.length > 0 ? noUsados : pokemonesValidos;
+  const correctPokemon = poolFinal[Math.floor(Math.random() * poolFinal.length)];
+
+  if (!configActual.repeticion){
+    pokemonesUsadosEnIntento.add(correctPokemon.name);
+  }
+  
   correctPokemonRondaActual = correctPokemon;
 
   const wrongOptions = [];
   while (wrongOptions.length < 3) {
-    const candidato =
-      dataState.pokedex[Math.floor(Math.random() * dataState.pokedex.length)];
+    const candidato = poolFiltrado[Math.floor(Math.random() * poolFiltrado.length)];
+    console.log(candidato)
     const esCorrecto = candidato.name === correctPokemon.name;
     const yaEnLista = wrongOptions.some((p) => p.name === candidato.name);
     const tieneLaMismaCombinacion = validarTiposPokemon(
@@ -196,11 +210,13 @@ function prepararOpciones(type1, type2) {
     });
   });
 
+  const velocidad = obtenerVelocidadTiempo(configActual.tiempo);
+
   iniciarBarraTiempoEstudio(() => {
     if (respondida) return;
     respondida = true;
     procesarResultadoRonda(false);
-  });
+  }, velocidad);
 }
 
 // Temporizador aislado para Estudio. Velocidad fija por ahora (el Nivel 1

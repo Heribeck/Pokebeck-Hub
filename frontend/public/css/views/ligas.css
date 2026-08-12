@@ -434,6 +434,11 @@
     box-shadow: 0 2px 8px rgba(211, 47, 47, 0.3);
 }
 
+.etiqueta.tiempo-dinamico {
+    background: #424242;
+    color: white;
+}
+
 /* | --- Tarjeta Nivel Examen (Jefe de Liga) --- |*/
 .tarjeta-nivel-examen {
     border: 2px solid #ffd700;
