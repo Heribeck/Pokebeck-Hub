@@ -166,6 +166,10 @@ export async function campistaLogica(){
     gameState.tiempoCampista, timeState.tiempoCampistaLeft, "campista", correctPokemon.name
   );
 
+  if (gameState.tiempoCampista === 0){
+    btnVolverDificultadCampista.style.display = "flex"
+  }
+
   allOptions.forEach(pokemon => {
       const button = document.createElement("button");
       button.textContent = pokemon.name.replaceAll("-"," ");

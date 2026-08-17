@@ -60,16 +60,19 @@ import {
   actualizarCorazonesUI,
 } from "../vidasGeneralesStorage.js";
 import { filtrarPokedexPorGeneracionEstudio } from "./filtroGeneracionEstudio.js";
-import { obtenerVelocidadTiempo } from "./tiempoEstudio.js";
+import { obtenerVelocidadTiempo, calcularVelocidadDinamica } from "./tiempoEstudio.js";
 
 // Estado interno del intento de nivel en curso
 let intentoActual = null;
 let colaRondas = [];
 let pokemonesUsadosEnIntento = new Set();
 let indiceRondaActual = 0;
+let posicionColaActual = 0;
 let correctPokemonRondaActual = null;
 let nivelIdActual = null;
 let configActual = null;
+let velocidadBase = null;
+let rondasTotales = null;
 
 // Punto de entrada: se llama desde ligas-ui.js al tocar "Iniciar Nivel" en el modal
 export async function iniciarNivelEstudio(nivelId) {
@@ -103,6 +106,9 @@ export async function iniciarNivelEstudio(nivelId) {
   pokemonesUsadosEnIntento = new Set();
   colaRondas = config.generarColaRondas(Math.random);
   indiceRondaActual = 0;
+  posicionColaActual = 0;
+  velocidadBase = obtenerVelocidadTiempo(config.tiempo);
+  rondasTotales = config.totalRondas;
 
   mostrarPanelEstudio();
   siguienteRonda();
@@ -130,18 +136,70 @@ function actualizarTextoProgreso() {
   hxGanadoTextoEstudio.textContent = llenos + vacios;
 }
 
+function buscarSiguienteRondaDisponible() {
+  while (posicionColaActual < colaRondas.length) {
+    const { type1, type2 } = colaRondas[posicionColaActual];
+    
+    const poolFiltrado = filtrarPokedexPorGeneracionEstudio(
+      dataState.pokedex,
+      configActual.filtroGeneracion,
+      configActual.filtroEspecial
+    );
+    
+    const pokemonesValidos = poolFiltrado.filter(pokemon => 
+      validarTiposPokemon(pokemon, type1, type2)
+    );
+    
+    if (pokemonesValidos.length === 0) {
+      colaRondas.splice(posicionColaActual, 1);
+      continue;
+    }
+    
+    if (configActual.repeticion) {
+      return {
+        type1,
+        type2,
+        pokemonesDisponibles: pokemonesValidos
+      };
+    }
+    
+    const disponibles = pokemonesValidos.filter(pokemon =>
+      !pokemonesUsadosEnIntento.has(pokemon.name)
+    );
+    
+    if (disponibles.length > 0) {
+      return {
+        type1,
+        type2,
+        pokemonesDisponibles: disponibles
+      };
+    }
+    
+    // combinación agotada - eliminar de la cola
+    colaRondas.splice(posicionColaActual, 1);
+  }
+  
+  return null;
+}
+
 function siguienteRonda() {
-  if (indiceRondaActual >= colaRondas.length) {
+  const ronda = buscarSiguienteRondaDisponible();
+  
+  if (!ronda) {
     finalizarNivel();
     return;
   }
+  
+  const { type1, type2, pokemonesDisponibles } = ronda;
+  
+  // Avanzar posición en la cola después de seleccionar una ronda válida
+  posicionColaActual++;
 
   btnNextEstudio.style.display = "none";
   btnIntentoEstudio.style.display = "none";
   mensajeAciertoEstudio.innerHTML = "";
   cajaOpcionesPokemonEstudio.innerHTML = "";
 
-  const { type1, type2 } = colaRondas[indiceRondaActual];
   gameState.type1ValueEstudio = type1;
   gameState.type2ValueEstudio = type2;
 
@@ -150,22 +208,18 @@ function siguienteRonda() {
   tipo1Estudio.style.backgroundColor = coloresTipos[type1];
   tipo2Estudio.style.backgroundColor = coloresTipos[type2];
 
-  prepararOpciones(type1, type2);
+  prepararOpciones(type1, type2, pokemonesDisponibles);
   actualizarTextoProgreso();
 }
 
-function prepararOpciones(type1, type2) {
+function prepararOpciones(type1, type2, pokemonesDisponibles) {
   uiCampistaEstudio.style.display = "flex";
 
-  const poolFiltrado = filtrarPokedexPorGeneracionEstudio(dataState.pokedex, configActual.filtroGeneracion);
+  const poolFiltrado = filtrarPokedexPorGeneracionEstudio(dataState.pokedex, configActual.filtroGeneracion, configActual.filtroEspecial);
   
-  const pokemonesValidos = poolFiltrado.filter(p => validarTiposPokemon(p, type1, type2));
-
-  const noUsados = configActual.repeticion ? pokemonesValidos : pokemonesValidos.filter(p => !pokemonesUsadosEnIntento.has(p.name));
-
-  const poolFinal = noUsados.length > 0 ? noUsados : pokemonesValidos;
-  const correctPokemon = poolFinal[Math.floor(Math.random() * poolFinal.length)];
-
+  const correctPokemon = pokemonesDisponibles[Math.floor(Math.random() * pokemonesDisponibles.length)];
+  console.log(correctPokemon)
+  console.log(pokemonesDisponibles)
   if (!configActual.repeticion){
     pokemonesUsadosEnIntento.add(correctPokemon.name);
   }
@@ -175,7 +229,6 @@ function prepararOpciones(type1, type2) {
   const wrongOptions = [];
   while (wrongOptions.length < 3) {
     const candidato = poolFiltrado[Math.floor(Math.random() * poolFiltrado.length)];
-    console.log(candidato)
     const esCorrecto = candidato.name === correctPokemon.name;
     const yaEnLista = wrongOptions.some((p) => p.name === candidato.name);
     const tieneLaMismaCombinacion = validarTiposPokemon(
@@ -210,7 +263,11 @@ function prepararOpciones(type1, type2) {
     });
   });
 
-  const velocidad = obtenerVelocidadTiempo(configActual.tiempo);
+  let velocidad = obtenerVelocidadTiempo(configActual.tiempo);
+  
+  if (configActual.tiempoDinamico && velocidadBase !== null && rondasTotales !== null) {
+    velocidad = calcularVelocidadDinamica(velocidadBase, indiceRondaActual, rondasTotales);
+  }
 
   iniciarBarraTiempoEstudio(() => {
     if (respondida) return;
@@ -299,6 +356,13 @@ async function finalizarNivel() {
       mensajeAciertoEstudio.innerHTML =
         `🏆 ¡Nivel superado! ${resultado.aciertos}/${resultado.totalRondas} aciertos.<br>` +
         `<span style="color: #43a047;">⚡ +${config.hxRecompensa} HX (Total: ${nuevoHX})</span>`;
+      
+      // Verificar si es campeon-18 y se completó correctamente
+      if (nivelQueTermino === "campeon-18" && intentoActual.corazonesRestantes > 0) {
+        if (window.victoriaPokeType) {
+          window.victoriaPokeType.ejecutarVictoriaDefinitiva();
+        }
+      }
     }
   } else {
     const vidasRestantes = await restarVidaGeneral();

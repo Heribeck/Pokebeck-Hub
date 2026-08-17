@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/views/modes/estudio.css">
+    <link rel="stylesheet" href="css/victoria.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.default.css">
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
     
@@ -38,6 +39,12 @@
         <div class="cabecera-global">
             <h1 class="titulo-hub">Pokebeck Hub</h1>
             <p id="hx-global" class="hx-global">⚡ 0 HX</p>
+        </div>
+
+        <!-- Título Maestro en Main -->
+        <div class="maestro-poketype" data-maestro-poketype>
+            <span class="maestro-poketype__medalla">🏆</span>
+            <span class="maestro-poketype__texto">Maestro En PokeType !</span>
         </div>
 
         <img src="assets/img/icons/icono-only.png" alt="Icono Pokebeck Hub" class="icono-main">
@@ -285,46 +292,48 @@
                 </button>
             </div>
 
-            <button id="btn-volver-poketype-dificultad" class="boton-volver-intermedio">Volver a Poketype</button>
+            <button id="btn-volver-poketype-dificultad" class="boton-volver-poketype">Volver a Poketype</button>
 
         </div>
 
-        <div id="configuracion-campista" class="caja-configuracion-campista">
+        <div id="layout-entrenamiento" class="layout-entrenamiento">
+            <div id="configuracion-campista" class="caja-configuracion-campista">
 
-            <button id="reinicio-score-campista" class="boton-reinicio"><i class="fa-solid fa-rotate-right"></i></button>
+                <button id="reinicio-score-campista" class="boton-reinicio"><i class="fa-solid fa-rotate-right"></i></button>
 
-            <p>Score: <span id="score-campista">0</span> || MAX: <span id="max-campista">0</span></p>
-                
-            <button id="reinicio-max-campista" class="boton-reinicio"><i class="fa-solid fa-rotate-right"></i></button>
+                <p>Score: <span id="score-campista">0</span> || MAX: <span id="max-campista">0</span></p>
+                    
+                <button id="reinicio-max-campista" class="boton-reinicio"><i class="fa-solid fa-rotate-right"></i></button>
 
-        </div>
+            </div>
 
-        <div class="caja-tipos">
+            <div class="caja-tipos">
 
-            <img id="type1-icon-campista" class="type-icon" src="assets/img/icons/icono-only.png" alt="Normal">
-            <img id="type2-icon-campista" class="type-icon" src="assets/img/icons/icono-only.png" alt="Normal">
+                <img id="type1-icon-campista" class="type-icon" src="assets/img/icons/icono-only.png" alt="Normal">
+                <img id="type2-icon-campista" class="type-icon" src="assets/img/icons/icono-only.png" alt="Normal">
 
-        </div>
+            </div>
 
-        <p id="mensaje-acierto-campista"></p>
+            <p id="mensaje-acierto-campista"></p>
 
-        <div class="caja-barra-tiempo">
-            <div id="tiempo-campista" class="barra-tiempo"></div>
-        </div>
-        
-        <div class="botones-campista" id="btns-campista">
+            <div class="caja-barra-tiempo">
+                <div id="tiempo-campista" class="barra-tiempo"></div>
+            </div>
+            
+            <div class="botones-campista" id="btns-campista">
 
-            <button id="btn-iniciar-juego-campista" class="boton-iniciar-juego">Iniciar Juego</button>
-            <button id="btn-next-campista" class="boton-next">Siguiente</button>
-            <button id="btn-intento-campista" class="boton-intento">Intentar de Nuevo</button>
-            <button id="btn-volver-dificultad-campista" class="boton-volver-intermedio" style="display: none;">Volver a Dificultad</button>
-            <button id="revivir-campista" class="boton-revivir">
-                Revivir Viendo un Video
-                <i class="fa-solid fa-film" style="margin-left: 10px;"></i>
-            </button>
-        </div>
+                <button id="btn-iniciar-juego-campista" class="boton-iniciar-juego">Iniciar Juego</button>
+                <button id="btn-volver-dificultad-campista" class="boton-volver-dificultad" style="display: none;">Volver a Dificultad</button>
+                <button id="btn-next-campista" class="boton-next">Siguiente</button>
+                <button id="btn-intento-campista" class="boton-intento">Intentar de Nuevo</button>
+                <button id="revivir-campista" class="boton-revivir">
+                    Revivir Viendo un Video
+                    <i class="fa-solid fa-film" style="margin-left: 10px;"></i>
+                </button>
+            </div>
 
-        <div id="opciones-pokemon" class="caja-opciones-pokemon">
+            <div id="opciones-pokemon" class="caja-opciones-pokemon">
+            </div>
         </div>
 
         <div id="ventana-confirmacion-campista" class="layout-confirmacion-ventana">
@@ -353,6 +362,33 @@
         <p><span id="mensaje-notificacion">Mensaje de prueba</span></p>
     </section>
     
+    <!-- Contenedor de Confeti -->
+    <div id="contenedor-confeti" aria-hidden="true"></div>
+
+    <!-- Modal de Victoria -->
+    <div id="modal-victoria" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+        <div class="modal-victoria__contenido">
+            <h2 class="modal-victoria__titulo" id="modal-titulo">
+                ¡MAESTRÍA ABSOLUTA ALCANZADA! 🏆
+            </h2>
+            <p class="modal-victoria__mensaje">
+                Tu conocimiento ha trascendido los límites. Hoy no solo terminas un desafío, 
+                hoy te coronas como un verdadero Maestro de la Biología Pokémon.
+            </p>
+            <div class="modal-victoria__recompensa">
+                <span class="modal-victoria__medalla-grande">🏆</span>
+                <h3 class="modal-victoria__titulo-recompensa">MAESTRO</h3>
+                <p class="modal-victoria__subtitulo-recompensa">DE POKETYPE</p>
+            </div>
+            <div class="modal-victoria__botones">
+                <button class="modal-victoria__boton modal-victoria__boton--cerrar" onclick="victoriaPokeType.ocultarModalVictoria()">
+                    ✖ Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/victoria.js"></script>
 </body>
 
 </html>

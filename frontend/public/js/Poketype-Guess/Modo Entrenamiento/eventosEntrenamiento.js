@@ -25,6 +25,7 @@ import{
   campista,
   poketype,
   cajaOpcionesPokemon,
+  panelJuego,
 } from '../config.js';
 import { reiniciarUsados } from '../control-repeticion.js';
 import { generarTipos } from '../Generador/generador.js';
@@ -54,6 +55,7 @@ function iniciarEntrenamiento(modo) {
   establecerDificultadEntrenamiento(modo);
   dificultadCampista.style.display = "none";
   campista.style.display = "flex";
+  panelJuego.style.display = "flex"
   pMaxCampista.textContent = scoreState.maxCampista;
   cambiarMusicaModes(musicaCampista);
 
@@ -104,6 +106,7 @@ btnNextCampista.addEventListener("click", () => {
 btnIntentoCampista.addEventListener("click", () => {
   manejarBotonIntento("campista", tipo1Campista, tipo2Campista, campistaLogica, btnIntentoCampista, mensajeAciertoCampista, musicaCampista);
   reiniciarUsados("campista");
+  btnVolverDificultadCampista.style.display = "none"
 });
 
 //Evento para mostrar el video bonificado
@@ -133,14 +136,20 @@ cancelarReinicioCampista.addEventListener("click", () => {
 
 //Evento para volver a la selección de dificultad desde el juego
 btnVolverDificultadCampista.addEventListener("click", () => {
-  campista.style.display = "none";
-  dificultadCampista.style.display = "flex";
+  campista.style.display = "flex";
+  dificultadCampista.style.display = "flex"
+  panelJuego.style.display = "none"
   btnVolverDificultadCampista.style.display = "none";
-  btnIniciarJuegoCampista.style.display = "block";
+  btnIniciarJuegoCampista.style.display = "flex";
+  btnNextCampista.style.display = "none";
+  btnIntentoCampista.style.display = "none";
+  btnRevivirCampista.style.display = "none";
+  cajaOpcionesPokemon.innerHTML = "";
+  mensajeAciertoCampista.innerHTML = "";
 });
 
 //Evento para volver a Poketype desde la selección de dificultad
 btnVolverPoketypeDificultad.addEventListener("click", () => {
-  dificultadCampista.style.display = "none";
+  campista.style.display = "none";
   poketype.style.display = "flex";
 });

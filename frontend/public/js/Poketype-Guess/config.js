@@ -222,6 +222,7 @@ export const domElements = {
   // Elementos del modo Campista
   campista: {
     dificultad: document.getElementById("dificultad"),
+    panelJuego: document.getElementById("layout-entrenamiento"),
     btnCampista: document.getElementById("btn-campista"),
     btnFacilEntrenamiento: document.getElementById("btn-facil-entrenamiento"),
     btnNormalEntrenamiento: document.getElementById("btn-normal-entrenamiento"),
@@ -350,6 +351,7 @@ export const modalHxFaltante = domElements.modalDetalles.hxFaltante;
 
 export const btnCampista = domElements.campista.btnCampista;
 export const dificultadCampista = domElements.campista.dificultad;
+export const panelJuego = domElements.campista.panelJuego;
 export const btnFacilEntrenamiento = domElements.campista.btnFacilEntrenamiento;
 export const btnNormalEntrenamiento = domElements.campista.btnNormalEntrenamiento;
 export const btnDificilEntrenamiento = domElements.campista.btnDificilEntrenamiento;

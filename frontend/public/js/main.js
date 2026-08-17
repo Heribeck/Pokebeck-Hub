@@ -84,6 +84,13 @@ if(window.Capacitor){
 cargarPokedex();
 actualizarStatsMenu();
 
+// Verificar victoria al cargar la aplicación
+document.addEventListener('DOMContentLoaded', () => {
+    if (window.victoriaPokeType) {
+        window.victoriaPokeType.verificarVictoriaAlIniciar();
+    }
+});
+
 solicitarPermisoNotificaciones().then(async () => {
   const completoHoy = await yaCompletoDesafioHoy();
   if (!completoHoy) {

@@ -11,7 +11,8 @@ import {
   btnVolverMenuPoketype,
   campista,
   btnRecuperarVidaPoketype,
-  adState
+  adState,
+  dificultadCampista
 } from './config.js';
 
 // Funciones importadas desde otros archivos

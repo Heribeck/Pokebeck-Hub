@@ -23,7 +23,7 @@ const POOL_YA_VISTO = [
   { type1: 'grass', type2: 'poison' },
   { type1: 'water', type2: 'ground' },
   { type1: 'rock', type2: 'ground' },
-  { type1: 'ghost', type2: 'poison' },
+  { type1: 'bug', type2: 'poison' },
   { type1: 'psychic', type2: 'water' },
   
 ];

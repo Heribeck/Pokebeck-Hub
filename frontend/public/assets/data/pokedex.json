@@ -7889,6 +7889,15 @@
     "sprite": "./assets/img/pokemones/arboliva.png"
   },
   {
+    "id": 931,
+    "name": "squawkabily",
+    "types": [
+      "flying",
+      "normal"
+    ],
+    "sprite": "./assets/img/pokemones/squawkabily.png"
+  },
+  {
     "id": 932,
     "name": "nacli",
     "types": [
@@ -8369,15 +8378,6 @@
     "sprite": "./assets/img/pokemones/flutter-mane.png"
   },
   {
-    "id": 987,
-    "name": "melena aleteo",
-    "types": [
-      "ghost",
-      "fairy"
-    ],
-    "sprite": "./assets/img/pokemones/flutter-mane.png"
-  },
-  {
     "id": 988,
     "name": "reptalada",
     "types": [
@@ -8439,15 +8439,6 @@
       "poison"
     ],
     "sprite": "./assets/img/pokemones/iron-moth.png"
-  },
-  {
-    "id": 995,
-    "name": "ferropúas",
-    "types": [
-      "rock",
-      "electric"
-    ],
-    "sprite": "./assets/img/pokemones/iron-thorns.png"
   },
   {
     "id": 995,
@@ -8546,15 +8537,6 @@
       "dark"
     ],
     "sprite": "./assets/img/pokemones/roaring-moon.png"
-  },
-  {
-    "id": 1006,
-    "name": "ferropaladín",
-    "types": [
-      "fairy",
-      "fighting"
-    ],
-    "sprite": "./assets/img/pokemones/iron-valiant.png"
   },
   {
     "id": 1006,
@@ -8735,35 +8717,35 @@
     "sprite": "./assets/img/pokemones/pecharunt.png"
   },
   { "id": 10008, 
-    "name": "Rotom-Heat", 
+    "name": "rotom-Heat", 
     "types": [
       "electric", 
       "fire"
     ] 
   },
   { "id": 10009, 
-    "name": "Rotom-Wash", 
+    "name": "rotom-Wash", 
     "types": [
       "electric", 
       "water"
     ] 
   },
   { "id": 10010, 
-    "name": "Rotom-Frost", 
+    "name": "rotom-Frost", 
     "types": [
       "electric", 
       "ice"
     ] 
   },
   { "id": 10011, 
-    "name": "Rotom-Fan", 
+    "name": "rotom-Fan", 
     "types": [
       "electric", 
       "flying"
     ] 
   },
   { "id": 10012, 
-    "name": "Rotom-Mow", 
+    "name": "rotom-Mow", 
     "types": [
       "electric", 
       "grass"
@@ -8771,7 +8753,7 @@
   },
   {
     "id": 10017,
-    "name": "Darmanitan-Zen",
+    "name": "darmanitan-Zen",
     "types": [
       "fire",
       "psychic"
@@ -9360,8 +9342,62 @@
     "sprite": "./assets/img/pokemones/marowak-alola.png"
   },
   {
+    "id": 10123,
+    "name": "oricorio-pom-pom",
+    "types": [
+      "electric",
+      "flying"
+    ],
+    "sprite": "./assets/img/pokemones/oricorio-pom-pom.png"
+  },
+  {
+    "id": 10124,
+    "name": "oricorio-pau",
+    "types": [
+      "psychic",
+      "flying"
+    ],
+    "sprite": "./assets/img/pokemones/oricorio-pau.png"
+  },
+  {
+    "id": 10125,
+    "name": "oricorio-sensu",
+    "types": [
+      "ghost",
+      "flying"
+    ],
+    "sprite": "./assets/img/pokemones/oricorio-sensu.png"
+  },
+  {
+    "id": 10149,
+    "name": "marowak-totem",
+    "types": [
+      "fire",
+      "ghost"
+    ],
+    "sprite": "./assets/img/pokemones/marowak-totem.png"
+  },
+  {
+    "id": 10155,
+    "name": "necrozma-dusk",
+    "types": [
+      "psychic",
+      "steel"
+    ],
+    "sprite": "./assets/img/pokemones/necrozma-dusk.png"
+  },
+  {
+    "id": 10156,
+    "name": "necrozma-dawn",
+    "types": [
+      "psychic",
+      "ghost"
+    ],
+    "sprite": "./assets/img/pokemones/necrozma-dawn.png"
+  },
+  {
     "id": 10157,
-    "name": "ultranecrozma",
+    "name": "necrozma-ultra",
     "types": [
       "psychic",
       "dragon"
@@ -9508,7 +9544,7 @@
   },
   {
     "id": 10177,
-    "name": "darmanitan-galar",
+    "name": "darmanitan galar",
     "types": [
       "ice"
     ]
@@ -9538,6 +9574,33 @@
       "steel"
     ],
     "sprite": "./assets/img/pokemones/stunfisk-galar.png"
+  },
+  {
+    "id": 10191,
+    "name": "urshifu-estilo-fluido",
+    "types": [
+      "fighting",
+      "water"
+    ],
+    "sprite": "./assets/img/pokemones/urshifu-rapid-strike.png"
+  },
+  {
+    "id": 10193,
+    "name": "calyrex-ice",
+    "types": [
+      "psychic",
+      "ice"
+    ],
+    "sprite": "./assets/img/pokemones/calyrex-ice.png"
+  },
+  {
+    "id": 10194,
+    "name": "calyrex-shadow",
+    "types": [
+      "psychic",
+      "ghost"
+    ],
+    "sprite": "./assets/img/pokemones/calyrex-shadow.png"
   },
   {
     "id": 10229,
@@ -9685,7 +9748,7 @@
   },
   {
     "id": 10250,
-    "name": "tauros combat",
+    "name": "tauros combat paldea",
     "types": [
       "fighting"
     ],
@@ -9693,7 +9756,7 @@
   },
   {
     "id": 10251,
-    "name": "tauros blaze",
+    "name": "tauros blaze paldea",
     "types": [
       "fighting",
       "fire"
@@ -9702,7 +9765,7 @@
   },
   {
     "id": 10252,
-    "name": "tauros aqua",
+    "name": "tauros aqua paldea",
     "types": [
       "fighting",
       "water"
@@ -9717,6 +9780,24 @@
       "ground"
     ],
     "sprite": "./assets/img/pokemones/wooper-paldea.png"
+  },
+  {
+    "id": 10278,
+    "name": "mega clefable",
+    "types": [
+      "fairy",
+      "flying"
+    ],
+    "sprite": "./assets/img/pokemones/clefable-mega.png"
+  },
+  {
+    "id": 10298,
+    "name": "mega barbaracle",
+    "types": [
+      "rock",
+      "fighting"
+    ],
+    "sprite": "./assets/img/pokemones/barbaracle-mega.png"
   },
   {
     "id": 10301,
@@ -9756,8 +9837,7 @@
     "id": 10305,
     "name": "mega garchomp z",
     "types": [
-      "dragon",
-      "ground"
+      "dragon"
     ],
     "sprite": "./assets/img/pokemones/garchomp-mega-z.png"
   },
@@ -9887,7 +9967,8 @@
     "id": 10320,
     "name": "mega meganium",
     "types": [
-      "grass"
+      "grass",
+      "fairy"
     ],
     "sprite": "./assets/img/pokemones/meganium-mega.png"
   },

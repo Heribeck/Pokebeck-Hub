@@ -20,7 +20,7 @@ const Preferences = PreferencesNativo || PreferencesLocalStorage;
 const CLAVE_VIDAS = 'pokebeck_vidas_generales';
 
 const VIDAS_MAXIMAS = 3;
-const HORAS_POR_REGENERACION = 12;
+const HORAS_POR_REGENERACION = 6;
 const MS_POR_REGENERACION = HORAS_POR_REGENERACION * 60 * 60 * 1000;
 
 function estadoPorDefecto() {
@@ -92,7 +92,7 @@ export async function restarVidaGeneral() {
   const estadoActualizado = aplicarRegeneracion(estadoCrudo);
 
   const nuevasVidas = Math.max(0, estadoActualizado.vidas - 1);
-  const nuevoEstado = { vidas: nuevasVidas, ultimaActualizacion: Date.now() };
+  const nuevoEstado = { vidas: nuevasVidas, ultimaActualizacion: estadoActualizado.ultimaActualizacion };
 
   await guardarEstado(nuevoEstado);
   return nuevasVidas;

@@ -43,8 +43,10 @@ export async function InicializarAdMob() {
       if (adState.recompensaGanada && adState.modoRevivirActivo === 'vidas-generales') {
         const { restaurarVidaPorAnuncio } = await import('./Modo Estudio/vidas-generales-storage.js');
         const { actualizarIndicadorVidas } = await import('./Modo Estudio/vidas-ui.js');
+        const { actualizarTiempoRegeneracionUI } = await import('./vidasGeneralesStorage.js');
         await restaurarVidaPorAnuncio();
         await actualizarIndicadorVidas();
+        await actualizarTiempoRegeneracionUI();
         mostrarNotificacion('¡Vida recuperada!');
         adState.recompensaGanada = false;
         adState.modoRevivirActivo = null;

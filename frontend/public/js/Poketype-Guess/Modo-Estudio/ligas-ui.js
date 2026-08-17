@@ -56,14 +56,17 @@ export async function generarTarjetasLigas() {
 
     const completadosEnLiga = liga.niveles.filter(n => idsCompletados.includes(n.id)).length;
     const porcentaje = Math.round((completadosEnLiga / liga.niveles.length) * 100);
+    const ligaCompletada = completadosEnLiga === liga.niveles.length;
 
     const tarjeta = document.createElement('div');
     tarjeta.className = `tarjeta-liga ${ligaBloqueada ? 'tarjeta-liga-bloqueada' : ''}`;
     tarjeta.dataset.liga = ligaKey;
 
     const estadoFooter = ligaBloqueada
-      ? `<span class="estado-liga estado-bloqueado">🔒 Necesitas ${primerNivel.hxRequerido - hxActual} HX más</span>`
-      : `<span class="estado-liga estado-desbloqueado">🔓 Desbloqueado</span>`;
+      ? `<span class="estado-liga estado-bloqueado">🔒 Bloqueado</span>`
+      : ligaCompletada
+        ? `<span class="estado-liga estado-completado">✅ Completado</span>`
+        : `<span class="estado-liga estado-desbloqueado">🔓 Desbloqueado</span>`;
 
     tarjeta.innerHTML = `
       <div class="tarjeta-liga-header">

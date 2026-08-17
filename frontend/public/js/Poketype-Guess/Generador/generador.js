@@ -1,5 +1,5 @@
 // Variables importadas desde config.js
-import { types, typesIcono, coloresTipos, gameState, esperar, btnGenerar, tipo1, tipo2, main } from '../config.js';
+import { types, typesIcono, coloresTipos, gameState, esperar, btnGenerar, tipo1, tipo2, main, btnVolverDificultadCampista } from '../config.js';
 import { Aleatoriedad, detenerTodoElAudio, soundLose, capitalizarPrimeraLetra } from '../utils.js';
 import { guardarScoreAntesDePerder, mostrarBotonRevivir } from '../Modo Entrenamiento/entrenamiento.js';
 
@@ -83,6 +83,7 @@ export function iniciarBarraTiempo(estado, modo, parrafo, boton, barra, mensaje,
       if(noExiste) noExiste.style.display = "none";
       if(validar) validar.style.display = "none";
       if(input) input.style.display = "none";
+      btnVolverDificultadCampista.style.display = "flex"
 
       const buttons = document.querySelectorAll(".btn-opcion");
 

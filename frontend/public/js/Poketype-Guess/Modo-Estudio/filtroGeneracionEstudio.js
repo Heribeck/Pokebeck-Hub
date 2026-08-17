@@ -1,8 +1,7 @@
-// Filtra la Pokedex por generación, según el campo "filtroGeneracion" que
-// definimos en ligas-datos.js ('gen-1', 'gen-1-3', 'gen-4-5', 'gen-6-9', 'todas').
-// Excluye formas/variantes especiales (ID >= 10000) por defecto — esas se
-// reservan para los niveles de "Formas y Variantes" en Liga Campeón, que
-// usan una función distinta (elegirPokemonConPrioridadFormas).
+// Filtra la Pokedex por generación y filtro especial, según los campos
+// "filtroGeneracion" y "filtroEspecial" que definimos en ligas-datos.js.
+// Excluye formas/variantes especiales (ID >= 10000) por defecto cuando
+// filtroEspecial es null.
 
 const LIMITE_ID_FORMAS_ESPECIALES = 10000;
 
@@ -35,16 +34,63 @@ function obtenerRangoIds(filtroGeneracion) {
   return mapa[filtroGeneracion] ?? null;
 }
 
-// Filtra el pool de Pokémon según el filtro de generación del nivel.
-// Excluye formas especiales (ID >= 10000) salvo que se indique lo contrario.
-export function filtrarPokedexPorGeneracionEstudio(pokedex, filtroGeneracion, incluirFormas = false) {
+// Funciones auxiliares de clasificación (case-insensitive)
+function esMega(pokemon) {
+  return pokemon.name.toLowerCase().startsWith('mega ');
+}
+
+function esRegional(pokemon) {
+  const nombre = pokemon.name.toLowerCase();
+  const regiones = ['alola', 'galar', 'hisui', 'paldea'];
+  return regiones.some(region => nombre.endsWith(region));
+}
+
+function esVariante(pokemon) {
+  return pokemon.name.includes('-') && !esMega(pokemon) && !esRegional(pokemon);
+}
+
+// Filtra el pool de Pokémon según el filtro de generación y filtro especial del nivel.
+export function filtrarPokedexPorGeneracionEstudio(pokedex, filtroGeneracion, filtroEspecial = null) {
   const rango = obtenerRangoIds(filtroGeneracion);
 
   return pokedex.filter(p => {
     const esForma = p.id >= LIMITE_ID_FORMAS_ESPECIALES;
-    if (esForma && !incluirFormas) return false;
-
-    if (rango === null) return true; // "todas", sin restricción de generación
-    return p.id >= rango[0] && p.id <= rango[1];
+    
+    // Lógica según filtroEspecial
+    switch (filtroEspecial) {
+      case null:
+        // Comportamiento actual: excluir formas especiales
+        if (esForma) return false;
+        // Filtro por generación para pokemones normales
+        if (rango !== null && (p.id < rango[0] || p.id > rango[1])) return false;
+        return true;
+      
+      case 'solo-regionales':
+        // Solo formas especiales que sean regionales (sin filtro de generación)
+        return esForma && esRegional(p);
+      
+      case 'solo-megas':
+        // Solo formas especiales que sean megas (sin filtro de generación)
+        return esForma && esMega(p);
+      
+      case 'solo-variantes':
+        // Solo formas especiales que sean variantes (sin filtro de generación)
+        return esForma && esVariante(p);
+      
+      case 'regionales-variantes':
+        // Solo formas especiales que sean regionales o variantes (sin filtro de generación, excluye megas)
+        return esForma && (esRegional(p) || esVariante(p));
+      
+      case 'absoluto':
+        // Todos los pokemones normales dentro del filtroGeneracion + TODAS las formas especiales
+        const enRangoBase = rango === null || (p.id >= rango[0] && p.id <= rango[1]);
+        return enRangoBase || esForma;
+      
+      default:
+        // Si filtroEspecial no es reconocido, comportarse como null
+        if (esForma) return false;
+        if (rango !== null && (p.id < rango[0] || p.id > rango[1])) return false;
+        return true;
+    }
   });
 }

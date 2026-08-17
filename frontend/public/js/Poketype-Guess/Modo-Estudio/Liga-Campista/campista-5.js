@@ -6,7 +6,7 @@
 const COMBOS_NIVEL = [
   { type1: 'water', type2: 'ground' },
   { type1: 'rock', type2: 'ground' },
-  { type1: 'ghost', type2: 'poison' },
+  { type1: 'bug', type2: 'poison' },
   { type1: 'psychic', type2: 'water' },
 ];
 const VECES_POR_COMBO = 4;

@@ -10,6 +10,11 @@
     overflow-y: auto;
 }
 
+.layout-entrenamiento{
+    display: none;
+    flex-direction: column;
+}
+
 .caja-configuracion-campista {
     display: flex;
     justify-content: center;
@@ -332,6 +337,48 @@
     background: rgba(255, 152, 0, 0.2);
     border-color: #ff9800;
     color: #ff9800;
+    transform: translateY(-2px);
+}
+
+.boton-volver-dificultad {
+    justify-content: center;
+    color: var(--text-primary);
+    border: 1px solid rgba(124, 77, 255, 0.3);
+    padding: 0.875rem 1.75rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    max-width: 20rem;
+    transition: all 0.2s ease;
+    background: rgba(124, 77, 255, 0.05);
+}
+
+.boton-volver-dificultad:hover {
+    background: rgba(124, 77, 255, 0.2);
+    border-color: #7c4dff;
+    color: #7c4dff;
+    transform: translateY(-2px);
+}
+
+.boton-volver-poketype {
+    justify-content: center;
+    color: var(--text-primary);
+    border: 1px solid rgba(67, 160, 71, 0.3);
+    padding: 0.875rem 1.75rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    max-width: 20rem;
+    transition: all 0.2s ease;
+    background: rgba(67, 160, 71, 0.05);
+}
+
+.boton-volver-poketype:hover {
+    background: rgba(67, 160, 71, 0.2);
+    border-color: #43a047;
+    color: #43a047;
     transform: translateY(-2px);
 }
 

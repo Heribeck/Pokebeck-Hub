@@ -162,10 +162,35 @@ export function validarSimilitudPalabra(palabraUsuario, palabraCorrecta, porcent
 
 //Función genérica para validar si un Pokémon tiene los tipos correctos
 export function validarTiposPokemon(pokemon, type1, type2) {
-    if (type1 === type2) {
-        return pokemon.types.length === 1 && pokemon.types.includes(type1);
-    }
-    return pokemon.types.includes(type1) && pokemon.types.includes(type2);
+  // Normalizar tipos del Pokémon
+  let tiposPokemon;
+  
+  if (pokemon.types && Array.isArray(pokemon.types)) {
+    tiposPokemon = pokemon.types.map(t => t?.toLowerCase()?.trim()).filter(t => t);
+  } else if (pokemon.type1 || pokemon.type2) {
+    tiposPokemon = [pokemon.type1, pokemon.type2]
+      .map(t => t?.toLowerCase()?.trim())
+      .filter(t => t);
+  } else {
+    return false;
+  }
+  
+  // Normalizar tipos de la ronda
+  const t1 = type1?.toLowerCase()?.trim();
+  const t2 = type2?.toLowerCase()?.trim();
+  
+  // Caso monotipo
+  if (!t2 || t2 === undefined || t1 === t2) {
+    return tiposPokemon.length === 1 && tiposPokemon[0] === t1;
+  }
+  
+  // Caso doble tipo - comparar como conjunto
+  const tiposRonda = [t1, t2].sort();
+  const tiposPokemonOrdenados = tiposPokemon.sort();
+  
+  return tiposPokemonOrdenados.length === 2 &&
+         tiposPokemonOrdenados[0] === tiposRonda[0] &&
+         tiposPokemonOrdenados[1] === tiposRonda[1];
 }
 
 //Función genérica para capitalizar primera letra
@@ -207,8 +232,13 @@ export function volverAlMenu(){
     if (panelEstudio) {panelEstudio.style.display = "none"}
     mostrarBanner("TOP_CENTER");
     detenerTodoElAudio();
+    
+    // Verificar si el usuario ya completó la liga para mostrar título
+    if (window.victoriaPokeType && window.victoriaPokeType.verificarVictoriaAlVolverAlMain) {
+        window.victoriaPokeType.verificarVictoriaAlVolverAlMain();
+    }
+}
     actualizarRachaEnMenu();
     obtenerHX().then(hx => {
         if (hxGlobal) hxGlobal.textContent = `⚡ ${hx} HX`;
     }).catch(e => console.error(e));
-}
