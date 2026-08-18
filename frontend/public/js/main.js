@@ -17,7 +17,7 @@ import './Poketype-Guess/Modo Entrenamiento/eventosEntrenamiento.js'
 //Actualizar La racha del Usuario
 import { actualizarRachaEnMenu } from './Poketype-Guess/Desafio del Dia/desafio-dia.js';
 
-import { solicitarPermisoNotificaciones, programarNotificacionRacha } from './Poketype-Guess/notificaciones-locales.js';
+import {inicializarPushFCM } from './Poketype-Guess/notificaciones-locales.js';
 
 import { obtenerProgreso, yaCompletoDesafioHoy } from './Poketype-Guess/Desafio del Dia/progreso-storage.js';
 import { obtenerHX } from './Poketype-Guess/hx-storage.js';
@@ -67,17 +67,6 @@ if(window.Capacitor){
   App.addListener("appStateChange", async (state) => {
     if (!state.isActive) {
       detenerTodoElAudio();
-    } else {
-      // Al volver a primer plano, verificar y reprogramar notificaciones
-      try {
-        const { verificarRachaVigente } = await import('./progreso-storage.js');
-        const progreso = await verificarRachaVigente();
-        if (progreso.racha > 0) {
-          await programarNotificacionRacha();
-        }
-      } catch (error) {
-        console.error('Error reprogramando notificaciones al volver de segundo plano:', error);
-      }
     }
   })
 }
@@ -91,10 +80,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-solicitarPermisoNotificaciones().then(async () => {
-  const completoHoy = await yaCompletoDesafioHoy();
-  if (!completoHoy) {
-    const progreso = await obtenerProgreso();
-    programarNotificacionRacha(progreso.racha);
-  }
-});
+inicializarPushFCM();
