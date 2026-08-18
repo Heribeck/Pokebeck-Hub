@@ -21,7 +21,7 @@ import {
 } from '../config.js';
 
 import { yaFueUsado, registrarUsado, reiniciarUsados } from '../control-repeticion.js';
-import { mostrarNotificacion, soundWin, soundLose, cambiarMusicaModes, vibrarWin, vibrarLose, validarTiposPokemon, capitalizarPrimeraLetra } from '../utils.js';
+import { mostrarNotificacion, reproducirSonidoGanar, reproducirSonidoPerder, reproducirMusicaPorDificultad, detenerMusica, vibrarWin, vibrarLose, validarTiposPokemon, capitalizarPrimeraLetra } from '../utils.js';
 import { generarTipos, iniciarBarraTiempo } from '../Generador/generador.js';
 import { calcularVelocidadEntrenamiento, permiteRepetirPokemon } from './entrenamientoDificultad.js';
 import { filtrarPokedexPorDificultad, elegirPokemonConPrioridadFormas } from './pokedexDificultad.js';
@@ -30,6 +30,10 @@ import { celebrarHito } from '../../celebracion.js';
 // Dificultad actual de Entrenamiento ('facil' | 'normal' | 'dificil').
 // Se actualiza al elegir el modo en la UI, antes de iniciar la sesión.
 let dificultadEntrenamientoActual = 'normal';
+
+export function getDificultadEntrenamientoActual() {
+  return dificultadEntrenamientoActual;
+}
 
 // Se llama al elegir Fácil/Normal/Difícil en la pantalla de selección
 export function establecerDificultadEntrenamiento(modo) {
@@ -105,7 +109,7 @@ export function ejecutarRevivir(modo) {
     campistaLogica();
     mostrarNotificacion("¡Revivido! Sigue jugando");
     vibrarWin();
-    cambiarMusicaModes(musicaCampista);
+    reproducirMusicaPorDificultad(dificultadEntrenamientoActual);
     return;
   }
 }
@@ -183,7 +187,7 @@ export async function campistaLogica(){
           clearInterval(gameState.tiempoCampista);
 
           if (pokemon.name === correctPokemon.name) {
-              soundWin();
+              reproducirSonidoGanar();
               vibrarWin();
               mensajeAciertoCampista.textContent = "¡Felicidades Sigue Sumando!";
               scoreState.estadoJuego.scoreCampista++;
@@ -203,8 +207,9 @@ export async function campistaLogica(){
           } else {
             guardarScoreAntesDePerder("campista");
             mostrarBotonRevivir("campista");
-            soundLose();
+            reproducirSonidoPerder();
             vibrarLose();
+            detenerMusica();
             mensajeAciertoCampista.innerHTML = "Has Perdido.<br>La respuesa correcta era <strong>" + capitalizarPrimeraLetra(correctPokemon.name) + "</strong>";
             scoreState.estadoJuego.scoreCampista = 0;
             pScoreCampista.textContent = scoreState.estadoJuego.scoreCampista;

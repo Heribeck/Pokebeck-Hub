@@ -30,6 +30,7 @@ import {
 import { iniciarNivelEstudio } from './estudio.js';
 import { obtenerNivelesCompletados } from './progresoNivelesStorage.js';
 import { obtenerHX } from '../hx-storage.js';
+import { estaDesbloqueado, mostrarMensajeBloqueo, DESBLOQUEOS } from '../sistema-desbloqueos.js';
 
 let nivelSeleccionado = null;
 
@@ -52,7 +53,16 @@ export async function generarTarjetasLigas() {
   Object.keys(datosLigas).forEach(ligaKey => {
     const liga = datosLigas[ligaKey];
     const primerNivel = liga.niveles[0];
-    const ligaBloqueada = hxActual < primerNivel.hxRequerido;
+    
+    // Verificar si la liga está desbloqueada por el sistema de desbloqueos
+    let ligaDesbloqueadaPorSistema = true;
+    if (ligaKey === 'as') {
+      ligaDesbloqueadaPorSistema = estaDesbloqueado(DESBLOQUEOS.LIGA_AS);
+    } else if (ligaKey === 'campeon') {
+      ligaDesbloqueadaPorSistema = estaDesbloqueado(DESBLOQUEOS.LIGA_CAMPEON);
+    }
+    
+    const ligaBloqueada = hxActual < primerNivel.hxRequerido || !ligaDesbloqueadaPorSistema;
 
     const completadosEnLiga = liga.niveles.filter(n => idsCompletados.includes(n.id)).length;
     const porcentaje = Math.round((completadosEnLiga / liga.niveles.length) * 100);
@@ -87,13 +97,21 @@ export async function generarTarjetasLigas() {
       ${ligaBloqueada ? '<div class="tarjeta-liga-overlay bloqueado"><span class="candado">🔒</span></div>' : ''}
     `;
 
-    tarjeta.addEventListener('click', () => mostrarVistaNiveles(ligaKey));
+    tarjeta.addEventListener('click', () => {
+      if (ligaBloqueada) {
+        if (!ligaDesbloqueadaPorSistema) {
+          mostrarMensajeBloqueo(ligaKey === 'as' ? DESBLOQUEOS.LIGA_AS : DESBLOQUEOS.LIGA_CAMPEON);
+        }
+      } else {
+        mostrarVistaNiveles(ligaKey);
+      }
+    });
     contenedorLigas.appendChild(tarjeta);
   });
 }
 
 // Mostrar vista de niveles de una liga específica, con estado real por nivel
-async function mostrarVistaNiveles(ligaKey) {
+export async function mostrarVistaNiveles(ligaKey) {
   const liga = datosLigas[ligaKey];
 
   const [hxActual, idsCompletados] = await Promise.all([

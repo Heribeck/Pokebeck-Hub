@@ -22,6 +22,8 @@ import { iniciarContadorRegeneracion, obtenerVidasGenerales } from './vidasGener
 import './Modo-Estudio/ligas-ui.js';
 import { actualizarIndicadorVidas } from './vidaUi.js';
 import { mostrarNotificacion } from './utils.js';
+import { estaDesbloqueado, mostrarMensajeBloqueo, DESBLOQUEOS } from './sistema-desbloqueos.js';
+import { actualizarEstadoDificultades } from './Modo Entrenamiento/eventosEntrenamiento.js';
 
 // Iniciar contador de regeneración de vidas
 iniciarContadorRegeneracion();
@@ -57,10 +59,15 @@ btnEntrenamiento.addEventListener("click", () => {
   poketype.style.display = "none";
   campista.style.display = "flex";
   ocultarBanner();
+  actualizarEstadoDificultades();
 });
 
 // --- |Evento del Apartado del Desafio Del Dia desde PokeType| -- //
 btnDesafio.addEventListener('click', () => {
+  if (!estaDesbloqueado(DESBLOQUEOS.DESAFIO_DIA)) {
+    mostrarMensajeBloqueo(DESBLOQUEOS.DESAFIO_DIA);
+    return;
+  }
   iniciarDesafioDelDia()
   ocultarBanner();
 });

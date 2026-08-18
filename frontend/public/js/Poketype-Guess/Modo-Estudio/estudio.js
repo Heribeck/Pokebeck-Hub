@@ -30,6 +30,8 @@ import {
   coloresTipos,
   hxGlobal,
   hxGlobalPoketype,
+  vistaLigas,
+  vistaNivelesLiga,
 } from "../config.js";
 
 import {
@@ -41,7 +43,14 @@ import {
   capitalizarPrimeraLetra,
   validarTiposPokemon,
   volverAlMenu,
+  reproducirMusicaPorLiga,
+  detenerMusica,
+  reproducirSonidoGanar,
+  reproducirSonidoPerder,
+  detenerTodoElAudio,
 } from "../utils.js";
+import { verificarDesbloqueos } from "../sistema-desbloqueos.js";
+import { generarTarjetasLigas, mostrarVistaNiveles } from "./ligas-ui.js";
 import {
   crearIntentoNivel,
   procesarRondaNivel,
@@ -73,6 +82,7 @@ let nivelIdActual = null;
 let configActual = null;
 let velocidadBase = null;
 let rondasTotales = null;
+let totalRondasNivel = null;
 
 // Punto de entrada: se llama desde ligas-ui.js al tocar "Iniciar Nivel" en el modal
 export async function iniciarNivelEstudio(nivelId) {
@@ -109,6 +119,9 @@ export async function iniciarNivelEstudio(nivelId) {
   posicionColaActual = 0;
   velocidadBase = obtenerVelocidadTiempo(config.tiempo);
   rondasTotales = config.totalRondas;
+  totalRondasNivel = config.totalRondas;
+
+  reproducirMusicaPorLiga(config.liga);
 
   mostrarPanelEstudio();
   siguienteRonda();
@@ -127,9 +140,7 @@ function mostrarPanelEstudio() {
 // NOTA: reutilizo "hxGanadoTextoEstudio" para mostrar los corazones del intento
 // actual. Si quieres, más adelante renombramos ese elemento a "corazonesTextoEstudio".
 function actualizarTextoProgreso() {
-  rondaActualTextoEstudio.textContent = `Ronda ${indiceRondaActual + 1} de ${
-    colaRondas.length
-  }`;
+  rondaActualTextoEstudio.textContent = `Ronda ${indiceRondaActual + 1} de ${totalRondasNivel}`;
 
   const llenos = "❤️".repeat(intentoActual.corazonesRestantes);
   const vacios = "🖤".repeat(3 - intentoActual.corazonesRestantes);
@@ -305,14 +316,16 @@ function procesarResultadoRonda(esCorrecta) {
   });
 
   const paso = procesarRondaNivel(intentoActual, esCorrecta);
-  indiceRondaActual++;
+  if(indiceRondaActual < totalRondasNivel - 1 ){
+    indiceRondaActual++;
+  }
 
   if (esCorrecta) {
-    soundWin();
+    reproducirSonidoGanar();
     vibrarWin();
     mensajeAciertoEstudio.textContent = "¡Correcto!";
   } else {
-    soundLose();
+    reproducirSonidoPerder();
     vibrarLose();
     const nombreCorrecta = capitalizarPrimeraLetra(
       correctPokemonRondaActual.name,
@@ -328,7 +341,9 @@ function procesarResultadoRonda(esCorrecta) {
     finalizarNivel();
   } else {
     btnNextEstudio.style.display = "flex";
-    btnNextEstudio.onclick = () => siguienteRonda();
+    btnNextEstudio.onclick = () => {
+      siguienteRonda();
+    };
   }
 }
 
@@ -336,6 +351,7 @@ async function finalizarNivel() {
   const resultado = calcularResultadoNivel(intentoActual);
   const nivelQueTermino = nivelIdActual;
   const config = obtenerConfiguracionNivel(nivelQueTermino);
+  detenerMusica()
 
   if (resultado.aprobado) {
     const yaLoHabiaCompletadoAntes = await yaCompletoNivel(nivelQueTermino);
@@ -356,6 +372,16 @@ async function finalizarNivel() {
       mensajeAciertoEstudio.innerHTML =
         `🏆 ¡Nivel superado! ${resultado.aciertos}/${resultado.totalRondas} aciertos.<br>` +
         `<span style="color: #43a047;">⚡ +${config.hxRecompensa} HX (Total: ${nuevoHX})</span>`;
+      
+      // Verificar desbloqueos
+      await verificarDesbloqueos(nivelQueTermino, config.liga);
+      
+      // Actualizar UI de ligas inmediatamente
+      await generarTarjetasLigas();
+
+      // 🔥 4. RE-RENDERIZAR LA LISTA DE NIVELES INMEDIATAMENTE 🔥
+      // Esto regenera el HTML del nivel recién desbloqueado en segundo plano
+      await mostrarVistaNiveles(config.liga);
       
       // Verificar si es campeon-18 y se completó correctamente
       if (nivelQueTermino === "campeon-18" && intentoActual.corazonesRestantes > 0) {

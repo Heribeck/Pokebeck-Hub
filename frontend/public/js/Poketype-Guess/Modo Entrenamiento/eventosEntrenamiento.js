@@ -29,8 +29,30 @@ import{
 } from '../config.js';
 import { reiniciarUsados } from '../control-repeticion.js';
 import { generarTipos } from '../Generador/generador.js';
-import { cambiarMusicaModes, reiniciarScoreActual, reiniciarScoreMax } from '../utils.js';
-import { campistaLogica, ocultarBotonRevivir, establecerDificultadEntrenamiento } from './entrenamiento.js';
+import { cambiarMusicaModes, reiniciarScoreActual, reiniciarScoreMax, reproducirMusicaPorDificultad, detenerMusica, reproducirSonidoGanar, reproducirSonidoPerder } from '../utils.js';
+import { campistaLogica, ocultarBotonRevivir, establecerDificultadEntrenamiento, getDificultadEntrenamientoActual } from './entrenamiento.js';
+import { estaDesbloqueado, mostrarMensajeBloqueo, DESBLOQUEOS } from '../sistema-desbloqueos.js';
+
+// Función para actualizar el estado visual de las dificultades
+export function actualizarEstadoDificultades() {
+  if (!estaDesbloqueado(DESBLOQUEOS.ENTRENAMIENTO_FACIL)) {
+    btnFacilEntrenamiento.classList.add('tarjeta-dificultad-bloqueada');
+  } else {
+    btnFacilEntrenamiento.classList.remove('tarjeta-dificultad-bloqueada');
+  }
+
+  if (!estaDesbloqueado(DESBLOQUEOS.ENTRENAMIENTO_NORMAL)) {
+    btnNormalEntrenamiento.classList.add('tarjeta-dificultad-bloqueada');
+  } else {
+    btnNormalEntrenamiento.classList.remove('tarjeta-dificultad-bloqueada');
+  }
+
+  if (!estaDesbloqueado(DESBLOQUEOS.ENTRENAMIENTO_DIFICIL)) {
+    btnDificilEntrenamiento.classList.add('tarjeta-dificultad-bloqueada');
+  } else {
+    btnDificilEntrenamiento.classList.remove('tarjeta-dificultad-bloqueada');
+  }
+}
 
 //Función auxiliar para manejar botón "Siguiente"
 function manejarBotonSiguiente(modo, tipo1Element, tipo2Element, logicaFuncion, btnNextElement, mensajeElement) {
@@ -42,9 +64,9 @@ function manejarBotonSiguiente(modo, tipo1Element, tipo2Element, logicaFuncion, 
 }
 
 //Función auxiliar para manejar botón "Intentar de Nuevo"
-function manejarBotonIntento(modo, tipo1Element, tipo2Element, logicaFuncion, btnIntentoElement, mensajeElement, musica) {
+function manejarBotonIntento(modo, tipo1Element, tipo2Element, logicaFuncion, btnIntentoElement, mensajeElement) {
   ocultarBotonRevivir(modo);
-  cambiarMusicaModes(musica);
+  reproducirMusicaPorDificultad(getDificultadEntrenamientoActual());
   generarTipos(tipo1Element, tipo2Element);
   logicaFuncion();
   btnIntentoElement.style.display = "none";
@@ -57,7 +79,8 @@ function iniciarEntrenamiento(modo) {
   campista.style.display = "flex";
   panelJuego.style.display = "flex"
   pMaxCampista.textContent = scoreState.maxCampista;
-  cambiarMusicaModes(musicaCampista);
+  
+  reproducirMusicaPorDificultad(modo);
 
   ocultarBotonRevivir("campista");
   btnIniciarJuegoCampista.style.display = "none";
@@ -75,16 +98,28 @@ function iniciarEntrenamiento(modo) {
 
 //Evento del boton "Fácil"
 btnFacilEntrenamiento.addEventListener("click", () => {
+  if (!estaDesbloqueado(DESBLOQUEOS.ENTRENAMIENTO_FACIL)) {
+    mostrarMensajeBloqueo(DESBLOQUEOS.ENTRENAMIENTO_FACIL);
+    return;
+  }
   iniciarEntrenamiento('facil');
 });
 
 //Evento del boton "Normal"
 btnNormalEntrenamiento.addEventListener("click", () => {
+  if (!estaDesbloqueado(DESBLOQUEOS.ENTRENAMIENTO_NORMAL)) {
+    mostrarMensajeBloqueo(DESBLOQUEOS.ENTRENAMIENTO_NORMAL);
+    return;
+  }
   iniciarEntrenamiento('normal');
 });
 
 //Evento del boton "Difícil"
 btnDificilEntrenamiento.addEventListener("click", () => {
+  if (!estaDesbloqueado(DESBLOQUEOS.ENTRENAMIENTO_DIFICIL)) {
+    mostrarMensajeBloqueo(DESBLOQUEOS.ENTRENAMIENTO_DIFICIL);
+    return;
+  }
   iniciarEntrenamiento('dificil');
 });
 
@@ -95,6 +130,7 @@ btnIniciarJuegoCampista.addEventListener("click", () => {
   btnIniciarJuegoCampista.style.display = "none";
   campistaLogica();
   reiniciarUsados("campista");
+  reproducirMusicaPorDificultad(getDificultadEntrenamientoActual());
 });
 
 //Evento del boton "Siguiente"
@@ -104,7 +140,7 @@ btnNextCampista.addEventListener("click", () => {
 
 //Evento del boton "Intentar de Nuevo"
 btnIntentoCampista.addEventListener("click", () => {
-  manejarBotonIntento("campista", tipo1Campista, tipo2Campista, campistaLogica, btnIntentoCampista, mensajeAciertoCampista, musicaCampista);
+  manejarBotonIntento("campista", tipo1Campista, tipo2Campista, campistaLogica, btnIntentoCampista, mensajeAciertoCampista);
   reiniciarUsados("campista");
   btnVolverDificultadCampista.style.display = "none"
 });

@@ -453,8 +453,8 @@ export const dataState = {
 
 //Varibales y valores por Defecto del sonido
 export const musicaCampista = new Audio("assets/sonidos/music/musicCampista.mp3");
-const musicaAsBatalla = new Audio("assets/sonidos/music/musicAs.mp3");
-const musicaCampeon = new Audio("assets/sonidos/music/musicCampeon.mp3");
+export const musicaAsBatalla = new Audio("assets/sonidos/music/musicAs.mp3");
+export const musicaCampeon = new Audio("assets/sonidos/music/musicCampeon.mp3");
 
 export const sonidoGanar = new Audio("assets/sonidos/efectoSound/win.mp3");
 export const sonidoPerder = new Audio("assets/sonidos/efectoSound/lose.mp3");

@@ -32,6 +32,7 @@ import { mostrarBotonRevivir } from '../Modo Entrenamiento/entrenamiento.js';
 import { mostrarNotificacion, soundWin, soundLose, vibrarWin, vibrarLose, capitalizarPrimeraLetra, volverAlMenu, cambiarMusicaModes, detenerTodoElAudio } from '../utils.js';
 import { crearGeneradorDelDia } from './prng-semilla.js';
 import { generarTiposDelDia, generarRondaCampista } from './desafio-generador.js';
+import { estaDesbloqueado, mostrarMensajeBloqueo, DESBLOQUEOS } from '../sistema-desbloqueos.js';
 import {
   crearSesionDesafio,
   procesarRespuesta,
@@ -67,13 +68,13 @@ export async function iniciarDesafioDelDia() {
     return;
   }
 
-  poketype.style.display = "none";
-
   const intentosDisponibles = await obtenerIntentosDisponiblesHoy();
   if (intentosDisponibles <= 0) {
     mostrarNotificacion('Ya usaste tus 2 intentos de hoy. ¡Vuelve mañana!');
     return;
   }
+
+  poketype.style.display = "none";
 
   const progreso = await verificarRachaVigente();
   const mecanica = obtenerMecanicaSegunRacha(progreso.racha);
@@ -239,15 +240,7 @@ function procesarResultadoDeRonda(esCorrecta){
         finalizarSesion();
       } else {
         siguienteRonda();
-      }
-
-      if (sesionActual.mecanica === 'campista') {
-      cambiarMusicaModes(musicaCampista)      
-      } else if (sesionActual.mecanica === 'as') {
-      cambiarMusicaModes(musicaAsBatalla)
-      } else if (sesionActual.mecanica === 'campeon') {
-      cambiarMusicaModes(musicaCampeon)
-      }
+      }      
     };
     return;
   }
@@ -280,11 +273,17 @@ async function finalizarSesion() {
     cancelarNotificacionRacha();
     mensajeAciertoDesafio.innerHTML =
       `¡Desafío superado! ${resultado.porcentaje}% de aciertos.<br>🔥 Racha: ${progreso.racha} días`;
+    
+    // Actualizar UI de racha inmediatamente
+    await actualizarRachaEnMenu();
   } else if (intentosRestantesAlIniciar <= 0) {
     // Era el último intento disponible de hoy y no aprobó: la racha se reinicia
     await registrarDesafioFallido();
     mensajeAciertoDesafio.innerHTML =
       `No alcanzaste el 70% (sacaste ${resultado.porcentaje}%). Se acabaron tus intentos de hoy. Tu racha se reinició.`;
+    
+    // Actualizar UI de racha inmediatamente
+    await actualizarRachaEnMenu();
   } else {
     btnJugarDeNuevoDesafio.style.display = 'flex';
     mensajeAciertoDesafio.innerHTML =

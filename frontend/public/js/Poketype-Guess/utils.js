@@ -11,13 +11,17 @@ import {
     acerca,
     generador,
     main,
-    desafio
+    desafio,
+    musicaCampista,
+    musicaAsBatalla,
+    musicaCampeon
 } from './config.js';
 
 import { mostrarBanner } from '../admob.js';
 import { actualizarRachaEnMenu } from './Desafio del Dia/desafio-dia.js';
 import { obtenerHX } from './hx-storage.js';
 import { hxGlobal, panelEstudio } from './config.js';
+import { verificarDesbloqueosPendientes } from './sistema-desbloqueos.js';
 
 // Función para generar números aleatorios
 export function Aleatoriedad(min, max) {
@@ -57,6 +61,8 @@ export async function startGame(){
 
   },500);
 
+  // Verificar desbloqueos pendientes al iniciar la app
+  await verificarDesbloqueosPendientes();
 }
 
 //Funcion para cargar la pokedex
@@ -220,6 +226,66 @@ export function reiniciarScoreMax(maxKey, localStorageKey, pMaxElement, scoreSta
     confirmacionElement.style.display = "none";
     mostrarNotificacion("Score Máximo Reiniciado");
     location.reload();
+}
+
+// Funciones de audio para música y efectos de sonido
+export function reproducirMusicaPorLiga(ligaId) {
+    detenerMusica();
+    
+    switch(ligaId) {
+        case 'campista':
+            musicaCampista.volume = 0.3;
+            musicaCampista.play().catch(e => console.log('Audio play failed:', e));
+            break;
+        case 'as':
+            musicaAsBatalla.volume = 0.3;
+            musicaAsBatalla.play().catch(e => console.log('Audio play failed:', e));
+            break;
+        case 'campeon':
+            musicaCampeon.volume = 0.3;
+            musicaCampeon.play().catch(e => console.log('Audio play failed:', e));
+            break;
+    }
+}
+
+export function reproducirMusicaPorDificultad(dificultad) {
+    detenerMusica();
+    
+    switch(dificultad) {
+        case 'facil':
+            musicaCampista.volume = 0.3;
+            musicaCampista.play().catch(e => console.log('Audio play failed:', e));
+            break;
+        case 'normal':
+            musicaAsBatalla.volume = 0.3;
+            musicaAsBatalla.play().catch(e => console.log('Audio play failed:', e));
+            break;
+        case 'dificil':
+            musicaCampeon.volume = 0.3;
+            musicaCampeon.play().catch(e => console.log('Audio play failed:', e));
+            break;
+    }
+}
+
+export function detenerMusica() {
+    musicaCampista.pause();
+    musicaCampista.currentTime = 0;
+    musicaAsBatalla.pause();
+    musicaAsBatalla.currentTime = 0;
+    musicaCampeon.pause();
+    musicaCampeon.currentTime = 0;
+}
+
+export function reproducirSonidoGanar() {
+    sonidoGanar.volume = 0.7;
+    sonidoGanar.currentTime = 0;
+    sonidoGanar.play().catch(e => console.log('Sound play failed:', e));
+}
+
+export function reproducirSonidoPerder() {
+    sonidoPerder.volume = 0.7;
+    sonidoPerder.currentTime = 0;
+    sonidoPerder.play().catch(e => console.log('Sound play failed:', e));
 }
 
 //Funcion para regresar al panel de Main
