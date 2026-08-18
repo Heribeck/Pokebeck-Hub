@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "188582878540",
+    "project_id": "com-heribeck-poketypeguess",
+    "storage_bucket": "com-heribeck-poketypeguess.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:188582878540:android:cc9e5738cd68ab4607c3e9",
+        "android_client_info": {
+          "package_name": "com.heribeck.PokeTypeGuess"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1SQ-niU9XFv9XqXZw41raveZWLZYT5Ck"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
