@@ -1,8 +1,3 @@
-// Guarda las vidas generales del jugador para el Modo Estudio. Máximo 3,
-// se regeneran +1 cada 12 horas automáticamente, o se pueden recuperar
-
-import { obtenerTiempoParaProximaRegeneracion } from './Modo-Estudio/vidasGeneralesStorageEstudio.js';
-
 // viendo un anuncio bonificado (tope siempre en 3).
 const PreferencesNativo = window.Capacitor?.Plugins?.Preferences;
 
@@ -142,6 +137,27 @@ function formatearTiempoRestante(ms) {
   } else {
     return `${segundos}s`;
   }
+}
+
+// Devuelve cuántos milisegundos faltan para la PRÓXIMA regeneración natural.
+// Si ya está en el máximo (3 vidas), devuelve null (no hay nada que esperar).
+export async function obtenerTiempoParaProximaRegeneracion() {
+  const estadoCrudo = await leerEstadoCrudo();
+  const estadoActualizado = aplicarRegeneracion(estadoCrudo);
+
+  // Si el estado cambió (hubo regeneración pendiente), lo guardamos primero
+  if (estadoActualizado !== estadoCrudo) {
+    await guardarEstado(estadoActualizado);
+  }
+
+  if (estadoActualizado.vidas >= VIDAS_MAXIMAS) {
+    return null; // ya está lleno, no hay cuenta regresiva que mostrar
+  }
+
+  const proximaRegeneracion = estadoActualizado.ultimaActualizacion + MS_POR_REGENERACION;
+  const msRestantes = proximaRegeneracion - Date.now();
+
+  return Math.max(0, msRestantes);
 }
 
 // Actualiza visualmente el tiempo de regeneración en la UI

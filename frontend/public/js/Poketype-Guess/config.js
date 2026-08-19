@@ -390,6 +390,13 @@ export const configRevivir = {
     scoreKey: "scoreCampista",
     pScore: pScoreCampista,
   },
+  'vidas-generales': {
+    btn: null,
+    btnIntento: null,
+    mensaje: null,
+    scoreKey: null,
+    pScore: null,
+  },
 };
 
 //Elementos Especificos Generales

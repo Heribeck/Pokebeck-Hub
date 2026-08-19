@@ -16,7 +16,7 @@ import {
 } from './config.js';
 
 // Funciones importadas desde otros archivos
-import { mostrarBonificado, ocultarBanner } from '../admob.js';
+import { mostrarBonificado, ocultarBanner, clickRevivir } from '../admob.js';
 import { iniciarDesafioDelDia } from './Desafio del Dia/desafio-dia.js';
 import { iniciarContadorRegeneracion, obtenerVidasGenerales } from './vidasGeneralesStorage.js';
 import './Modo-Estudio/ligas-ui.js';
@@ -37,9 +37,7 @@ btnRecuperarVidaPoketype.addEventListener('click', async () => {
     mostrarNotificacion('Ya tienes el máximo de vidas');
     return;
   }
-  adState.modoRevivirActivo = 'vidas-generales';
-  adState.recompensaGanada = false;
-  await mostrarBonificado();
+  await clickRevivir('vidas-generales');
 });
 
 // Muestra el estado real de las vidas apenas carga el panel

@@ -35,8 +35,9 @@ export async function inicializarPushFCM() {
     // Listener para obtener el token FCM
     await PushNotifications.addListener('registration', token => {
       console.log('🔥 FCM TOKEN:', token.value);
-      const elemento = document.getElementById('fcm-token');
 
+      //Muestra el TOKEN FCM en el apartado acerca.
+      const elemento = document.getElementById('fcm-token');
       if (elemento) {
         elemento.textContent = token.value;
       }

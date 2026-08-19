@@ -11,6 +11,7 @@ import {
 import { mostrarNotificacion } from './Poketype-Guess/utils.js';
 import { ocultarBotonRevivir, cuentaRegresivaRevivir, ejecutarRevivir, cancelarContadorRevivir } from './Poketype-Guess/Modo Entrenamiento/entrenamiento.js';
 
+
 //Funcion para inicializar AdMob
 export async function InicializarAdMob() {
   if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.AdMob) {
@@ -41,12 +42,12 @@ export async function InicializarAdMob() {
     window.Capacitor.Plugins.AdMob.addListener(eventosBonificado.cerrado, async () => {
 
       if (adState.recompensaGanada && adState.modoRevivirActivo === 'vidas-generales') {
-        const { restaurarVidaPorAnuncio } = await import('./Modo Estudio/vidas-generales-storage.js');
-        const { actualizarIndicadorVidas } = await import('./Modo Estudio/vidas-ui.js');
-        const { actualizarTiempoRegeneracionUI } = await import('./vidasGeneralesStorage.js');
+        const { restaurarVidaPorAnuncio } = await import('./Poketype-Guess/vidasGeneralesStorage.js');
+        const { actualizarTiempoRegeneracionUI } = await import('./Poketype-Guess/vidasGeneralesStorage.js');
+        const { actualizarIndicadorVidas } = await import('./Poketype-Guess/vidaUi.js');
         await restaurarVidaPorAnuncio();
-        await actualizarIndicadorVidas();
         await actualizarTiempoRegeneracionUI();
+        await actualizarIndicadorVidas()
         mostrarNotificacion('¡Vida recuperada!');
         adState.recompensaGanada = false;
         adState.modoRevivirActivo = null;
@@ -181,9 +182,13 @@ export async function clickRevivir(modo) {
   adState.recompensaGanada = false;
 
   const config = configRevivir[modo];
-  config.btn.disabled = true;
+  if (config.btn) {
+    config.btn.disabled = true;
+  }
   await mostrarBonificado();
-  config.btn.disabled = false;
+  if (config.btn) {
+    config.btn.disabled = false;
+  }
 }
 
 let intersticialCargado = false;
