@@ -26,6 +26,7 @@ import { generarTipos, iniciarBarraTiempo } from '../Generador/generador.js';
 import { calcularVelocidadEntrenamiento, permiteRepetirPokemon } from './entrenamientoDificultad.js';
 import { filtrarPokedexPorDificultad, elegirPokemonConPrioridadFormas } from './pokedexDificultad.js';
 import { celebrarHito } from '../../celebracion.js';
+import { incrementarContadorPerdidasEntrenamiento } from '../../admob.js';
 
 // Dificultad actual de Entrenamiento ('facil' | 'normal' | 'dificil').
 // Se actualiza al elegir el modo en la UI, antes de iniciar la sesión.
@@ -102,6 +103,7 @@ export function ejecutarRevivir(modo) {
     pScoreCampista.textContent = scoreState.estadoJuego.scoreCampista;
     btnRevivirCampista.style.display = "none";
     btnIntentoCampista.style.display = "none";
+    btnVolverDificultadCampista.style.display = "none";
     mensajeAciertoCampista.innerHTML = "";
     cajaOpcionesPokemon.innerHTML = "";
     timeState.tiempoCampistaLeft = 100;
@@ -210,6 +212,7 @@ export async function campistaLogica(){
             reproducirSonidoPerder();
             vibrarLose();
             detenerMusica();
+            incrementarContadorPerdidasEntrenamiento();
             mensajeAciertoCampista.innerHTML = "Has Perdido.<br>La respuesa correcta era <strong>" + capitalizarPrimeraLetra(correctPokemon.name) + "</strong>";
             scoreState.estadoJuego.scoreCampista = 0;
             pScoreCampista.textContent = scoreState.estadoJuego.scoreCampista;

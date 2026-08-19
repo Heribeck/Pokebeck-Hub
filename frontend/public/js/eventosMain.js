@@ -1,17 +1,18 @@
-import { ocultarBanner } from './admob.js';
+import { ocultarBanner, mostrarBanner, prepararBonificado } from './admob.js';
 import { btnAcerca, btnPoketype, poketype, sonidoTouch, main, acerca, telegram, adState } from './Poketype-Guess/config.js';
 
 // --- |Evento de boton de "PokeType Guess"|
 btnPoketype.addEventListener("click", () => {
   main.style.display = "none";
   poketype.style.display = "flex";
-  ocultarBanner();
+  mostrarBanner("TOP_CENTER");
 });
 
 // --- |Eventos del Apartado de "Acerca del Proyecto"| --- //
 btnAcerca.addEventListener("click", () => {
   main.style.display = "none";
   acerca.style.display = "flex";
+  mostrarBanner("TOP_CENTER");
 });
 
 //Evento del boton de "Telegram"

@@ -57,6 +57,7 @@ import {
   calcularResultadoNivel,
 } from "./nivel-motor.js";
 import { obtenerConfiguracionNivel } from "./registroNiveles.js";
+import { incrementarContadorRepeticionesNivel, verificarNivelEspecificoIntersticial } from "../../admob.js";
 import { tieneHXParaNivel } from "./desbloqueoNiveles.js";
 import { obtenerHX, sumarHX } from "../hx-storage.js";
 import {
@@ -360,6 +361,8 @@ async function finalizarNivel() {
       mensajeAciertoEstudio.innerHTML =
         `🏆 ¡Nivel superado de nuevo! ${resultado.aciertos}/${resultado.totalRondas} aciertos.<br>` +
         `Ya dominas este nivel, no otorga HX adicional.`;
+      // Incrementar contador de repeticiones al completar nivel ya completado
+      incrementarContadorRepeticionesNivel(nivelQueTermino);
     } else {
       await marcarNivelCompletado(nivelQueTermino);
       const nuevoHX = await sumarHX(config.hxRecompensa);
@@ -382,6 +385,9 @@ async function finalizarNivel() {
       // 🔥 4. RE-RENDERIZAR LA LISTA DE NIVELES INMEDIATAMENTE 🔥
       // Esto regenera el HTML del nivel recién desbloqueado en segundo plano
       await mostrarVistaNiveles(config.liga);
+      
+      // Verificar si es un nivel específico para mostrar intersticial
+      verificarNivelEspecificoIntersticial(nivelQueTermino, config.liga);
       
       // Verificar si es campeon-18 y se completó correctamente
       if (nivelQueTermino === "campeon-18" && intentoActual.corazonesRestantes > 0) {

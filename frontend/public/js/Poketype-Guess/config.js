@@ -421,6 +421,7 @@ export const gameState = {
   type2ValueDesafio: "",
   tiempoDesafio: null,
   tiempoCampista: null,
+  tiempoEstudio: null,
   pokemonesValidos: []
 };
 
@@ -440,6 +441,14 @@ export const adState = {
   modoRevivirActivo: null,
   recompensaGanada: false
 };
+
+//Constantes para contadores de anuncios intersticiales
+export const CONTADOR_SELECCION_DIFICULTAD_KEY = 'contadorSeleccionDificultad';
+export const CONTADOR_PERDIDAS_ENTRENAMIENTO_KEY = 'contadorPerdidasEntrenamiento';
+export const CONTADOR_REPETICIONES_NIVEL_PREFIX = 'contadorRepeticionesNivel_';
+export const LIMITE_SELECCION_DIFICULTAD = 3;
+export const LIMITE_PERDIDAS_ENTRENAMIENTO = 5;
+export const LIMITE_REPETICIONES_NIVEL = 2;
 
 //Objeto del score de los modos de juego - Agrupado en scoreState
 export const scoreState = {

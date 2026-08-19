@@ -102,7 +102,12 @@ export async function restaurarVidaPorAnuncio() {
   const estadoActualizado = aplicarRegeneracion(estadoCrudo);
 
   const nuevasVidas = Math.min(VIDAS_MAXIMAS, estadoActualizado.vidas + 1);
-  const nuevoEstado = { vidas: nuevasVidas, ultimaActualizacion: Date.now() };
+  // Si no está en el máximo, mantener el tiempo existente para no reiniciar la regeneración
+  // Si está en el máximo, actualizar el tiempo para evitar cálculos innecesarios
+  const nuevaMarcaDeTiempo = nuevasVidas >= VIDAS_MAXIMAS
+    ? Date.now()
+    : estadoActualizado.ultimaActualizacion;
+  const nuevoEstado = { vidas: nuevasVidas, ultimaActualizacion: nuevaMarcaDeTiempo };
 
   await guardarEstado(nuevoEstado);
   return nuevasVidas;

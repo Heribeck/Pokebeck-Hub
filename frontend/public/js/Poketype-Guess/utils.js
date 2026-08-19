@@ -14,7 +14,9 @@ import {
     desafio,
     musicaCampista,
     musicaAsBatalla,
-    musicaCampeon
+    musicaCampeon,
+    ligas,
+    poketype
 } from './config.js';
 
 import { mostrarBanner } from '../admob.js';
@@ -296,6 +298,8 @@ export function volverAlMenu(){
     if (campista) {campista.style.display = "none";}
     if (desafio) {desafio.style.display = "none"}
     if (panelEstudio) {panelEstudio.style.display = "none"}
+    if (ligas) {ligas.style.display = "none"}
+    if (poketype) {poketype.style.display = "none"}
     mostrarBanner("TOP_CENTER");
     detenerTodoElAudio();
     

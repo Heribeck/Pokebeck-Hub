@@ -1,4 +1,4 @@
-import { clickRevivir } from '../../admob.js';
+import { clickRevivir, incrementarContadorPerdidasEntrenamiento, mostrarBanner } from '../../admob.js';
 import{
   btnIniciarJuegoCampista,
   btnFacilEntrenamiento,
@@ -188,4 +188,5 @@ btnVolverDificultadCampista.addEventListener("click", () => {
 btnVolverPoketypeDificultad.addEventListener("click", () => {
   campista.style.display = "none";
   poketype.style.display = "flex";
+  mostrarBanner("TOP_CENTER")
 });

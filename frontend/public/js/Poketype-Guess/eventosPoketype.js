@@ -16,7 +16,7 @@ import {
 } from './config.js';
 
 // Funciones importadas desde otros archivos
-import { mostrarBonificado, ocultarBanner, clickRevivir } from '../admob.js';
+import { mostrarBonificado, ocultarBanner, clickRevivir, mostrarBanner } from '../admob.js';
 import { iniciarDesafioDelDia } from './Desafio del Dia/desafio-dia.js';
 import { iniciarContadorRegeneracion, obtenerVidasGenerales } from './vidasGeneralesStorage.js';
 import './Modo-Estudio/ligas-ui.js';
@@ -74,12 +74,14 @@ btnDesafio.addEventListener('click', () => {
 btnGenerador.addEventListener("click", () => {
   poketype.style.display = "none";
   generador.style.display = "flex";
+  mostrarBanner("TOP_CENTER");
 });
 
 // --- |Evento de boton de "Volver al Menú" desde PokeType| -- //
 btnVolverMenuPoketype.addEventListener("click", () => {
   poketype.style.display = "none";
   main.style.display = "flex";
+  mostrarBanner("TOP_CENTER");
 });
 
 
