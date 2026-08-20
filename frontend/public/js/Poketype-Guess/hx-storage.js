@@ -18,7 +18,7 @@ if (!PreferencesNativo) {
 }
 
 const Preferences = PreferencesNativo || PreferencesLocalStorage;
-const CLAVE_HX = 'pokebeck_hx';
+const CLAVE_HX = 'pokebeck_hx_v2';
 
 // Devuelve el HX actual del jugador (700 si nunca ha jugado el modo Reto)
 export async function obtenerHX() {
