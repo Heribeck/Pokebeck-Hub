@@ -34,7 +34,7 @@ const REQUERIMIENTOS = {
   },
   [DESBLOQUEOS.DESAFIO_DIA]: {
     tipo: 'nivel',
-    liga: 'campeon-1',
+    nivel: 'campeon-1',
     mensaje: 'Completa el nivel 1 de la Liga Campeón para desbloquear',
   },
   [DESBLOQUEOS.LIGA_AS]: {
