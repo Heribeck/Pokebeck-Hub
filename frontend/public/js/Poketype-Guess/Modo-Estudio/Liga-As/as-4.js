@@ -1,30 +1,38 @@
-const POOL_YA_VISTO = [
-  { type1: 'normal', type2: 'flying' },
-  { type1: 'grass', type2: 'poison' },
+const COMBOS_NIVEL = [
   { type1: 'bug', type2: 'flying' },
-  { type1: 'bug', type2: 'poison' },
   { type1: 'dark', type2: 'dragon' },
   { type1: 'dark', type2: 'poison' },
   { type1: 'ghost', type2: 'steel' },
   { type1: 'bug', type2: 'grass' },
   { type1: 'rock', type2: 'steel' },
   { type1: 'dark', type2: 'flying' },
-  { type1: 'fire', type2: 'fighting' },
   { type1: 'water', type2: 'rock' },
   { type1: 'dragon', type2: 'ground' },
 ];
 
-const TOTAL_RONDAS = 18;
+const VECES_POR_COMBO = 2;
 
-// Elige 12 combinaciones al azar del pool ya visto (con reemplazo — el
-// objetivo aquí es repaso variado, no cobertura garantizada como antes).
+// Devuelve un array de 16 elementos: { type1, type2 }, cada una de las 4
+// combinaciones apareciendo exactamente 4 veces, mezclado.
 export function generarColaRondasAs4(generador = Math.random) {
   const cola = [];
 
-  for (let i = 0; i < TOTAL_RONDAS; i++) {
-    const indice = Math.floor(generador() * POOL_YA_VISTO.length);
-    cola.push({ ...POOL_YA_VISTO[indice] });
-  }
+  COMBOS_NIVEL.forEach(combo => {
+    for (let i = 0; i < VECES_POR_COMBO; i++) {
+      cola.push({ type1: combo.type1, type2: combo.type2 });
+    }
+  });
 
-  return cola;
+  return mezclar(cola, generador);
 }
+
+// Mezcla un array sin mutar el original (Fisher-Yates)
+function mezclar(array, generador) {
+  const copia = [...array];
+  for (let i = copia.length - 1; i > 0; i--) {
+    const j = Math.floor(generador() * (i + 1));
+    [copia[i], copia[j]] = [copia[j], copia[i]];
+  }
+  return copia;
+}
+

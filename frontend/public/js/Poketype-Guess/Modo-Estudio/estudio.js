@@ -76,6 +76,7 @@ import { obtenerVelocidadTiempo, calcularVelocidadDinamica } from "./tiempoEstud
 let intentoActual = null;
 let colaRondas = [];
 let pokemonesUsadosEnIntento = new Set();
+let combinacionesAgotadasEnIntento = new Set();
 let indiceRondaActual = 0;
 let posicionColaActual = 0;
 let correctPokemonRondaActual = null;
@@ -84,6 +85,126 @@ let configActual = null;
 let velocidadBase = null;
 let rondasTotales = null;
 let totalRondasNivel = null;
+
+// Funciones auxiliares para la selección dinámica de rondas
+
+function obtenerPoolFiltradoEstudio() {
+  return filtrarPokedexPorGeneracionEstudio(
+    dataState.pokedex,
+    configActual.filtroGeneracion,
+    configActual.filtroEspecial
+  );
+}
+
+function obtenerClaveCombinacion(type1, type2) {
+  // Clave canónica ordenada para evitar duplicados (ghost+grass == grass+ghost)
+  const ordenado = [type1, type2].sort();
+  return `${ordenado[0]}/${ordenado[1]}`;
+}
+
+function obtenerPokemonesDisponiblesParaCombinacion(type1, type2) {
+  const poolFiltrado = obtenerPoolFiltradoEstudio();
+  const pokemonesValidos = poolFiltrado.filter(pokemon => 
+    validarTiposPokemon(pokemon, type1, type2)
+  );
+  
+  if (configActual.repeticion) {
+    return pokemonesValidos;
+  }
+  
+  // Si no hay repetición, filtrar los ya usados
+  return pokemonesValidos.filter(pokemon =>
+    !pokemonesUsadosEnIntento.has(pokemon.name)
+  );
+}
+
+function obtenerCombinacionesDisponibles() {
+  const poolFiltrado = obtenerPoolFiltradoEstudio();
+  const combinacionesDisponibles = new Map(); // Map<claveCombinacion, {type1, type2, pokemones}>
+  
+  for (const pokemon of poolFiltrado) {
+    const type1 = pokemon.types[0];
+    const type2 = pokemon.types[1] || null;
+    
+    // Usar la clave canónica directamente, no generar combinaciones duplicadas
+    const clave = obtenerClaveCombinacion(type1, type2);
+    
+    // Verificar si la combinación ya fue procesada
+    if (combinacionesDisponibles.has(clave)) {
+      continue;
+    }
+    
+    // Verificar si la combinación está agotada
+    if (combinacionesAgotadasEnIntento.has(clave)) {
+      continue;
+    }
+    
+    // Obtener Pokémon disponibles para esta combinación
+    const pokemonesParaCombo = poolFiltrado.filter(p => 
+      validarTiposPokemon(p, type1, type2)
+    );
+    
+    // Si no hay repetición, filtrar los ya usados
+    const disponibles = configActual.repeticion 
+      ? pokemonesParaCombo
+      : pokemonesParaCombo.filter(p => !pokemonesUsadosEnIntento.has(p.name));
+    
+    if (disponibles.length > 0) {
+      combinacionesDisponibles.set(clave, {
+        type1,
+        type2,
+        pokemonesDisponibles: disponibles
+      });
+    }
+  }
+  
+  return Array.from(combinacionesDisponibles.values());
+}
+
+function generarCombinacionDisponibleAleatoria() {
+  const combinacionesDisponibles = obtenerCombinacionesDisponibles();
+  
+  if (combinacionesDisponibles.length === 0) {
+    console.error('No hay combinaciones disponibles en el pool filtrado');
+    return null;
+  }
+  
+  // Elegir aleatoriamente una combinación del conjunto
+  const indiceAleatorio = Math.floor(Math.random() * combinacionesDisponibles.length);
+  return combinacionesDisponibles[indiceAleatorio];
+}
+
+function obtenerOpcionesIncorrectas(correctPokemon, type1, type2) {
+  const poolFiltrado = obtenerPoolFiltradoEstudio();
+  
+  // Obtener todos los candidatos válidos
+  const candidatos = poolFiltrado.filter(pokemon => {
+    const esCorrecto = pokemon.name === correctPokemon.name;
+    const tieneLaMismaCombinacion = validarTiposPokemon(pokemon, type1, type2);
+    return !esCorrecto && !tieneLaMismaCombinacion;
+  });
+  
+  // Eliminar duplicados
+  const candidatosUnicos = new Map();
+  for (const p of candidatos) {
+    if (!candidatosUnicos.has(p.name)) {
+      candidatosUnicos.set(p.name, p);
+    }
+  }
+  
+  // Mezclar y tomar hasta 3
+  const candidatosArray = Array.from(candidatosUnicos.values());
+  mezclarArray(candidatosArray);
+  
+  return candidatosArray.slice(0, 3);
+}
+
+function mezclarArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
 
 // Punto de entrada: se llama desde ligas-ui.js al tocar "Iniciar Nivel" en el modal
 export async function iniciarNivelEstudio(nivelId) {
@@ -115,6 +236,7 @@ export async function iniciarNivelEstudio(nivelId) {
   intentoActual = crearIntentoNivel(config);
   configActual = config;
   pokemonesUsadosEnIntento = new Set();
+  combinacionesAgotadasEnIntento = new Set();
   colaRondas = config.generarColaRondas(Math.random);
   indiceRondaActual = 0;
   posicionColaActual = 0;
@@ -151,58 +273,64 @@ function actualizarTextoProgreso() {
 function buscarSiguienteRondaDisponible() {
   while (posicionColaActual < colaRondas.length) {
     const { type1, type2 } = colaRondas[posicionColaActual];
+    const claveCombinacion = obtenerClaveCombinacion(type1, type2);
     
-    const poolFiltrado = filtrarPokedexPorGeneracionEstudio(
-      dataState.pokedex,
-      configActual.filtroGeneracion,
-      configActual.filtroEspecial
-    );
-    
-    const pokemonesValidos = poolFiltrado.filter(pokemon => 
-      validarTiposPokemon(pokemon, type1, type2)
-    );
-    
-    if (pokemonesValidos.length === 0) {
-      colaRondas.splice(posicionColaActual, 1);
+    // Si la combinación ya está agotada, saltarla
+    if (combinacionesAgotadasEnIntento.has(claveCombinacion)) {
+      console.log(`Combinación agotada en cola: ${type1}/${type2}, saltando`);
+      posicionColaActual++;
       continue;
     }
     
-    if (configActual.repeticion) {
-      return {
-        type1,
-        type2,
-        pokemonesDisponibles: pokemonesValidos
-      };
+    const pokemonesDisponibles = obtenerPokemonesDisponiblesParaCombinacion(type1, type2);
+    
+    if (pokemonesDisponibles.length === 0) {
+      // Marcar como agotada y continuar
+      console.log(`Combinación sin Pokémon disponibles: ${type1}/${type2}, marcando como agotada`);
+      combinacionesAgotadasEnIntento.add(claveCombinacion);
+      posicionColaActual++;
+      continue;
     }
     
-    const disponibles = pokemonesValidos.filter(pokemon =>
-      !pokemonesUsadosEnIntento.has(pokemon.name)
-    );
-    
-    if (disponibles.length > 0) {
-      return {
-        type1,
-        type2,
-        pokemonesDisponibles: disponibles
-      };
-    }
-    
-    // combinación agotada - eliminar de la cola
-    colaRondas.splice(posicionColaActual, 1);
+    // Combinación válida encontrada
+    return {
+      type1,
+      type2,
+      pokemonesDisponibles
+    };
   }
   
   return null;
 }
 
 function siguienteRonda() {
-  const ronda = buscarSiguienteRondaDisponible();
+  // Verificar si se han completado todas las rondas configuradas
+  if (indiceRondaActual >= totalRondasNivel) {
+    finalizarNivel();
+    return;
+  }
+  
+  let ronda = buscarSiguienteRondaDisponible();
+  
+  // Si no hay ronda disponible en la cola, intentar generar una dinámicamente
+  if (!ronda) {
+    console.log('Fallback dinámico: cola agotada, buscando combinación disponible en pool');
+    ronda = generarCombinacionDisponibleAleatoria();
+    if (ronda) {
+      console.log('Fallback dinámico: combinación elegida', ronda.type1, ronda.type2);
+    }
+  }
   
   if (!ronda) {
+    console.error('No hay combinaciones disponibles en el pool filtrado');
+    // Si no hay ninguna combinación disponible, finalizar el nivel
     finalizarNivel();
     return;
   }
   
   const { type1, type2, pokemonesDisponibles } = ronda;
+  
+  console.log(`Ronda ${indiceRondaActual + 1}/${totalRondasNivel}: ${type1}/${type2}, ${pokemonesDisponibles.length} Pokémon disponibles`);
   
   // Avanzar posición en la cola después de seleccionar una ronda válida
   posicionColaActual++;
@@ -227,8 +355,6 @@ function siguienteRonda() {
 function prepararOpciones(type1, type2, pokemonesDisponibles) {
   uiCampistaEstudio.style.display = "flex";
 
-  const poolFiltrado = filtrarPokedexPorGeneracionEstudio(dataState.pokedex, configActual.filtroGeneracion, configActual.filtroEspecial);
-  
   const correctPokemon = pokemonesDisponibles[Math.floor(Math.random() * pokemonesDisponibles.length)];
   console.log(correctPokemon)
   console.log(pokemonesDisponibles)
@@ -238,21 +364,7 @@ function prepararOpciones(type1, type2, pokemonesDisponibles) {
   
   correctPokemonRondaActual = correctPokemon;
 
-  const wrongOptions = [];
-  while (wrongOptions.length < 3) {
-    const candidato = poolFiltrado[Math.floor(Math.random() * poolFiltrado.length)];
-    const esCorrecto = candidato.name === correctPokemon.name;
-    const yaEnLista = wrongOptions.some((p) => p.name === candidato.name);
-    const tieneLaMismaCombinacion = validarTiposPokemon(
-      candidato,
-      type1,
-      type2,
-    );
-
-    if (!esCorrecto && !yaEnLista && !tieneLaMismaCombinacion) {
-      wrongOptions.push(candidato);
-    }
-  }
+  const wrongOptions = obtenerOpcionesIncorrectas(correctPokemon, type1, type2);
 
   const allOptions = [correctPokemon, ...wrongOptions].sort(
     () => Math.random() - 0.5,
@@ -317,7 +429,9 @@ function procesarResultadoRonda(esCorrecta) {
   });
 
   const paso = procesarRondaNivel(intentoActual, esCorrecta);
-  if(indiceRondaActual < totalRondasNivel - 1 ){
+  
+  // Avanzar contador solo si no se han completado todas las rondas
+  if (indiceRondaActual < totalRondasNivel - 1) {
     indiceRondaActual++;
   }
 
