@@ -50,7 +50,7 @@ Pokebeck Hub es una aplicación móvil Android que ofrece juegos educativos basa
 ## Tecnologías Utilizadas
 
 ### Build Tool y Servidor de Desarrollo
-- **Vite** v8.2.2 - Herramienta de build y servidor de desarrollo
+- **Vite** - Herramienta de build y servidor de desarrollo (sin archivo de configuración explícito)
 
 ### Capacitor
 - **@capacitor/core** v8.0.0 - Core de Capacitor
@@ -92,7 +92,7 @@ Pokebeck Hub es una aplicación móvil Android que ofrece juegos educativos basa
 1. **Clonar el repositorio:**
    ```bash
    git clone https://github.com/Heribeck/poketype-guess.git
-   cd poketype-guess/frontend
+   cd Pokebeck-Hub/frontend
    ```
 
 2. **Instalar dependencias:**
@@ -206,40 +206,23 @@ No existe backend ni base de datos externa. Toda la información se guarda local
 frontend/
 ├── src/
 │   ├── css/              # Estilos de la aplicación
-│   │   ├── components/   # Componentes CSS
-│   │   ├── views/        # Estilos específicos de vistas
-│   │   └── ...
 │   └── js/
-│       ├── Poketype-Guess/  # Lógica principal de juegos
-│       │   ├── Desafio del Dia/     # Lógica del modo Desafío
-│       │   ├── Modo-Estudio/        # Lógica del modo Estudio
-│       │   ├── Modo Entrenamiento/  # Lógica del modo Entrenamiento
-│       │   ├── Generador/           # Lógica del generador de tipos
-│       │   ├── config.js            # Configuración del juego y AdMob
-│       │   ├── hx-storage.js        # Almacenamiento de HX
-│       │   ├── notificaciones-locales.js  # Notificaciones locales
-│       │   ├── vidasGeneralesStorage.js   # Almacenamiento de vidas
-│       │   ├── utils.js             # Utilidades y wrapper de plugins
-│       │   ├── sistema-desbloqueos.js    # Sistema de desbloqueos
-│       │   └── ...
+│       ├── Poketype-Guess/  # Lógica principal de juegos y modos
 │       ├── admob.js          # Gestión de anuncios AdMob
+│       ├── celebracion.js    # Animaciones de celebración
 │       ├── eventosMain.js    # Eventos principales de la app
 │       ├── firebase-config.js # Configuración de Firebase
 │       ├── main.js           # Punto de entrada
-│       ├── celebracion.js    # Animaciones de celebración
 │       └── victoria.js       # Pantalla de victoria
 ├── public/
 │   ├── assets/          # Assets estáticos (imágenes, sonidos, datos)
-│   │   ├── data/        # Archivos de datos (pokedex.json)
-│   │   ├── img/         # Imágenes
-│   │   └── sonidos/     # Archivos de audio
 │   └── manifest.json    # Manifest de la aplicación
+├── docs/                # Documentación del proyecto
 ├── android/             # Proyecto Android nativo (generado por Capacitor)
 ├── index.html           # HTML principal
 ├── capacitor.config.json  # Configuración de Capacitor
 ├── capacitor-assets.config.json  # Configuración de assets
-├── package.json         # Dependencias y scripts
-└── package-lock.json    # Lock file de dependencias
+└── package.json         # Dependencias y scripts
 ```
 
 ---
