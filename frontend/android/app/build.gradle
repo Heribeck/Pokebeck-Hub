@@ -20,9 +20,9 @@ android {
     signingConfigs {
         release {
             storeFile file("PokeTypeGuess.jks")
-            storePassword System.getenv("KEYSTORE_PASSWORD") ?: "34007661"
+            storePassword System.getenv("KEYSTORE_PASSWORD")
             keyAlias "PokeTypeGuess"
-            keyPassword System.getenv("KEY_PASSWORD") ?: "34007661"
+            keyPassword System.getenv("KEY_PASSWORD")
         }
     }
 
