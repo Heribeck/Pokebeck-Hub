@@ -57,7 +57,7 @@ import {
   calcularResultadoNivel,
 } from "./nivel-motor.js";
 import { obtenerConfiguracionNivel } from "./registroNiveles.js";
-import { incrementarContadorRepeticionesNivel, verificarNivelEspecificoIntersticial } from "../../admob.js";
+import { verificarNivelEspecificoIntersticial } from "../../admob.js";
 import { tieneHXParaNivel } from "./desbloqueoNiveles.js";
 import { obtenerHX, sumarHX } from "../hx-storage.js";
 import {
@@ -475,8 +475,6 @@ async function finalizarNivel() {
       mensajeAciertoEstudio.innerHTML =
         `🏆 ¡Nivel superado de nuevo! ${resultado.aciertos}/${resultado.totalRondas} aciertos.<br>` +
         `Ya dominas este nivel, no otorga HX adicional.`;
-      // Incrementar contador de repeticiones al completar nivel ya completado
-      incrementarContadorRepeticionesNivel(nivelQueTermino);
     } else {
       await marcarNivelCompletado(nivelQueTermino);
       const nuevoHX = await sumarHX(config.hxRecompensa);

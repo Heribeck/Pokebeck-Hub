@@ -11,7 +11,6 @@ import {
   btnVolverMenuPoketype,
   campista,
   btnRecuperarVidaPoketype,
-  adState,
   dificultadCampista
 } from './config.js';
 
@@ -74,7 +73,7 @@ btnDesafio.addEventListener('click', () => {
 btnGenerador.addEventListener("click", () => {
   poketype.style.display = "none";
   generador.style.display = "flex";
-  mostrarBanner("TOP_CENTER");
+  mostrarBanner("TOP_CENTER", "generador");
 });
 
 // --- |Evento de boton de "Volver al Menú" desde PokeType| -- //

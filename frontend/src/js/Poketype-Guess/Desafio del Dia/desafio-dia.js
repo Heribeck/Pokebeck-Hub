@@ -28,6 +28,7 @@ import {
 } from '../config.js';
 
 import { clickRevivir, mostrarIntersticial } from '../../admob.js';
+import { ADS_CONFIG } from '../../adsConfig.js';
 import { mostrarBotonRevivir } from '../Modo Entrenamiento/entrenamiento.js';
 import { mostrarNotificacion, soundWin, soundLose, vibrarWin, vibrarLose, capitalizarPrimeraLetra, volverAlMenu, cambiarMusicaModes, detenerTodoElAudio } from '../utils.js';
 import { crearGeneradorDelDia } from './prng-semilla.js';
@@ -305,7 +306,7 @@ async function finalizarSesion() {
   };
 
   sesionActual = null;
-  mostrarIntersticial();
+  mostrarIntersticial(ADS_CONFIG.INTERSTITIAL_DESAFIO_DIA);
 }
 
 // Actualiza la racha Diaria al momento

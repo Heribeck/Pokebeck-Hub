@@ -402,17 +402,6 @@ export const configRevivir = {
 //Elementos Especificos Generales
 export const conteoBtnRevivir = 3;
 
-//IDs de los anuncios / Eventos
-export const idBanner = "ca-app-pub-1898586331132450/5546962412" || "Real";
-export const idBonificado = "ca-app-pub-1898586331132450/8031266354" || "Real";
-export const idIntersticial = "ca-app-pub-1898586331132450/4178291414" || "Real"
-export const eventosBonificado = {
-  cargado: "onRewardedVideoAdLoaded",
-  falloCarga: "onRewardedVideoAdFailedToLoad",
-  recompensa: "onRewardedVideoAdReward",
-  cerrado: "onRewardedVideoAdDismissed",
-};
-
 //Variables sin valor Definido - Agrupadas en gameState
 export const gameState = {
   type1Value: "",
@@ -441,14 +430,6 @@ export const adState = {
   modoRevivirActivo: null,
   recompensaGanada: false
 };
-
-//Constantes para contadores de anuncios intersticiales
-export const CONTADOR_SELECCION_DIFICULTAD_KEY = 'contadorSeleccionDificultad';
-export const CONTADOR_PERDIDAS_ENTRENAMIENTO_KEY = 'contadorPerdidasEntrenamiento';
-export const CONTADOR_REPETICIONES_NIVEL_PREFIX = 'contadorRepeticionesNivel_';
-export const LIMITE_SELECCION_DIFICULTAD = 3;
-export const LIMITE_PERDIDAS_ENTRENAMIENTO = 5;
-export const LIMITE_REPETICIONES_NIVEL = 2;
 
 //Objeto del score de los modos de juego - Agrupado en scoreState
 export const scoreState = {

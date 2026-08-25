@@ -21,7 +21,7 @@ import {
 
 import { Capacitor } from '@capacitor/core';
 
-import { mostrarBanner } from '../admob.js';
+import { cambiarBanner } from '../admob.js';
 import { actualizarRachaEnMenu } from './Desafio del Dia/desafio-dia.js';
 import { obtenerHX } from './hx-storage.js';
 import { hxGlobal, panelEstudio } from './config.js';
@@ -324,7 +324,7 @@ export function volverAlMenu(){
     if (panelEstudio) {panelEstudio.style.display = "none"}
     if (ligas) {ligas.style.display = "none"}
     if (poketype) {poketype.style.display = "none"}
-    mostrarBanner("TOP_CENTER");
+    cambiarBanner("main");
     detenerTodoElAudio();
     
     // Verificar si el usuario ya completó la liga para mostrar título

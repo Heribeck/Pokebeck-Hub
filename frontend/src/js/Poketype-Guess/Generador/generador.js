@@ -2,6 +2,7 @@
 import { types, typesIcono, coloresTipos, gameState, esperar, btnGenerar, tipo1, tipo2, main, btnVolverDificultadCampista } from '../config.js';
 import { Aleatoriedad, detenerTodoElAudio, soundLose, capitalizarPrimeraLetra } from '../utils.js';
 import { guardarScoreAntesDePerder, mostrarBotonRevivir } from '../Modo Entrenamiento/entrenamiento.js';
+import { incrementarContadorGenerador } from '../../admob.js';
 
 btnGenerar.onclick = () => iniciarGeneracion();
 
@@ -21,6 +22,9 @@ export async function iniciarGeneracion() {
   
   btnGenerar.textContent = "¡Generando!";
   
+  // Incrementar contador de generaciones (para interstitial cada 7)
+  incrementarContadorGenerador();
+
   generarTipos(tipo1, tipo2);
   
   await esperar(500); 
@@ -33,10 +37,10 @@ export async function iniciarGeneracion() {
 export async function generarTipos(tipo1Generic, tipo2Generic) {
   gameState.type1Value = types[Aleatoriedad(0, types.length - 1)];
   gameState.type2Value = types[Aleatoriedad(0, types.length - 1)];
-  
+
   tipo1Generic.src = typesIcono[gameState.type1Value];
   tipo2Generic.src = typesIcono[gameState.type2Value];
-  
+
   tipo1Generic.style.backgroundColor = coloresTipos[gameState.type1Value];
   tipo2Generic.style.backgroundColor = coloresTipos[gameState.type2Value];
 }
