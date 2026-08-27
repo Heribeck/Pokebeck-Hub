@@ -1,4 +1,3 @@
-// Variables importadas desde config.js
 import {
   adState,
   configRevivir,
@@ -18,7 +17,6 @@ import {
   cancelarContadorRevivir
 } from './Poketype-Guess/Modo Entrenamiento/entrenamiento.js';
 
-
 // ============================================================
 // ESTADO INTERNO DE ADMOB
 // ============================================================
@@ -26,92 +24,74 @@ import {
 let intersticialCargado = false;
 let intersticialPreparadoId = null;
 
-// Evita que se ejecuten varias cargas del bonificado al mismo tiempo.
 let preparandoBonificado = null;
-
-// Promesa utilizada para esperar el evento real de "cargado".
 let resolverCargaBonificado = null;
-
-// Timeout de seguridad para evitar quedarse esperando indefinidamente.
+let promesaCargaBonificado = null;
 let timeoutCargaBonificado = null;
-
-// ID del rewarded actualmente preparado
 let bonificadoPreparadoId = null;
 
-// Banner actualmente activo
 let bannerActivo = null;
 
-// Flag para evitar inicialización doble
 let inicializado = false;
 
-// Referencias a listeners para poder eliminarlos
 let listenersRegistrados = false;
 
 // ============================================================
-// FUNCION AUXILIAR: COMPROBAR ADMOB
+// FUNCIONES ARROW AUXILIARES: COMPROBAR ADMOB
 // ============================================================
-
-function admobDisponible() {
-  return Capacitor.isPluginAvailable('AdMob');
-}
-
-function esPlataformaNativa() {
-  return Capacitor.isNativePlatform();
-}
+const admobDisponible = () => Capacitor.isPluginAvailable('AdMob');
+const esPlataformaNativa = () => Capacitor.isNativePlatform();
 
 // ============================================================
 // FUNCIONES DE SIMULACIÓN WEB (FALLBACK)
 // ============================================================
 
-function simularBanner() {
-  console.log("[AdMob Web] Simulando banner...");
-  return Promise.resolve();
-}
+const simularBanner = (tipoBanner) => {
+  console.log(`[AdMob Web] Simulando banner: ${tipoBanner}`);
+};
 
-function simularRewarded(callbackRecompensa) {
-  console.log("[AdMob Web] Simulando anuncio bonificado...");
-  setTimeout(() => {
-    console.log("[AdMob Web] Recompensa concedida.");
-    if (callbackRecompensa) {
-      callbackRecompensa();
-    }
-  }, 1000);
-}
+const simularRewarded = () => {
+  return new Promise((resolve) => {
+    console.log("[AdMob Web] Simulando anuncio bonificado...");
+    setTimeout(() => {
+      console.log("[AdMob Web] Recompensa concedida.");
+      resolve(true);
+    }, 1000);
+  });
+};
 
-function simularInterstitial(callbackCierre) {
-  console.log("[AdMob Web] Simulando interstitial...");
-  setTimeout(() => {
-    console.log("[AdMob Web] Interstitial cerrado.");
-    if (callbackCierre) {
-      callbackCierre();
-    }
-  }, 1000);
-}
+const simularInterstitial = () => {
+  return new Promise((resolve) => {
+    console.log("[AdMob Web] Simulando interstitial...");
+    setTimeout(() => {
+      console.log("[AdMob Web] Interstitial cerrado.");
+      resolve(true);
+    }, 1000);
+  });
+};
 
 // ============================================================
 // FUNCION AUXILIAR: ESPERAR A QUE ADMOB CONFIRME LA CARGA
 // ============================================================
 
 function esperarBonificadoCargado(timeoutMs = 15000) {
-  // Si ya sabemos que está cargado, no necesitamos esperar.
   if (adState.bonificadoCargado) {
     return Promise.resolve(true);
   }
 
-  // Si ya existe una espera activa, reutilizamos esa misma promesa.
-  if (resolverCargaBonificado) {
-    return resolverCargaBonificado;
+  // Evita múltiples esperas simultáneas del mismo evento de carga de AdMob.
+  if (promesaCargaBonificado) {
+    return promesaCargaBonificado;
   }
 
-  return new Promise((resolve) => {
+  promesaCargaBonificado =  new Promise((resolve) => {
     resolverCargaBonificado = resolve;
 
     timeoutCargaBonificado = setTimeout(() => {
-      if (resolverCargaBonificado) {
-        resolverCargaBonificado(false);
-        resolverCargaBonificado = null;
-      }
+      resolverCargaBonificado?.(false) 
 
+      resolverCargaBonificado = null;
+      promesaCargaBonificado = null;
       timeoutCargaBonificado = null;
 
       console.warn(
@@ -119,6 +99,7 @@ function esperarBonificadoCargado(timeoutMs = 15000) {
       );
     }, timeoutMs);
   });
+  return promesaCargaBonificado;
 }
 
 // ============================================================
@@ -126,7 +107,6 @@ function esperarBonificadoCargado(timeoutMs = 15000) {
 // ============================================================
 
 export async function InicializarAdMob() {
-  // Protección contra inicialización doble
   if (inicializado) {
     console.warn("AdMob ya está inicializado. Evitando inicialización duplicada.");
     return;
@@ -155,11 +135,9 @@ export async function InicializarAdMob() {
 
           adState.bonificadoCargado = true;
 
-          // Resolver cualquier espera pendiente.
-          if (resolverCargaBonificado) {
-            resolverCargaBonificado(true);
-            resolverCargaBonificado = null;
-          }
+          resolverCargaBonificado?.(true);
+          resolverCargaBonificado = null;
+          promesaCargaBonificado = null;
 
           if (timeoutCargaBonificado) {
             clearTimeout(timeoutCargaBonificado);
@@ -175,11 +153,10 @@ export async function InicializarAdMob() {
 
           adState.bonificadoCargado = false;
 
-          // Resolver cualquier espera pendiente como fallo.
-          if (resolverCargaBonificado) {
-            resolverCargaBonificado(false);
-            resolverCargaBonificado = null;
-          }
+          resolverCargaBonificado?.(false);
+          resolverCargaBonificado = null;
+          promesaCargaBonificado = null;
+
 
           if (timeoutCargaBonificado) {
             clearTimeout(timeoutCargaBonificado);
@@ -286,45 +263,15 @@ export async function InicializarAdMob() {
                 continuarDesafioTrasRevivir();
 
               // --------------------------------------------------
-              // CONTINUAR RETO
-              // --------------------------------------------------
-
-              } else if (modo === 'reto') {
-                const {
-                  continuarRetoTrasRevivir
-                } = await import(
-                  './Poketype-Guess/Modo-Estudio/estudio.js'
-                );
-
-                continuarRetoTrasRevivir();
-
-              // --------------------------------------------------
               // OTROS MODOS
               // --------------------------------------------------
 
-              } else {
+              }  else {
                 ejecutarRevivir(modo);
               }
             }
 
             adState.recompensaGanada = false;
-          }
-
-          // ------------------------------------------------------
-          // CAMPISTA
-          // ------------------------------------------------------
-
-          if (
-            adState.modoRevivirActivo === 'campista' &&
-            !adState.recompensaGanada
-          ) {
-            const {
-              btnVolverDificultadCampista
-            } = await import('./Poketype-Guess/config.js');
-
-            if (btnVolverDificultadCampista) {
-              btnVolverDificultadCampista.style.display = "none";
-            }
           }
 
           // Limpiar estado del modo después de terminar.
@@ -365,20 +312,23 @@ export async function InicializarAdMob() {
 // ============================================================
 
 export async function mostrarBanner(posicionBanner, tipoBanner = 'main') {
-  // Fallback web: simular banner en navegador
+  const adId = tipoBanner === 'generador'
+  ? ADS_CONFIG.BANNER_GENERADOR
+  : ADS_CONFIG.BANNER_MAIN;
+
+  console.log("[AdMob Banner]:", {
+    tipoBanner,
+    adId
+  });
+
   if (!esPlataformaNativa()) {
-    return simularBanner();
+    return simularBanner(tipoBanner);
   }
 
   if (!admobDisponible()) return;
 
   if (!adState.hayInternet) return;
-
-  // Seleccionar ID según tipo
-  const adId = tipoBanner === 'generador'
-    ? ADS_CONFIG.BANNER_GENERADOR
-    : ADS_CONFIG.BANNER_MAIN;
-
+  
   const settingsAdMob = {
     adId: adId,
     adSize: "ADAPTIVE_BANNER",
@@ -406,7 +356,6 @@ export async function mostrarBanner(posicionBanner, tipoBanner = 'main') {
 // ============================================================
 
 export async function ocultarBanner() {
-  // Fallback web: no hacer nada en navegador
   if (!esPlataformaNativa()) {
     adState.bannerVisible = false;
     bannerActivo = null;
@@ -433,12 +382,10 @@ export async function ocultarBanner() {
 export async function cambiarBanner(tipoBanner) {
   if (!admobDisponible()) return;
 
-  // Si ya está activo el mismo banner, no hacer nada
   if (bannerActivo === tipoBanner && adState.bannerVisible) {
     return;
   }
 
-  // Ocultar banner actual si está visible
   if (adState.bannerVisible) {
     await ocultarBanner();
   }
@@ -452,7 +399,6 @@ export async function cambiarBanner(tipoBanner) {
 // ============================================================
 
 export async function prepararBonificado(adUnitId = null) {
-  // Si no se proporciona ID, usar el default (vidas generales)
   const idAUsar = adUnitId || ADS_CONFIG.REWARDED_VIDAS;
 
   if (!admobDisponible() || !adState.hayInternet) {
@@ -483,7 +429,6 @@ export async function prepararBonificado(adUnitId = null) {
 
       console.log(`AdMob: preparando anuncio bonificado (${idAUsar})...`);
 
-      // Comenzamos la preparación.
       await AdMob.prepareRewardVideoAd({
         adId: idAUsar,
         isTesting: false,
@@ -493,9 +438,6 @@ export async function prepararBonificado(adUnitId = null) {
         "AdMob: prepareRewardVideoAd terminó. Esperando confirmación de carga..."
       );
 
-      // IMPORTANTE:
-      // NO ponemos bonificadoCargado = true aquí.
-      //
       // Esperamos al evento real de "cargado".
       const cargado = await esperarBonificadoCargado(15000);
 
@@ -534,58 +476,25 @@ export async function prepararBonificado(adUnitId = null) {
 }
 
 // ============================================================
-// MOSTRAR ANUNCIO BONIFICADO
+// MOSTRAR ANUNCIO BONIFICADO + SIMULACIÓN
 // ============================================================
 
 export async function mostrarBonificado(adUnitId = null) {
-  // Si no se proporciona ID, usar el que está preparado o default
   const idAUsar = adUnitId || bonificadoPreparadoId || ADS_CONFIG.REWARDED_VIDAS;
 
-  // Fallback web: simular rewarded en navegador
   if (!esPlataformaNativa()) {
-    return new Promise((resolve) => {
-      simularRewarded(() => {
-        // Simular recompensa
-        adState.recompensaGanada = true;
-        // Simular cierre del anuncio
-        setTimeout(() => {
-          if (adState.modoRevivirActivo) {
-            // Ejecutar la lógica de recompensa que normalmente estaría en el listener
-            procesarRecompensaWeb();
-          }
-          adState.recompensaGanada = false;
-          adState.modoRevivirActivo = null;
-          resolve(true);
-        }, 500);
-      });
-    });
+    await simularRewarded();
+    adState.recompensaGanada = true;
+    await procesarRecompensaWeb();
+    adState.recompensaGanada = false;
+    adState.modoRevivirActivo = null;
+    return true;
   }
 
-  if (!admobDisponible()) {
-    mostrarNotificacion(
-      "Anuncios no disponibles en este dispositivo"
-    );
-
+  if (!admobDisponible() || !adState.hayInternet) {
     return false;
-  }
-
-  // NO utilizamos navigator.onLine.
-  //
-  // adState.hayInternet es el estado de conectividad que utiliza
-  // la aplicación. Si AdMob no consigue conectar con sus servidores,
-  // la propia preparación del anuncio devolverá el fallo.
-  if (!adState.hayInternet) {
-    mostrarNotificacion(
-      "Sin conexión a internet. Activa WiFi o datos móviles para ver el video y revivir."
-    );
-
-    return false;
-  }
-
-  // ----------------------------------------------------------
-  // SI NO ESTÁ CARGADO O ES ID DIFERENTE, PREPARAMOS
-  // ----------------------------------------------------------
-
+  } 
+  
   if (!adState.bonificadoCargado || bonificadoPreparadoId !== idAUsar) {
     mostrarNotificacion("Cargando anuncio...");
 
@@ -600,17 +509,11 @@ export async function mostrarBonificado(adUnitId = null) {
     }
   }
 
-  // ----------------------------------------------------------
-  // MOSTRAR
-  // ----------------------------------------------------------
-
   try {
     console.log(`AdMob: mostrando anuncio bonificado (${idAUsar})...`);
 
     await AdMob.showRewardVideoAd();
 
-    // Una vez mostrado, ya no debemos considerar que tenemos
-    // otro anuncio listo.
     adState.bonificadoCargado = false;
     bonificadoPreparadoId = null;
 
@@ -631,7 +534,6 @@ export async function mostrarBonificado(adUnitId = null) {
       "Error al mostrar el anuncio"
     );
 
-    // Intentamos dejar preparado el siguiente.
     prepararBonificado(idAUsar);
 
     return false;
@@ -664,9 +566,11 @@ async function procesarRecompensaWeb() {
 
   // Lógica para otros modos de revivir
   ocultarBotonRevivir(modo);
+
   if (config.btnIntento) {
     config.btnIntento.style.display = "none";
   }
+
   if (modo === 'campista') {
     const {
       btnVolverDificultadCampista
@@ -676,6 +580,7 @@ async function procesarRecompensaWeb() {
     }
   }
   await cuentaRegresivaRevivir(config.mensaje);
+
   if (modo === 'desafio') {
     const {
       continuarDesafioTrasRevivir
@@ -692,15 +597,12 @@ async function procesarRecompensaWeb() {
 }
 
 // ============================================================
-// CLICK REVIVIR
+// CLICK REVIVIR (BONIFICADO)
 // ============================================================
 
 export async function clickRevivir(modo) {
   if (!adState.hayInternet) {
-    mostrarNotificacion(
-      "Sin conexión a internet. Activa WiFi o datos móviles para ver el video y revivir."
-    );
-
+    mostrarNotificacion("Sin conexión a internet. Activa WiFi o datos móviles para ver el video y revivir.");
     return;
   }
 
@@ -715,31 +617,18 @@ export async function clickRevivir(modo) {
     config.btn.disabled = true;
   }
 
-  // ----------------------------------------------------------
-  // SELECCIONAR ID SEGÚN MODO
-  // ----------------------------------------------------------
-
   let adUnitId;
   if (modo === 'vidas-generales') {
     adUnitId = ADS_CONFIG.REWARDED_VIDAS;
   } else if (modo === 'desafio') {
     adUnitId = ADS_CONFIG.REWARDED_DESAFIO_DIA;
   } else {
-    // campista, reto, entrenamiento, etc.
     adUnitId = ADS_CONFIG.REWARDED_ENTRENAMIENTO;
   }
-
-  // ----------------------------------------------------------
-  // PAUSAR TIEMPO DEL JUEGO
-  // ----------------------------------------------------------
 
   if (modo !== 'vidas-generales') {
     if (gameState.tiempoCampista) {
       clearInterval(gameState.tiempoCampista);
-    }
-
-    if (gameState.tiempoEstudio) {
-      clearInterval(gameState.tiempoEstudio);
     }
 
     if (gameState.tiempoDesafio) {
@@ -747,19 +636,13 @@ export async function clickRevivir(modo) {
     }
   }
 
-  // ----------------------------------------------------------
-  // MOSTRAR BONIFICADO
-  // ----------------------------------------------------------
-
   const anuncioMostrado = await mostrarBonificado(adUnitId);
 
   if (config?.btn) {
     config.btn.disabled = false;
   }
 
-  // Si el anuncio no pudo mostrarse, limpiamos el modo activo.
-  // De esta manera no queda un modo de revivir antiguo
-  // esperando una recompensa que nunca llegará.
+  // Limpiamos para que no quede modo revivir antiguo.
   if (!anuncioMostrado) {
     adState.modoRevivirActivo = null;
     adState.recompensaGanada = false;
@@ -771,7 +654,6 @@ export async function clickRevivir(modo) {
 // ============================================================
 
 export async function prepararIntersticial(adUnitId = null) {
-  // Si no se proporciona ID, usar el default (desafío del día)
   const idAUsar = adUnitId || ADS_CONFIG.INTERSTITIAL_DESAFIO_DIA;
 
   if (!admobDisponible() || !adState.hayInternet) {
@@ -816,52 +698,29 @@ export async function prepararIntersticial(adUnitId = null) {
 // ============================================================
 
 export async function mostrarIntersticial(adUnitId = null) {
-  // Si no se proporciona ID, usar el que está preparado o default
   const idAUsar = adUnitId || intersticialPreparadoId || ADS_CONFIG.INTERSTITIAL_DESAFIO_DIA;
 
-  // Fallback web: simular interstitial en navegador
   if (!esPlataformaNativa()) {
-    // Pausar tiempo del juego
     if (gameState.tiempoCampista) {
       clearInterval(gameState.tiempoCampista);
-    }
-    if (gameState.tiempoEstudio) {
-      clearInterval(gameState.tiempoEstudio);
     }
     if (gameState.tiempoDesafio) {
       clearInterval(gameState.tiempoDesafio);
     }
 
-    return new Promise((resolve) => {
-      simularInterstitial(() => {
-        resolve(true);
-      });
-    });
+    await simularInterstitial();
   }
 
   if (!admobDisponible() || !adState.hayInternet) {
     return false;
   }
 
-  // ----------------------------------------------------------
-  // PAUSAR TIEMPO DEL JUEGO
-  // ----------------------------------------------------------
-
   if (gameState.tiempoCampista) {
     clearInterval(gameState.tiempoCampista);
   }
-
-  if (gameState.tiempoEstudio) {
-    clearInterval(gameState.tiempoEstudio);
-  }
-
   if (gameState.tiempoDesafio) {
     clearInterval(gameState.tiempoDesafio);
   }
-
-  // ----------------------------------------------------------
-  // PREPARAR SI NO ESTÁ LISTO O ES ID DIFERENTE
-  // ----------------------------------------------------------
 
   if (!intersticialCargado || intersticialPreparadoId !== idAUsar) {
     const cargado = await prepararIntersticial(idAUsar);
@@ -870,10 +729,6 @@ export async function mostrarIntersticial(adUnitId = null) {
       return false;
     }
   }
-
-  // ----------------------------------------------------------
-  // MOSTRAR
-  // ----------------------------------------------------------
 
   try {
     console.log(`AdMob: mostrando interstitial (${idAUsar})...`);
@@ -885,7 +740,6 @@ export async function mostrarIntersticial(adUnitId = null) {
 
     console.log("AdMob: interstitial mostrado.");
 
-    // Preparar el siguiente intersticial con el mismo ID.
     prepararIntersticial(idAUsar);
 
     return true;
@@ -904,7 +758,7 @@ export async function mostrarIntersticial(adUnitId = null) {
 }
 
 // ============================================================
-// CONTADOR: PERDIDAS ENTRENAMIENTO
+// CONTADOR: PERDIDAS ENTRENAMIENTO (INSTERSTICIAL)
 // ============================================================
 
 export function incrementarContadorPerdidasEntrenamiento() {
@@ -936,10 +790,8 @@ export function incrementarContadorPerdidasEntrenamiento() {
 // INTERSTICIAL POR NIVEL ESPECÍFICO
 // ============================================================
 
-export function verificarNivelEspecificoIntersticial(
-  nivelId,
-  liga
-) {
+export function verificarNivelEspecificoIntersticial(nivelId, liga) {
+  // Extrae el número del nivel a partir del formato "nivel-X".
   const nivelNumero = parseInt(
     nivelId.split('-')[1],
     10

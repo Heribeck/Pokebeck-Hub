@@ -6,14 +6,12 @@ import { Capacitor } from '@capacitor/core';
 btnPoketype.addEventListener("click", () => {
   main.style.display = "none";
   poketype.style.display = "flex";
-  mostrarBanner("TOP_CENTER");
 });
 
 // --- |Eventos del Apartado de "Acerca del Proyecto"| --- //
 btnAcerca.addEventListener("click", () => {
   main.style.display = "none";
   acerca.style.display = "flex";
-  mostrarBanner("TOP_CENTER");
 });
 
 //Evento del boton de "Telegram"
