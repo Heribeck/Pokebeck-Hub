@@ -1,5 +1,20 @@
 # Documentación de Anuncios - Pokebeck Hub
 
+## Índice
+
+- [Overview](#overview)
+- [Tipos de Anuncios](#tipos-de-anuncios)
+  - [1. Banner Ad](#1-banner-ad)
+  - [2. Interstitial Ad](#2-interstitial-ad)
+  - [3. Rewarded Ad (Anuncio Bonificado)](#3-rewarded-ad-anuncio-bonificado)
+- [Contadores en LocalStorage](#contadores-en-localstorage)
+- [Configuración de AdMob](#configuración-de-admob)
+- [Funciones Principales en admob.js](#funciones-principales-en-admobjs)
+- [Flujo de Recompensa de Anuncio Bonificado](#flujo-de-recompensa-de-anuncio-bonificado)
+- [Resumen de Frecuencia de Anuncios](#resumen-de-frecuencia-de-anuncios)
+- [Notas de Implementación](#notas-de-implementación)
+- [Última Actualización](#última-actualización)
+
 ## Overview
 
 Este documento describe todos los anuncios implementados en la aplicación Pokebeck Hub, incluyendo sus tipos, IDs, condiciones de visualización y lógica de funcionamiento.
@@ -8,99 +23,118 @@ Este documento describe todos los anuncios implementados en la aplicación Pokeb
 
 ### 1. Banner Ad
 
-**ID:** `ca-app-pub-1898586331132450/5546962412`
+**IDs:**
+- **BANNER_MAIN:** `ca-app-pub-1898586331132450/5546962412` - Banner principal para toda la aplicación
+- **BANNER_GENERADOR:** `ca-app-pub-1898586331132450/9079259103` - Banner específico para el Generador
 
-**Descripción:** Anuncio de banner que se muestra en la parte superior de la pantalla.
+**Descripción:** Anuncios de banner que se muestran en la parte superior de la pantalla. Se utilizan dos IDs diferentes para optimizar el rendimiento según el contexto.
 
 **Condiciones de Visualización:**
-- **Se muestra:**
+- **Se muestra (BANNER_MAIN):**
   - Al inicializar la aplicación
   - Al volver al menú principal
   - Al entrar a PokeType (panel principal)
   - Al entrar a Acerca del Proyecto
-  - Al entrar al Generador
   - Al volver al menú desde cualquier panel
+
+- **Se muestra (BANNER_GENERADOR):**
+  - Al entrar al Generador
 
 - **Se oculta:**
   - Al entrar a Estudio/Ligas (modo de juego)
   - Al entrar a Entrenamiento/Dificultades (modo de juego)
   - Al entrar al Desafío del Día (modo de juego)
 
+**Gestión de Banners:**
+- La función `cambarBanner(tipo)` permite cambiar entre banners sin duplicar visualizaciones
+- Solo un banner está activo a la vez
+- Al salir del Generador, se restaura automáticamente el banner principal
+
 **Archivos relacionados:**
-- `admob.js` - Funciones `mostrarBanner()` y `ocultarBanner()`
-- `utils.js` - Llamada a `mostrarBanner()` en `volverAlMenu()`
+- `adsConfig.js` - Configuración de IDs de banners
+- `admob.js` - Funciones `mostrarBanner(posicion, tipo)`, `ocultarBanner()`, `cambarBanner(tipo)`
+- `utils.js` - Llamada a `cambarBanner('main')` en `volverAlMenu()`
 - `eventosMain.js` - Llamadas a `mostrarBanner()` en navegación
-- `eventosPoketype.js` - Llamadas a `mostrarBanner()` y `ocultarBanner()`
+- `eventosPoketype.js` - Llamada a `mostrarBanner("TOP_CENTER", "generador")`
 
 ---
 
 ### 2. Interstitial Ad
 
-**ID:** `ca-app-pub-1898586331132450/4178291414`
+**IDs:**
+- **INTERSTITIAL_DESAFIO_DIA:** `ca-app-pub-1898586331132450/4178291414` - Para el Desafío del Día
+- **INTERSTITIAL_ENTRENAMIENTO:** `ca-app-pub-1898586331132450/9813756274` - Para Modo Entrenamiento
+- **INTERSTITIAL_NIVELES:** `ca-app-pub-1898586331132450/6996021243` - Para Modo Estudio/Ligas
+- **INTERSTITIAL_GENERADOR:** `ca-app-pub-1898586331132450/7626576636` - Para el Generador
 
-**Descripción:** Anuncio intersticial de pantalla completa que se muestra en momentos específicos del juego.
+**Descripción:** Anuncios intersticiales de pantalla completa que se muestran en momentos específicos del juego. Se utilizan 4 IDs diferentes para optimizar el rendimiento según el contexto.
 
 **Condiciones de Visualización:**
 
 #### 2.1. Desafío del Día
+- **ID:** `INTERSTITIAL_DESAFIO_DIA`
 - **Cuándo:** Al finalizar el desafío del día (completar las 10 rondas)
 - **Archivo:** `desafio-dia.js` - Función `finalizarSesion()`
 
-#### 2.2. Modo Entrenamiento - Selección de Dificultad
-- **Cuándo:** Cada 3 veces que el usuario selecciona cualquier dificultad (en total)
-- **Contador:** `contadorSeleccionDificultad` (localStorage)
-- **Límite:** 3 selecciones
-- **Archivo:** `eventosEntrenamiento.js` - Event listeners de dificultades
-
-#### 2.3. Modo Entrenamiento - Pérdidas
-- **Cuándo:** Cada 5 veces que el usuario pierde y vuelve a jugar (en general)
+#### 2.2. Modo Entrenamiento - Pérdidas
+- **ID:** `INTERSTITIAL_ENTRENAMIENTO`
+- **Cuándo:** Cada 5 veces que el usuario pierde en el modo entrenamiento
 - **Contador:** `contadorPerdidasEntrenamiento` (localStorage)
 - **Límite:** 5 pérdidas
 - **Archivo:** `entrenamiento.js` - Lógica de pérdida en `campistaLogica()`
 
-#### 2.4. Modo Estudio - Repeticiones de Nivel
-- **Cuándo:** Cada 2 veces que el usuario repite un nivel ya completado
-- **Contador:** `contadorRepeticionesNivel_{nivelId}` (localStorage, uno por nivel)
-- **Límite:** 2 repeticiones por nivel
-- **Archivo:** `estudio.js` - Función `iniciarNivelEstudio()`
-
-#### 2.5. Modo Estudio - Niveles Específicos (Múltiplos de 4)
+#### 2.3. Modo Estudio - Niveles Específicos (Múltiplos de 4)
+- **ID:** `INTERSTITIAL_NIVELES`
 - **Cuándo:** Al completar niveles específicos según la liga:
   - **Campista:** Niveles 4, 8
   - **As:** Niveles 4, 8, 12
   - **Campeón:** Niveles 4, 8, 12, 16
-- **Archivo:** `estudio.js` - Función `finalizarNivel()`
+- **Archivo:** `estudio.js` - Función `verificarNivelEspecificoIntersticial()`
+
+#### 2.4. Generador
+- **ID:** `INTERSTITIAL_GENERADOR`
+- **Cuándo:** Cada 7 generaciones de tipos en el Generador
+- **Contador:** `contadorGenerador` (localStorage)
+- **Límite:** 7 generaciones
+- **Archivo:** `generador.js` - Función `generarTipos()`
 
 **Archivos relacionados:**
-- `admob.js` - Funciones `mostrarIntersticial()`, `prepararIntersticial()`, y funciones de contadores
-- `desafio-dia.js` - Llamada a `mostrarIntersticial()`
-- `eventosEntrenamiento.js` - Llamadas a `incrementarContadorSeleccionDificultad()`
+- `adsConfig.js` - Configuración de IDs de intersticiales
+- `admob.js` - Funciones `mostrarIntersticial(adUnitId)`, `prepararIntersticial(adUnitId)`, y funciones de contadores
+- `desafio-dia.js` - Llamada a `mostrarIntersticial(ADS_CONFIG.INTERSTITIAL_DESAFIO_DIA)`
 - `entrenamiento.js` - Llamada a `incrementarContadorPerdidasEntrenamiento()`
-- `estudio.js` - Llamadas a `incrementarContadorRepeticionesNivel()` y `verificarNivelEspecificoIntersticial()`
+- `estudio.js` - Llamada a `verificarNivelEspecificoIntersticial()`
+- `generador.js` - Llamada a `incrementarContadorGenerador()`
 
 ---
 
 ### 3. Rewarded Ad (Anuncio Bonificado)
 
-**ID:** `ca-app-pub-1898586331132450/8031266354`
+**IDs:**
+- **REWARDED_VIDAS:** `ca-app-pub-1898586331132450/8031266354` - Para recuperar vidas generales
+- **REWARDED_ENTRENAMIENTO:** `ca-app-pub-1898586331132450/8142843731` - Para revivir en entrenamiento y otros modos
+- **REWARDED_DESAFIO_DIA:** `ca-app-pub-1898586331132450/1315379800` - Para revivir en Desafío del Día
 
-**Descripción:** Anuncio con recompensa que el usuario ve voluntariamente a cambio de beneficios en el juego.
+**Descripción:** Anuncios con recompensa que el usuario ve voluntariamente a cambio de beneficios en el juego. Se utilizan 3 IDs diferentes para optimizar el rendimiento según el contexto.
 
 **Condiciones de Visualización:**
 
 #### 3.1. Recuperar Vida General
+- **ID:** `REWARDED_VIDAS`
 - **Cuándo:** Al hacer click en el botón "Recuperar Vida" en PokeType
 - **Recompensa:** Restaura 1 vida general
 - **Modo:** `vidas-generales`
 - **Archivo:** `eventosPoketype.js` - Botón `btnRecuperarVidaPoketype`
 
 #### 3.2. Revivir en Entrenamiento
+- **ID:** `REWARDED_ENTRENAMIENTO`
 - **Cuándo:** Al hacer click en el botón "Revivir" durante el modo entrenamiento
 - **Recompensa:** Continúa la sesión de entrenamiento con el score anterior
 - **Modo:** `campista`
 - **Archivo:** `entrenamiento.js` - Botón `btnRevivirCampista`
 
 #### 3.3. Revivir en Desafío del Día
+- **ID:** `REWARDED_DESAFIO_DIA`
 - **Cuándo:** Al hacer click en el botón "Revivir" durante el desafío del día
 - **Recompensa:** Continúa el desafío del día
 - **Modo:** `desafio`
@@ -113,7 +147,8 @@ Este documento describe todos los anuncios implementados en la aplicación Pokeb
 - `onRewardedVideoAdDismissed` - Anuncio cerrado
 
 **Archivos relacionados:**
-- `admob.js` - Funciones `mostrarBonificado()`, `prepararBonificado()`, y lógica de eventos
+- `adsConfig.js` - Configuración de IDs de rewarded ads
+- `admob.js` - Funciones `mostrarBonificado(adUnitId)`, `prepararBonificado(adUnitId)`, `clickRevivir(modo)`, y lógica de eventos
 - `eventosPoketype.js` - Llamada a `clickRevivir('vidas-generales')`
 - `entrenamiento.js` - Llamada a `clickRevivir('campista')`
 - `desafio-dia.js` - Llamada a `clickRevivir('desafio')`
@@ -128,19 +163,16 @@ Este documento describe todos los anuncios implementados en la aplicación Pokeb
 
 | Clave | Propósito | Límite | Reinicia |
 |-------|-----------|--------|----------|
-| `contadorSeleccionDificultad` | Selecciones de dificultad en entrenamiento | 3 | Sí |
 | `contadorPerdidasEntrenamiento` | Pérdidas en entrenamiento | 5 | Sí |
-| `contadorRepeticionesNivel_{nivelId}` | Repeticiones de nivel en Estudio | 2 | Sí |
+| `contadorGenerador` | Generaciones de tipos en el Generador | 7 | Sí |
 
-### Constantes en config.js
+### Constantes en adsConfig.js
 
 ```javascript
-export const CONTADOR_SELECCION_DIFICULTAD_KEY = 'contadorSeleccionDificultad';
 export const CONTADOR_PERDIDAS_ENTRENAMIENTO_KEY = 'contadorPerdidasEntrenamiento';
-export const CONTADOR_REPETICIONES_NIVEL_PREFIX = 'contadorRepeticionesNivel_';
-export const LIMITE_SELECCION_DIFICULTAD = 3;
 export const LIMITE_PERDIDAS_ENTRENAMIENTO = 5;
-export const LIMITE_REPETICIONES_NIVEL = 2;
+export const CONTADOR_GENERADOR_KEY = 'contadorGenerador';
+export const LIMITE_GENERADOR = 7;
 ```
 
 ---
@@ -168,26 +200,32 @@ export const LIMITE_REPETICIONES_NIVEL = 2;
 ## Funciones Principales en admob.js
 
 ### Inicialización
-- `InicializarAdMob()` - Inicializa AdMob, muestra banner, prepara intersticial
+- `InicializarAdMob()` - Inicializa AdMob con protección contra inicialización doble, muestra banner, prepara intersticial y bonificado
 
 ### Banner
-- `mostrarBanner(posicionBanner)` - Muestra banner en posición especificada
-- `ocultarBanner()` - Oculta el banner
+- `mostrarBanner(posicionBanner, tipoBanner)` - Muestra banner en posición especificada con tipo específico ('main' o 'generador')
+- `ocultarBanner()` - Oculta el banner actual
+- `cambarBanner(tipoBanner)` - Cambia entre banners sin duplicar visualizaciones
 
 ### Intersticial
-- `prepararIntersticial()` - Prepara el anuncio intersticial
-- `mostrarIntersticial()` - Muestra el anuncio intersticial
+- `prepararIntersticial(adUnitId)` - Prepara el anuncio intersticial con ID específico
+- `mostrarIntersticial(adUnitId)` - Muestra el anuncio intersticial con ID específico
 
 ### Bonificado
-- `prepararBonificado()` - Prepara el anuncio bonificado
-- `mostrarBonificado()` - Muestra el anuncio bonificado
-- `clickRevivir(modo)` - Maneja el flujo de revivir con anuncio bonificado
+- `prepararBonificado(adUnitId)` - Prepara el anuncio bonificado con ID específico
+- `mostrarBonificado(adUnitId)` - Muestra el anuncio bonificado con ID específico
+- `clickRevivir(modo)` - Maneja el flujo de revivir con anuncio bonificado, seleccionando el ID según el modo
 
 ### Contadores
-- `incrementarContadorSeleccionDificultad()` - Incrementa y verifica contador de selección de dificultad
-- `incrementarContadorPerdidasEntrenamiento()` - Incrementa y verifica contador de pérdidas
-- `incrementarContadorRepeticionesNivel(nivelId)` - Incrementa y verifica contador de repeticiones de nivel
+- `incrementarContadorPerdidasEntrenamiento()` - Incrementa y verifica contador de pérdidas en entrenamiento
+- `incrementarContadorGenerador()` - Incrementa y verifica contador de generaciones
 - `verificarNivelEspecificoIntersticial(nivelId, liga)` - Verifica si el nivel es múltiplo de 4 y muestra intersticial
+
+### Web Fallback
+- `esPlataformaNativa()` - Verifica si la aplicación está en plataforma nativa
+- `simularBanner()` - Simula banner en navegador (para desarrollo)
+- `simularRewarded(callbackRecompensa)` - Simula anuncio bonificado en navegador
+- `simularInterstitial(callbackCierre)` - Simula interstitial en navegador
 
 ---
 
@@ -215,17 +253,18 @@ export const LIMITE_REPETICIONES_NIVEL = 2;
 ### Banner
 - **Frecuencia:** Permanente (excepto en modos de juego)
 - **Posición:** TOP_CENTER
+- **IDs:** 2 (BANNER_MAIN para general, BANNER_GENERADOR para el Generador)
 
 ### Intersticial
-- **Desafío del Día:** 1 por sesión (al finalizar)
-- **Entrenamiento (selección):** 1 cada 3 selecciones
-- **Entrenamiento (pérdidas):** 1 cada 5 pérdidas
-- **Estudio (repeticiones):** 1 cada 2 repeticiones por nivel
-- **Estudio (niveles específicos):** 1 al completar niveles múltiplos de 4
+- **Desafío del Día:** 1 por sesión (al finalizar) - ID: INTERSTITIAL_DESAFIO_DIA
+- **Entrenamiento (pérdidas):** 1 cada 5 pérdidas - ID: INTERSTITIAL_ENTRENAMIENTO
+- **Estudio (niveles específicos):** 1 al completar niveles múltiplos de 4 - ID: INTERSTITIAL_NIVELES
+- **Generador:** 1 cada 7 generaciones - ID: INTERSTITIAL_GENERADOR
 
 ### Bonificado
 - **Frecuencia:** Bajo demanda (usuario decide verlo)
 - **Recompensas:** Vida general, revivir en entrenamiento, revivir en desafío
+- **IDs:** 3 (REWARDED_VIDAS, REWARDED_ENTRENAMIENTO, REWARDED_DESAFIO_DIA)
 
 ---
 
@@ -236,16 +275,28 @@ export const LIMITE_REPETICIONES_NIVEL = 2;
 3. **Testing:** Los IDs de anuncio están configurados para producción (`isTesting: false`)
 4. **Consistencia:** El banner solo se oculta en modos de juego activos para no interrumpir la experiencia
 5. **UX:** Los anuncios intersticiales se muestran en momentos naturales de transición (fin de nivel, selección, etc.)
+6. **Múltiples IDs:** Se utilizan IDs específicos para diferentes contextos (banners, intersticiales, rewarded) para optimizar el rendimiento
+7. **Protección contra duplicados:** La inicialización de AdMob tiene protección contra inicialización doble y listeners duplicados
+8. **Web Fallback:** En entorno de desarrollo (npm run dev), los anuncios se simulan para permitir testing sin plataforma nativa
+9. **Seguridad de recompensas:** El sistema de rewarded ads tiene protección contra doble entrega de recompensas
+10. **Gestión de banners:** Solo un banner está activo a la vez, con función para cambiar entre tipos sin duplicar visualizaciones
 
 ---
 
 ## Última Actualización
 
-**Fecha:** 18 de agosto de 2026  
-**Versión:** 2.2.4  
+**Fecha:** 30 de agosto de 2026
+**Versión:** 2.2.6
 **Cambios recientes:**
-- Implementación de contadores para intersticiales en entrenamiento
-- Implementación de contador de repeticiones en Estudio
-- Implementación de intersticiales en niveles específicos (múltiplos de 4)
-- Extensión del banner a más paneles de la aplicación
-- Corrección del sistema de recuperación de vida con anuncio bonificado
+- Implementación de múltiples IDs de AdMob para optimizar el rendimiento:
+  - 2 IDs de banners (BANNER_MAIN, BANNER_GENERADOR)
+  - 4 IDs de intersticiales (DESAFIO_DIA, ENTRENAMIENTO, NIVELES, GENERADOR)
+  - 3 IDs de rewarded ads (VIDAS, ENTRENAMIENTO, DESAFIO_DIA)
+- Implementación de contador del generador (cada 7 generaciones)
+- Implementación de web fallback para desarrollo (npm run dev)
+- Implementación de protección contra inicialización doble y listeners duplicados
+- Implementación de función `cambarBanner()` para cambiar entre banners sin duplicar
+- Actualización de funciones de anuncios para aceptar parámetro `adUnitId` específico
+- Migración de IDs de anuncios a archivo `adsConfig.js` centralizado
+- Corrección de documentación: eliminación de contadores inexistentes (selección dificultad, repeticiones nivel)
+- Actualización precisa de contadores existentes (pérdidas entrenamiento, generador)
