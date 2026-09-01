@@ -48,9 +48,9 @@ import {
   consumirIntentoDeHoy,
   registrarDesafioAprobado,
   registrarDesafioFallido,
-  obtenerMecanicaSegunRacha,
   yaCompletoDesafioHoy,
   verificarRachaVigente,
+  registrarActividadGeneral,
 } from './progreso-storage.js';
 
 // Estado interno de la sesión en curso (vive solo mientras el jugador está en el Desafío)
@@ -75,16 +75,12 @@ export async function iniciarDesafioDelDia() {
 
   poketype.style.display = "none";
 
-  const progreso = await verificarRachaVigente();
-  const mecanica = obtenerMecanicaSegunRacha(progreso.racha);
-  
-  if (mecanica === 'campista') {
-    cambiarMusicaModes(musicaCampista)
-  }
+  // La mecánica siempre es campista (ya no depende de racha)
+  cambiarMusicaModes(musicaCampista);
 
   intentosRestantesAlIniciar = await consumirIntentoDeHoy();
 
-  sesionActual = crearSesionDesafio(mecanica);
+  sesionActual = crearSesionDesafio('campista');
   generadorDelDia = crearGeneradorDelDia();
 
   mostrarPanelDesafio();
@@ -263,23 +259,26 @@ export function continuarDesafioTrasRevivir() {
   }
 }
 
-// Se llama cuando la sesión de 10 rondas terminó: calcula el resultado y actualiza la racha
+// Se llama cuando la sesión de 10 rondas terminó: calcula el resultado
 async function finalizarSesion() {
   const resultado = calcularResultadoFinal(sesionActual);
 
+  // Registrar actividad para racha general
+  await registrarActividadGeneral();
+
   if (resultado.aprobado) {
-    const progreso = await registrarDesafioAprobado();
+    await registrarDesafioAprobado();
     mensajeAciertoDesafio.innerHTML =
-      `¡Desafío superado! ${resultado.porcentaje}% de aciertos.<br>🔥 Racha: ${progreso.racha} días`;
-    
+      `¡Desafío superado! ${resultado.porcentaje}% de aciertos.`;
+
     // Actualizar UI de racha inmediatamente
     await actualizarRachaEnMenu();
   } else if (intentosRestantesAlIniciar <= 0) {
-    // Era el último intento disponible de hoy y no aprobó: la racha se reinicia
+    // Era el último intento disponible de hoy y no aprobó
     await registrarDesafioFallido();
     mensajeAciertoDesafio.innerHTML =
-      `No alcanzaste el 70% (sacaste ${resultado.porcentaje}%). Se acabaron tus intentos de hoy. Tu racha se reinició.`;
-    
+      `No alcanzaste el 70% (sacaste ${resultado.porcentaje}%). Se acabaron tus intentos de hoy.`;
+
     // Actualizar UI de racha inmediatamente
     await actualizarRachaEnMenu();
   } else {
@@ -309,11 +308,11 @@ async function finalizarSesion() {
   mostrarIntersticial(ADS_CONFIG.INTERSTITIAL_DESAFIO_DIA);
 }
 
-// Actualiza la racha Diaria al momento
+// Actualiza la racha general en el menú
 export async function actualizarRachaEnMenu() {
   const progreso = await verificarRachaVigente();
 
   if (rachaTextoPoketype) {
-    rachaTextoPoketype.textContent = `🔥 ${progreso.racha} días`;
+    rachaTextoPoketype.textContent = `🔥 ${progreso.rachaGeneral} días`;
   }
 }

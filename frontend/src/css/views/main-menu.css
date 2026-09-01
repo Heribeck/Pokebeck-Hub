@@ -7,6 +7,46 @@
     min-height: 100dvh;
 }
 
+/* Panel de Estado General */
+.caja-estadisticas-main {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 22rem;
+    padding: 1rem 1.25rem;
+    background: linear-gradient(135deg, rgba(255, 203, 5, 0.08) 0%, rgba(255, 203, 5, 0.04) 100%);
+    border: 1px solid rgba(255, 203, 5, 0.2);
+    border-radius: 16px;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(10px);
+}
+
+.caja-estadisticas-main .estadistica-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    flex: 1;
+    min-width: 0;
+}
+
+.caja-estadisticas-main .estadistica-icono {
+    font-size: 1.125rem;
+    flex-shrink: 0;
+}
+
+.caja-estadisticas-main .estadistica-valor {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--accent-yellow);
+    white-space: nowrap;
+}
+
 .layout-dificultad {
     display: none;
     justify-content: center;

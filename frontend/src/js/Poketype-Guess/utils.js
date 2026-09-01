@@ -105,12 +105,32 @@ export async function cargarPokedex(){
 export function mostrarNotificacion(mensaje) {
 
     toastMensaje.textContent = mensaje;
-    
+
     notificacion.classList.add("mostrar");
 
     setTimeout(() => {
         notificacion.classList.remove("mostrar");
     }, 2000);
+}
+
+// Función para mostrar notificación especial de racha activa
+export function mostrarNotificacionRacha(rachaAnterior, rachaActual) {
+    const notificacionRacha = document.getElementById('notificacion-racha');
+    if (!notificacionRacha) {
+        console.warn('Elemento notificacion-racha no encontrado');
+        return;
+    }
+
+    const rachaTexto = document.getElementById('racha-notificacion-texto');
+    if (rachaTexto) {
+        rachaTexto.innerHTML = `<span class="racha-anterior">${rachaAnterior}</span> ➜ <span class="racha-actual">${rachaActual} 🔥</span>`;
+    }
+
+    notificacionRacha.classList.add('mostrar');
+
+    setTimeout(() => {
+        notificacionRacha.classList.remove('mostrar');
+    }, 5000);
 }
 
 //Funcion para detener musica, sonidos y vibracion de los modos

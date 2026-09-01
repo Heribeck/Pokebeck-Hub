@@ -117,12 +117,12 @@ export const domElements = {
     btnPoketype: document.getElementById("btn-poketype"),
     btnAcerca: document.getElementById("btn-acerca"),
     telegram: document.getElementById("telegram"),
+    rachaMain: document.getElementById("racha-main"),
+    hxGlobalMain: document.getElementById("hx-global-main"),
   },
 
   // Elementos globales (cabecera)
-  global: {
-    hxGlobal: document.getElementById("hx-global"),
-  },
+  global: {},
 
   // Elementos del panel PokeType
   poketype: {

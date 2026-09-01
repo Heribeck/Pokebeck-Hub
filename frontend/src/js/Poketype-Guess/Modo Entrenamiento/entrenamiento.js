@@ -27,6 +27,7 @@ import { calcularVelocidadEntrenamiento, permiteRepetirPokemon } from './entrena
 import { filtrarPokedexPorDificultad, elegirPokemonConPrioridadFormas } from './pokedexDificultad.js';
 import { celebrarHito } from '../../celebracion.js';
 import { incrementarContadorPerdidasEntrenamiento } from '../../admob.js';
+import { registrarActividadGeneral } from '../Desafio del Dia/progreso-storage.js';
 
 // Dificultad actual de Entrenamiento ('facil' | 'normal' | 'dificil').
 // Se actualiza al elegir el modo en la UI, antes de iniciar la sesión.
@@ -206,6 +207,9 @@ export async function campistaLogica(){
               document.querySelectorAll(".btn-opcion").forEach(btn => btn.style.display = "none");
               btnNextCampista.style.display = "flex";
 
+              // Registrar actividad para racha general
+              registrarActividadGeneral();
+
           } else {
             guardarScoreAntesDePerder("campista");
             mostrarBotonRevivir("campista");
@@ -219,6 +223,9 @@ export async function campistaLogica(){
             btnIntentoCampista.style.display = "flex";
             btnVolverDificultadCampista.style.display = "flex";
             document.querySelectorAll(".btn-opcion").forEach(btn => btn.style.display = "none");
+
+            // Registrar actividad para racha general
+            registrarActividadGeneral();
           }
       });
   });

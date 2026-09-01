@@ -71,6 +71,8 @@ import {
 } from "../vidasGeneralesStorage.js";
 import { filtrarPokedexPorGeneracionEstudio } from "./filtroGeneracionEstudio.js";
 import { obtenerVelocidadTiempo, calcularVelocidadDinamica } from "./tiempoEstudio.js";
+import { registrarActividadGeneral } from "../Desafio del Dia/progreso-storage.js";
+import { actualizarTodosLosHX } from "../hx-storage.js";
 
 // Estado interno del intento de nivel en curso
 let intentoActual = null;
@@ -468,6 +470,9 @@ async function finalizarNivel() {
   const config = obtenerConfiguracionNivel(nivelQueTermino);
   detenerMusica()
 
+  // Registrar actividad para racha general
+  await registrarActividadGeneral();
+
   if (resultado.aprobado) {
     const yaLoHabiaCompletadoAntes = await yaCompletoNivel(nivelQueTermino);
 
@@ -478,19 +483,14 @@ async function finalizarNivel() {
     } else {
       await marcarNivelCompletado(nivelQueTermino);
       const nuevoHX = await sumarHX(config.hxRecompensa);
-      obtenerHX()
-        .then((hx) => {
-          hxGlobal.textContent = `⚡ ${hx} HX`;
-          hxGlobalPoketype.textContent = `⚡ ${hx} HX`;
-        })
-        .catch((e) => console.error(e));
+      await actualizarTodosLosHX(nuevoHX);
       mensajeAciertoEstudio.innerHTML =
         `🏆 ¡Nivel superado! ${resultado.aciertos}/${resultado.totalRondas} aciertos.<br>` +
         `<span style="color: #43a047;">⚡ +${config.hxRecompensa} HX (Total: ${nuevoHX})</span>`;
-      
+
       // Verificar desbloqueos
       await verificarDesbloqueos(nivelQueTermino, config.liga);
-      
+
       // Actualizar UI de ligas inmediatamente
       await generarTarjetasLigas();
 

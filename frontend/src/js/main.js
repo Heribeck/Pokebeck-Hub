@@ -21,23 +21,30 @@ import { actualizarRachaEnMenu } from './Poketype-Guess/Desafio del Dia/desafio-
 
 import {inicializarPushFCM } from './Poketype-Guess/notificaciones-locales.js';
 
-import { obtenerProgreso, yaCompletoDesafioHoy } from './Poketype-Guess/Desafio del Dia/progreso-storage.js';
-import { obtenerHX } from './Poketype-Guess/hx-storage.js';
-import { hxGlobal, hxGlobalPoketype } from './Poketype-Guess/config.js';
+import { obtenerProgreso, yaCompletoDesafioHoy, verificarRachaVigente } from './Poketype-Guess/Desafio del Dia/progreso-storage.js';
+import { obtenerHX, actualizarTodosLosHX } from './Poketype-Guess/hx-storage.js';
+import { domElements } from './Poketype-Guess/config.js';
 
 // Funcion global o expuesta para recargar los stats del menu
 export async function actualizarStatsMenu() {
     actualizarRachaEnMenu();
     try {
         const hx = await obtenerHX();
-        if (hxGlobal) {
-            hxGlobal.textContent = `⚡ ${hx} HX`;
-        }
-        if (hxGlobalPoketype) {
-            hxGlobalPoketype.textContent = `⚡ ${hx} HX`;
-        }
+        await actualizarTodosLosHX(hx);
     } catch (e) {
         console.error("Error actualizando HX:", e);
+    }
+
+    // Actualizar racha general en menú principal
+    try {
+        const progreso = await verificarRachaVigente();
+        if (domElements.main.rachaMain) {
+            domElements.main.rachaMain.textContent = `🔥 ${progreso.rachaGeneral} días`;
+        }
+        if (domElements.poketype.rachaTexto)
+        domElements.poketype.rachaTexto.textContent = `🔥 ${progreso.rachaGeneral} días`;
+    } catch (e) {
+        console.error("Error actualizando racha general:", e);
     }
 }
 

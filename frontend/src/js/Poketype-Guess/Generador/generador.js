@@ -3,6 +3,7 @@ import { types, typesIcono, coloresTipos, gameState, esperar, btnGenerar, tipo1,
 import { Aleatoriedad, detenerTodoElAudio, soundLose, capitalizarPrimeraLetra } from '../utils.js';
 import { guardarScoreAntesDePerder, mostrarBotonRevivir } from '../Modo Entrenamiento/entrenamiento.js';
 import { incrementarContadorGenerador } from '../../admob.js';
+import { registrarActividadGeneral } from '../Desafio del Dia/progreso-storage.js';
 
 // Traducción de tipos al español
 const tiposEspanol = {
@@ -100,6 +101,9 @@ export async function generarTipos(tipo1Generic, tipo2Generic) {
 
   // Actualizar selector con Pokémon del primer tipo
   actualizarSelector(gameState.type1Value);
+
+  // Registrar actividad para racha general
+  await registrarActividadGeneral();
 }
 
 //Función para iniciar la barra de tiempo
