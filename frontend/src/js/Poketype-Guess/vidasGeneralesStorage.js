@@ -13,7 +13,7 @@ const PreferencesLocalStorage = {
 const CLAVE_VIDAS = 'pokebeck_vidas_generales';
 
 const VIDAS_MAXIMAS = 3;
-const HORAS_POR_REGENERACION = 6;
+const HORAS_POR_REGENERACION = 3;
 const MS_POR_REGENERACION = HORAS_POR_REGENERACION * 60 * 60 * 1000;
 
 function estadoPorDefecto() {

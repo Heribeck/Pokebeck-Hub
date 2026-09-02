@@ -1,4 +1,10 @@
 apply plugin: 'com.android.application'
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
 
 android {
     namespace "com.heribeck.PokeTypeGuess"
@@ -7,8 +13,8 @@ android {
         applicationId "com.heribeck.PokeTypeGuess"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 11
-        versionName "2.2.6"
+        versionCode 12
+        versionName "2.2.7"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -19,10 +25,10 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("PokeTypeGuess.jks")
-            storePassword System.getenv("KEYSTORE_PASSWORD")
-            keyAlias "PokeTypeGuess"
-            keyPassword System.getenv("KEY_PASSWORD")
+            storeFile file(keystoreProperties["storeFile"])
+            storePassword keystoreProperties["storePassword"]
+            keyAlias keystoreProperties["keyAlias"]
+            keyPassword keystoreProperties["keyPassword"]
         }
     }
 
