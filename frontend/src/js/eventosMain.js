@@ -2,28 +2,34 @@ import { ocultarBanner, mostrarBanner, prepararBonificado } from './admob.js';
 import { btnAcerca, btnPoketype, poketype, sonidoTouch, main, acerca, telegram, adState } from './Poketype-Guess/config.js';
 import { Capacitor } from '@capacitor/core';
 
-// --- |Evento de boton de "PokeType Guess"|
+function mostrarPanel(panel){
+  main.style.display = "none";
+  poketype.style.display = "none";
+  acerca.style.display = "none";
+
+  panel.style.display = "flex";
+};
+
+function abrirTelegram(){
+  const isNative = Capacitor.isNativePlatform()
+
+  const url = isNative
+    ? "tg://resolve?domain=pokebeck"
+    : "https://t.me/pokebeck";
+
+  window.open(url, isNative ? "_system" : "_blank");
+}
+
 btnPoketype.addEventListener("click", () => {
-  main.style.display = "none";
-  poketype.style.display = "flex";
+  mostrarPanel(poketype);
 });
 
-// --- |Eventos del Apartado de "Acerca del Proyecto"| --- //
 btnAcerca.addEventListener("click", () => {
-  main.style.display = "none";
-  acerca.style.display = "flex";
+  mostrarPanel(acerca);
 });
 
-//Evento del boton de "Telegram"
-telegram.addEventListener("click", () => {
-    if (Capacitor.isNativePlatform()) {
-        window.open('tg://resolve?domain=heribeck', '_system');
-    } else {
-        window.open('https://t.me/pokebeck', '_blank');
-    }
-});
+telegram.addEventListener("click", abrirTelegram);
 
-// --- |Eventos de para comprobar conexion a internet
 window.addEventListener("online", () => {
   adState.hayInternet = true;
   prepararBonificado();
@@ -32,16 +38,18 @@ window.addEventListener("online", () => {
   }
 });
 
-//Evento Offline
 window.addEventListener("offline", () => {
   adState.hayInternet = false;
 });
 
-//Evento Global sonido de los touch en botones
 document.addEventListener("click", (evento) => {
-  if (evento.target.tagName === "BUTTON") {
+  const boton = evento.target.closest("button");
+
+  if (boton) {
     sonidoTouch.currentTime = 0;
-    sonidoTouch.play();
+    sonidoTouch.play().catch((error) => {
+      console.warn("No se pudo reproducir el sonido", error);
+    })
   }
 });
 
