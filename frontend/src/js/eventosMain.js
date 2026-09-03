@@ -1,5 +1,8 @@
 import { ocultarBanner, mostrarBanner, prepararBonificado } from './admob.js';
 import { btnAcerca, btnPoketype, poketype, sonidoTouch, main, acerca, telegram, adState } from './Poketype-Guess/config.js';
+import { detenerTodoElAudio, volverAlMenu } from './Poketype-Guess/utils.js';
+
+import { App } from '@capacitor/app';
 import { Capacitor } from '@capacitor/core';
 
 function mostrarPanel(panel){
@@ -18,6 +21,26 @@ function abrirTelegram(){
     : "https://t.me/pokebeck";
 
   window.open(url, isNative ? "_system" : "_blank");
+}
+
+if (Capacitor.isPluginAvailable('App')){
+
+  App.addListener("backButton", () => {
+    if (main.style.display !== "none" && main.style.display !== ""){
+      if(confirm("¿Seguro que quieres salir del juego?")){
+        App.exitApp();
+      }
+      return;
+    }
+
+    volverAlMenu()
+  })
+
+  App.addListener("appStateChange", async (state) => {
+    if (!state.isActive) {
+      detenerTodoElAudio();
+    }
+  })
 }
 
 btnPoketype.addEventListener("click", () => {

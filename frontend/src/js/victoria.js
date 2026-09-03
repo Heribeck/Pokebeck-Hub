@@ -51,7 +51,7 @@ function ejecutarVictoriaDefinitiva() {
 /**
  * Actualiza el Main para mostrar el título de Maestro
  */
-function actualizarMaestroEnMain() {
+async function actualizarMaestroEnMain() {
     const elementoMaestro = document.querySelector("[data-maestro-poketype]");
     
     if (!elementoMaestro) return;
@@ -268,9 +268,9 @@ function mostrarNotificacion(texto) {
 /**
  * Verifica y aplica el título de Maestro al cargar la aplicación
  */
-function verificarVictoriaAlIniciar() {
+export async function verificarVictoriaAlIniciar() {
     if (estaLigaCompletada()) {
-        actualizarMaestroEnMain();
+       await actualizarMaestroEnMain();
     }
 }
 

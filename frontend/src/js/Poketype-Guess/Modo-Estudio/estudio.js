@@ -71,8 +71,8 @@ import {
 } from "../vidasGeneralesStorage.js";
 import { filtrarPokedexPorGeneracionEstudio } from "./filtroGeneracionEstudio.js";
 import { obtenerVelocidadTiempo, calcularVelocidadDinamica } from "./tiempoEstudio.js";
-import { registrarActividadGeneral } from "../Desafio del Dia/progreso-storage.js";
-import { actualizarTodosLosHX } from "../hx-storage.js";
+import { registrarActividadGeneral } from "../Desafio-del-Dia/progreso-storage.js";
+import { actualizarTodosLosHX } from "../../utilsMain.js";
 
 // Estado interno del intento de nivel en curso
 let intentoActual = null;

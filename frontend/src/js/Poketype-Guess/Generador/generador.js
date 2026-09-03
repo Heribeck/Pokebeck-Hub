@@ -1,9 +1,9 @@
 // Variables importadas desde config.js
 import { types, typesIcono, coloresTipos, gameState, esperar, btnGenerar, tipo1, tipo2, main, btnVolverDificultadCampista } from '../config.js';
 import { Aleatoriedad, detenerTodoElAudio, soundLose, capitalizarPrimeraLetra } from '../utils.js';
-import { guardarScoreAntesDePerder, mostrarBotonRevivir } from '../Modo Entrenamiento/entrenamiento.js';
+import { guardarScoreAntesDePerder, mostrarBotonRevivir } from '../Modo-Entrenamiento/entrenamiento.js';
 import { incrementarContadorGenerador } from '../../admob.js';
-import { registrarActividadGeneral } from '../Desafio del Dia/progreso-storage.js';
+import { registrarActividadGeneral } from '../Desafio-del-Dia/progreso-storage.js';
 
 // Traducción de tipos al español
 const tiposEspanol = {

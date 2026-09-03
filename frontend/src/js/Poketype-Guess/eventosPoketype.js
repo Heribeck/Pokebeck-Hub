@@ -16,13 +16,13 @@ import {
 
 // Funciones importadas desde otros archivos
 import { mostrarBonificado, ocultarBanner, clickRevivir, mostrarBanner, cambiarBanner } from '../admob.js';
-import { iniciarDesafioDelDia } from './Desafio del Dia/desafio-dia.js';
+import { iniciarDesafioDelDia } from './Desafio-del-Dia/desafio-dia.js';
 import { iniciarContadorRegeneracion, obtenerVidasGenerales } from './vidasGeneralesStorage.js';
 import './Modo-Estudio/ligas-ui.js';
 import { actualizarIndicadorVidas } from './vidaUi.js';
 import { mostrarNotificacion } from './utils.js';
 import { estaDesbloqueado, mostrarMensajeBloqueo, DESBLOQUEOS } from './sistema-desbloqueos.js';
-import { actualizarEstadoDificultades } from './Modo Entrenamiento/eventosEntrenamiento.js';
+import { actualizarEstadoDificultades } from './Modo-Entrenamiento/eventosEntrenamiento.js';
 
 // Iniciar contador de regeneración de vidas
 iniciarContadorRegeneracion();

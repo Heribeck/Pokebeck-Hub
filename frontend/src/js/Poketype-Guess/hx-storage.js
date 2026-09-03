@@ -53,17 +53,3 @@ export async function sumarHX(cantidad) {
   return nuevoHX;
 }
 
-// Actualiza todos los elementos HX en la UI con el valor proporcionado
-export async function actualizarTodosLosHX(valor) {
-  const { domElements } = await import('./config.js');
-
-  // Actualizar HX en menú principal
-  if (domElements.main.hxGlobalMain) {
-    domElements.main.hxGlobalMain.textContent = `⚡ ${valor} HX`;
-  }
-
-  // Actualizar HX en panel poketype
-  if (domElements.poketype.hxGlobal) {
-    domElements.poketype.hxGlobal.textContent = `⚡ ${valor} HX`;
-  }
-}

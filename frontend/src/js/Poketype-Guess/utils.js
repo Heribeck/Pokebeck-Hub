@@ -16,16 +16,17 @@ import {
     musicaAsBatalla,
     musicaCampeon,
     ligas,
-    poketype
+    poketype,
+    domElements
 } from './config.js';
 
 import { Capacitor } from '@capacitor/core';
 
 import { cambiarBanner } from '../admob.js';
-import { actualizarRachaEnMenu } from './Desafio del Dia/desafio-dia.js';
 import { obtenerHX } from './hx-storage.js';
 import { hxGlobal, panelEstudio } from './config.js';
 import { verificarDesbloqueosPendientes } from './sistema-desbloqueos.js';
+import { verificarRachaVigente } from './Desafio-del-Dia/progreso-storage.js';
 
 // Wrapper seguro para ejecutar funciones de plugins de Capacitor
 export async function ejecutarPluginSeguro(pluginName, pluginFunction, fallback) {
@@ -52,53 +53,6 @@ export async function ejecutarPluginSeguro(pluginName, pluginFunction, fallback)
 // Función para generar números aleatorios
 export function Aleatoriedad(min, max) {
     return Math.floor(Math.random()*(max - min + 1) + min)
-}
-
-//Funcion de barra de carga del SplashScreen
-export function loadApp() {
-    const progressBar = document.querySelector(".barra-carga");
-    let progress = 0;
-
-    const fakeLoader = setInterval(()=>{
-
-    progress += 10;
-
-    progressBar.style.width = progress + "%";
-
-    if(progress >= 100){
-
-    clearInterval(fakeLoader);
-
-    startGame();
-
-    }
-
-},300);
-}
-
-//Funcion de inicio del juego (Se acaba el SplashScreen)
-export async function startGame(){
-
-  splash.style.opacity = "0";
-
-  setTimeout(()=>{
-
-    splash.remove();
-
-  },500);
-
-  // Verificar desbloqueos pendientes al iniciar la app
-  await verificarDesbloqueosPendientes();
-}
-
-//Funcion para cargar la pokedex
-export async function cargarPokedex(){
-
-    const response = await fetch(
-      "./assets/data/pokedex.json"
-    );
-
-    dataState.pokedex = await response.json();
 }
 
 // Función para mostrar notificaciones
@@ -352,7 +306,3 @@ export function volverAlMenu(){
         window.victoriaPokeType.verificarVictoriaAlVolverAlMain();
     }
 }
-    actualizarRachaEnMenu();
-    obtenerHX().then(hx => {
-        if (hxGlobal) hxGlobal.textContent = `⚡ ${hx} HX`;
-    }).catch(e => console.error(e));

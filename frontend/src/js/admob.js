@@ -15,7 +15,7 @@ import {
   cuentaRegresivaRevivir,
   ejecutarRevivir,
   cancelarContadorRevivir
-} from './Poketype-Guess/Modo Entrenamiento/entrenamiento.js';
+} from './Poketype-Guess/Modo-Entrenamiento/entrenamiento.js';
 
 // ============================================================
 // ESTADO INTERNO DE ADMOB
@@ -257,7 +257,7 @@ export async function InicializarAdMob() {
                 const {
                   continuarDesafioTrasRevivir
                 } = await import(
-                  './Poketype-Guess/Desafio del Dia/desafio-dia.js'
+                  './Poketype-Guess/Desafio-del-Dia/desafio-dia.js'
                 );
 
                 continuarDesafioTrasRevivir();
@@ -584,7 +584,7 @@ async function procesarRecompensaWeb() {
   if (modo === 'desafio') {
     const {
       continuarDesafioTrasRevivir
-    } = await import('./Poketype-Guess/Desafio del Dia/desafio-dia.js');
+    } = await import('./Poketype-Guess/Desafio-del-Dia/desafio-dia.js');
     continuarDesafioTrasRevivir();
   } else if (modo === 'reto') {
     const {
