@@ -7,7 +7,7 @@ import './Poketype-Guess/Modo-Entrenamiento/eventosEntrenamiento.js'
 import { inicializarPushFCM } from './Poketype-Guess/notificaciones-locales.js';
 import { dataState, splash, main, adState } from './Poketype-Guess/config.js';
 import { InicializarAdMob, prepararBonificado } from './admob.js';
-import { actualizarStatsMenu } from './utilsMain.js';
+import { actualizarStatMenu } from './utilsMain.js';
 import { verificarDesbloqueosPendientes } from './Poketype-Guess/sistema-desbloqueos.js';
 import { verificarVictoriaAlIniciar } from './victoria.js';
 
@@ -42,7 +42,7 @@ async function iniciarApp(){
   await cargarPokedex();
   progressBar.style.width = "33%"
 
-  await actualizarStatsMenu();
+  await actualizarStatMenu();
   progressBar.style.width = "66%"
 
   await verificarVictoriaAlIniciar();

@@ -117,7 +117,7 @@ export const domElements = {
     btnPoketype: document.getElementById("btn-poketype"),
     btnAcerca: document.getElementById("btn-acerca"),
     telegram: document.getElementById("telegram"),
-    rachaMain: document.getElementById("racha-main"),
+    rachaTextoMain: document.getElementById("racha-main"),
     hxGlobalMain: document.getElementById("hx-global-main"),
   },
 
@@ -131,7 +131,7 @@ export const domElements = {
     btnDesafio: document.getElementById("btn-desafio-poketype"),
     btnGenerador: document.getElementById("btn-generador-poketype"),
     btnVolverAlMenu: document.getElementById("btn-volver-menu-poketype"),
-    rachaTexto: document.getElementById("racha-poketype"),
+    rachaTextoPoketype: document.getElementById("racha-poketype"),
     hxGlobal: document.getElementById("hx-global-poketype"),
     // Indicador de vidas generales
     corazon1: document.getElementById("corazon-1-poketype"),

@@ -72,7 +72,7 @@ import {
 import { filtrarPokedexPorGeneracionEstudio } from "./filtroGeneracionEstudio.js";
 import { obtenerVelocidadTiempo, calcularVelocidadDinamica } from "./tiempoEstudio.js";
 import { registrarActividadGeneral } from "../Desafio-del-Dia/progreso-storage.js";
-import { actualizarTodosLosHX } from "../../utilsMain.js";
+import { actualizarHXEnMenu } from "../../utilsMain.js";
 
 // Estado interno del intento de nivel en curso
 let intentoActual = null;
@@ -483,7 +483,7 @@ async function finalizarNivel() {
     } else {
       await marcarNivelCompletado(nivelQueTermino);
       const nuevoHX = await sumarHX(config.hxRecompensa);
-      await actualizarTodosLosHX(nuevoHX);
+      actualizarHXEnMenu(nuevoHX);
       mensajeAciertoEstudio.innerHTML =
         `🏆 ¡Nivel superado! ${resultado.aciertos}/${resultado.totalRondas} aciertos.<br>` +
         `<span style="color: #43a047;">⚡ +${config.hxRecompensa} HX (Total: ${nuevoHX})</span>`;

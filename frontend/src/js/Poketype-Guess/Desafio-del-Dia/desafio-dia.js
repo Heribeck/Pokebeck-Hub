@@ -52,7 +52,7 @@ import {
   verificarRachaVigente,
   registrarActividadGeneral,
 } from './progreso-storage.js';
-import { actualizarStatsMenu } from '../../utilsMain.js';
+import { actualizarStatMenu } from '../../utilsMain.js';
 
 // Estado interno de la sesión en curso (vive solo mientras el jugador está en el Desafío)
 let sesionActual = null;
@@ -273,7 +273,7 @@ async function finalizarSesion() {
       `¡Desafío superado! ${resultado.porcentaje}% de aciertos.`;
 
     // Actualizar UI de racha inmediatamente
-    await actualizarStatsMenu();
+    await actualizarStatMenu();
   } else if (intentosRestantesAlIniciar <= 0) {
     // Era el último intento disponible de hoy y no aprobó
     await registrarDesafioFallido();
@@ -281,7 +281,7 @@ async function finalizarSesion() {
       `No alcanzaste el 70% (sacaste ${resultado.porcentaje}%). Se acabaron tus intentos de hoy.`;
 
     // Actualizar UI de racha inmediatamente
-    await actualizarStatsMenu();
+    await actualizarStatMenu();
   } else {
     btnJugarDeNuevoDesafio.style.display = 'flex';
     mensajeAciertoDesafio.innerHTML =
