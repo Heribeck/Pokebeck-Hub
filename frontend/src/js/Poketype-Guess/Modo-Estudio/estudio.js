@@ -73,6 +73,7 @@ import { filtrarPokedexPorGeneracionEstudio } from "./filtroGeneracionEstudio.js
 import { obtenerVelocidadTiempo, calcularVelocidadDinamica } from "./tiempoEstudio.js";
 import { registrarActividadGeneral } from "../Desafio-del-Dia/progreso-storage.js";
 import { actualizarHXEnMenu } from "../../utilsMain.js";
+import { ejecutarVictoriaDefinitiva } from "../../victoria.js";
 
 // Estado interno del intento de nivel en curso
 let intentoActual = null;
@@ -503,9 +504,7 @@ async function finalizarNivel() {
       
       // Verificar si es campeon-18 y se completó correctamente
       if (nivelQueTermino === "campeon-18" && intentoActual.corazonesRestantes > 0) {
-        if (window.victoriaPokeType) {
-          window.victoriaPokeType.ejecutarVictoriaDefinitiva();
-        }
+        ejecutarVictoriaDefinitiva();
       }
     }
   } else {

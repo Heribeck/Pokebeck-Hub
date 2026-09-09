@@ -298,11 +298,8 @@ export function volverAlMenu(){
     if (panelEstudio) {panelEstudio.style.display = "none"}
     if (ligas) {ligas.style.display = "none"}
     if (poketype) {poketype.style.display = "none"}
+
     cambiarBanner("main");
     detenerTodoElAudio();
-    
-    // Verificar si el usuario ya completó la liga para mostrar título
-    if (window.victoriaPokeType && window.victoriaPokeType.verificarVictoriaAlVolverAlMain) {
-        window.victoriaPokeType.verificarVictoriaAlVolverAlMain();
-    }
+    verificarVictoriaAlVolverAlMain();
 }

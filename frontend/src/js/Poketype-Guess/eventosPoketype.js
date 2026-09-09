@@ -11,11 +11,10 @@ import {
   btnVolverMenuPoketype,
   campista,
   btnRecuperarVidaPoketype,
-  dificultadCampista
 } from './config.js';
 
 // Funciones importadas desde otros archivos
-import { mostrarBonificado, ocultarBanner, clickRevivir, mostrarBanner, cambiarBanner } from '../admob.js';
+import { ocultarBanner, clickRevivir, mostrarBanner, cambiarBanner } from '../admob.js';
 import { iniciarDesafioDelDia } from './Desafio-del-Dia/desafio-dia.js';
 import { iniciarContadorRegeneracion, obtenerVidasGenerales } from './vidasGeneralesStorage.js';
 import './Modo-Estudio/ligas-ui.js';
@@ -23,6 +22,13 @@ import { actualizarIndicadorVidas } from './vidaUi.js';
 import { mostrarNotificacion } from './utils.js';
 import { estaDesbloqueado, mostrarMensajeBloqueo, DESBLOQUEOS } from './sistema-desbloqueos.js';
 import { actualizarEstadoDificultades } from './Modo-Entrenamiento/eventosEntrenamiento.js';
+
+const btnCerrarModalVictoria = document.querySelector('.modal-victoria__boton--cerrar');
+import { ocultarModalVictoria } from '../victoria.js'; 
+
+btnCerrarModalVictoria.addEventListener('click', () => {
+  ocultarModalVictoria();
+});
 
 // Iniciar contador de regeneración de vidas
 iniciarContadorRegeneracion();
@@ -82,6 +88,8 @@ btnVolverMenuPoketype.addEventListener("click", () => {
   main.style.display = "flex";
   mostrarBanner("TOP_CENTER");
 });
+
+
 
 
 
