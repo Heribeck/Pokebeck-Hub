@@ -23,8 +23,9 @@ Thumbs.db
 *.swo
 *~
 
-# Versiones APK | AAB
+# Versiones APK | AAB & Docs
 /Versiones
+**/docs/
 
 # Módulos y empaquetados pesados
 **/node_modules/
@@ -51,9 +52,9 @@ gradle.properties.local
 *.sublime-workspace
 
 # Build y dist
-/dist
-/build
-/out
+**/dist/
+**/build/
+**/out/
 
 # Lock files (opcional, descomentar si no quieres subirlos)
 # package-lock.json
