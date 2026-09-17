@@ -12,6 +12,7 @@ import {
   campista,
   btnRecuperarVidaPoketype,
 } from '../../config/config.js';
+import { generarTarjetasLigas } from './modes/Modo-Estudio/ligas-ui.js';
 
 // Funciones importadas desde otros archivos
 import { ocultarBanner, clickRevivir, mostrarBanner, cambiarBanner } from '../../shared/admob/admob.js';
@@ -52,6 +53,7 @@ btnEstudio.addEventListener("click", () => {
   modoJuegoSeleccionado = 'estudio';
   poketype.style.display = "none";
   ligas.style.display = "flex";
+  generarTarjetasLigas();
   ocultarBanner();
 });
 

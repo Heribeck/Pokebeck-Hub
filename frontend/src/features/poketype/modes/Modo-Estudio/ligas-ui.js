@@ -1,6 +1,3 @@
-// UI del Sistema de Ligas - Generación de tarjetas con estado REAL
-// (completado / desbloqueado / bloqueado), usando HX y progreso guardado.
-
 import { datosLigas } from './ligas-datos.js';
 import {
   contenedorLigas,
@@ -252,6 +249,3 @@ modalDetalles.addEventListener('click', (e) => {
     cerrarModal();
   }
 });
-
-// Inicializar tarjetas cuando se cargue el módulo
-generarTarjetasLigas();

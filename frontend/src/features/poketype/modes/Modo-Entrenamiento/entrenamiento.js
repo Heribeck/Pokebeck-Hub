@@ -130,7 +130,6 @@ export async function campistaLogica(){
   if (pokemonesValidos.length === 0) {
     generarTipos(tipo1Campista, tipo2Campista);
     campistaLogica();
-    console.log("No hay pokemones con esa combinación para esta dificultad");
     return;
   }
 

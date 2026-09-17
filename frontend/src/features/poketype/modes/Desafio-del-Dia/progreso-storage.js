@@ -331,7 +331,6 @@ export async function cancelarNotificacionRacha() {
 
   try {
     await LocalNotifications.cancel({ notifications: [{ id: 1 }] });
-    console.log('Notificación de racha cancelada');
   } catch (error) {
     console.error('Error cancelando notificación de racha:', error);
   }

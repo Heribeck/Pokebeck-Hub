@@ -238,7 +238,6 @@ function actualizarSelector(tipo) {
   selectPokemonGenerador.disabled = false;
   tomSelectInstance.enable();
   
-  console.log('Selector actualizado con', pokemonFiltrados.length, 'Pokémon de tipo', tipo);
 }
 
 // Comprobar si el Pokémon seleccionado tiene los tipos correctos
