@@ -51,12 +51,6 @@ btnPoketype.addEventListener("click", () => {
 
 btnAcerca.addEventListener("click", () => {
   mostrarPanel(acerca);
-  showNotification({
-    id: NOTIFICATION_IDS.RACHA_CASI_POR_EXPIRAR,
-    title: "Acerca de",
-    body: "Información sobre la aplicación",
-    extra: "Prueba de la muestra de notificaciones"
-  });
 });
 
 telegram.addEventListener("click", abrirTelegram);

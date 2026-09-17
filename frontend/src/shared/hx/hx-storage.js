@@ -1,5 +1,4 @@
-// Módulo encargado de guardar y leer el HX (Hexium) del jugador.
-// Mismo patrón que progreso-storage.js: Preferences nativo con respaldo a localStorage.
+
 import { HX_INICIAL } from './hx-sistema.js';
 import { Preferences } from '@capacitor/preferences';
 import { executePluginSafely } from '../capacitor/executePluginSafely.js';

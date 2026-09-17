@@ -26,7 +26,7 @@ import { cambiarBanner } from '../../shared/admob/admob.js';
 import { obtenerHX } from '../../shared/hx/hx-storage.js';
 import { hxGlobal, panelEstudio } from '../../config/config.js';
 import { verificarDesbloqueosPendientes } from './sistema-desbloqueos.js';
-import { verificarRachaVigente } from './modes/Desafio-del-Dia/progreso-storage.js';
+import { verificarVictoriaAlVolverAlMain } from './victoria.js';
 
 
 // Función para generar números aleatorios

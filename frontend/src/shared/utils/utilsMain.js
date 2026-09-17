@@ -1,5 +1,5 @@
 import { domElements } from "../../config/config.js";
-import { verificarRachaVigente } from "../../features/poketype/modes/Desafio-del-Dia/progreso-storage";
+import { verificarRachaVigente } from "../../features/poketype/modes/Desafio-del-Dia/progreso-storage.js";
 import { obtenerHX } from "../../shared/hx/hx-storage";
 
 export async function actualizarStatMenu() {

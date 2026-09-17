@@ -20,7 +20,7 @@ export async function showNotification({
         }
       ]
     })
-    console.log('Notification Funcionando Correctamente');
+    console.log('Notification Inmediata Funcionando Correctamente');
     },
 
     () => {
@@ -30,7 +30,7 @@ export async function showNotification({
   );
 }
 
-async function scheduleNotification({
+export async function scheduleNotification({
   id,
   title,
   body,
@@ -40,7 +40,7 @@ async function scheduleNotification({
   return await executePluginSafely(
     'LocalNotifications',
 
-    () => LocalNotifications.schedule({
+    () => { LocalNotifications.schedule({
       notifications: [
         {
           id,
@@ -52,13 +52,15 @@ async function scheduleNotification({
           extra
         }
       ]
-    }),
+    });
+    console.log('Notification Programada Funcionando Correctamente');
+    },
 
     () => null
   );
 }
 
-async function cancelNotification(id) {
+export async function cancelNotification(id) {
   return await executePluginSafely(
     'LocalNotifications',
 

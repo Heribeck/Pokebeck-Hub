@@ -2,6 +2,9 @@ import { Preferences } from '@capacitor/preferences';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { executePluginSafely } from '../../../../shared/capacitor/executePluginSafely.js';
 import { Capacitor } from '@capacitor/core';
+import { getToday, getYesterday, getCurrentDateTime, hasResetTimePassed } from '../../../../shared/time/time.js';
+import { cancelNotification, scheduleNotification } from '../../../../shared/notifications/localNotifications.js';
+import { NOTIFICATION_IDS } from '../../../../shared/notifications/idsNotifications.js';
 
 const PreferencesLocalStorage = {
   async get({ key }) {
@@ -28,54 +31,6 @@ function progresoPorDefecto() {
   };
 }
 
-// Devuelve la fecha de hoy en formato "YYYY-MM-DD", en la zona horaria local del dispositivo
-function obtenerFechaDeHoy() {
-  const hoy = new Date();
-  const año = hoy.getFullYear();
-  const mes = String(hoy.getMonth() + 1).padStart(2, '0');
-  const dia = String(hoy.getDate()).padStart(2, '0');
-  return `${año}-${mes}-${dia}`;
-}
-
-// Devuelve la fecha y hora actual en formato "YYYY-MM-DD HH:mm"
-function obtenerFechaHoraActual() {
-  const ahora = new Date();
-  const año = ahora.getFullYear();
-  const mes = String(ahora.getMonth() + 1).padStart(2, '0');
-  const dia = String(ahora.getDate()).padStart(2, '0');
-  const hora = String(ahora.getHours()).padStart(2, '0');
-  const minuto = String(ahora.getMinutes()).padStart(2, '0');
-  return `${año}-${mes}-${dia} ${hora}:${minuto}`;
-}
-
-// Devuelve la fecha de ayer en formato "YYYY-MM-DD"
-function obtenerFechaDeAyer() {
-  const ayer = new Date();
-  ayer.setDate(ayer.getDate() - 1);
-  const año = ayer.getFullYear();
-  const mes = String(ayer.getMonth() + 1).padStart(2, '0');
-  const dia = String(ayer.getDate()).padStart(2, '0');
-  return `${año}-${mes}-${dia}`;
-}
-
-// Devuelve la hora de reinicio (8pm) de hoy en formato "YYYY-MM-DD 20:00"
-function obtenerHoraReinicio8pm() {
-  const hoy = new Date();
-  hoy.setHours(20, 0, 0, 0);
-  const año = hoy.getFullYear();
-  const mes = String(hoy.getMonth() + 1).padStart(2, '0');
-  const dia = String(hoy.getDate()).padStart(2, '0');
-  return `${año}-${mes}-${dia} 20:00`;
-}
-
-// Verifica si ya pasó la hora de reinicio (8pm) hoy
-function yaPaso8pm() {
-  const ahora = new Date();
-  const hora8pm = new Date();
-  hora8pm.setHours(20, 0, 0, 0);
-  return ahora >= hora8pm;
-}
-
 // Lee el progreso guardado. Si no existe nada todavía, devuelve la estructura por defecto.
 export async function obtenerProgreso() {
   return await executePluginSafely(
@@ -88,9 +43,11 @@ export async function obtenerProgreso() {
       return JSON.parse(resultado.value);
     },
     async () => {
-      const valor = localStorage.getItem(CLAVE_PROGRESO);
-      if (!valor) return progresoPorDefecto();
-      return JSON.parse(valor);
+      const resultado = localStorage.getItem(CLAVE_PROGRESO);
+      if (!resultado) {
+        return progresoPorDefecto();
+      }
+      return JSON.parse(resultado);
     }
   );
 }
@@ -108,12 +65,30 @@ async function guardarProgreso(progreso) {
   );
 }
 
+// Programa un recordatorio de la racha a las 8pm del día siguiente si el jugador no ha completado su actividad hoy.
+async function scheduleStreakReminder(fechaHoraActual) {
+
+  const rightNow = new Date(fechaHoraActual);
+
+  const reminderDate = new Date(rightNow.getTime() + 24 * 60 * 60 * 1000);
+
+  await cancelNotification(NOTIFICATION_IDS.STREAK_REMINDER);
+
+  await scheduleNotification({
+    id: NOTIFICATION_IDS.STREAK_REMINDER,
+    title: '¡No olvides tu racha!🔥',
+    body: '⏰Continúa tu racha antes de que se reinicie.',
+    at: reminderDate,
+    extra: "Funciona la notificación de racha"
+  });
+} 
+
 // Revisa si la racha general sigue vigente según la hora de reinicio (8pm)
 // Si pasaron 2 días sin actividad, la racha se reinicia
 export async function verificarRachaVigente() {
   const progreso = await obtenerProgreso();
-  const hoy = obtenerFechaDeHoy();
-  const ayer = obtenerFechaDeAyer();
+  const hoy = getToday();
+  const ayer = getYesterday();
 
   let rachaReiniciada = false;
 
@@ -123,7 +98,7 @@ export async function verificarRachaVigente() {
   }
 
   // Si ya pasó 8pm hoy, verificar si hubo actividad hoy
-  if (yaPaso8pm()) {
+  if (hasResetTimePassed()) {
     if (progreso.ultimaActividadFecha !== hoy) {
       // No hubo actividad hoy antes de las 8pm, verificar si fue ayer
       if (progreso.ultimaActividadFecha !== ayer) {
@@ -165,7 +140,7 @@ export async function verificarRachaVigente() {
 // Si cambió el día desde la última vez, resetea el contador automáticamente.
 export async function obtenerIntentosDisponiblesHoy() {
   const progreso = await obtenerProgreso();
-  const hoy = obtenerFechaDeHoy();
+  const hoy = getToday();
 
   if (progreso.fechaIntentosHoy !== hoy) {
     return 2;
@@ -177,7 +152,7 @@ export async function obtenerIntentosDisponiblesHoy() {
 // Registra que el jugador usó un intento del Desafío del Día hoy (haya pasado o no).
 export async function consumirIntentoDeHoy() {
   const progreso = await obtenerProgreso();
-  const hoy = obtenerFechaDeHoy();
+  const hoy = getToday();
 
   if (progreso.fechaIntentosHoy !== hoy) {
     progreso.fechaIntentosHoy = hoy;
@@ -194,7 +169,7 @@ export async function consumirIntentoDeHoy() {
 // Solo marca como completado, ya no maneja racha.
 export async function registrarDesafioAprobado() {
   const progreso = await obtenerProgreso();
-  const hoy = obtenerFechaDeHoy();
+  const hoy = getToday();
 
   if (progreso.ultimoDiaDesafioCompletado === hoy) {
     return progreso;
@@ -217,9 +192,9 @@ export async function registrarDesafioFallido() {
 // Actualiza o incrementa la racha general según corresponda
 export async function registrarActividadGeneral() {
   let progreso = await obtenerProgreso();
-  const hoy = obtenerFechaDeHoy();
-  const ayer = obtenerFechaDeAyer();
-  const fechaHoraActual = obtenerFechaHoraActual();
+  const hoy = getToday();
+  const ayer = getYesterday();
+  const fechaHoraActual = getCurrentDateTime();
 
   const rachaAnterior = progreso.rachaGeneral;
 
@@ -235,10 +210,12 @@ export async function registrarActividadGeneral() {
     if (progreso.ultimaActividadFecha === ayer) {
       progreso.rachaGeneral += 1;
       rachaIncrementada = true;
+      await scheduleStreakReminder(fechaHoraActual);
     } else {
       // Si fue hace más de 1 día, iniciar nueva racha
       progreso.rachaGeneral = 1;
       rachaIncrementada = true;
+      await scheduleStreakReminder(fechaHoraActual);
     }
   }
 
@@ -281,7 +258,7 @@ export function obtenerMecanicaSegunRacha(racha) {
 // Indica si el jugador YA aprobó el Desafío del Día de hoy
 export async function yaCompletoDesafioHoy() {
   const progreso = await obtenerProgreso();
-  return progreso.ultimoDiaDesafioCompletado === obtenerFechaDeHoy();
+  return progreso.ultimoDiaDesafioCompletado === getToday();
 }
 
 // Programar notificación local para advertir sobre racha en peligro
@@ -340,8 +317,8 @@ export async function cancelarNotificacionRacha() {
 // Se llama después de cada actividad registrada
 export async function verificarYProgramarNotificacion() {
   const progreso = await obtenerProgreso();
-  const hoy = obtenerFechaDeHoy();
-  const ayer = obtenerFechaDeAyer();
+  const hoy = getToday();
+  const ayer = getYesterday();
 
   // Si hubo actividad hoy, cancelar notificación
   if (progreso.ultimaActividadFecha === hoy) {
