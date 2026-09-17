@@ -1,0 +1,98 @@
+// Elementos del DOM importados desde config.js
+import {
+  main,
+  poketype,
+  ligas,
+  generador,
+  btnEstudio,
+  btnEntrenamiento,
+  btnDesafio,
+  btnGenerador,
+  btnVolverMenuPoketype,
+  campista,
+  btnRecuperarVidaPoketype,
+} from '../../config/config.js';
+
+// Funciones importadas desde otros archivos
+import { ocultarBanner, clickRevivir, mostrarBanner, cambiarBanner } from '../../shared/admob/admob.js';
+import { iniciarDesafioDelDia } from './modes/Desafio-del-Dia/desafio-dia.js';
+import { iniciarContadorRegeneracion, obtenerVidasGenerales } from './vidas/vidasGeneralesStorage.js';
+import { actualizarIndicadorVidas } from './vidas/vidaUi.js';
+import { mostrarNotificacion } from './utils.js';
+import { estaDesbloqueado, mostrarMensajeBloqueo, DESBLOQUEOS } from './sistema-desbloqueos.js';
+import { actualizarEstadoDificultades } from './modes/Modo-Entrenamiento/eventosEntrenamiento.js';
+
+const btnCerrarModalVictoria = document.querySelector('.modal-victoria__boton--cerrar');
+import { ocultarModalVictoria } from './victoria.js'; 
+
+btnCerrarModalVictoria.addEventListener('click', () => {
+  ocultarModalVictoria();
+});
+
+// Iniciar contador de regeneración de vidas
+iniciarContadorRegeneracion();
+
+// Variable de estado para diferenciar Estudio de Entrenamiento
+let modoJuegoSeleccionado = 'entrenamiento'; 
+
+btnRecuperarVidaPoketype.addEventListener('click', async () => {
+  const vidas = await obtenerVidasGenerales();
+  if (vidas >= 3) {
+    mostrarNotificacion('Ya tienes el máximo de vidas');
+    return;
+  }
+  await clickRevivir('vidas-generales');
+});
+
+// Muestra el estado real de las vidas apenas carga el panel
+actualizarIndicadorVidas();
+
+// --- |Evento de boton de "Estudio(Ligas)" desde PokeType|
+btnEstudio.addEventListener("click", () => {
+  modoJuegoSeleccionado = 'estudio';
+  poketype.style.display = "none";
+  ligas.style.display = "flex";
+  ocultarBanner();
+});
+
+// --- |Evento de boton de "Entrenamiento desde PokeType|
+btnEntrenamiento.addEventListener("click", () => {
+  modoJuegoSeleccionado = 'entrenamiento';
+  poketype.style.display = "none";
+  campista.style.display = "flex";
+  ocultarBanner();
+  actualizarEstadoDificultades();
+});
+
+// --- |Evento del Apartado del Desafio Del Dia desde PokeType| -- //
+btnDesafio.addEventListener('click', () => {
+  if (!estaDesbloqueado(DESBLOQUEOS.DESAFIO_DIA)) {
+    mostrarMensajeBloqueo(DESBLOQUEOS.DESAFIO_DIA);
+    return;
+  }
+  iniciarDesafioDelDia()
+  ocultarBanner();
+});
+
+// --- |Evento del Generador desde PokeType| -- //
+btnGenerador.addEventListener("click", () => {
+  poketype.style.display = "none";
+  generador.style.display = "flex";
+  cambiarBanner("generador");
+});
+
+// --- |Evento de boton de "Volver al Menú" desde PokeType| -- //
+btnVolverMenuPoketype.addEventListener("click", () => {
+  poketype.style.display = "none";
+  main.style.display = "flex";
+  mostrarBanner("TOP_CENTER");
+});
+
+
+
+
+
+
+
+
+
