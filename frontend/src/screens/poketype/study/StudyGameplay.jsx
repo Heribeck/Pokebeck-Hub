@@ -5,6 +5,7 @@ import { crearEstadoRondas, generarSiguienteRonda } from '../../../features/poke
 import { haCompletadoTodos, marcarNivelCompletado, yaCompletoNivel } from '../../../features/poketype/modes/study/storage/levelProgressStorage.js';
 import { obtenerVelocidadTiempo } from '../../../features/poketype/modes/study/config/timeConfig.js';
 import { calcularVelocidadDinamica } from '../../../features/poketype/modes/study/algorithms/dynamicTimeSpeed.js';
+import { INTERSTITIAL_LEVEL_NUMBERS } from '../../../features/poketype/modes/study/config/interstitialConfig.js';
 import { restarVidaGeneral, verificarDesbloqueos } from '../../../features/poketype/index.js';
 import { typesIcons, typesColors } from '../../../features/poketype/index.js';
 import { dataState } from '../../../home/index.js';
@@ -12,6 +13,7 @@ import { sumarHX } from '../../../home/index.js';
 import { showToast } from '../../../shared/toast/index.js';
 import { capitalizeFirstLetter } from '../../../shared/strings/index.js';
 import { playLoseSound, playWinSound } from '../../../shared/audio/index.js';
+import { showInsterstitial } from '../../../shared/admob/index.js';
 import StudyVictory from './StudyVictory.jsx';
 
 const TIEMPO_INICIAL = 100;
@@ -180,6 +182,10 @@ export default function StudyGameplay({ nivelId, onBack }) {
           estadoActual === 'pendiente' ? 'error' : estadoActual
         );
       }
+    }
+
+    if (resultado.aprobado && INTERSTITIAL_LEVEL_NUMBERS.includes(config.numero)) {
+      await showInsterstitial('levels');
     }
   }
 

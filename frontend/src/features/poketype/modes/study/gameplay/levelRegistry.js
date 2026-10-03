@@ -116,6 +116,7 @@ export function obtenerConfiguracionNivel(nivelId) {
 
   return {
     liga: datosNivel.liga,
+    numero: datosNivel.numero,
     hxRequerido: datosNivel.hxRequerido,
     hxRecompensa: datosNivel.hxRecompensa,
     totalRondas: datosNivel.rondas,
