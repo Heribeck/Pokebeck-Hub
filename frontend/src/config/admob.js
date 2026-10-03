@@ -12,11 +12,3 @@ export const ADS_CONFIG = {
   INTERSTITIAL_NIVELES: "ca-app-pub-1898586331132450/6996021243",
   INTERSTITIAL_GENERADOR: "ca-app-pub-1898586331132450/7626576636",
 };
-
-//Eventos de los anuncios Bonificado
-export const eventsRewarded = {
-  cargado: "onRewardedVideoAdLoaded",
-  falloCarga: "onRewardedVideoAdFailedToLoad",
-  recompensa: "onRewardedVideoAdReward",
-  cerrado: "onRewardedVideoAdDismissed",
-};

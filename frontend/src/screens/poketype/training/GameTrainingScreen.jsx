@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 import { showToast } from '../../../shared/toast/index.js'
-import { ADS_CONFIG, typesIcons, typesColors } from '../../../config/index.js'
+import { typesIcons, typesColors } from '../../../features/poketype/index.js'
 import { showRewarded } from '../../../shared/admob/index.js'
 import { 
     trainingLogic, 
@@ -151,7 +151,7 @@ export default function GameTrainingScreen({ onNavigation, currentDifficulty }) 
         let rewardEarned = false
 
         try {
-            const adShown = await showRewarded(ADS_CONFIG.REWARDED_ENTRENAMIENTO,() => {
+            const adShown = await showRewarded('training', () => {
                     rewardEarned = true
                 }
             )

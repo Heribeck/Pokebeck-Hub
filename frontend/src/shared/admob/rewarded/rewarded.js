@@ -7,6 +7,17 @@ import { appState } from "../../../home/index.js";
 import { showToast } from "../../toast/index.js";
 
 const isAdmobAvailable = Capacitor.isPluginAvailable('AdMob');
+const REWARDED_ADS = {
+  lives: ADS_CONFIG.REWARDED_VIDAS,
+  training: ADS_CONFIG.REWARDED_ENTRENAMIENTO,
+};
+
+function getRewardedAdId(placement) {
+  if (!Object.prototype.hasOwnProperty.call(REWARDED_ADS, placement)) {
+    throw new RangeError(`Ubicación de anuncio bonificado desconocida: ${placement}`);
+  }
+  return REWARDED_ADS[placement];
+}
 
 function esperarBonificadoCargado(timeoutMs = 15000) {
   if (adState.bonificadoCargado) {  
@@ -33,8 +44,8 @@ function esperarBonificadoCargado(timeoutMs = 15000) {
   return adState.promesaCargaBonificado;
 }
 
-export async function prepararBonificado(adUnitId = null) {
-  const idAUsar = adUnitId || ADS_CONFIG.REWARDED_VIDAS;
+export async function prepararBonificado(placement = 'lives') {
+  const idAUsar = getRewardedAdId(placement);
 
   if (!isAdmobAvailable || !appState.internet) {
     adState.bonificadoCargado = false;
@@ -90,8 +101,8 @@ export async function prepararBonificado(adUnitId = null) {
   return adState.preparandoBonificado;
 }
 
-export async function showRewarded(adUnitId = null, onRewardEarned = null) {
-  const idAUsar = adUnitId || adState.bonificadoPreparadoId || ADS_CONFIG.REWARDED_VIDAS;
+export async function showRewarded(placement = 'lives', onRewardEarned = null) {
+  const idAUsar = getRewardedAdId(placement);
 
   if (!isAdmobAvailable || !appState.internet) {
     return false;
@@ -99,7 +110,7 @@ export async function showRewarded(adUnitId = null, onRewardEarned = null) {
   
   if (!adState.bonificadoCargado || adState.bonificadoPreparadoId !== idAUsar) {
     showToast("Cargando anuncio...");
-    const cargado = await prepararBonificado(idAUsar);
+    const cargado = await prepararBonificado(placement);
 
     if (!cargado || !adState.bonificadoCargado) {
       showToast("No se pudo cargar el anuncio bonificado.");

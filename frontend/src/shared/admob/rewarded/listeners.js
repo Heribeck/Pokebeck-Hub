@@ -2,7 +2,14 @@ import { AdMob } from '@capacitor-community/admob'
 
 import { adState, setResolverCargaBonificado, setPromesaCargaBonificado, setTimeoutCargaBonificado, setListenersRegistrados } from '../admobState.js'
 import { prepararBonificado } from './rewarded.js'
-import { eventsRewarded } from '../../../config/index.js'
+
+//Eventos de los anuncios Bonificado
+const eventsRewarded = {
+    cargado: 'onRewardedVideoAdLoaded',
+    falloCarga: 'onRewardedVideoAdFailedToLoad',
+    recompensa: 'onRewardedVideoAdReward',
+    cerrado: 'onRewardedVideoAdDismissed',
+}
 
 function onRewardedLoaded() {
     console.log('AdMob: anuncio bonificado cargado.')

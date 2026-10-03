@@ -1,4 +1,4 @@
-import { STREAK_KEY } from '../../../config/index.js'
+import { STREAK_KEY } from '../../../shared/storage/index.js'
 import { Preferences } from '@capacitor/preferences'
 import { showToast } from '../../../shared/toast/index.js'
 import { getCurrentDateTime } from '../../../shared/time/index.js'

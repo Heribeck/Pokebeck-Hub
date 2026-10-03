@@ -1,5 +1,5 @@
 import { dataState } from "../../../../../home/index.js";
-import { types } from "../../../../../config/index.js";
+import { types } from "../../../data/pokemonTypes.js";
 import { gameState } from "../../../state/poketypeState.js";
 import { validatePokemonTypes } from "../../../algorithms/pokemonTypes.js";
 import { pickRandom } from "../algorithms/prngSeed.js";

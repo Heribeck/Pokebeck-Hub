@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
 import { showRewarded } from "../../shared/admob/index.js";
-import { ADS_CONFIG } from "../../config/index.js";
 import { getStreakProgress, obtenerHX } from "../../home/index.js";
 import { obtenerTiempoParaProximaRegeneracion, obtenerVidasGenerales, restaurarVidaPorAnuncio } from "../../features/poketype/index.js";
 import { showToast } from "../../shared/toast/index.js";
@@ -70,7 +69,7 @@ export default function PoketypeScreen({ onNavigation }) {
   }, [tiempoRegeneracion, cargarVidas]);
 
   const handleRecoverLife = async () => {
-    await showRewarded(ADS_CONFIG.REWARDED_VIDAS, async () => {
+    await showRewarded('lives', async () => {
       try {
         const vidasActualizadas = await restaurarVidaPorAnuncio();
         setVidas(vidasActualizadas);

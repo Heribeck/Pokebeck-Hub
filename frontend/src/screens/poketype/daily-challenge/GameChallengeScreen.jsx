@@ -15,7 +15,7 @@ import {
 import { getStreakProgress, incrementStreak } from '../../../home/index.js'
 import { showToast } from '../../../shared/toast/index.js'
 import { capitalizeFirstLetter } from '../../../shared/strings/index.js'
-import { typesIcons, typesColors, ADS_CONFIG } from '../../../config/index.js'
+import { typesIcons, typesColors } from '../../../features/poketype/index.js'
 import { showInsterstitial } from '../../../shared/admob/index.js'
 
 
@@ -102,11 +102,11 @@ export default function GameChallengeScreen({ onNavigation }) {
         if (result.passed) {
             await registerChallengePassed()
             setMessage(`¡Desafío superado! ${result.percentage}% de aciertos (necesitabas ${updated.params.passPercent}%).`)
-            showInsterstitial(ADS_CONFIG.INTERSTITIAL_CHALLENGE)
+            showInsterstitial('challenge')
             return
         }
 
-        showInsterstitial(ADS_CONFIG.INTERSTITIAL_CHALLENGE)
+        showInsterstitial('challenge')
         setMessage(`No alcanzaste el ${updated.params.passPercent}% (sacaste ${result.percentage}%). ${attemptsRef.current > 0 ? `Te quedan ${attemptsRef.current} intento(s) hoy.` : 'Se acabaron tus intentos de hoy.'}`)
         setShowRetry(attemptsRef.current > 0)
     }

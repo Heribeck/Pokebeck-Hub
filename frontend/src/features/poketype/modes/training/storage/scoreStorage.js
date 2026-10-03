@@ -4,7 +4,7 @@ import {
     TRAINING_MAX_EASY_KEY,
     TRAINING_MAX_NORMAL_KEY,
     TRAINING_MAX_HARD_KEY
-} from '../../../../../config/index.js'
+} from '../../../../../shared/storage/index.js'
 import { scoreState } from '../state/state.js'
 
 export async function loadMaxScores() {

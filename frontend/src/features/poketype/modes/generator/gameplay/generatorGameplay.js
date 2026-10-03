@@ -1,6 +1,6 @@
 import { generateGeneratorTypes } from "../algorithms/generateTypes.js";
 import { delay } from "../../../../../shared/time/index.js";
-import { typeSpanish } from "../../../../../config/index.js";
+import { typeSpanish } from "../../../data/pokemonTypes.js";
 import { capitalizeFirstLetter } from "../../../../../shared/strings/index.js";
 import { dataState } from "../../../../../home/index.js";
 import { incrementGeneratorCounter } from "../storage/generatorStorage.js"; 

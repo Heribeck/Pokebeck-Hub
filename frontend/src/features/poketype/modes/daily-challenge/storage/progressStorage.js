@@ -2,7 +2,7 @@ import { Preferences } from '@capacitor/preferences'
 
 import { getToday } from '../../../../../shared/time/index.js'
 import { MAX_DAILY_ATTEMPTS } from '../config/challengeConfig.js'
-import { DAILY_CHALLENGE_PROGRESS_KEY } from '../../../../../config/index.js'
+import { DAILY_CHALLENGE_PROGRESS_KEY } from '../../../../../shared/storage/index.js'
 
 function defaultProgress() {
   return {

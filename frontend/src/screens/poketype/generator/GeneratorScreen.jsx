@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { typesIcons, typesColors } from "../../../config/index.js";
+import { typesIcons, typesColors } from '../../../features/poketype/index.js';
 import { startGeneration } from "../../../features/poketype/index.js";
 import { gameState } from "../../../features/poketype/index.js";
 import { validatePokemon, buildResultMessage } from "../../../features/poketype/index.js";

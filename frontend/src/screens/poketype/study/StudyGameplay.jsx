@@ -6,7 +6,7 @@ import { haCompletadoTodos, marcarNivelCompletado, yaCompletoNivel } from '../..
 import { obtenerVelocidadTiempo } from '../../../features/poketype/modes/study/config/timeConfig.js';
 import { calcularVelocidadDinamica } from '../../../features/poketype/modes/study/algorithms/dynamicTimeSpeed.js';
 import { restarVidaGeneral, verificarDesbloqueos } from '../../../features/poketype/index.js';
-import { typesIcons, typesColors } from '../../../config/index.js';
+import { typesIcons, typesColors } from '../../../features/poketype/index.js';
 import { dataState } from '../../../home/index.js';
 import { sumarHX } from '../../../home/index.js';
 import { showToast } from '../../../shared/toast/index.js';

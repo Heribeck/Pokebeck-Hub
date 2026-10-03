@@ -1,5 +1,5 @@
 import { Preferences } from '@capacitor/preferences';
-import { HX_KEY } from '../../../config/index.js';
+import { HX_KEY } from '../../../shared/storage/index.js';
 const HX_INICIAL = 300;
 
 export async function obtenerHX() {

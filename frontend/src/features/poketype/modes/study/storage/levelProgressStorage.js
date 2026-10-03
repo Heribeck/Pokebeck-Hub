@@ -1,5 +1,5 @@
 import { Preferences } from '@capacitor/preferences';
-import { STUDY_COMPLETED_LEVELS_KEY } from '../../../../../config/index.js';
+import { STUDY_COMPLETED_LEVELS_KEY } from '../../../../../shared/storage/index.js';
 
 // Devuelve la lista de IDs de niveles ya completados (array de strings)
 export async function obtenerNivelesCompletados() {

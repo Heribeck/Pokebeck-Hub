@@ -8,6 +8,7 @@ export { challengeLogic } from './modes/daily-challenge/gameplay/challengeLogic.
 export { createChallengeSession, registerRoundResult, calculateFinalResult } from './modes/daily-challenge/gameplay/challengeSession.js'
 export { createDailyGenerator } from './modes/daily-challenge/algorithms/prngSeed.js'
 export { getAvailableAttemptsToday, consumeAttemptToday, registerChallengePassed, hasCompletedChallengeToday } from './modes/daily-challenge/storage/progressStorage.js'
+export { types, typesIcons, typesColors, typeSpanish } from './data/pokemonTypes.js'
 
 export { gameState } from './state/poketypeState.js'
 export { scoreState } from './modes/training/state/state.js'

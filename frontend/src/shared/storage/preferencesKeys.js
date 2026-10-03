@@ -2,7 +2,7 @@
 export const STREAK_KEY = 'STREAK_SYSTEM'
 export const HX_KEY = 'POKEBECK_HX'
 
-// ====== | Poketypes| ====== //
+// ====== | Poketype Constants | ====== //
 export const GENERATOR_COUNTER_KEY = 'POKETYPE_GENERATOR_COUNTER'
 
 export const STUDY_COMPLETED_LEVELS_KEY = 'POKETYPE_STUDY_COMPLETED_LEVELS'

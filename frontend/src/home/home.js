@@ -11,7 +11,6 @@ import { loadMaxScores } from '../features/poketype/modes/training/storage/score
 import { checkStreak } from './systems/streak/streakStorage.js';
 import { obtenerVidasGenerales } from '../features/poketype/index.js';
 import { requestNotificationPermission } from '../shared/notifications/index.js';
-import { ADS_CONFIG } from '../config/index.js';
 import { preloadNativeAds } from '../shared/admob/native/index.js';
 
 export async function initApp(onNavigation, onStreakExpired){
@@ -20,7 +19,7 @@ export async function initApp(onNavigation, onStreakExpired){
     const streakStatus = await checkStreak();
     await obtenerVidasGenerales();
     await initAdMob();
-    preloadNativeAds(ADS_CONFIG.NATIVE_AD);
+    preloadNativeAds();
     progressBar.value = 25;
 
     await cargarPokedex();

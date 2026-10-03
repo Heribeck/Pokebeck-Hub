@@ -1,5 +1,5 @@
 import { Preferences } from '@capacitor/preferences';
-import { PLAYER_LIVES_KEY } from '../../../config/index.js';
+import { PLAYER_LIVES_KEY } from '../../../shared/storage/index.js';
 const VIDAS_MAXIMAS = 3;
 
 export async function leerEstadoVidas() {
