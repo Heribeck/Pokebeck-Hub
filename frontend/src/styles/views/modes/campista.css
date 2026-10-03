@@ -1,6 +1,6 @@
 /* | --- Modo Campista --- |*/
-.layout-campista {
-    display: none;
+.PokemonGameScreen {
+    display: flex;
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
@@ -10,12 +10,30 @@
     overflow-y: auto;
 }
 
-.layout-entrenamiento{
-    display: none;
-    flex-direction: column;
+.TrainingResultMessage {
+    width: min(100%, 30rem);
+    min-height: 1.5em;
+    margin: 0;
+    color: var(--text-primary);
+    line-height: 1.5;
+    text-align: center;
 }
 
-.caja-configuracion-campista {
+.TrainingActions {
+    display: flex;
+    width: 100%;
+    max-width: 20rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+}
+
+.TrainingActions > button {
+    width: 100%;
+    max-width: none;
+}
+
+.TrainingStatsPanel {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,48 +47,18 @@
     max-width: 20rem;
 }
 
-.caja-configuracion-campista p {
+.TrainingStatsPanel p {
     color: var(--text-secondary);
     font-size: 0.875rem;
     font-weight: 500;
 }
 
-.caja-configuracion-campista span {
+.TrainingStatsPanel span {
     color: #43a047;
     font-weight: 700;
 }
 
-.boton-campista {
-    color: var(--text-primary);
-    border: 1px solid rgba(67, 160, 71, 0.3);
-    padding: 0.875rem 1.75rem;
-    border-radius: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 1.5rem;
-    width: 10rem;
-    transition: all 0.2s ease;
-    background: rgba(67, 160, 71, 0.05);
-}
-
-.boton-campista:hover {
-    background: rgba(67, 160, 71, 0.2);
-    border-color: #43a047;
-    color: #43a047;
-    transform: translateY(-2px);
-}
-
-.botones-campista {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 1.75rem;
-    margin-top: 1rem;
-    width: 100%;
-}
-
-.caja-tipos {
+.PokemonTypes {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -80,7 +68,7 @@
     margin-bottom: 1.25rem;
 }
 
-.caja-opciones-pokemon {
+.AnswerOptions {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -90,7 +78,7 @@
     margin-top: 1rem;
 }
 
-.layout-dificultad {
+.TrainingDifficultyScreen {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -100,7 +88,7 @@
     max-width: 20rem;
 }
 
-.caja-dificultades {
+.DifficultyOptions {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -110,7 +98,7 @@
     width: 100%;
 }
 
-.tarjeta-dificultad {
+.DifficultyCard {
     flex: 1;
     padding: 1rem;
     border-radius: 16px;
@@ -125,78 +113,78 @@
     width: 100%;
 }
 
-.tarjeta-dificultad:hover {
+.DifficultyCard:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
-.tarjeta-dificultad:active {
+.DifficultyCard:active {
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.tarjeta-facil {
+.EasyDifficultyCard {
     background: linear-gradient(135deg, rgba(67, 160, 71, 0.15) 0%, rgba(67, 160, 71, 0.05) 100%);
     border-color: #43a047;
 }
 
-.tarjeta-facil:hover {
+.EasyDifficultyCard:hover {
     background: linear-gradient(135deg, rgba(67, 160, 71, 0.25) 0%, rgba(67, 160, 71, 0.1) 100%);
     border-color: #66bb6a;
 }
 
-.tarjeta-facil:active {
+.EasyDifficultyCard:active {
     background: linear-gradient(135deg, rgba(67, 160, 71, 0.3) 0%, rgba(67, 160, 71, 0.15) 100%);
 }
 
-.tarjeta-normal {
+.NormalDifficultyCard {
     background: linear-gradient(135deg, rgba(255, 152, 0, 0.15) 0%, rgba(255, 152, 0, 0.05) 100%);
     border-color: #ff9800;
 }
 
-.tarjeta-normal:hover {
+.NormalDifficultyCard:hover {
     background: linear-gradient(135deg, rgba(255, 152, 0, 0.25) 0%, rgba(255, 152, 0, 0.1) 100%);
     border-color: #ffb74d;
 }
 
-.tarjeta-normal:active {
+.NormalDifficultyCard:active {
     background: linear-gradient(135deg, rgba(255, 152, 0, 0.3) 0%, rgba(255, 152, 0, 0.15) 100%);
 }
 
-.tarjeta-dificil {
+.HardDifficultyCard {
     background: linear-gradient(135deg, rgba(211, 47, 47, 0.15) 0%, rgba(211, 47, 47, 0.05) 100%);
     border-color: #d32f2f;
 }
 
-.tarjeta-dificil:hover {
+.HardDifficultyCard:hover {
     background: linear-gradient(135deg, rgba(211, 47, 47, 0.25) 0%, rgba(211, 47, 47, 0.1) 100%);
     border-color: #ef5350;
 }
 
-.tarjeta-dificil:active {
+.HardDifficultyCard:active {
     background: linear-gradient(135deg, rgba(211, 47, 47, 0.3) 0%, rgba(211, 47, 47, 0.15) 100%);
 }
 
-.titulo-dificultad {
+.DifficultyTitle {
     margin: 0;
     font-size: 1.125rem;
     font-weight: 700;
     text-align: center;
 }
 
-.tarjeta-facil .titulo-dificultad {
+.EasyDifficultyCard .DifficultyTitle {
     color: #43a047;
 }
 
-.tarjeta-normal .titulo-dificultad {
+.NormalDifficultyCard .DifficultyTitle {
     color: #ff9800;
 }
 
-.tarjeta-dificil .titulo-dificultad {
+.HardDifficultyCard .DifficultyTitle {
     color: #d32f2f;
 }
 
-.especificacion-dificultad {
+.DifficultyDetail {
     margin: 0;
     font-size: 0.75rem;
     color: var(--text-secondary);
@@ -204,7 +192,7 @@
     line-height: 1.4;
 }
 
-.btn-iniciar {
+.StartButton {
     margin-top: auto;
     padding: 0.5rem 1rem;
     border-radius: 8px;
@@ -217,50 +205,50 @@
     transition: all 0.2s ease;
 }
 
-.tarjeta-facil .btn-iniciar {
+.EasyDifficultyCard .StartButton {
     background: rgba(67, 160, 71, 0.2);
     border-color: rgba(67, 160, 71, 0.4);
     color: #43a047;
 }
 
-.tarjeta-normal .btn-iniciar {
+.NormalDifficultyCard .StartButton {
     background: rgba(255, 152, 0, 0.2);
     border-color: rgba(255, 152, 0, 0.4);
     color: #ff9800;
 }
 
-.tarjeta-dificil .btn-iniciar {
+.HardDifficultyCard .StartButton {
     background: rgba(211, 47, 47, 0.2);
     border-color: rgba(211, 47, 47, 0.4);
     color: #d32f2f;
 }
 
-.tarjeta-dificultad:hover .btn-iniciar {
+.DifficultyCard:hover .StartButton {
     background: rgba(255, 255, 255, 0.2);
     border-color: rgba(255, 255, 255, 0.4);
     color: var(--text-primary);
 }
 
-.tarjeta-facil:hover .btn-iniciar {
+.EasyDifficultyCard:hover .StartButton {
     background: rgba(67, 160, 71, 0.3);
     border-color: #43a047;
     color: #43a047;
 }
 
-.tarjeta-normal:hover .btn-iniciar {
+.NormalDifficultyCard:hover .StartButton {
     background: rgba(255, 152, 0, 0.3);
     border-color: #ff9800;
     color: #ff9800;
 }
 
-.tarjeta-dificil:hover .btn-iniciar {
+.HardDifficultyCard:hover .StartButton {
     background: rgba(211, 47, 47, 0.3);
     border-color: #d32f2f;
     color: #d32f2f;
 }
 
 /* Estilos para botones del modo Campista */
-.boton-iniciar-juego {
+.StartGameButton {
     color: var(--text-primary);
     border: 1px solid rgba(67, 160, 71, 0.3);
     padding: 0.875rem 1.75rem;
@@ -273,14 +261,14 @@
     background: rgba(67, 160, 71, 0.05);
 }
 
-.boton-iniciar-juego:hover {
+.StartGameButton:hover {
     background: rgba(67, 160, 71, 0.2);
     border-color: #43a047;
     color: #43a047;
     transform: translateY(-2px);
 }
 
-.boton-next {
+.NextButton {
     justify-content: center;
     color: var(--text-primary);
     border: 1px solid rgba(67, 160, 71, 0.3);
@@ -293,14 +281,14 @@
     background: rgba(67, 160, 71, 0.05);
 }
 
-.boton-next:hover {
+.NextButton:hover {
     background: rgba(67, 160, 71, 0.2);
     border-color: #43a047;
     color: #43a047;
     transform: translateY(-2px);
 }
 
-.boton-intento {
+.RetryButton {
     color: var(--text-primary);
     border: 1px solid rgba(211, 47, 47, 0.3);
     padding: 0.875rem 1.75rem;
@@ -313,14 +301,14 @@
     background: rgba(211, 47, 47, 0.05);
 }
 
-.boton-intento:hover {
+.RetryButton:hover {
     background: rgba(211, 47, 47, 0.2);
     border-color: #d32f2f;
     color: #d32f2f;
     transform: translateY(-2px);
 }
 
-.boton-revivir {
+.ReviveButton {
     color: var(--text-primary);
     border: 1px solid rgba(255, 152, 0, 0.3);
     padding: 0.875rem 1.75rem;
@@ -333,14 +321,14 @@
     background: rgba(255, 152, 0, 0.05);
 }
 
-.boton-revivir:hover {
+.ReviveButton:hover {
     background: rgba(255, 152, 0, 0.2);
     border-color: #ff9800;
     color: #ff9800;
     transform: translateY(-2px);
 }
 
-.boton-volver-dificultad {
+.BackButton {
     justify-content: center;
     color: var(--text-primary);
     border: 1px solid rgba(124, 77, 255, 0.3);
@@ -354,14 +342,14 @@
     background: rgba(124, 77, 255, 0.05);
 }
 
-.boton-volver-dificultad:hover {
+.BackButton:hover {
     background: rgba(124, 77, 255, 0.2);
     border-color: #7c4dff;
     color: #7c4dff;
     transform: translateY(-2px);
 }
 
-.boton-volver-poketype {
+.BackButton {
     justify-content: center;
     color: var(--text-primary);
     border: 1px solid rgba(67, 160, 71, 0.3);
@@ -375,7 +363,7 @@
     background: rgba(67, 160, 71, 0.05);
 }
 
-.boton-volver-poketype:hover {
+.BackButton:hover {
     background: rgba(67, 160, 71, 0.2);
     border-color: #43a047;
     color: #43a047;
@@ -383,19 +371,8 @@
 }
 
 /* Estilos para la barra de tiempo del modo Campista */
-.caja-barra-tiempo {
+.TimerPanel {
     width: 100%;
     max-width: 20rem;
     margin-top: 1rem;
-}
-
-#tiempo-campista {
-    width: 100%;
-    height: 0.75rem;
-    background: linear-gradient(90deg, var(--accent-yellow), var(--accent-yellow-light));
-    border-radius: 8px;
-    overflow: hidden;
-    border: 2px solid rgba(67, 160, 71, 0.3);
-    box-shadow: 0 0 10px rgba(67, 160, 71, 0.3);
-    transition: width 0.1s linear;
 }

@@ -1,17 +1,27 @@
 /* | --- Variables(:root) --- |*/
 :root {
-    --bg-primary: #0a0a0f;
-    --bg-secondary: #121218;
-    --bg-tertiary: #1a1a24;
-    --bg-card: rgba(26, 26, 36, 0.8);
-    --accent-yellow: #FFCB05;
-    --accent-yellow-dark: #E5B004;
-    --accent-yellow-light: #FFD700;
-    --text-primary: #ffffff;
-    --text-secondary: rgba(255, 255, 255, 0.7);
-    --text-muted: rgba(255, 255, 255, 0.5);
-    --border-subtle: rgba(255, 255, 255, 0.08);
-    --border-focus: rgba(255, 203, 5, 0.4);
-    --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.3);
-    --shadow-glow: 0 0 20px rgba(255, 203, 5, 0.15);
+    color-scheme: dark;
+    --bg-primary: #111114;
+    --bg-secondary: #191A1F;
+    --bg-tertiary: #22242B;
+    --bg-card: #22242B;
+    --accent-red: #E51B23;
+    --accent-red-dark: #B8141B;
+    --accent-yellow: #FFC928;
+    --accent-yellow-dark: #E0A900;
+    --accent-yellow-light: #FFE07A;
+    --text-primary: #F4F5F7;
+    --text-secondary: #B8BAC2;
+    --text-muted: #858892;
+    --border-subtle: #363840;
+    --border-focus: rgba(255, 201, 40, 0.6);
+    --color-success: #39B879;
+    --color-error: #E05252;
+    --shadow-subtle: 0 12px 32px rgba(0, 0, 0, 0.24);
+    --shadow-glow: 0 0 24px rgba(255, 201, 40, 0.16);
+    --radius-small: 0.625rem;
+    --radius-medium: 1rem;
+    --radius-large: 1.5rem;
+    --content-width: 70rem;
+    --navigation-height: 4.75rem;
 }

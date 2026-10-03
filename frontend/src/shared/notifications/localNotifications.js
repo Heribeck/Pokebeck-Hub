@@ -1,98 +1,67 @@
+import { Capacitor } from '@capacitor/core';
 import { LocalNotifications } from '@capacitor/local-notifications';
-import { executePluginSafely } from '../capacitor/executePluginSafely.js';
 
-export async function showNotification({ 
-  id,
-  title,
-  body,
-  extra = null
-}) {
-  return await executePluginSafely(
-    'LocalNotifications',
-
-    () => {LocalNotifications.schedule({
-      notifications: [
-        {
-          id,
-          title,
-          body,
-          extra
-        }
-      ]
-    })
-    console.log('Notification Inmediata Funcionando Correctamente');
-    },
-
-    () => {
-      null;
-      console.log('Notification Fallida');
-    }
-  );
+function isAvailable() {
+  return Capacitor.isPluginAvailable('LocalNotifications');
 }
 
-export async function scheduleNotification({
-  id,
-  title,
-  body,
-  at,
-  extra = null
-}) {
-  return await executePluginSafely(
-    'LocalNotifications',
+async function hasNotificationPermission() {
+  const permission = await LocalNotifications.checkPermissions();
+  return permission.display === 'granted';
+}
 
-    () => { LocalNotifications.schedule({
+export async function showNotification({ id, title, body, extra = null }) {
+  if (!isAvailable()) return false;
+
+  try {
+    if (!(await hasNotificationPermission())) return false;
+
+    await LocalNotifications.schedule({
+      notifications: [{ id, title, body, extra }],
+    });
+    return true;
+  } catch (error) {
+    console.error('No se pudo mostrar la notificación local:', error);
+    return false;
+  }
+}
+
+export async function scheduleNotification({ id, title, body, at, extra = null }) {
+  if (!isAvailable()) return false;
+  if (!(at instanceof Date) || Number.isNaN(at.getTime())) {
+    console.error('No se pudo programar la notificación local: la fecha no es válida.');
+    return false;
+  }
+
+  try {
+    if (!(await hasNotificationPermission())) return false;
+
+    await LocalNotifications.schedule({
       notifications: [
         {
           id,
           title,
           body,
-          schedule: {
-            at
-          },
-          extra
-        }
-      ]
+          schedule: { at },
+          extra,
+        },
+      ],
     });
-    console.log('Notification Programada Funcionando Correctamente');
-    },
-
-    () => null
-  );
+    return true;
+  } catch (error) {
+    console.error('No se pudo programar la notificación local:', error);
+    return false;
+  }
 }
 
 export async function cancelNotification(id) {
-  return await executePluginSafely(
-    'LocalNotifications',
+  if (!isAvailable()) return false;
 
-    () => LocalNotifications.cancel({
-      notifications: [{ id }]
-    }),
-
-    () => null
-  );
+  try {
+    await LocalNotifications.cancel({ notifications: [{ id }] });
+    return true;
+  } catch (error) {
+    console.error('No se pudo cancelar la notificación local:', error);
+    return false;
+  }
 }
-
-async function cancelNotifications(ids) {
-  return await executePluginSafely(
-    'LocalNotifications',
-
-    () => LocalNotifications.cancel({
-      notifications: ids.map(id => ({ id }))
-    }),
-
-    () => null
-  );
-}
-
-async function getScheduledNotifications() {
-  return await executePluginSafely  (
-    'LocalNotifications',
-
-    () => LocalNotifications.getPending(),
-
-    () => ({ notifications: [] })
-  );
-}
-
-
-

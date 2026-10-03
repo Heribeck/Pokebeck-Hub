@@ -1,6 +1,6 @@
 /* | --- Acerca de --- |*/
-.layout-acerca {
-    display: none;
+.AboutScreen {
+    display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -8,7 +8,7 @@
     padding: 1.25rem;
 }
 
-.parrafo-disclaimer {
+.LegalNotice {
     font-size: 0.875rem;
     color: var(--text-secondary);
     text-align: center;

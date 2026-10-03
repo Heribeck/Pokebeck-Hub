@@ -1,0 +1,83 @@
+export const types = [
+  "normal",
+  "fire",
+  "water",
+  "electric",
+  "grass",
+  "ice",
+  "fighting",
+  "poison",
+  "ground",
+  "flying",
+  "psychic",
+  "bug",
+  "rock",
+  "ghost",
+  "dragon",
+  "dark",
+  "steel",
+  "fairy"
+];
+
+export const typesIcons = {
+  "normal": "assets/img/poketype/normal.svg",
+  "fire": "assets/img/poketype/fire.svg",
+  "water": "assets/img/poketype/water.svg",
+  "electric": "assets/img/poketype/electric.svg",
+  "grass": "assets/img/poketype/grass.svg",
+  "ice": "assets/img/poketype/ice.svg",
+  "fighting": "assets/img/poketype/fighting.svg",
+  "poison": "assets/img/poketype/poison.svg",
+  "ground": "assets/img/poketype/ground.svg",
+  "flying": "assets/img/poketype/flying.svg",
+  "psychic": "assets/img/poketype/psychic.svg",
+  "bug": "assets/img/poketype/bug.svg",
+  "rock": "assets/img/poketype/rock.svg",
+  "ghost": "assets/img/poketype/ghost.svg",
+  "dragon": "assets/img/poketype/dragon.svg",
+  "dark": "assets/img/poketype/dark.svg",
+  "steel": "assets/img/poketype/steel.svg",
+  "fairy": "assets/img/poketype/fairy.svg"
+}
+
+export const typesColors = {
+  "normal": "#A8A77A",
+  "fire": "#EE8130",
+  "water": "#6390F0",
+  "electric": "#F7D02C",
+  "grass": "#7AC74C",
+  "ice": "#96D9D6",
+  "fighting": "#C22E28",
+  "poison": "#A33EA1",
+  "ground": "#E2BF65",
+  "flying": "#A98FF3",
+  "psychic": "#F95587",
+  "bug": "#A6B91A",
+  "rock": "#B6A136",
+  "ghost": "#735797",
+  "dragon": "#6F35FC",
+  "dark": "#383838",
+  "steel": "#B7B7CE",
+  "fairy": "#D685AD"
+};
+
+export const typeSpanish = {
+  normal: 'Normal',
+  fire: 'Fuego',
+  water: 'Agua',
+  electric: 'Eléctrico',
+  grass: 'Planta',
+  ice: 'Hielo',
+  fighting: 'Lucha',
+  poison: 'Veneno',
+  ground: 'Tierra',
+  flying: 'Volador',
+  psychic: 'Psíquico',
+  bug: 'Bicho',
+  rock: 'Roca',
+  ghost: 'Fantasma',
+  dragon: 'Dragón',
+  dark: 'Siniestro',
+  steel: 'Acero',
+  fairy: 'Hada'
+};

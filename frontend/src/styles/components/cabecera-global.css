@@ -1,5 +1,5 @@
 /* | --- Cabecera Global --- |*/
-.cabecera-global {
+.GlobalHeader {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -9,30 +9,10 @@
     padding: 0.5rem 0;
 }
 
-.titulo-hub {
+.AppTitle {
     font-size: 1.75rem;
     font-weight: 700;
     color: var(--accent-yellow);
     text-shadow: 0 0 15px rgba(255, 203, 5, 0.5);
     margin: 0;
-}
-
-.hx-global {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--accent-yellow);
-    text-shadow: 0 0 20px rgba(255, 203, 5, 0.8);
-    margin: 0;
-    animation: pulse-hx 2s ease-in-out infinite;
-}
-
-@keyframes pulse-hx {
-    0%, 100% {
-        text-shadow: 0 0 20px rgba(255, 203, 5, 0.8);
-        transform: scale(1);
-    }
-    50% {
-        text-shadow: 0 0 30px rgba(255, 203, 5, 1);
-        transform: scale(1.05);
-    }
 }

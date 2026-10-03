@@ -8,37 +8,7 @@
     --color-bloqueado: #666;
 }
 
-/* Layout principal del panel de juego */
-.layout-estudio {
-    display: none;
-    justify-content: flex-start;
-    align-items: center;
-    flex-direction: column;
-    min-height: 100dvh;
-    padding: 1rem 1rem 2rem 1rem;
-    gap: 1rem;
-    overflow-y: auto;
-}
-
-.cabecera-estudio {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    max-width: 20rem;
-    padding: 0.875rem 1.5rem;
-    background: rgba(255, 203, 5, 0.08);
-    border-radius: 14px;
-    border: 1px solid rgba(255, 203, 5, 0.3);
-}
-
-.cabecera-estudio p {
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-    font-weight: 500;
-}
-
-.tipos-estudio {
+.StudyTypes {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -48,191 +18,23 @@
     margin-bottom: 1.25rem;
 }
 
-.tipos-estudio img {
+.StudyTypes img {
     width: 80px;
     height: 80px;
     border-radius: 12px;
     padding: 0.5rem;
     background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-subtle);
     transition: all 0.3s ease;
 }
 
-.tipos-estudio img:hover {
+.StudyTypes img:hover {
     transform: scale(1.05);
 }
 
-#tiempo-estudio {
-    width: 100%;
-    max-width: 20rem;
-    height: 0.5rem;
-    background: var(--accent-yellow);
-    border-radius: 4px;
-    overflow: hidden;
-    border: 1px solid var(--border-subtle);
-}
-
-#mensaje-acierto-estudio {
-    text-align: center;
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    min-height: 3rem;
-    margin-top: 1rem;
-}
-
-/* Sub-UI: Campista */
-#opciones-pokemon-estudio {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.50rem;
-    width: 100%;
-    margin-top: 0.5rem;
-}
-
-.btn-opcion {
-    width: 100dvw;
-    max-width: 20rem;
-    padding: 1rem 1.5rem;
-    background: rgba(255, 203, 5, 0.05);
-    border: 2px solid rgba(255, 203, 5, 0.3);
-    border-radius: 12px;
-    color: var(--text-primary);
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    text-align: center;
-}
-
-.btn-opcion:hover {
-    background: rgba(255, 203, 5, 0.2);
-    border-color: var(--accent-yellow);
-    color: var(--accent-yellow);
-    transform: translateY(-2px);
-}
-
-.btn-opcion:active {
-    transform: translateY(0);
-}
-
-.botones-estudio {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    width: 100%;
-    margin-top: 1rem;
-}
-
-#btn-next-estudio {
-    display: none;
-    justify-content: center;
-    background: rgba(67, 160, 71, 0.2);
-    border-color: #43a047;
-    color: #43a047;
-    width: 8.125rem;
-    padding: 0.875rem 1.5rem;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.2s ease;
-    margin: 0.5rem auto;
-}
-
-#btn-next-estudio:hover {
-    background: #43a047;
-    color: white;
-}
-
-#btn-intento-estudio {
-    display: none;
-    justify-content: center;
-    background: rgba(255, 152, 0, 0.2);
-    border-color: #ff9800;
-    color: #ff9800;
-    width: 8.125rem;
-    padding: 0.875rem 1.5rem;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.2s ease;
-    margin: 0.5rem auto;
-}
-
-#btn-intento-estudio:hover {
-    background: #ff9800;
-    color: white;
-}
-
-#btn-volver-ligas-estudio {
-    display: none;
-    justify-content: center;
-    background: rgba(255, 203, 5, 0.2);
-    border-color: var(--accent-yellow);
-    color: var(--accent-yellow);
-    width: 10rem;
-    padding: 0.875rem 1.5rem;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.2s ease;
-    margin: 0.5rem auto;
-    border: 1px solid var(--accent-yellow);
-}
-
-#btn-volver-ligas-estudio:hover {
-    background: var(--accent-yellow);
-    color: var(--bg-primary);
-}
-
-#btn-jugar-de-nuevo-estudio {
-    display: none;
-    justify-content: center;
-    background: rgba(67, 160, 71, 0.2);
-    border-color: #43a047;
-    color: #43a047;
-    width: 10rem;
-    padding: 0.875rem 1.5rem;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.2s ease;
-    margin: 0.5rem auto;
-    border: 1px solid #43a047;
-}
-
-#btn-jugar-de-nuevo-estudio:hover {
-    background: #43a047;
-    color: white;
-}
-
-#btn-volver-menu-estudio {
-    display: none;
-    justify-content: center;
-    background: rgba(255, 203, 5, 0.2);
-    border-color: var(--accent-yellow);
-    color: var(--accent-yellow);
-    width: 10rem;
-    padding: 0.875rem 1.5rem;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.2s ease;
-    margin: 0.5rem auto;
-    border: 1px solid var(--accent-yellow);
-}
-
-#btn-volver-menu-estudio:hover {
-    background: var(--accent-yellow);
-    color: var(--bg-primary);
-}
-
 /* Layout principal de ligas */
-.layout-ligas {
-    display: none;
+.StudyScreen {
+    display: flex;
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
@@ -243,7 +45,7 @@
 }
 
 /* Vista de selección de ligas */
-.vista-ligas {
+.LeagueSelectionView {
     width: 100%;
     display: flex;
     align-items: center;
@@ -251,7 +53,7 @@
     gap: 1rem;
 }
 
-.titulo-ligas {
+.LeagueListTitle {
     font-size: 1.75rem;
     font-weight: 700;
     color: var(--accent-yellow);
@@ -260,7 +62,7 @@
     text-shadow: 0 0 15px rgba(255, 203, 5, 0.3);
 }
 
-.contenedor-ligas {
+.LeagueList {
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -269,7 +71,7 @@
 }
 
 /* Tarjeta de liga */
-.tarjeta-liga {
+.LeagueCard {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
     border-radius: 16px;
     border: 2px solid rgba(255, 255, 255, 0.1);
@@ -280,78 +82,72 @@
     overflow: hidden;
 }
 
-.tarjeta-liga:hover {
+.LeagueCard:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
-.tarjeta-liga:active {
+.LeagueCard:active {
     transform: translateY(-2px);
 }
 
 /* Colores específicos por liga */
-.tarjeta-liga[data-liga="campista"] {
+.LeagueCard[data-liga="campista"] {
     border-color: rgba(67, 160, 71, 0.3);
     background: linear-gradient(135deg, rgba(67, 160, 71, 0.1) 0%, rgba(67, 160, 71, 0.05) 100%);
 }
 
-.tarjeta-liga[data-liga="campista"]:hover {
+.LeagueCard[data-liga="campista"]:hover {
     border-color: #43a047;
     background: linear-gradient(135deg, rgba(67, 160, 71, 0.2) 0%, rgba(67, 160, 71, 0.1) 100%);
 }
 
-.tarjeta-liga[data-liga="as"] {
+.LeagueCard[data-liga="as"] {
     border-color: rgba(251, 192, 45, 0.3);
     background: linear-gradient(135deg, rgba(251, 192, 45, 0.1) 0%, rgba(251, 192, 45, 0.05) 100%);
 }
 
-.tarjeta-liga[data-liga="as"]:hover {
+.LeagueCard[data-liga="as"]:hover {
     border-color: #fbc02d;
     background: linear-gradient(135deg, rgba(251, 192, 45, 0.2) 0%, rgba(251, 192, 45, 0.1) 100%);
 }
 
-.tarjeta-liga[data-liga="campeon"] {
+.LeagueCard[data-liga="campeon"] {
     border-color: rgba(211, 47, 47, 0.3);
     background: linear-gradient(135deg, rgba(211, 47, 47, 0.1) 0%, rgba(211, 47, 47, 0.05) 100%);
 }
 
-.tarjeta-liga[data-liga="campeon"]:hover {
+.LeagueCard[data-liga="campeon"]:hover {
     border-color: #d32f2f;
     background: linear-gradient(135deg, rgba(211, 47, 47, 0.2) 0%, rgba(211, 47, 47, 0.1) 100%);
 }
 
-.tarjeta-liga-header {
+.LeagueCardHeader {
     display: flex;
     align-items: center;
     gap: 1rem;
     margin-bottom: 1rem;
 }
 
-.liga-emoji {
+.LeagueIcon {
     font-size: 2rem;
 }
 
-.liga-nombre {
+.LeagueName {
     font-size: 1.25rem;
     font-weight: 700;
     color: var(--text-primary);
     margin: 0;
 }
 
-.liga-subtitulo {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    font-weight: 500;
-}
-
-.tarjeta-liga-progreso {
+.LeagueProgress {
     display: flex;
     align-items: center;
     gap: 0.75rem;
     margin-bottom: 0.75rem;
 }
 
-.barra-progreso-liga {
+.LeagueProgressTrack {
     flex: 1;
     height: 0.5rem;
     background: rgba(255, 255, 255, 0.1);
@@ -359,56 +155,56 @@
     overflow: hidden;
 }
 
-.barra-progreso-fill {
+.LeagueProgressFill {
     height: 100%;
     border-radius: 4px;
     transition: width 0.5s ease;
 }
 
-.tarjeta-liga[data-liga="campista"] .barra-progreso-fill {
+.LeagueCard[data-liga="campista"] .LeagueProgressFill {
     background: linear-gradient(90deg, #43a047, #66bb6a);
 }
 
-.tarjeta-liga[data-liga="as"] .barra-progreso-fill {
+.LeagueCard[data-liga="as"] .LeagueProgressFill {
     background: linear-gradient(90deg, #fbc02d, #ffeb3b);
 }
 
-.tarjeta-liga[data-liga="campeon"] .barra-progreso-fill {
+.LeagueCard[data-liga="campeon"] .LeagueProgressFill {
     background: linear-gradient(90deg, #d32f2f, #ef5350);
 }
 
-.texto-progreso {
+.ProgressText {
     font-size: 0.875rem;
     color: var(--text-secondary);
     font-weight: 500;
     white-space: nowrap;
 }
 
-.tarjeta-liga-footer {
+.LeagueCardFooter {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.estado-liga {
+.LeagueStatus {
     font-size: 0.875rem;
     font-weight: 600;
     padding: 0.25rem 0.75rem;
     border-radius: 8px;
 }
 
-.estado-liga.estado-desbloqueado {
+.LeagueStatus.LeagueStatusUnlocked {
     color: #43a047;
     background: rgba(67, 160, 71, 0.1);
 }
 
-.estado-liga.estado-bloqueado {
+.LeagueStatus.LeagueStatusLocked {
     color: var(--color-bloqueado);
     background: rgba(102, 102, 102, 0.1);
 }
 
 /* Overlay para ligas bloqueadas */
-.tarjeta-liga-overlay {
+.LeagueLockedOverlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -425,43 +221,24 @@
     transition: opacity 0.3s ease;
 }
 
-.tarjeta-liga-overlay.bloqueado {
+.LeagueLockedOverlay.Locked {
     opacity: 1;
     pointer-events: auto;
 }
 
-.tarjeta-liga-overlay .candado {
+.LeagueLockedOverlay .LockIcon {
     font-size: 2rem;
 }
 
-.tarjeta-liga-overlay .texto-bloqueo {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    font-weight: 500;
-    text-align: center;
-}
-
 /* Vista de niveles de liga */
-.vista-niveles-liga {
+.LeagueLevelsView {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 1rem;
 }
 
-.cabecera-liga {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    background: rgba(15, 23, 42, 0.95);
-    backdrop-filter: blur(10px);
-    border-radius: 16px;
-    padding: 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    margin-bottom: 0.5rem;
-}
-
-.btn-volver-liga {
+.BackButton {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: var(--text-primary);
@@ -474,30 +251,19 @@
     margin-bottom: 0.75rem;
 }
 
-.btn-volver-liga:hover {
+.BackButton:hover {
     background: rgba(255, 255, 255, 0.1);
     transform: translateX(-2px);
 }
 
-.liga-info {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 0.5rem;
-}
-
-.liga-info .liga-emoji {
-    font-size: 1.75rem;
-}
-
-.liga-titulo {
+.LeagueTitle {
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--text-primary);
     margin: 0;
 }
 
-.liga-descripcion {
+.LeagueDescription {
     font-size: 0.875rem;
     color: var(--text-secondary);
     font-weight: 500;
@@ -505,7 +271,7 @@
     line-height: 1.4;
 }
 
-.contenedor-niveles {
+.LevelGrid {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
@@ -515,7 +281,7 @@
 }
 
 /* Tarjeta de nivel */
-.tarjeta-nivel {
+.LevelCard {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
     border-radius: 12px;
     border: 2px solid rgba(255, 255, 255, 0.1);
@@ -525,92 +291,92 @@
     position: relative;
 }
 
-.tarjeta-nivel:hover {
+.LevelCard:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.tarjeta-nivel:active {
+.LevelCard:active {
     transform: translateY(0);
 }
 
 /* Estados de nivel */
-.tarjeta-nivel[data-estado="completado"] {
+.LevelCard[data-estado="completado"] {
     border-color: rgba(67, 160, 71, 0.3);
     background: linear-gradient(135deg, rgba(67, 160, 71, 0.1) 0%, rgba(67, 160, 71, 0.05) 100%);
 }
 
-.tarjeta-nivel[data-estado="completado"]:hover {
+.LevelCard[data-estado="completado"]:hover {
     border-color: #43a047;
 }
 
-.tarjeta-nivel[data-estado="desbloqueado"] {
+.LevelCard[data-estado="desbloqueado"] {
     border-color: rgba(255, 203, 5, 0.3);
     background: linear-gradient(135deg, rgba(255, 203, 5, 0.1) 0%, rgba(255, 203, 5, 0.05) 100%);
 }
 
-.tarjeta-nivel[data-estado="desbloqueado"]:hover {
+.LevelCard[data-estado="desbloqueado"]:hover {
     border-color: var(--accent-yellow);
 }
 
-.tarjeta-nivel[data-estado="bloqueado"] {
+.LevelCard[data-estado="Locked"] {
     border-color: rgba(102, 102, 102, 0.3);
     background: linear-gradient(135deg, rgba(102, 102, 102, 0.1) 0%, rgba(102, 102, 102, 0.05) 100%);
     cursor: not-allowed;
     opacity: 0.7;
 }
 
-.tarjeta-nivel-header {
+.LevelCardHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 0.5rem;
 }
 
-.nivel-numero {
+.LevelNumber {
     font-size: 0.75rem;
     color: var(--text-secondary);
     font-weight: 500;
 }
 
-.nivel-estado-icono {
+.LevelStatusIcon {
     font-size: 1.25rem;
 }
 
-.nivel-titulo {
+.LevelTitle {
     font-size: 1rem;
     font-weight: 600;
     color: var(--text-primary);
     margin: 0 0 0.5rem 0;
 }
 
-.nivel-etiquetas {
+.LevelBadges {
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
 }
 
-.etiqueta {
+.Badge {
     font-size: 0.7rem;
     font-weight: 600;
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
 }
 
-.etiqueta.especial {
+.Badge.SpecialBadge {
     background: rgba(255, 203, 5, 0.2);
     color: var(--accent-yellow);
     border: 1px solid rgba(255, 203, 5, 0.3);
 }
 
-.etiqueta.riesgo-critico {
+.Badge.CriticalRiskBadge {
     background: rgba(211, 47, 47, 0.2);
     color: #d32f2f;
     border: 1px solid rgba(211, 47, 47, 0.3);
 }
 
 /* Información de bloqueo de nivel */
-.nivel-bloqueo-info {
+.LevelUnlockHint {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -619,18 +385,18 @@
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.nivel-bloqueo-info .candado {
+.LevelUnlockHint .LockIcon {
     font-size: 1rem;
 }
 
-.nivel-bloqueo-info .hx-faltante {
+.LevelUnlockHint .MissingHxMessage {
     font-size: 0.75rem;
     color: var(--text-secondary);
     font-weight: 500;
 }
 
 /* Modal de detalles */
-.modal-detalles {
+.LevelDialog {
     position: fixed;
     top: 0;
     left: 0;
@@ -644,7 +410,7 @@
     padding: 1rem;
 }
 
-.modal-contenido {
+.DialogContent {
     background: var(--bg-secondary);
     border-radius: 16px;
     padding: 1.5rem;
@@ -656,7 +422,7 @@
     overflow-y: auto;
 }
 
-.btn-cerrar-modal {
+.CloseModalButton {
     position: absolute;
     top: 1rem;
     right: 1rem;
@@ -671,12 +437,12 @@
     transition: all 0.2s ease;
 }
 
-.btn-cerrar-modal:hover {
+.CloseModalButton:hover {
     background: rgba(255, 255, 255, 0.1);
     transform: rotate(90deg);
 }
 
-.modal-estado {
+.LevelStatus {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -686,31 +452,17 @@
     background: rgba(67, 160, 71, 0.1);
 }
 
-.modal-estado-icono {
+.LevelStatusIcon {
     font-size: 1.25rem;
 }
 
-.modal-estado-texto {
+.LevelStatusText {
     font-size: 0.875rem;
     font-weight: 600;
     color: #43a047;
 }
 
-.modal-titulo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin: 0 0 0.75rem 0;
-}
-
-.modal-descripcion {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    line-height: 1.5;
-    margin-bottom: 1rem;
-}
-
-.modal-requisitos {
+.LevelRequirements {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -720,31 +472,11 @@
     margin-bottom: 1rem;
 }
 
-.modal-requisitos .candado {
+.LevelRequirements .LockIcon {
     font-size: 1.25rem;
 }
 
-.modal-requisitos #modal-hx-faltante {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    font-weight: 500;
-}
-
-.modal-especificaciones {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 1rem;
-}
-
-.modal-especificaciones p {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    line-height: 1.5;
-    margin: 0;
-}
-
-.boton-iniciar-nivel {
+.StartLevelButton {
     justify-content: center;
     width: 100%;
     padding: 0.875rem 1.5rem;
@@ -758,37 +490,168 @@
     transition: all 0.2s ease;
 }
 
-.boton-iniciar-nivel:hover {
+.StartLevelButton:hover {
     background: #43a047;
     color: white;
     transform: translateY(-2px);
 }
 
-.boton-iniciar-nivel:disabled {
+.StartLevelButton:disabled {
     opacity: 0.5;
     cursor: not-allowed;
     transform: none;
 }
 
+.StudyGameplay {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    max-width: 32rem;
+    margin: 0 auto;
+    padding: 1rem;
+    text-align: center;
+}
+
+.StudyGameplay.Result {
+    margin-block: auto;
+}
+
+.StudyGameplay.Result > h2, .StudyGameplay.Result > p {
+    margin: 0;
+}
+
+.StudyGameplay .HxRewardMessage {
+    max-width: 28rem;
+    color: var(--accent-yellow);
+    font-weight: 600;
+}
+
+.StudyGameplay .GameplayHeader {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 1rem;
+    width: 100%;
+}
+
+.GameplayStat {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    min-height: 4.5rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(255, 203, 5, 0.3);
+    border-radius: 14px;
+    background: rgba(255, 203, 5, 0.08);
+}
+
+.GameplayStat > span {
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.GameplayStat h3 {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 1.125rem;
+}
+
+.GameplayStat .HeartDisplay {
+    font-size: 1.125rem;
+    line-height: 1.5rem;
+    white-space: nowrap;
+}
+
+.StudyGameplay .StudyTypes {
+    width: 100%;
+    margin: 0.25rem 0;
+}
+
+.StudyGameplay .RoundResultMessage {
+    min-height: 2.5rem;
+    color: var(--text-primary);
+    font-size: 1.125rem;
+    font-weight: 700;
+}
+
+.StudyGameplay .RoundResultMessage p {
+    margin: 0;
+}
+
+.StudyGameplay .RoundResultMessage.Correct {
+    color: #66bb6a;
+}
+
+.StudyGameplay .RoundResultMessage.Incorrect {
+    color: #ef5350;
+}
+
+.StudyGameplay > progress.TimerProgress {
+    display: block;
+    width: 100%;
+    max-width: 24rem;
+    height: 0.75rem;
+    appearance: none;
+    -webkit-appearance: none;
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.StudyGameplay > progress.TimerProgress::-webkit-progress-bar {
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.StudyGameplay > progress.TimerProgress::-webkit-progress-value {
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent-yellow-dark), var(--accent-yellow));
+    transition: width 0.1s linear;
+}
+
+.StudyGameplay > progress.TimerProgress::-moz-progress-bar {
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent-yellow-dark), var(--accent-yellow));
+    transition: width 0.1s linear;
+}
+
+.GameplayActions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    width: 100%;
+}
+
+.GameplayActions > button {
+    margin: 0;
+}
+
 /* Responsive */
 @media (max-width: 420px) {
-    .layout-ligas {
+    .StudyScreen {
         padding: 0.75rem 0.75rem 1.5rem 0.75rem;
     }
 
-    .indicador-vidas {
-        padding: 0.75rem 1rem;
-    }
-
-    .tarjeta-liga {
+    .LeagueCard {
         padding: 1rem;
     }
 
-    .tarjeta-nivel {
+    .LevelCard {
         padding: 0.875rem;
     }
 
-    .modal-contenido {
+    .DialogContent {
         padding: 1.25rem;
     }
 }

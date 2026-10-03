@@ -1,111 +1,175 @@
 /* | --- Modales y Notificaciones Reutilizables --- |*/
 
-.layout-confirmacion {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    min-height: 100dvh;
-}
-
-.layout-confirmacion-ventana {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(8px);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    padding: 1.25rem;
-}
-
-.caja-confirmacion {
-    width: 100%;
-    max-width: 20rem;
-    background: var(--bg-card);
-    border: 1px solid var(--border-subtle);
-    border-radius: 20px;
-    padding: 1.75rem;
-    box-shadow: var(--shadow-subtle);
-    animation: aparecerModal 0.8s ease;
-}
-
-.caja-confirmacion h3 {
-    color: var(--text-primary);
-    font-size: 1.125rem;
-    margin-bottom: 0.75rem;
-    font-weight: 600;
-}
-
-.caja-confirmacion p {
-    color: var(--text-secondary);
-    line-height: 1.5;
-    margin-bottom: 1.5rem;
-    font-size: 0.875rem;
-}
-
-.caja-botones-confirmacion {
-    display: flex;
-    gap: 12px;
-}
-
-.btn-confirmar,
-.btn-cancelar {
-    flex: 1;
-    height: 3rem;
-    border: none;
-    border-radius: 12px;
-    font-weight: 600;
-    transition: all 0.2s ease;
-    cursor: pointer;
-}
-
-.btn-confirmar {
-    background: #ff4d4d;
-    color: white;
-}
-
-.btn-confirmar:hover {
-    background: #ff3333;
-}
-
-.btn-cancelar {
-    background: var(--bg-tertiary);
-    color: var(--text-primary);
-    border: 1px solid var(--border-subtle);
-}
-
-.btn-cancelar:hover {
-    background: rgba(255, 203, 5, 0.1);
-    border-color: var(--accent-yellow);
-    color: var(--accent-yellow);
-}
-
-.btn-confirmar:active,
-.btn-cancelar:active {
-    transform: scale(0.96);
-}
-
-.layout-notificacion {
+.ToastMessage {
     position: fixed;
     width: 90%;
-    bottom: -100px;
     left: 50%;
+    top: -100px;
     transform: translateX(-50%);
-    color: var(--text-primary);
+    color: #1a1a1a;
     padding: 1rem 1.5rem;
     border-radius: 12px;
     font-weight: 600;
     font-size: 0.9375rem;
     z-index: 9999;
-    background: var(--bg-card);
-    border: 1px solid var(--border-subtle);
+    background: rgb(0 0 0 / 85%);
+    border: 1px solid rgba(255, 190, 0, 0.5);
     backdrop-filter: blur(10px);
-    box-shadow: var(--shadow-subtle);
-    transition: bottom 0.4s ease-in-out;
+    box-shadow: 0 4px 20px rgb(14 12 0 / 0%);
+    transition: top 0.7s ease-in-out;
 }
 
-.layout-notificacion.mostrar {
-    bottom: 1.875rem;
+.ToastMessage.IsVisible {
+    top: 5.2rem;
+}
+
+.StreakResetOverlay {
+    position: fixed;
+    z-index: 10000;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 1.25rem;
+    background: rgba(10, 10, 13, 0.72);
+    backdrop-filter: blur(8px);
+    animation: StreakResetFadeIn 180ms ease-out both;
+}
+
+.StreakResetDialog {
+    position: relative;
+    width: min(100%, 23rem);
+    padding: 1.5rem;
+    overflow: hidden;
+    border: 1px solid rgba(255, 201, 40, 0.4);
+    border-radius: var(--radius-large);
+    background:
+        radial-gradient(ellipse at 50% 0, rgba(255, 201, 40, 0.15), transparent 58%),
+        linear-gradient(145deg, var(--bg-tertiary), var(--bg-secondary));
+    box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.45), var(--shadow-glow);
+    text-align: center;
+    animation: StreakResetPopIn 360ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.StreakResetEmblem {
+    position: relative;
+    display: grid;
+    width: 4rem;
+    height: 4rem;
+    place-items: center;
+    margin: 0 auto 0.75rem;
+    border: 1px solid rgba(255, 201, 40, 0.32);
+    border-radius: 50%;
+    background: rgba(255, 201, 40, 0.1);
+    box-shadow: 0 0 1.5rem rgba(255, 201, 40, 0.16);
+    animation: StreakResetGlow 2.4s ease-in-out infinite;
+}
+
+.StreakResetFire {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.StreakResetSpark {
+    position: absolute;
+    width: 0.35rem;
+    height: 0.35rem;
+    border-radius: 50%;
+    background: var(--accent-yellow-light);
+    box-shadow: 0 0 0.75rem var(--accent-yellow);
+    animation: StreakResetSparkle 1.8s ease-in-out infinite;
+}
+
+.StreakResetSparkOne {
+    top: 0.15rem;
+    right: 0.45rem;
+}
+
+.StreakResetSparkTwo {
+    bottom: 0.45rem;
+    left: 0.1rem;
+    animation-delay: 0.6s;
+}
+
+.StreakResetEyebrow {
+    margin: 0 0 0.35rem;
+    color: var(--accent-yellow);
+    font-size: 0.72rem;
+    font-weight: 750;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.StreakResetDialog h2 {
+    margin: 0 0 0.8rem;
+    font-size: 1.4rem;
+}
+
+.StreakResetMessage,
+.StreakResetMotivation {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.StreakResetMessage strong {
+    color: var(--text-primary);
+}
+
+.StreakResetMotivation {
+    margin-top: 0.7rem;
+}
+
+.StreakResetButton {
+    width: 100%;
+    min-height: 2.9rem;
+    margin-top: 1.2rem;
+    border: 1px solid var(--accent-yellow);
+    border-radius: var(--radius-medium);
+    background: var(--accent-yellow);
+    color: var(--bg-primary);
+    font: inherit;
+    font-weight: 750;
+    cursor: pointer;
+    transition: transform 160ms ease, background-color 160ms ease;
+}
+
+.StreakResetButton:hover {
+    transform: translateY(-1px);
+    background: var(--accent-yellow-light);
+}
+
+.StreakResetButton:active {
+    transform: scale(0.98);
+}
+
+@keyframes StreakResetFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes StreakResetPopIn {
+    from { opacity: 0; transform: translateY(0.8rem) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes StreakResetGlow {
+    50% { box-shadow: 0 0 2rem rgba(255, 201, 40, 0.32); }
+}
+
+@keyframes StreakResetSparkle {
+    50% { opacity: 0.35; transform: scale(0.65); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .StreakResetOverlay,
+    .StreakResetDialog,
+    .StreakResetEmblem,
+    .StreakResetSpark {
+        animation: none;
+    }
+
+    .StreakResetButton {
+        transition: none;
+    }
 }

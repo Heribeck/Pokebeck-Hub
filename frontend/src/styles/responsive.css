@@ -6,21 +6,19 @@
         padding: 0.5rem;
     }
     
-    .layout-campista,
-    .layout-As {
+    .PokemonGameScreen {
         padding: 0.5rem 0.5rem 1.5rem 0.5rem;
         gap: 0.75rem;
     }
     
-    .icono-main {
+    .AppIcon {
         width: 35vw;
         height: 35vw;
         max-width: 100px;
         max-height: 100px;
     }
     
-    .type-icon,
-    .img-tipo {
+    .TypeIcon, .TypeIcon {
         width: 25vw;
         height: 25vw;
         max-width: 80px;
@@ -29,51 +27,32 @@
         min-height: 50px;
     }
     
-    .boton-entrenamiento,
-    .boton-generador,
-    .boton-acerca {
+    .TrainingButton, .GeneratorButton {
         width: 11rem;
         padding: 0.75rem 1.5rem;
     }
     
-    .boton-campista,
-    .boton-as,
-    .boton-campeon {
-        width: 9rem;
-        padding: 0.75rem 1.5rem;
-    }
-    
-    .caja-configuracion-campista,
-    .caja-configuracion-As,
-    .caja-configuracion-campeon {
+    .TrainingStatsPanel {
         padding: 0.5rem 0.75rem;
         gap: 0.5rem;
     }
     
-    .caja-opciones-pokemon {
+    .AnswerOptions {
         gap: 0.5rem;
         margin-top: 0.25rem;
     }
     
-    .botones-campista,
-    .botones-As,
-    .botones-campeon {
-        gap: 0.5rem;
-        margin-top: 0.75rem;
-    }
-    
-    .caja-barra-tiempo {
+    .TimerPanel {
         margin-top: 1rem;
     }
     
-    .caja-tipos,
-    .caja-tipos-generador {
+    .PokemonTypes, .GeneratorTypes {
         margin-top: 1rem;
         margin-bottom: 0.75rem;
         gap: 1.5rem;
     }
     
-    .btn-opcion {
+    .AnswerOptionButton {
         padding: 0.75rem 1rem;
         font-size: 0.875rem;
     }
@@ -85,35 +64,32 @@
         padding: 0.75rem;
     }
     
-    .layout-campista,
-    .layout-As {
+    .PokemonGameScreen {
         padding: 0.75rem 0.75rem 1.75rem 0.75rem;
         gap: 0.875rem;
     }
     
-    .icono-main {
+    .AppIcon {
         width: 28vw;
         height: 28vw;
     }
     
-    .type-icon,
-    .img-tipo {
+    .TypeIcon, .TypeIcon {
         width: 20vw;
         height: 20vw;
     }
     
-    .caja-barra-tiempo {
+    .TimerPanel {
         margin-top: 1.25rem;
     }
     
-    .caja-tipos,
-    .caja-tipos-generador {
+    .PokemonTypes, .GeneratorTypes {
         margin-top: 1.25rem;
         margin-bottom: 1rem;
         gap: 1.75rem;
     }
     
-    .btn-opcion {
+    .AnswerOptionButton {
         padding: 0.875rem 1.25rem;
         font-size: 0.9375rem;
     }
@@ -126,23 +102,21 @@
         max-width: 480px;
     }
     
-    .icono-main {
+    .AppIcon {
         width: 25vw;
         height: 25vw;
         max-width: 140px;
         max-height: 140px;
     }
     
-    .type-icon,
-    .img-tipo {
+    .TypeIcon, .TypeIcon {
         width: 18vw;
         height: 18vw;
         max-width: 100px;
         max-height: 100px;
     }
     
-    .caja-tipos,
-    .caja-tipos-generador {
+    .PokemonTypes, .GeneratorTypes {
         gap: 2.5rem;
     }
 }
@@ -154,15 +128,14 @@
         max-width: 600px;
     }
     
-    .icono-main {
+    .AppIcon {
         width: 20vw;
         height: 20vw;
         max-width: 160px;
         max-height: 160px;
     }
     
-    .type-icon,
-    .img-tipo {
+    .TypeIcon, .TypeIcon {
         width: 15vw;
         height: 15vw;
         max-width: 110px;
@@ -170,30 +143,886 @@
     }
 }
 
-/* Pantallas muy grandes (desktops) */
-@media (min-width: 1025px) {
-    body {
-        padding: 2rem;
-        max-width: 700px;
+body {
+    max-width: none;
+    padding: 0;
+}
+
+.AppShell {
+    min-height: 100dvh;
+}
+
+.AppContent {
+    min-width: 0;
+    min-height: 100dvh;
+    padding: 1.25rem 1rem calc(var(--navigation-height) + env(safe-area-inset-bottom) + 1.25rem);
+}
+
+.AppNavigation {
+    position: fixed;
+    z-index: 1000;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    min-height: calc(var(--navigation-height) + env(safe-area-inset-bottom));
+    padding: 0.5rem 0.75rem calc(0.5rem + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--border-subtle);
+    background: rgba(25, 26, 31, 0.94);
+    backdrop-filter: blur(18px);
+}
+
+.AppNavigationButton {
+    display: flex;
+    min-width: 0;
+    min-height: 3.5rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    border: 0;
+    border-radius: var(--radius-medium);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 160ms ease, background-color 160ms ease;
+}
+
+.AppNavigationButton:hover,
+.AppNavigationButton.IsActive {
+    background: rgba(255, 201, 40, 0.1);
+    color: var(--accent-yellow);
+}
+
+.AppNavigationIcon {
+    font-size: 1.35rem;
+    line-height: 1;
+}
+
+.AppNavigationLabel {
+    font-size: clamp(0.55rem, 2.8vw, 0.7rem);
+    font-weight: 650;
+}
+
+.AppContent button {
+    min-height: 2.9rem;
+    border-radius: 0.9rem;
+    font-weight: 650;
+    transition: transform 160ms ease, background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.AppContent button:disabled {
+    cursor: not-allowed;
+    opacity: 0.52;
+    transform: none;
+}
+
+.BackButton {
+    display: inline-flex;
+    width: auto;
+    min-width: 9rem;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    margin: 1.25rem 0 0;
+    padding: 0.7rem 1.15rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-medium);
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 650;
+}
+
+.BackButton:hover {
+    border-color: var(--accent-red);
+    background: rgba(229, 27, 35, 0.14);
+    color: var(--text-primary);
+    transform: translateY(-1px);
+}
+
+.BackButton:active {
+    transform: translateY(0);
+}
+
+.HomeScreen,
+.CatalogScreen,
+.PoketypeScreen,
+.AboutScreen,
+.ProfileScreen,
+.GeneratorScreen,
+.TrainingDifficultyScreen,
+.PokemonGameScreen,
+.StudyScreen {
+    display: flex;
+    width: 100%;
+    min-height: calc(100dvh - var(--navigation-height) - env(safe-area-inset-bottom) - 2.5rem);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 0 auto;
+    padding: 1rem 0;
+}
+
+.HomeScreen,
+.CatalogScreen,
+.PoketypeScreen,
+.AboutScreen,
+.GeneratorScreen,
+.TrainingDifficultyScreen,
+.PokemonGameScreen {
+    max-width: 42rem;
+}
+
+.CatalogScreen {
+    max-width: 34rem;
+}
+
+.AppTitle,
+.PoketypeTitle,
+.ProfileTitle,
+.LeagueListTitle {
+    max-width: none;
+    margin: 0;
+    color: var(--text-primary);
+    text-align: center;
+    text-shadow: none;
+}
+
+.AppTitle::after,
+.PoketypeTitle::after {
+    display: block;
+    width: 2.25rem;
+    height: 0.2rem;
+    margin: 0.65rem auto 0;
+    border-radius: 999px;
+    background: var(--accent-red);
+    content: "";
+}
+
+.ScreenSubtitle {
+    width: min(100%, 35rem);
+    margin: 0 auto 0.5rem;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    text-align: center;
+}
+
+.ProfileScreen {
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 1.25rem;
+}
+
+.ProfileHeader .ScreenSubtitle {
+    margin-top: 0.5rem;
+}
+
+.CatalogCard {
+    width: 100%;
+}
+
+.AppIcon {
+    width: clamp(8rem, 28vw, 12rem);
+    height: clamp(8rem, 28vw, 12rem);
+    border-radius: 28%;
+    filter: drop-shadow(0 14px 30px rgba(229, 27, 35, 0.2));
+}
+
+.PoketypeStatsPanel {
+    width: min(100%, 34rem);
+    max-width: 34rem;
+    gap: 0.65rem;
+    padding: 0.85rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-large);
+    background: rgba(34, 36, 43, 0.86);
+    box-shadow: var(--shadow-subtle);
+}
+
+.PoketypeStatsPanel .StatItem {
+    min-height: 3.25rem;
+    padding: 0.65rem;
+    border: 1px solid rgba(244, 245, 247, 0.06);
+    border-radius: var(--radius-medium);
+    background: rgba(17, 17, 20, 0.5);
+}
+
+.StatValue {
+    color: var(--accent-yellow);
+    font-size: 0.875rem;
+}
+
+.GenerateButton,
+.StartGameButton,
+.NextButton,
+.RetryButton,
+.StartLevelButton {
+    border: 1px solid var(--accent-yellow);
+    background: var(--accent-yellow);
+    color: #211b09;
+    box-shadow: 0 8px 20px rgba(255, 201, 40, 0.12);
+}
+
+.GenerateButton:hover:not(:disabled),
+.StartGameButton:hover,
+.NextButton:hover,
+.RetryButton:hover,
+.StartLevelButton:hover {
+    border-color: var(--accent-yellow-light);
+    background: var(--accent-yellow-light);
+    color: #211b09;
+    transform: translateY(-1px);
+}
+
+.CheckGeneratorButton,
+.ResetButton,
+.CloseModalButton,
+.RecoverLifeButton {
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+.ResetButton:hover,
+.CloseModalButton:hover,
+.RecoverLifeButton:hover:not(:disabled) {
+    border-color: var(--accent-red);
+    background: rgba(229, 27, 35, 0.14);
+    color: var(--text-primary);
+}
+
+.PoketypeModes {
+    width: min(100%, 34rem);
+    margin-top: 0.25rem;
+    gap: 0.7rem;
+}
+
+.PoketypeModes > button {
+    display: flex;
+    width: 100%;
+    min-height: 4.6rem;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0.3rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--border-subtle);
+    border-left: 3px solid var(--accent-yellow);
+    border-radius: var(--radius-medium);
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    text-align: left;
+    box-shadow: none;
+}
+
+.PoketypeModes > button:hover {
+    border-color: var(--accent-yellow);
+    background: #292b32;
+    transform: translateY(-1px);
+}
+
+.PoketypeModes > .DailyChallengeButton {
+    border-left-color: var(--accent-red);
+}
+
+.ModeCardTitle {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.ModeCardDescription {
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    font-weight: 450;
+}
+
+.DifficultyOptions {
+    max-width: 32rem;
+}
+
+.DifficultyCard {
+    min-height: 10rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    text-align: center;
+}
+
+.EasyDifficultyCard,
+.NormalDifficultyCard,
+.HardDifficultyCard {
+    border-color: var(--border-subtle);
+    background: var(--bg-tertiary);
+}
+
+.DifficultyCard:hover {
+    border-color: var(--accent-yellow);
+    background: #292b32;
+    transform: translateY(-2px);
+}
+
+.DifficultyCard.DifficultyCardLocked {
+    opacity: 0.68;
+    cursor: not-allowed;
+}
+
+.DifficultyCard.DifficultyCardLocked:hover {
+    border-color: var(--border-subtle);
+    background: var(--bg-tertiary);
+    transform: none;
+}
+
+.DifficultyTitle,
+.EasyDifficultyCard .DifficultyTitle,
+.NormalDifficultyCard .DifficultyTitle,
+.HardDifficultyCard .DifficultyTitle {
+    color: var(--accent-yellow);
+}
+
+.DifficultyDetail {
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+}
+
+.AnswerOptions {
+    width: min(100%, 30rem);
+    gap: 0.7rem;
+}
+
+.AnswerOptionButton {
+    width: 100%;
+    min-height: 3.25rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+.AnswerOptionButton:hover:not(:disabled) {
+    border-color: var(--accent-yellow);
+    background: rgba(255, 201, 40, 0.09);
+    color: var(--accent-yellow-light);
+    transform: translateY(-1px);
+}
+
+.StudyGameplay .AnswerOptionButton.IsCorrect:disabled {
+    border-color: var(--color-success);
+    background: rgba(57, 184, 121, 0.18);
+    color: #83e0ad;
+    opacity: 1;
+}
+
+.StudyGameplay .AnswerOptionButton.IsIncorrect:disabled {
+    border-color: var(--color-error);
+    background: rgba(224, 82, 82, 0.18);
+    color: #ff9b9b;
+    opacity: 1;
+}
+
+.PokemonTypes,
+.GeneratorTypes,
+.StudyTypes {
+    gap: clamp(1rem, 5vw, 2rem);
+    margin: 0.75rem 0;
+}
+
+.TypeIcon {
+    width: clamp(4.5rem, 18vw, 6rem);
+    height: clamp(4.5rem, 18vw, 6rem);
+    min-width: 0;
+    min-height: 0;
+    padding: 0.45rem;
+    border: 2px solid rgba(244, 245, 247, 0.14);
+    border-radius: 1.25rem;
+}
+
+.TimerPanel,
+.TrainingStatsPanel,
+.GameplayHeader,
+.GameplayStat {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-medium);
+    background: var(--bg-tertiary);
+}
+
+.TimerPanel {
+    width: min(100%, 30rem);
+    margin: 0;
+    padding: 0.5rem;
+}
+
+.TimerProgress {
+    display: block;
+    width: 100%;
+    height: 0.6rem;
+    border: 0;
+    border-radius: 999px;
+    background: var(--bg-secondary);
+    accent-color: var(--accent-yellow);
+}
+
+.TimerProgress::-webkit-progress-bar {
+    border-radius: 999px;
+    background: var(--bg-secondary);
+}
+
+.TimerProgress::-webkit-progress-value {
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent-yellow), var(--accent-red));
+}
+
+.TimerProgress::-moz-progress-bar {
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent-yellow), var(--accent-red));
+}
+
+.GeneratorPanel,
+.StudyScreen,
+.AboutScreen {
+    max-width: var(--content-width);
+}
+
+.GeneratorPanel {
+    gap: 0.9rem;
+}
+
+.PokemonSearchInput {
+    min-height: 3rem;
+    padding: 0.75rem 0.9rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-medium);
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+.PokemonSearchInput::placeholder {
+    color: var(--text-muted);
+}
+
+.PokemonSearchInput:disabled {
+    cursor: not-allowed;
+    opacity: 0.72;
+}
+
+.GeneratorPrompt {
+    max-width: 13rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.PokemonSuggestionButton {
+    min-height: 2.75rem;
+    border: 0;
+    background: transparent;
+    color: var(--text-primary);
+    text-align: left;
+}
+
+.PokemonSuggestionButton:hover {
+    background: rgba(255, 201, 40, 0.1);
+    color: var(--accent-yellow-light);
+}
+
+.GeneratorResultMessage,
+.RoundResultMessage,
+.HxRewardMessage {
+    width: min(100%, 38rem);
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-medium);
+    background: var(--bg-tertiary);
+    text-align: center;
+}
+
+.GeneratorResultMessage {
+    margin: 0;
+}
+
+.RoundResultMessage.Correct {
+    border-color: rgba(57, 184, 121, 0.5);
+    color: var(--color-success);
+}
+
+.RoundResultMessage.Incorrect {
+    border-color: rgba(224, 82, 82, 0.5);
+    color: var(--color-error);
+}
+
+.StudyScreen {
+    justify-content: flex-start;
+}
+
+.LeagueSelectionView,
+.LeagueLevelsView {
+    width: 100%;
+    max-width: var(--content-width);
+    gap: 1.25rem;
+    padding: 0;
+}
+
+.LeagueLevelsView {
+    height: calc(100dvh - var(--navigation-height) - env(safe-area-inset-bottom) - 4rem);
+    min-height: 20rem;
+    max-height: calc(100dvh - var(--navigation-height) - env(safe-area-inset-bottom) - 4rem);
+    align-items: stretch;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    scrollbar-color: var(--accent-yellow) var(--bg-secondary);
+    scrollbar-width: auto;
+}
+
+.LeagueLevelsView::-webkit-scrollbar {
+    width: 0.75rem;
+}
+
+.LeagueLevelsView::-webkit-scrollbar-track {
+    border-radius: 999px;
+    background: var(--bg-secondary);
+}
+
+.LeagueLevelsView::-webkit-scrollbar-thumb {
+    min-height: 2.5rem;
+    border: 2px solid var(--bg-secondary);
+    border-radius: 999px;
+    background: var(--accent-yellow);
+}
+
+.LevelListHeader {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+        "back heading"
+        "description description";
+    align-items: center;
+    gap: 0.5rem 0.85rem;
+    padding: 0.35rem 0 0.75rem;
+}
+
+.LevelListBackButton {
+    grid-area: back;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    margin: 0;
+    padding: 0.5rem;
+    border-color: var(--border-subtle);
+    color: var(--text-primary);
+    font-size: 1.25rem;
+}
+
+.LevelListBackButton:hover {
+    border-color: var(--accent-red);
+    background: rgba(229, 27, 35, 0.14);
+    color: var(--text-primary);
+}
+
+.LevelListHeading {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 0.75rem;
+    grid-area: heading;
+}
+
+.LevelListHeading .LeagueIcon {
+    flex: 0 0 auto;
+    font-size: 1.75rem;
+}
+
+.LevelListHeading .LeagueTitle {
+    margin: 0;
+    font-size: clamp(1.2rem, 4vw, 1.65rem);
+    overflow-wrap: anywhere;
+    text-align: left;
+}
+
+.LevelListHeader .LeagueDescription {
+    grid-area: description;
+    margin: 0;
+    text-align: left;
+}
+
+.LeagueList {
+    max-width: 44rem;
+    gap: 0.85rem;
+}
+
+.LeagueCard,
+.LevelCard {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-large);
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-subtle);
+}
+
+.LeagueCard:hover,
+.LevelCard:hover {
+    border-color: rgba(255, 201, 40, 0.5);
+    background: #292b32;
+    transform: translateY(-2px);
+}
+
+.LeagueCard[data-liga="campista"],
+.LeagueCard[data-liga="as"],
+.LeagueCard[data-liga="campeon"] {
+    border-color: var(--border-subtle);
+    background: var(--bg-tertiary);
+}
+
+.LeagueCard[data-liga="campista"]:hover,
+.LeagueCard[data-liga="as"]:hover,
+.LeagueCard[data-liga="campeon"]:hover {
+    border-color: var(--accent-red);
+    background: #292b32;
+}
+
+.LeagueListTitle,
+.LeagueTitle {
+    color: var(--text-primary);
+    text-shadow: none;
+}
+
+.LeagueDescription,
+.ProgressText,
+.LevelNumber,
+.LevelDetail {
+    color: var(--text-secondary);
+}
+
+.LeagueProgressTrack {
+    height: 0.55rem;
+    border-radius: 999px;
+    background: rgba(244, 245, 247, 0.1);
+}
+
+.LeagueProgressFill {
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--accent-red), var(--accent-yellow));
+}
+
+.LeagueStatusUnlocked {
+    color: var(--color-success);
+}
+
+.LeagueStatusLocked {
+    color: var(--text-muted);
+}
+
+.LevelGrid {
+    max-width: var(--content-width);
+    padding-bottom: 1rem;
+}
+
+.LevelCard {
+    min-width: 0;
+    padding: 1rem;
+    gap: 0.65rem;
+}
+
+.LevelCardLocked {
+    opacity: 0.72;
+}
+
+.LevelCardExam {
+    border-color: var(--accent-yellow);
+    background: linear-gradient(145deg, rgba(255, 201, 40, 0.1), var(--bg-tertiary) 65%);
+}
+
+.LevelCardRisk {
+    border-color: rgba(229, 27, 35, 0.55);
+}
+
+.LevelTitle {
+    justify-content: flex-start;
+}
+
+.LevelDetails,
+.LevelBadges {
+    justify-content: flex-start;
+}
+
+.LevelDetail,
+.Badge {
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    background: rgba(17, 17, 20, 0.55);
+}
+
+.SpecialBadge {
+    border-color: rgba(255, 201, 40, 0.4);
+    background: rgba(255, 201, 40, 0.12);
+    color: var(--accent-yellow-light);
+}
+
+.CriticalRiskBadge {
+    border-color: rgba(229, 27, 35, 0.45);
+    background: rgba(229, 27, 35, 0.12);
+    color: #ff8589;
+}
+
+.DynamicTimeBadge {
+    color: var(--text-secondary);
+}
+
+.LevelDialog {
+    z-index: 1100;
+    padding: 1rem;
+    background: rgba(8, 8, 11, 0.78);
+    backdrop-filter: blur(12px);
+}
+
+.DialogContent,
+.VictoryDialogContent {
+    width: min(100%, 34rem);
+    max-height: min(85dvh, 48rem);
+    overflow-y: auto;
+    padding: clamp(1.25rem, 5vw, 2rem);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-large);
+    background: var(--bg-secondary);
+    box-shadow: var(--shadow-subtle);
+}
+
+.DialogHeader {
+    padding-right: 2.25rem;
+}
+
+.LevelDialogTitle {
+    justify-content: flex-start;
+}
+
+.LevelDescription,
+.LevelSpecifications {
+    margin: 0.75rem 0;
+    text-align: left;
+}
+
+.LevelStatus,
+.LevelRequirements {
+    display: flex;
+    gap: 0.55rem;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+.MissingHxMessage {
+    color: var(--text-secondary);
+}
+
+.PokemonGameScreen,
+.StudyGameplay {
+    justify-content: flex-start;
+    gap: 1rem;
+    padding-top: 1rem;
+}
+
+.TrainingStatsPanel,
+.GameplayHeader {
+    width: min(100%, 34rem);
+    max-width: 34rem;
+    padding: 0.85rem;
+}
+
+.GameplayHeader {
+    display: flex;
+    justify-content: space-around;
+    gap: 0.75rem;
+}
+
+.GameplayStat {
+    display: grid;
+    min-width: 8rem;
+    gap: 0.25rem;
+    padding: 0.65rem 0.9rem;
+    text-align: center;
+}
+
+.GameplayActions {
+    display: flex;
+    width: min(100%, 34rem);
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.AboutScreen {
+    max-width: 46rem;
+}
+
+.LegalNotice {
+    max-width: 44rem;
+    padding: 1.25rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-large);
+    background: var(--bg-tertiary);
+    text-align: left;
+}
+
+.ToastMessage {
+    top: calc(env(safe-area-inset-top) + 0.5rem);
+    width: min(calc(100% - 2rem), 30rem);
+    padding: 0.9rem 1rem;
+    border: 1px solid rgba(255, 201, 40, 0.4);
+    border-radius: var(--radius-medium);
+    background: rgba(34, 36, 43, 0.96);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-subtle);
+    transform: translate(-50%, -150%);
+    transition: transform 220ms ease;
+}
+
+.ToastMessage.IsVisible {
+    top: calc(env(safe-area-inset-top) + 0.5rem);
+    transform: translate(-50%, 0);
+}
+
+.LoadingBarTrack {
+    border-radius: 999px;
+    background: var(--bg-tertiary);
+}
+
+.LoadingProgressBar {
+    height: 0.45rem;
+}
+
+.LoadingProgressBar::-webkit-progress-bar {
+    border-radius: 999px;
+    background: var(--bg-tertiary);
+}
+
+.LoadingProgressBar::-webkit-progress-value {
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent-red), var(--accent-yellow));
+}
+
+.LoadingProgressBar::-moz-progress-bar {
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent-red), var(--accent-yellow));
+}
+
+@media (max-width: 420px) {
+    .PoketypeStatsPanel {
+        padding: 0.6rem;
     }
-    
-    .icono-main {
-        width: 18vw;
-        height: 18vw;
-        max-width: 180px;
-        max-height: 180px;
+
+    .PoketypeStatsPanel .StatItem {
+        gap: 0.3rem;
+        padding: 0.5rem 0.35rem;
     }
-    
-    .type-icon,
-    .img-tipo {
-        width: 12vw;
-        height: 12vw;
-        max-width: 120px;
-        max-height: 120px;
+
+    .StatValue {
+        font-size: 0.75rem;
     }
-    
-    .caja-tipos,
-    .caja-tipos-generador {
-        gap: 3rem;
+
+    .GameplayHeader {
+        gap: 0.45rem;
+        padding: 0.6rem;
     }
 }

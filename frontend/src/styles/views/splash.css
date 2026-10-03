@@ -1,5 +1,5 @@
 /* | --- Splash Screen --- |*/
-.layout-custom-splash {
+.SplashScreen {
     position: fixed;
     inset: 0;
     background: var(--bg-primary);
@@ -11,20 +11,22 @@
     transition: opacity 0.5s ease;
 }
 
-.layout-custom-splash img {
+.SplashScreen img {
     width: 45vw;
     height: 45vw;
     max-width: 180px;
     max-height: 180px;
     margin-bottom: 1.5rem;
     filter: drop-shadow(0 0 30px rgba(255, 203, 5, 0.4));
+    animation: splashIconPulse 1.8s ease-in-out infinite;
 }
 
-.layout-custom-splash h1 {
+.SplashScreen h1 {
     margin-bottom: 2rem;
 }
 
-.Caja-barra-carga {
+.LoadingBarTrack {
+    position: relative;
     width: 12.5rem;
     height: 0.375rem;
     background: var(--bg-tertiary);
@@ -33,7 +35,22 @@
     border: 1px solid var(--border-subtle);
 }
 
-.barra-carga {
+.LoadingBarTrack::after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 35%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, transparent, var(--accent-yellow-light), transparent);
+    content: "";
+    pointer-events: none;
+    animation: splashProgressSweep 1.2s ease-in-out infinite;
+}
+
+.LoadingProgressBar {
+    position: relative;
+    z-index: 0;
     width: 100%;
     appearance: none;
     -webkit-appearance: none;
@@ -43,19 +60,54 @@
     overflow: hidden;
 }
 
-.barra-carga::-webkit-progress-bar {
+.LoadingProgressBar::-webkit-progress-bar {
     background: var(--bg-tertiary);
     border-radius: 3px;
 }
 
-.barra-carga::-webkit-progress-value {
+.LoadingProgressBar::-webkit-progress-value {
+    background: linear-gradient(90deg, var(--accent-yellow), var(--accent-yellow-light));
+    border-radius: 3px;
+    box-shadow: 0 0 10px rgba(255, 203, 5, 0.5);
+    transition: width 0.5s ease;
+}
+
+.LoadingProgressBar::-moz-progress-bar {
     background: linear-gradient(90deg, var(--accent-yellow), var(--accent-yellow-light));
     border-radius: 3px;
     box-shadow: 0 0 10px rgba(255, 203, 5, 0.5);
 }
 
-.layout-custom-splash p {
+.SplashScreen p {
     margin-top: 1.25rem;
     color: var(--text-muted);
     font-size: 0.875rem;
+}
+
+@keyframes splashIconPulse {
+    0%, 100% {
+        transform: scale(0.97);
+        filter: drop-shadow(0 0 18px rgba(255, 203, 5, 0.25));
+    }
+    50% {
+        transform: scale(1.03);
+        filter: drop-shadow(0 0 32px rgba(255, 203, 5, 0.55));
+    }
+}
+
+@keyframes splashProgressSweep {
+    from {
+        transform: translateX(-120%);
+    }
+    to {
+        transform: translateX(360%);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .LoadingBarTrack::after {
+        left: 32.5%;
+        animation: none;
+        transform: none;
+    }
 }

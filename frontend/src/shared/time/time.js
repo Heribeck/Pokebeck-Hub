@@ -45,3 +45,5 @@ export function hasResetTimePassed() {
   hora8pm.setHours(20, 0, 0, 0);
   return ahora >= hora8pm;
 }
+
+export const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));

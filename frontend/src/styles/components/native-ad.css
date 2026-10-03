@@ -1,0 +1,24 @@
+.NativeAdSlot {
+    display: block;
+    width: min(100%, var(--catalog-content-width, 34rem));
+    flex: 0 0 auto;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: var(--radius-large);
+}
+
+.NativeAdSlotLarge {
+    height: 9rem;
+}
+
+.NativeAdSlotCompact {
+    height: 6rem;
+}
+
+.NativeAdSlot.IsSuspended {
+    display: none;
+}
+
+.GeneratorPanel > .NativeAdSlot {
+    width: 100%;
+}

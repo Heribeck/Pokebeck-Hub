@@ -1,0 +1,1 @@
+export { abrirTelegram } from './telegram.js';

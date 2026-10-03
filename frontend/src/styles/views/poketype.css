@@ -1,6 +1,6 @@
 /* | --- Panel PokeType Guess --- |*/
-.layout-poketype {
-    display: none;
+.PoketypeScreen {
+    display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -8,7 +8,7 @@
     padding: 1rem;
 }
 
-.titulo-juego {
+.PoketypeTitle {
     font-size: 2rem;
     font-weight: 700;
     color: var(--accent-yellow);
@@ -17,7 +17,7 @@
 }
 
 /* Mini caja horizontal de estadísticas */
-.caja-estadisticas-poketype {
+.PoketypeStatsPanel {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
@@ -31,13 +31,13 @@
     backdrop-filter: blur(10px);
 }
 
-.estadisticas-superior {
+.PrimaryStats {
     display: flex;
     justify-content: space-between;
     gap: 0.75rem;
 }
 
-.estadistica-item {
+.StatItem {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -50,16 +50,16 @@
     min-width: 0;
 }
 
-.corazones-item {
+.LivesPanel {
     justify-content: space-between;
 }
 
-.estadistica-icono {
+.StatIcon {
     font-size: 1.125rem;
     flex-shrink: 0;
 }
 
-.estadistica-valor {
+.StatValue {
     font-size: 0.8125rem;
     font-weight: 600;
     color: var(--accent-yellow);
@@ -67,25 +67,20 @@
 }
 
 /* Corazones mini */
-.corazones-mini {
+.CompactHearts {
     display: flex;
     gap: 0.375rem;
     align-items: center;
 }
 
-.corazon-mini {
+.CompactHeart {
     font-size: 1.125rem;
     transition: all 0.3s ease;
     flex-shrink: 0;
 }
 
-.corazon-mini.vacio {
-    filter: grayscale(100%);
-    opacity: 0.4;
-}
-
 /* Botón recuperar mini */
-.btn-recuperar-mini {
+.RecoverLifeButton {
     width: 1.75rem;
     height: 1.75rem;
     border-radius: 50%;
@@ -103,20 +98,20 @@
     flex-shrink: 0;
 }
 
-.btn-recuperar-mini:hover {
+.RecoverLifeButton:hover {
     background: rgba(255, 203, 5, 0.2);
     border-color: var(--accent-yellow);
     transform: scale(1.1);
 }
 
-.btn-recuperar-mini:disabled {
+.RecoverLifeButton:disabled {
     opacity: 0.3;
     cursor: not-allowed;
     transform: none;
 }
 
 /* Tiempo de regeneración */
-.tiempo-regeneracion {
+.LifeRegenerationTime {
     font-size: 0.75rem;
     color: var(--text-secondary);
     font-weight: 500;
@@ -124,27 +119,7 @@
     white-space: nowrap;
 }
 
-.racha-poketype {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--accent-yellow);
-    text-shadow: 0 0 15px rgba(255, 203, 5, 0.5);
-    margin-bottom: 1.5rem;
-    animation: pulse-glow 2s ease-in-out infinite;
-}
-
-@keyframes pulse-glow {
-    0%, 100% {
-        text-shadow: 0 0 15px rgba(255, 203, 5, 0.5);
-        transform: scale(1);
-    }
-    50% {
-        text-shadow: 0 0 25px rgba(255, 203, 5, 0.8);
-        transform: scale(1.05);
-    }
-}
-
-.caja-btn-poketype {
+.PoketypeModes {
     margin-top: 1.5rem;
     display: flex;
     gap: 0.75rem;
@@ -154,11 +129,7 @@
     width: 100%;
 }
 
-.boton-poketype,
-.boton-estudio,
-.boton-entrenamiento,
-.boton-desafio,
-.boton-generador {
+.StudyButton, .TrainingButton, .DailyChallengeButton, .GeneratorButton {
     background: var(--accent-yellow);
     color: var(--bg-primary);
     border: none;
@@ -171,24 +142,16 @@
     width: 12.5rem;
 }
 
-.boton-poketype:hover,
-.boton-estudio:hover,
-.boton-entrenamiento:hover,
-.boton-desafio:hover,
-.boton-generador:hover {
+.StudyButton:hover, .TrainingButton:hover, .DailyChallengeButton:hover, .GeneratorButton:hover {
     background: var(--accent-yellow-dark);
     transform: translateY(-2px);
 }
 
-.boton-poketype:active,
-.boton-estudio:active,
-.boton-entrenamiento:active,
-.boton-desafio:active,
-.boton-generador:active {
+.StudyButton:active, .TrainingButton:active, .DailyChallengeButton:active, .GeneratorButton:active {
     transform: translateY(0);
 }
 
-.boton-volver {
+.BackButton {
     margin-top: 2rem;
     background: rgba(255, 255, 255, 0.1);
     color: var(--accent-yellow);
@@ -200,7 +163,7 @@
     transition: all 0.2s ease;
 }
 
-.boton-volver:hover {
+.BackButton:hover {
     background: var(--accent-yellow);
     color: var(--bg-primary);
 }

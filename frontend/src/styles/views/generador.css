@@ -1,13 +1,13 @@
 /* | --- Generador de Equipos --- |*/
-.layout-generador {
-    display: none;
+.GeneratorScreen {
+    display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     min-height: 100dvh;
 }
 
-.caja-generador {
+.GeneratorPanel {
     margin-top: 1.5rem;
     display: flex;
     justify-content: center;
@@ -18,7 +18,8 @@
     padding: 0 1rem;
 }
 
-.contenedor-img-generador {
+.PokemonImageContainer {
+    display: flex;
     width: 150px;
     height: 150px;
     display: flex;
@@ -28,7 +29,7 @@
     margin-bottom: 1rem;
 }
 
-.img-pokemon-generador {
+.PokemonSprite {
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -36,14 +37,14 @@
     box-shadow: var(--shadow-subtle);
 }
 
-.texto-img-no-disponible {
+.SpriteUnavailableMessage {
     color: var(--text-muted);
     font-size: 0.875rem;
     text-align: center;
     font-style: italic;
 }
 
-.caja-tipos-generador {
+.GeneratorTypes {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -53,7 +54,7 @@
     margin-bottom: 1.25rem;
 }
 
-.mensaje-resultado-generador {
+.GeneratorResultMessage {
     color: var(--text-primary);
     font-size: 1rem;
     text-align: center;
@@ -62,12 +63,7 @@
     font-weight: 500;
 }
 
-.caja-select-generador {
-    width: 100%;
-    margin-bottom: 1rem;
-}
-
-.boton-generar {
+.GenerateButton {
     background: var(--accent-yellow);
     color: var(--bg-primary);
     border: none;
@@ -81,17 +77,17 @@
     box-shadow: var(--shadow-glow);
 }
 
-.boton-generar:hover:not(:disabled) {
+.GenerateButton:hover:not(:disabled) {
     background: var(--accent-yellow-dark);
     transform: translateY(-2px);
 }
 
-.boton-generar:disabled {
+.GenerateButton:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
-.boton-comprobar-generador {
+.CheckGeneratorButton {
     background: var(--bg-tertiary);
     color: var(--accent-yellow);
     border: 2px solid var(--accent-yellow);
@@ -104,141 +100,32 @@
     transition: all 0.2s ease;
 }
 
-.boton-comprobar-generador:hover:not(:disabled) {
+.CheckGeneratorButton:hover:not(:disabled) {
     background: var(--accent-yellow);
     color: var(--bg-primary);
     transform: translateY(-2px);
 }
 
-.boton-comprobar-generador:disabled {
+.CheckGeneratorButton:disabled {
     opacity: 0.3;
     cursor: not-allowed;
     border-color: var(--border-subtle);
     color: var(--text-muted);
 }
 
-/* Tom Select Personalizado */
-.ts-wrapper {
-    font-family: inherit;
-}
-
-.ts-wrapper.single .ts-control {
-    background-color: #000000 !important;
-    box-shadow: none !important;
-}
-
-.ts-control {
-    background-color: #000000 !important;
-    border: 1px solid var(--border-subtle) !important;
-    border-radius: 12px !important;
-    padding: 0.875rem 1rem !important;
-    color: var(--text-primary) !important;
-    font-size: 1rem !important;
-    transition: all 0.2s ease;
-}
-
-.ts-wrapper.single.input-active .ts-control {
-    background-color: #000000 !important;
-}
-
-.ts-control:focus {
-    border-color: var(--accent-yellow) !important;
-    box-shadow: 0 0 0 3px rgba(255, 203, 5, 0.1) !important;
-}
-
-.ts-control input {
-    color: var(--text-primary) !important;
-    background: transparent !important;
-}
-
-.ts-control input::placeholder {
-    color: var(--text-muted) !important;
-}
-
-.ts-dropdown {
-    background-color: #000000 !important;
-    border: 1px solid var(--border-subtle) !important;
-    border-radius: 12px !important;
-    margin-top: 0.5rem;
-    box-shadow: var(--shadow-subtle);
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-.ts-dropdown-content {
-    padding: 0.5rem;
-}
-
-.ts-option {
-    color: var(--text-primary) !important;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.ts-dropdown .active {
-    background: black;
-}
-
-.ts-option:hover {
-    background: var(--bg-card);
-    color: var(--accent-yellow);
-}
-
-.ts-option.selected {
-    background: var(--accent-yellow);
-    color: var(--bg-primary);
-    font-weight: 600;
-}
-
-.ts-dropdown .no-results {
-    color: var(--text-muted);
-    padding: 1rem;
-    text-align: center;
-}
-
-.ts-control, .ts-wrapper.single.input-active .ts-control {
-    background: black;
-    cursor: text;
-}
-
-.ts-dropdown [data-selectable] .highlight {
-    background: rgb(0 0 0);
-    border-radius: 1px;
-}
-
-/* Responsive adjustments */
 @media (max-width: 480px) {
-    .caja-generador {
+    .GeneratorPanel {
         padding: 0 0.75rem;
     }
 
-    .contenedor-img-generador {
+    .PokemonImageContainer {
         width: 120px;
         height: 120px;
     }
 
-    .boton-generar,
-    .boton-comprobar-generador {
+    .GenerateButton, .CheckGeneratorButton {
         padding: 0.75rem 1.5rem;
         font-size: 0.9rem;
     }
 
-    .ts-control {
-        padding: 0.75rem 0.875rem;
-        font-size: 0.9rem;
-    }
-}
-
-.btn-opcion {
-    padding: 0.875rem 1.5rem;
-    border: 1px solid var(--border-subtle);
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.2s ease;
-    background: var(--bg-tertiary);
-    color: var(--text-primary);
-    width: 100vw;
 }

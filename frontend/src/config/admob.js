@@ -1,0 +1,22 @@
+// Configuración de IDs de AdMob
+export const ADS_CONFIG = {
+  // Native Ads
+  NATIVE_AD: "ca-app-pub-1898586331132450/3371167668",
+
+  // Rewarded Ads(Bonificado)
+  REWARDED_VIDAS: "ca-app-pub-1898586331132450/8031266354",
+  REWARDED_ENTRENAMIENTO: "ca-app-pub-1898586331132450/8142843731",
+
+  // Interstitial Ads
+  INTERSTITIAL_CHALLENGE: "ca-app-pub-1898586331132450/4178291414",
+  INTERSTITIAL_NIVELES: "ca-app-pub-1898586331132450/6996021243",
+  INTERSTITIAL_GENERADOR: "ca-app-pub-1898586331132450/7626576636",
+};
+
+//Eventos de los anuncios Bonificado
+export const eventsRewarded = {
+  cargado: "onRewardedVideoAdLoaded",
+  falloCarga: "onRewardedVideoAdFailedToLoad",
+  recompensa: "onRewardedVideoAdReward",
+  cerrado: "onRewardedVideoAdDismissed",
+};

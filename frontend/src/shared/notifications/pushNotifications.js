@@ -1,6 +1,3 @@
-import { PushNotifications } from '@capacitor/push-notifications';
-import { executePluginSafely } from '../capacitor/executePluginSafely.js';
-import { requestNotificationPermission } from './permissionsNotifications.js';
 
 export async function inicializarPushFCM() {
   return await executePluginSafely(

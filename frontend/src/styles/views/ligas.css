@@ -1,5 +1,5 @@
 /* | --- Panel de Ligas --- |*/
-.layout-ligas {
+.StudyScreen {
     display: none;
     justify-content: center;
     align-items: center;
@@ -9,7 +9,7 @@
     overflow-y: auto;
 }
 
-.titulo-ligas {
+.LeagueListTitle {
     font-size: 2rem;
     font-weight: 700;
     color: var(--accent-yellow);
@@ -17,60 +17,7 @@
     margin-bottom: 2rem;
 }
 
-.seccion-liga {
-    width: 100%;
-    max-width: 600px;
-    margin-bottom: 2rem;
-}
-
-.titulo-liga {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    padding: 0.75rem 1rem;
-    border-radius: 12px;
-}
-
-.liga-campista {
-    background: linear-gradient(135deg, #43a047 0%, #2e7d32 100%);
-    color: white;
-}
-
-.liga-as {
-    background: linear-gradient(135deg, #fbc02d 0%, #f9a825 100%);
-    color: #333;
-}
-
-.liga-campeon {
-    background: linear-gradient(135deg, #d32f2f 0%, #c62828 100%);
-    color: white;
-}
-
-.scroll-tarjetas {
-    display: flex;
-    gap: 1rem;
-    overflow-x: auto;
-    padding: 0.5rem;
-    scroll-behavior: smooth;
-    scrollbar-width: thin;
-    scrollbar-color: var(--accent-yellow) rgba(255, 255, 255, 0.1);
-}
-
-.scroll-tarjetas::-webkit-scrollbar {
-    height: 8px;
-}
-
-.scroll-tarjetas::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-}
-
-.scroll-tarjetas::-webkit-scrollbar-thumb {
-    background: var(--accent-yellow);
-    border-radius: 4px;
-}
-
-.tarjeta-nivel {
+.LevelCard {
     min-width: 200px;
     padding: 1.25rem;
     border-radius: 16px;
@@ -82,40 +29,12 @@
     gap: 0.5rem;
 }
 
-.tarjeta-nivel:hover {
+.LevelCard:hover {
     transform: translateY(-5px) scale(1.02);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
 }
 
-.tarjeta-nivel.campista {
-    background: linear-gradient(135deg, #66bb6a 0%, #43a047 100%);
-    border: 2px solid #81c784;
-}
-
-.tarjeta-nivel.as {
-    background: linear-gradient(135deg, #fff176 0%, #fbc02d 100%);
-    border: 2px solid #fff59d;
-    color: #333;
-}
-
-.tarjeta-nivel.campeon {
-    background: linear-gradient(135deg, #ef5350 0%, #d32f2f 100%);
-    border: 2px solid #e57373;
-}
-
-.tarjeta-numero {
-    font-size: 0.875rem;
-    font-weight: 600;
-    opacity: 0.9;
-}
-
-.tarjeta-titulo {
-    font-size: 1.125rem;
-    font-weight: 700;
-    line-height: 1.3;
-}
-
-.boton-volver {
+.BackButton {
     margin-top: 2rem;
     background: rgba(255, 255, 255, 0.1);
     color: var(--accent-yellow);
@@ -127,13 +46,13 @@
     transition: all 0.2s ease;
 }
 
-.boton-volver:hover {
+.BackButton:hover {
     background: var(--accent-yellow);
     color: var(--bg-primary);
 }
 
 /* | --- Modal de Detalles --- |*/
-.modal-detalles {
+.LevelDialog {
     position: fixed;
     top: 0;
     left: 0;
@@ -146,7 +65,7 @@
     z-index: 1000;
 }
 
-.modal-contenido {
+.DialogContent {
     background: var(--bg-secondary);
     padding: 2rem;
     border-radius: 20px;
@@ -157,7 +76,7 @@
     border: 2px solid var(--accent-yellow);
 }
 
-.btn-cerrar-modal {
+.CloseModalButton {
     position: absolute;
     top: 1rem;
     right: 1rem;
@@ -169,41 +88,12 @@
     transition: all 0.2s ease;
 }
 
-.btn-cerrar-modal:hover {
+.CloseModalButton:hover {
     color: white;
     transform: rotate(90deg);
 }
 
-.modal-titulo {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: var(--accent-yellow);
-    margin-bottom: 1rem;
-    margin-top: 0.5rem;
-}
-
-.modal-descripcion {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.9);
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-}
-
-.modal-especificaciones {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 1rem;
-    border-radius: 12px;
-    margin-bottom: 1.5rem;
-}
-
-.modal-especificaciones p {
-    margin: 0;
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.8);
-    line-height: 1.5;
-}
-
-.boton-iniciar-nivel {
+.StartLevelButton {
     width: 100%;
     background: var(--accent-yellow);
     color: var(--bg-primary);
@@ -217,17 +107,17 @@
     box-shadow: var(--shadow-glow);
 }
 
-.boton-iniciar-nivel:hover {
+.StartLevelButton:hover {
     background: var(--accent-yellow-dark);
     transform: translateY(-2px);
 }
 
-.boton-iniciar-nivel:active {
+.StartLevelButton:active {
     transform: translateY(0);
 }
 
 /* | --- Vista de Ligas --- |*/
-.vista-ligas {
+.LeagueSelectionView {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -236,7 +126,7 @@
     gap: 2rem;
 }
 
-.contenedor-ligas {
+.LeagueList {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -244,13 +134,13 @@
     max-width: 500px;
 }
 
-.boton-volver-intermedio {
+.BackButton {
     margin-top: auto;
     align-self: center;
 }
 
 /* | --- Vista de Niveles de Liga --- |*/
-.vista-niveles-liga {
+.LeagueLevelsView {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -264,33 +154,21 @@
     scrollbar-color: var(--accent-yellow) rgba(255, 255, 255, 0.1);
 }
 
-.vista-niveles-liga::-webkit-scrollbar {
+.LeagueLevelsView::-webkit-scrollbar {
     width: 8px;
 }
 
-.vista-niveles-liga::-webkit-scrollbar-track {
+.LeagueLevelsView::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 4px;
 }
 
-.vista-niveles-liga::-webkit-scrollbar-thumb {
+.LeagueLevelsView::-webkit-scrollbar-thumb {
     background: var(--accent-yellow);
     border-radius: 4px;
 }
 
-.cabecera-liga {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    width: 100%;
-    max-width: 600px;
-    text-align: center;
-    flex-shrink: 0;
-}
-
-.btn-volver-liga {
+.BackButton {
     background: rgba(255, 255, 255, 0.1);
     color: var(--accent-yellow);
     border: 2px solid var(--accent-yellow);
@@ -303,29 +181,22 @@
     align-self: flex-start;
 }
 
-.btn-volver-liga:hover {
+.BackButton:hover {
     background: var(--accent-yellow);
     color: var(--bg-primary);
 }
 
-.liga-info {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-}
-
-.liga-emoji {
+.LeagueIcon {
     font-size: 2rem;
 }
 
-.liga-titulo {
+.LeagueTitle {
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--accent-yellow);
 }
 
-.liga-descripcion {
+.LeagueDescription {
     text-align: center;
     color: rgba(255, 255, 255, 0.8);
     margin-bottom: 1rem;
@@ -334,7 +205,7 @@
     line-height: 1.5;
 }
 
-.contenedor-niveles {
+.LevelGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1rem;
@@ -344,7 +215,7 @@
 }
 
 /* | --- Tarjetas de Nivel --- |*/
-.tarjeta-nivel {
+.LevelCard {
     background: var(--bg-tertiary);
     border: 2px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
@@ -358,19 +229,19 @@
     overflow: hidden;
 }
 
-.tarjeta-nivel:hover {
+.LevelCard:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     border-color: rgba(255, 203, 5, 0.3);
 }
 
-.tarjeta-nivel-header {
+.LevelCardHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.nivel-numero {
+.LevelNumber {
     font-size: 0.8rem;
     font-weight: 600;
     color: rgba(255, 255, 255, 0.6);
@@ -378,25 +249,25 @@
     letter-spacing: 0.5px;
 }
 
-.nivel-estado-icono {
+.LevelStatusIcon {
     font-size: 1rem;
 }
 
-.nivel-titulo {
+.LevelTitle {
     font-size: 1.1rem;
     font-weight: 700;
     color: var(--text-primary);
     line-height: 1.3;
 }
 
-.nivel-info {
+.LevelDetails {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
     justify-content: center;
 }
 
-.info-item {
+.LevelDetail {
     font-size: 0.75rem;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.7);
@@ -406,14 +277,14 @@
     white-space: nowrap;
 }
 
-.nivel-etiquetas {
+.LevelBadges {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
     justify-content: center;
 }
 
-.etiqueta {
+.Badge {
     font-size: 0.75rem;
     font-weight: 600;
     padding: 0.25rem 0.5rem;
@@ -422,53 +293,53 @@
     letter-spacing: 0.5px;
 }
 
-.etiqueta.especial {
+.Badge.SpecialBadge {
     background: linear-gradient(135deg, #ffd700 0%, #ffb700 100%);
     color: #333;
     box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
 }
 
-.etiqueta.riesgo-critico {
+.Badge.CriticalRiskBadge {
     background: linear-gradient(135deg, #ff5252 0%, #d32f2f 100%);
     color: white;
     box-shadow: 0 2px 8px rgba(211, 47, 47, 0.3);
 }
 
-.etiqueta.tiempo-dinamico {
+.Badge.DynamicTimeBadge {
     background: #424242;
     color: white;
 }
 
 /* | --- Tarjeta Nivel Examen (Jefe de Liga) --- |*/
-.tarjeta-nivel-examen {
+.LevelCardExam {
     border: 2px solid #ffd700;
     background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 183, 0, 0.05) 100%);
     box-shadow: 0 4px 20px rgba(255, 215, 0, 0.2);
 }
 
-.tarjeta-nivel-examen:hover {
+.LevelCardExam:hover {
     border-color: #ffb700;
     box-shadow: 0 8px 30px rgba(255, 215, 0, 0.4);
 }
 
-.tarjeta-nivel-examen .nivel-titulo {
+.LevelCardExam .LevelTitle {
     color: #ffd700;
     text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
 }
 
 /* | --- Tarjeta Nivel Riesgo Crítico --- |*/
-.tarjeta-nivel-riesgo {
+.LevelCardRisk {
     border: 2px solid #ff5252;
     background: linear-gradient(135deg, rgba(255, 82, 82, 0.1) 0%, rgba(211, 47, 47, 0.05) 100%);
     box-shadow: 0 4px 20px rgba(255, 82, 82, 0.2);
 }
 
-.tarjeta-nivel-riesgo:hover {
+.LevelCardRisk:hover {
     border-color: #d32f2f;
     box-shadow: 0 8px 30px rgba(255, 82, 82, 0.4);
 }
 
-.tarjeta-nivel-riesgo .nivel-titulo {
+.LevelCardRisk .LevelTitle {
     color: #ff5252;
     text-shadow: 0 0 10px rgba(255, 82, 82, 0.5);
 }
