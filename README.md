@@ -1,367 +1,238 @@
 # Pokebeck Hub
 
-**Versión Actual:** 2.2.4
-
----
+Aplicación móvil de juegos y herramientas educativas sobre Pokémon. El proyecto utiliza React y Vite para la interfaz, y Capacitor para integrarla con Android.
 
 ## Índice
 
-- [Descripción del Proyecto](#descripción-del-proyecto)
-- [Estado Actual](#estado-actual)
-- [Distribución](#distribución)
-- [Tecnologías Utilizadas](#tecnologías-utilizadas)
-- [Requisitos Previos](#requisitos-previos)
+- [Descripción del proyecto](#descripción-del-proyecto)
+- [Estado actual](#estado-actual)
+- [Distribución e identificadores](#distribución-e-identificadores)
+- [Tecnologías utilizadas](#tecnologías-utilizadas)
+- [Requisitos previos](#requisitos-previos)
 - [Instalación](#instalación)
 - [Desarrollo con Vite](#desarrollo-con-vite)
-- [Ejecución y Compilación Android con Capacitor](#ejecución-y-compilación-android-con-capacitor)
-- [Funcionalidades](#funcionalidades)
-- [Persistencia de Datos](#persistencia-de-datos)
-- [Estructura del Proyecto](#estructura-del-proyecto)
+- [Ejecución y compilación Android con Capacitor](#ejecución-y-compilación-android-con-capacitor)
+- [Funcionalidades disponibles](#funcionalidades-disponibles)
+- [Persistencia de datos](#persistencia-de-datos)
+- [Estructura del proyecto](#estructura-del-proyecto)
 - [Configuración](#configuración)
-- [Arquitectura y Decisiones Técnicas](#arquitectura-y-decisiones-técnicas)
-- [Scripts Disponibles](#scripts-disponibles)
-- [Estado del Proyecto / Roadmap](#estado-del-proyecto--roadmap)
+- [Arquitectura y decisiones técnicas](#arquitectura-y-decisiones-técnicas)
+- [Scripts disponibles](#scripts-disponibles)
+- [Estado del proyecto y próximos pasos](#estado-del-proyecto-y-próximos-pasos)
 - [Permisos de Android](#permisos-de-android)
-- [Limitaciones Conocidas](#limitaciones-conocidas)
+- [Limitaciones conocidas](#limitaciones-conocidas)
 - [Licencia](#licencia)
 - [Repositorio](#repositorio)
 
----
+## Descripción del proyecto
 
-## Descripción del Proyecto
+Pokebeck Hub reúne el juego PokeType Guess y herramientas para aprender y practicar los tipos Pokémon. La aplicación tiene navegación propia entre Inicio, Juegos, Herramientas, Perfil e Información.
 
-Pokebeck Hub es una aplicación móvil Android que ofrece juegos educativos basados en el universo Pokémon. La aplicación permite a los usuarios entrenar sus conocimientos sobre tipos de Pokémon mediante diferentes modos de juego.
+La interfaz está implementada con React y se empaqueta para Android mediante Capacitor. Vite también permite ejecutar la aplicación en un navegador durante el desarrollo; las funciones que requieren plugins nativos deben probarse en Android.
 
-**Estado actual:** En desarrollo
+## Estado actual
 
----
+- La aplicación principal, las pantallas de navegación y el catálogo están implementados.
+- PokeType Guess ofrece los modos Estudio, Entrenamiento y Desafío del Día.
+- El Generador de tipos está disponible desde las secciones Herramientas y PokeType.
+- Pokédex, Team Builder y Type Coverage Calculator aparecen en el catálogo como funciones próximas; aún no están disponibles.
+- El perfil muestra HX y racha diaria. Favoritos, historial, logros, ranking y copia de seguridad se presentan como funciones próximas.
+- El progreso se guarda localmente. No hay un backend ni sincronización entre dispositivos.
 
-## Distribución
+## Distribución e identificadores
 
-### Google Play
-- **Disponible en:** [Google Play Store](https://play.google.com/store/apps/details?id=com.heribeck.PokeTypeGuess)
-- **Versión actual:** 2.2.4
-- **ID de paquete:** com.heribeck.PokeTypeGuess
+Android es la plataforma móvil configurada actualmente. La aplicación está publicada en [Google Play](https://play.google.com/store/apps/details?id=com.heribeck.PokeTypeGuess).
 
-**Nota:** El repositorio originalmente se llamó "poketype-guess" porque la aplicación comenzó como "PokeTypeGuess". Posteriormente el proyecto evolucionó y cambió su nombre a "Pokebeck Hub", aunque el ID del paquete en Google Play mantiene el nombre original por compatibilidad.
+La configuración nativa de [build.gradle](./frontend/android/app/build.gradle) declara el identificador `com.heribeck.PokeTypeGuess`, `versionCode` 12 y `versionName` 2.2.7. El [capacitor.config.json](./frontend/capacitor.config.json), en cambio, declara `appId` `com.heribeck.poketype`. Estos identificadores no coinciden y deben revisarse antes de futuras sincronizaciones o publicaciones. La pantalla de perfil muestra 2.3.7, distinto del `versionName` Android.
 
----
+## Tecnologías utilizadas
 
-## Tecnologías Utilizadas
+- **JavaScript** (ES modules), **React 19** y **React DOM 19** para la aplicación.
+- **Vite 8** para el servidor de desarrollo y la compilación web.
+- **Capacitor 8** para el contenedor nativo Android.
+- Plugins de Capacitor para la aplicación, preferencias, notificaciones locales y anuncios.
+- **Google AdMob** para anuncios nativos, bonificados e intersticiales.
+- **Font Awesome** y **Tom Select** se cargan desde CDN en `frontend/index.html`.
 
-### Build Tool y Servidor de Desarrollo
-- **Vite** - Herramienta de build y servidor de desarrollo (sin archivo de configuración explícito)
+El proyecto también conserva dependencias de Firebase y notificaciones push, pero no inicializa Firebase Analytics ni registra notificaciones push desde el arranque actual de la aplicación.
 
-### Capacitor
-- **@capacitor/core** v8.0.0 - Core de Capacitor
-- **@capacitor/android** v8.0.0 - Plataforma Android
-- **@capacitor/cli** v8.0.0 - CLI de Capacitor
-- **@capacitor/assets** v3.0.5 - Gestión de assets
+## Requisitos previos
 
-### Plugins de Capacitor
-- **@capacitor/app** v8.0.0 - Información de la aplicación
-- **@capacitor/preferences** v8.0.1 - Almacenamiento persistente
-- **@capacitor/local-notifications** v8.2.1 - Notificaciones locales
-- **@capacitor/push-notifications** v8.1.2 - Notificaciones push (FCM)
-- **@capacitor-community/admob** v8.0.0 - Anuncios de Google AdMob
-
-### Servicios de Firebase
-- **Firebase Analytics** - Análisis de uso de la aplicación
-- **Firebase Cloud Messaging (FCM)** - Servicio para recepción de notificaciones push
-
-### Lenguaje
-- JavaScript (ES6+)
-
-### Librerías Externas (CDN)
-- **Font Awesome** v6.4.0 - Iconos
-- **Tom Select** v2.2.2 - Componente de selección
-
----
-
-## Requisitos Previos
-
-- **Node.js** - Versión recomendada: 18.x o superior
-- **npm** - Gestor de paquetes de Node.js
-- **Android Studio** - Para desarrollo y compilación Android
-- **SDK Android** - Configurado en Android Studio
-
----
+- Node.js compatible con la versión de Vite del proyecto.
+- npm.
+- Android Studio y Android SDK para compilar o ejecutar la aplicación Android.
+- Un dispositivo o emulador Android para validar el comportamiento de los plugins nativos.
 
 ## Instalación
 
-1. **Clonar el repositorio:**
-   ```bash
-   git clone https://github.com/Heribeck/poketype-guess.git
-   cd Pokebeck-Hub/frontend
-   ```
-
-2. **Instalar dependencias:**
-   ```bash
-   npm install
-   ```
-
-3. **Configuración inicial:**
-   - Firebase ya está configurado en `src/js/firebase-config.js` (apiKey, authDomain, projectId, etc. - valores públicos de Firebase Web)
-   - AdMob ya está configurado en `src/js/Poketype-Guess/config.js` y `android/app/src/main/AndroidManifest.xml`
-
----
+```bash
+git clone https://github.com/Heribeck/poketype-guess.git
+cd poketype-guess/frontend
+npm install
+```
 
 ## Desarrollo con Vite
 
-### Ejecutar en navegador (entorno de desarrollo)
+Desde `frontend/`, inicia el servidor de desarrollo:
+
 ```bash
 npm run dev
 ```
 
-Vite permite ejecutar el frontend en el navegador como entorno de desarrollo, facilitando la depuración y desarrollo rápido. La plataforma objetivo actual es Android, pero muchas funcionalidades pueden probarse en el navegador.
+Para crear una compilación web optimizada:
 
-### Compilar para producción
 ```bash
 npm run build
 ```
 
-Este comando genera la carpeta `dist/` con los archivos optimizados para producción.
+Vite genera la salida en `frontend/dist/`. Para servir esa compilación localmente:
 
-### Previsualizar compilación de producción
 ```bash
 npm run preview
 ```
 
----
+## Ejecución y compilación Android con Capacitor
 
-## Ejecución y Compilación Android con Capacitor
+Después de compilar la aplicación web, sincroniza los archivos con el proyecto Android:
 
-### Sincronizar cambios con Capacitor
 ```bash
+npm run build
 npx cap sync android
-```
-
-Este comando sincroniza los cambios del código web (carpeta `dist/`) con el proyecto Android nativo.
-
-### Abrir Android Studio
-```bash
 npx cap open android
 ```
 
-### Ejecutar la aplicación
-Desde Android Studio:
-1. Selecciona el dispositivo/emulador deseado
-2. Presiona el botón "Run" o usa `Shift + F10`
+Desde Android Studio se puede ejecutar en un dispositivo o emulador y generar un APK o AAB firmado. La firma de release requiere una configuración local de keystore; no se deben guardar keystores ni contraseñas en el repositorio.
 
-### Generar APK/AAB
-Desde Android Studio:
-1. Build > Generate Signed Bundle / APK
-2. Selecciona APK o AAB
-3. Configura la firma con tu keystore
-4. Genera el archivo
+## Funcionalidades disponibles
 
----
+### PokeType Guess
 
-## Funcionalidades
+- **Estudio:** ligas Campista, As y Campeón, con niveles, progreso guardado y recompensas HX.
+- **Entrenamiento:** dificultades Fácil, Normal y Difícil, con desbloqueos por progreso y récords guardados.
+- **Desafío del Día:** reto diario con intentos y progreso persistentes.
+- **Generador:** genera combinaciones de tipos Pokémon.
 
-### Implementadas
-- Sistema de almacenamiento persistente con Capacitor Preferences
-- Sistema de notificaciones locales
-- Integración con Firebase Analytics
-- Integración con Firebase Cloud Messaging (FCM) para notificaciones push
-- Integración con Google AdMob (banners, intersticiales, bonificados)
-- Sistema de HX (Hexium) - Moneda del juego
-- Sistema de vidas con regeneración
-- Modo de juego Type Guess (adivinar Pokémon por sus tipos)
-- Modo de juego Desafío del Día
-- Modo de juego Estudio (Ligas y Niveles)
-- Modo de juego Entrenamiento (Campista)
-- Sistema de desbloqueos progresivos por HX
-- Generador de tipos
+### Sistemas de la aplicación
 
-### En desarrollo
-- Completar implementación de todos los juegos documentados en la documentación del proyecto
-- Sistema de estadísticas y récords
-- Optimización de rendimiento
-- Herramientas adicionales (Pokédex, Team Builder, Type Coverage Calculator)
+- **Vidas:** hasta tres vidas, con regeneración de una vida por hora y opción de recuperar una mediante un anuncio bonificado.
+- **HX:** moneda de progreso usada por el juego.
+- **Racha diaria:** progreso de actividad consecutiva.
+- **Anuncios:** formatos nativo, bonificado e intersticial integrados con AdMob.
+- **Notificaciones locales:** permiso y programación de notificaciones, incluida la notificación de vidas completas.
+- **Audio:** música y efectos de sonido de la aplicación y los modos.
 
----
+## Persistencia de datos
 
-## Persistencia de Datos
+El proyecto no tiene backend. El progreso y las preferencias se guardan en el dispositivo usando Capacitor Preferences. Esto incluye, entre otros datos, HX, racha, vidas, niveles de Estudio, progreso del Desafío del Día y récords de Entrenamiento.
 
-No existe backend ni base de datos externa. Toda la información se guarda localmente en el dispositivo.
+Los datos estáticos del juego, la Pokédex y los recursos visuales y de audio se distribuyen en `frontend/public/assets/`. Desinstalar la aplicación puede eliminar el progreso local; actualmente no hay sincronización ni copia de seguridad entre dispositivos.
 
-### Tecnologías de almacenamiento
-- **Capacitor Preferences** - Almacenamiento persistente nativo (principal en Android)
-- **localStorage** - Fallback para navegadores durante el desarrollo
+## Estructura del proyecto
 
-### Información guardada localmente
-- Progreso del jugador en diferentes modos de juego
-- Sistema de HX (Hexium)
-- Sistema de vidas y regeneración
-- Niveles completados en modo Estudio
-- Configuraciones y preferencias del usuario
-- Contadores para control de anuncios intersticiales
+El código de la aplicación vive en `frontend/`. La lógica de negocio de PokeType se organiza bajo `src/features/poketype/`; las pantallas React la conectan con la interfaz.
 
----
-
-## Estructura del Proyecto
-
-```
+```text
 frontend/
-├── src/
-│   ├── css/              # Estilos de la aplicación
-│   └── js/
-│       ├── Poketype-Guess/  # Lógica principal de juegos y modos
-│       ├── admob.js          # Gestión de anuncios AdMob
-│       ├── celebracion.js    # Animaciones de celebración
-│       ├── eventosMain.js    # Eventos principales de la app
-│       ├── firebase-config.js # Configuración de Firebase
-│       ├── main.js           # Punto de entrada
-│       └── victoria.js       # Pantalla de victoria
 ├── public/
-│   ├── assets/          # Assets estáticos (imágenes, sonidos, datos)
-│   └── manifest.json    # Manifest de la aplicación
-├── docs/                # Documentación del proyecto
-├── android/             # Proyecto Android nativo (generado por Capacitor)
-├── index.html           # HTML principal
-├── capacitor.config.json  # Configuración de Capacitor
-├── capacitor-assets.config.json  # Configuración de assets
-└── package.json         # Dependencias y scripts
+│   └── assets/
+│       ├── data/
+│       ├── icons/
+│       ├── img/
+│       └── sonidos/
+├── src/
+│   ├── app.jsx
+│   ├── config/
+│   ├── home/
+│   ├── features/poketype/
+│   │   ├── data/
+│   │   ├── modes/
+│   │   │   ├── daily-challenge/
+│   │   │   ├── generator/
+│   │   │   ├── study/
+│   │   │   └── training/
+│   │   ├── state/
+│   │   ├── storage/
+│   │   └── systems/
+│   ├── screens/
+│   ├── components/
+│   ├── shared/
+│   └── styles/
+├── android/
+├── index.html
+├── capacitor.config.json
+├── vite.config.js
+└── package.json
 ```
 
----
+- `src/app.jsx` monta React y conecta la navegación de la aplicación.
+- `src/screens/` contiene las pantallas principales y las pantallas específicas de PokeType.
+- `src/features/` contiene las reglas, los datos y la persistencia propios de las funcionalidades.
+- `src/home/` contiene el arranque, el estado global y sistemas como HX y racha.
+- `src/shared/` contiene servicios reutilizables, incluidos AdMob, audio, notificaciones, almacenamiento y utilidades.
+- `src/styles/` contiene los estilos de la aplicación.
+- `public/assets/` contiene los recursos que se cargan como archivos estáticos.
+- `android/` contiene el proyecto nativo generado y mantenido por Capacitor.
 
 ## Configuración
 
-El proyecto utiliza archivos de configuración en lugar de variables de entorno.
+- `frontend/capacitor.config.json`: nombre de la aplicación, identificador de Capacitor y directorio de build.
+- `frontend/src/config/admob.js`: identificadores de unidades de anuncios de AdMob.
+- `frontend/src/features/poketype/`: configuración interna de cada modo, como niveles intersticiales y parámetros de juego.
+- `frontend/src/shared/storage/preferencesKeys.js`: claves usadas para guardar datos con Capacitor Preferences.
+- `frontend/android/app/src/main/AndroidManifest.xml`: permisos y metadatos nativos de Android.
 
-### Archivos de configuración principales
+No se requieren archivos `.env` para ejecutar el proyecto según la configuración actual. No agregues al repositorio keystores, contraseñas ni credenciales privadas.
 
-#### `capacitor.config.json`
-Configuración de Capacitor:
-- `appId`: com.heribeck.poketype
-- `appName`: Poketype-Guess
-- `webDir`: dist
-- Plugins: LocalNotifications configurado para mostrar en foreground
+## Arquitectura y decisiones técnicas
 
-#### `src/js/firebase-config.js`
-Configuración de Firebase Web:
-- apiKey, authDomain, projectId, storageBucket, messagingSenderId, appId, measurementId
-- Inicializa Firebase Analytics
-- **Nota:** Estos valores son públicos por diseño de Firebase y no representan un riesgo de seguridad.
+- La aplicación usa React con navegación basada en el estado de pantalla definido en `src/app.jsx`.
+- Vite sirve la aplicación durante el desarrollo y crea la compilación web que Capacitor sincroniza con Android.
+- Las pantallas y componentes de interfaz consumen la lógica organizada en `features/`; las integraciones reutilizables se encuentran en `shared/`.
+- La persistencia del usuario es local y usa Capacitor Preferences. Los datos estáticos se sirven desde `public/assets/`.
+- AdMob y las notificaciones locales dependen de plugins nativos y de los permisos correspondientes. Su disponibilidad puede variar en navegador.
+- No se debe considerar Firebase Analytics o FCM como una integración activa del arranque actual: aunque quedan dependencias y archivos relacionados, la inicialización no está conectada en el flujo de inicio.
 
-#### `src/js/Poketype-Guess/config.js`
-Configuración del juego:
-- IDs de AdMob (Banner, Intersticial, Bonificado)
-- Configuración de tipos de Pokémon
-- Elementos DOM agrupados
-- Estado del juego (gameState, timeState, adState, scoreState)
-- Archivos de audio y música
+## Scripts disponibles
 
-#### `android/app/src/main/AndroidManifest.xml`
-Configuración Android:
-- ID de aplicación de AdMob
-- Configuración de Firebase Messaging
-- Permisos de la aplicación
-
-### Archivos que NO deben incluirse en el repositorio
-- Keystores de Android (*.jks, *.keystore)
-- Claves privadas
-- Credenciales sensibles
-- Archivos de configuración con secretos reales
-
----
-
-## Arquitectura y Decisiones Técnicas
-
-### Por qué Capacitor
-- Permite desarrollar la interfaz utilizando tecnologías web y empaquetarla como aplicación Android
-- Proporciona acceso a APIs nativas del dispositivo mediante plugins
-- Facilita el desarrollo y despliegue en múltiples plataformas
-
-### Por qué almacenamiento local
-- No requiere servidor ni backend
-- Reduce costos de infraestructura
-- Permite que las funcionalidades basadas en datos locales continúen funcionando sin conexión a internet
-- Los datos permanecen en el dispositivo del usuario
-
-### Por qué no existe backend actualmente
-- Fase inicial del proyecto enfocada en funcionalidad core
-- Reducción de complejidad y costos
-- Los datos del juego no requieren sincronización entre dispositivos en esta etapa
-
-### Wrapper de plugins seguros
-El proyecto implementa un wrapper `ejecutarPluginSeguro` en `src/js/Poketype-Guess/utils.js` que:
-- Verifica disponibilidad del plugin con `Capacitor.isPluginAvailable()`
-- Ejecuta la función del plugin nativo
-- Proporciona fallback a localStorage cuando el plugin no está disponible
-- Maneja errores de forma centralizada
-
----
-
-## Scripts Disponibles
+Ejecuta estos comandos desde `frontend/`:
 
 ```bash
-npm run dev          # Inicia servidor de desarrollo con Vite
-npm run build        # Compila la aplicación para producción (carpeta dist/)
-npm run preview      # Previsualiza la compilación de producción
+npm run dev      # Inicia Vite en modo desarrollo
+npm run build    # Compila la aplicación en frontend/dist/
+npm run preview  # Previsualiza la compilación
 ```
 
----
+## Estado del proyecto y próximos pasos
 
-## Estado del Proyecto / Roadmap
+El núcleo de PokeType Guess, la navegación principal, el almacenamiento local y las integraciones actuales de AdMob y notificaciones locales están implementados.
 
-### Terminado
-- Estructura base de la aplicación
-- Sistema de almacenamiento persistente con Capacitor Preferences
-- Integración con Capacitor y plugins principales
-- Sistema de anuncios AdMob (banners, intersticiales, bonificados)
-- Integración con Firebase Analytics y FCM
-- Sistema de HX (Hexium)
-- Sistema de vidas con regeneración
-- Modos de juego: Type Guess, Desafío del Día, Estudio, Entrenamiento
-- Sistema de desbloqueos progresivos
-- Generador de tipos
-
-### En desarrollo
-- Completar implementación de juegos documentados (Adivina Habilidad, Impostor, ¿Quién soy?, Trivia General, Who's That Pokémon?)
-- Herramientas: Pokédex, Team Builder, Type Coverage Calculator
-- Sistema de estadísticas y récords
-- Optimización de rendimiento y UX
-
-### Planeado
-- Sincronización de datos entre dispositivos (opcional)
-- Más juegos y herramientas
-- Mejoras en el sistema de notificaciones
-- Versión iOS
-
----
+El catálogo y el perfil indican las funciones que aún no están disponibles, como Pokédex independiente, Team Builder, cobertura de tipos, favoritos, estadísticas detalladas, logros, ranking y copia de seguridad. La sincronización de progreso entre dispositivos tampoco está implementada.
 
 ## Permisos de Android
 
-La aplicación requiere los siguientes permisos declarados en `android/app/src/main/AndroidManifest.xml`:
+El manifiesto Android declara los siguientes permisos:
 
-- **INTERNET** - Necesario para cargar anuncios de AdMob, Firebase Analytics y notificaciones push
-- **VIBRATE** - Para feedback háptico en ciertas interacciones del juego
-- **com.google.android.gms.permission.AD_ID** - Requerido por AdMob para mostrar anuncios personalizados
-- **POST_NOTIFICATIONS** - Para mostrar notificaciones locales y push
-- **SCHEDULE_EXACT_ALARM** - Para programar alarmas exactas para notificaciones locales
+- `INTERNET`: acceso de red, necesario para servicios como AdMob.
+- `VIBRATE`: vibración.
+- `com.google.android.gms.permission.AD_ID`: acceso al identificador publicitario.
+- `POST_NOTIFICATIONS`: notificaciones.
+- `SCHEDULE_EXACT_ALARM`: programación de alarmas exactas para notificaciones.
 
----
+La disponibilidad y el efecto de cada permiso dependen de la versión de Android y de la autorización concedida por el usuario.
 
-## Limitaciones Conocidas
+## Limitaciones conocidas
 
-- Datos almacenados únicamente en el dispositivo del usuario
-- Sin sincronización entre dispositivos
-- Pérdida de datos si el usuario desinstala la aplicación
-- Dependencia de conexión a internet para: anuncios de AdMob, Firebase Analytics, notificaciones push FCM
-- Solo disponible para Android (iOS planeado para futuro)
-- Las funcionalidades basadas en datos locales pueden funcionar sin conexión, pero las que dependen de servicios externos no
-
----
+- El progreso se almacena en el dispositivo y no se sincroniza con una cuenta ni con otros dispositivos.
+- La desinstalación puede eliminar los datos locales.
+- Los anuncios requieren conectividad y disponibilidad del servicio AdMob.
+- Los plugins nativos y los permisos de Android no se comportan necesariamente igual en el navegador.
+- Algunas opciones del catálogo y del perfil están marcadas como próximas y todavía no tienen funcionalidad.
+- El `appId` de Capacitor no coincide con el `applicationId` nativo de Android; revisar esa diferencia antes de una sincronización o publicación.
 
 ## Licencia
 
-ISC
-
----
+ISC.
 
 ## Repositorio
 
-https://github.com/Heribeck/poketype-guess
+[Heribeck/poketype-guess](https://github.com/Heribeck/poketype-guess)

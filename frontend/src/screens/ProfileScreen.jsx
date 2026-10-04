@@ -96,6 +96,10 @@ export default function ProfileScreen() {
           <button type="button" className="ProfileDataButton" onClick={showComingSoon}>Importar todos los datos</button>
         </div>
       </section>
+
+      <div className="ProfileSectionFooter">
+        <span className="ProfileSectionHint">Versión de la aplicación: 2.3.7</span>
+      </div>
     </section>
   );
 }
