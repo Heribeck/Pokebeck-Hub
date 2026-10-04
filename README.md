@@ -36,7 +36,7 @@ La interfaz está implementada con React y se empaqueta para Android mediante Ca
 - PokeType Guess ofrece los modos Estudio, Entrenamiento y Desafío del Día.
 - El Generador de tipos está disponible desde las secciones Herramientas y PokeType.
 - Pokédex, Team Builder y Type Coverage Calculator aparecen en el catálogo como funciones próximas; aún no están disponibles.
-- El perfil muestra HX y racha diaria. Favoritos, historial, logros, ranking y copia de seguridad se presentan como funciones próximas.
+- El perfil muestra HX, racha diaria y el logro de maestría cuando se completa todo el modo Estudio. Favoritos, historial, ranking y copia de seguridad siguen como funciones próximas.
 - El progreso se guarda localmente. No hay un backend ni sincronización entre dispositivos.
 
 ## Distribución e identificadores
@@ -50,11 +50,11 @@ La configuración nativa de [build.gradle](./frontend/android/app/build.gradle) 
 - **JavaScript** (ES modules), **React 19** y **React DOM 19** para la aplicación.
 - **Vite 8** para el servidor de desarrollo y la compilación web.
 - **Capacitor 8** para el contenedor nativo Android.
-- Plugins de Capacitor para la aplicación, preferencias, notificaciones locales y anuncios.
+- Plugins de Capacitor para la aplicación, preferencias, notificaciones locales, notificaciones push y anuncios.
 - **Google AdMob** para anuncios nativos, bonificados e intersticiales.
 - **Font Awesome** y **Tom Select** se cargan desde CDN en `frontend/index.html`.
 
-El proyecto también conserva dependencias de Firebase y notificaciones push, pero no inicializa Firebase Analytics ni registra notificaciones push desde el arranque actual de la aplicación.
+En Android, la aplicación registra el dispositivo en Firebase Cloud Messaging (FCM) al iniciar si el permiso de notificaciones está concedido y puede recibir mensajes push enviados desde Firebase. Firebase Analytics no está inicializado en el flujo actual.
 
 ## Requisitos previos
 
@@ -118,7 +118,7 @@ Desde Android Studio se puede ejecutar en un dispositivo o emulador y generar un
 - **HX:** moneda de progreso usada por el juego.
 - **Racha diaria:** progreso de actividad consecutiva.
 - **Anuncios:** formatos nativo, bonificado e intersticial integrados con AdMob.
-- **Notificaciones locales:** permiso y programación de notificaciones, incluida la notificación de vidas completas.
+- **Notificaciones:** notificaciones locales programadas, incluida la de vidas completas, y push de FCM enviadas desde Firebase. En primer plano, las push recibidas se muestran como notificación del sistema.
 - **Audio:** música y efectos de sonido de la aplicación y los modos.
 
 ## Persistencia de datos
@@ -190,7 +190,7 @@ No se requieren archivos `.env` para ejecutar el proyecto según la configuraci�
 - Las pantallas y componentes de interfaz consumen la lógica organizada en `features/`; las integraciones reutilizables se encuentran en `shared/`.
 - La persistencia del usuario es local y usa Capacitor Preferences. Los datos estáticos se sirven desde `public/assets/`.
 - AdMob y las notificaciones locales dependen de plugins nativos y de los permisos correspondientes. Su disponibilidad puede variar en navegador.
-- No se debe considerar Firebase Analytics o FCM como una integración activa del arranque actual: aunque quedan dependencias y archivos relacionados, la inicialización no está conectada en el flujo de inicio.
+- FCM se inicializa durante el arranque si el permiso compartido de notificaciones está concedido. Los mensajes que Android debe mostrar automáticamente en segundo plano deben enviarse como notificaciones desde Firebase; los mensajes recibidos en primer plano se reenvían a Notificaciones locales. Firebase Analytics no está activo.
 
 ## Scripts disponibles
 
@@ -206,7 +206,7 @@ npm run preview  # Previsualiza la compilación
 
 El núcleo de PokeType Guess, la navegación principal, el almacenamiento local y las integraciones actuales de AdMob y notificaciones locales están implementados.
 
-El catálogo y el perfil indican las funciones que aún no están disponibles, como Pokédex independiente, Team Builder, cobertura de tipos, favoritos, estadísticas detalladas, logros, ranking y copia de seguridad. La sincronización de progreso entre dispositivos tampoco está implementada.
+El catálogo y el perfil indican las funciones que aún no están disponibles, como Pokédex independiente, Team Builder, cobertura de tipos, favoritos, estadísticas detalladas, ranking y copia de seguridad. La sincronización de progreso entre dispositivos tampoco está implementada.
 
 ## Permisos de Android
 

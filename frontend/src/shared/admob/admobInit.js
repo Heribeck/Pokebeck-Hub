@@ -10,12 +10,12 @@ const admobAvailable = () => Capacitor.isPluginAvailable('AdMob')
 export async function initAdMob() {
   if (adState.inicializado) {
     console.warn('AdMob ya está inicializado.')
-    return
+    return true
   }
 
   if (!admobAvailable()) {
     console.warn('AdMob no disponible en este dispositivo.')
-    return
+    return false
   }
 
   try {
@@ -25,11 +25,16 @@ export async function initAdMob() {
     })
 
     registerListeners()
-    await setupAds()
-
     setInicializado(true)
+    setTimeout(() => {
+      setupAds().catch((error) => {
+        console.error('Error al preparar los anuncios secundarios:', error)
+      })
+    }, 0)
+    return true
 
   } catch (error) {
     console.error('Error al inicializar AdMob:', error)
+    return false
   }
 }

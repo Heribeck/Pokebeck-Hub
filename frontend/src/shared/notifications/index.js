@@ -5,3 +5,4 @@ export {
   showNotification,
 } from './localNotifications.js';
 export { requestNotificationPermission } from './permissionsNotifications.js';
+export { inicializarPushFCM } from './pushNotifications.js';

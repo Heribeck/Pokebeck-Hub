@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Capacitor } from '@capacitor/core';
 import { ADS_CONFIG } from '../../../config/index.js';
-import { NativeAds } from './nativeAds.js';
+import { NativeAds, waitForNativeAdPreload } from './nativeAds.js';
 
 const supportsNativeAds = Capacitor.getPlatform() === 'android';
 
@@ -54,33 +54,43 @@ export default function NativeAd({ placementId, size = 'compact', suspended = fa
     window.visualViewport?.addEventListener('resize', updatePosition);
     window.visualViewport?.addEventListener('scroll', updatePosition);
 
-    NativeAds.showNativeAd({
-      slotId: placementId,
-      size,
-      adUnitId: ADS_CONFIG.NATIVE_AD,
-      ...initialPosition,
-    })
-      .then(() => {
-        if (disposed) {
-          return NativeAds.hideNativeAd({ slotId: placementId });
-        }
+    const showAd = async () => {
+      await waitForNativeAdPreload(size);
+      if (disposed) return;
 
-        loadedRef.current = true;
-        NativeAds.preloadNativeAd({ size, adUnitId: ADS_CONFIG.NATIVE_AD }).catch((error) => {
-          console.warn(`No se pudo reponer el anuncio nativo ${size}:`, error);
-        });
-        if (suspendedRef.current) {
-          return NativeAds.setNativeAdVisibility({ slotId: placementId, visible: false });
-        }
-        positionFrame = window.requestAnimationFrame(updatePosition);
-        return undefined;
-      })
-      .catch((error) => {
-        if (!disposed) {
-          console.warn('No se pudo mostrar el anuncio nativo:', error);
-          setAvailable(false);
-        }
+      const position = getPosition();
+      if (!position) {
+        setAvailable(false);
+        return;
+      }
+
+      await NativeAds.showNativeAd({
+        slotId: placementId,
+        size,
+        adUnitId: ADS_CONFIG.NATIVE_AD,
+        ...position,
       });
+
+      if (disposed) {
+        return NativeAds.hideNativeAd({ slotId: placementId });
+      }
+
+      loadedRef.current = true;
+      NativeAds.preloadNativeAd({ size, adUnitId: ADS_CONFIG.NATIVE_AD }).catch((error) => {
+        console.warn(`No se pudo reponer el anuncio nativo ${size}:`, error);
+      });
+      if (suspendedRef.current) {
+        return NativeAds.setNativeAdVisibility({ slotId: placementId, visible: false });
+      }
+      positionFrame = window.requestAnimationFrame(updatePosition);
+    };
+
+    showAd().catch((error) => {
+      if (!disposed) {
+        console.warn('No se pudo mostrar el anuncio nativo:', error);
+        setAvailable(false);
+      }
+    });
 
     return () => {
       disposed = true;

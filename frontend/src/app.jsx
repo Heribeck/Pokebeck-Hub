@@ -16,6 +16,18 @@ import GameChallengeScreen from './screens/poketype/daily-challenge/GameChalleng
 import GeneratorScreen from './screens/poketype/generator/GeneratorScreen.jsx';
 import StreakResetDialog from './components/StreakResetDialog.jsx';
 import { playAppMusic } from './shared/audio/index.js';
+import { showToast } from './shared/toast/index.js';
+
+const DATA_DEPENDENT_SCREENS = new Set([
+    'games',
+    'tools',
+    'poketype',
+    'leagues',
+    'difficultyTraining',
+    'gameTraining',
+    'gameChallenge',
+    'generator',
+]);
 
 const root = createRoot(document.getElementById('root'));
 root.render(<App />);
@@ -24,6 +36,7 @@ export default function App() {
     const [screen, setScreen] = useState('splash');
     const [currentDifficulty, setCurrentDifficulty] = useState(null);
     const [expiredStreak, setExpiredStreak] = useState(null);
+    const [gameDataStatus, setGameDataStatus] = useState('loading');
     const mainSection = screen === 'home'
         ? 'home'
         : screen === 'tools' || screen === 'generator'
@@ -42,13 +55,30 @@ export default function App() {
     ];
 
     const handleNavigation = (screen, difficulty = null) => {
+        if (DATA_DEPENDENT_SCREENS.has(screen) && gameDataStatus !== 'ready') {
+            showToast(
+                gameDataStatus === 'error'
+                    ? 'No se pudieron preparar los modos de juego. Comprueba tu conexión e inténtalo de nuevo.'
+                    : 'Preparando los datos de juego...',
+            );
+            return;
+        }
+
         if (difficulty) setCurrentDifficulty(difficulty);
         setScreen(screen);
         window.scrollTo(0, 0);
     };
 
     useEffect(() => {   
-        initApp(setScreen, setExpiredStreak);
+        initApp(
+            setScreen,
+            setExpiredStreak,
+            () => setGameDataStatus('ready'),
+            () => setGameDataStatus('error'),
+        ).catch((error) => {
+            console.error('Error durante el arranque de Pokebeck Hub:', error);
+            setGameDataStatus('error');
+        });
         initBackButton(setScreen);
     }, []);
 

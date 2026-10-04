@@ -1,6 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-const COLORES = ['#E3350D', '#FFD700', '#3B82F6', '#FFFFFF', '#FF6B6B', '#4ECDC4', '#F7DC6F'];
+const COLORES = [
+  'var(--accent-red)',
+  'var(--accent-yellow)',
+  'var(--accent-yellow-light)',
+  'var(--text-primary)',
+  'var(--color-success)',
+];
 const PARTICULAS = 170;
 
 function crearParticulas() {
@@ -29,6 +35,7 @@ export default function StudyVictory({ onClose }) {
   const [mostrarConfeti, setMostrarConfeti] = useState(true);
   const [mostrarModal, setMostrarModal] = useState(false);
   const [particulas] = useState(crearParticulas);
+  const continuarButtonRef = useRef(null);
 
   useEffect(() => {
     navigator.vibrate?.([200, 100, 200, 100, 400]);
@@ -40,6 +47,10 @@ export default function StudyVictory({ onClose }) {
       window.clearTimeout(timeoutModal);
     };
   }, []);
+
+  useEffect(() => {
+    if (mostrarModal) continuarButtonRef.current?.focus();
+  }, [mostrarModal]);
 
   if (!mostrarConfeti && !mostrarModal) return null;
 
@@ -68,7 +79,7 @@ export default function StudyVictory({ onClose }) {
       )}
       {mostrarModal && (
         <div className="VictoryDialog" role="dialog" aria-modal="true" aria-labelledby="study-victory-title">
-          <div className="VictoryDialogContent">
+          <section className="VictoryDialogContent" aria-describedby="study-victory-description">
             <button
               className="VictoryDialogCloseButton"
               type="button"
@@ -77,9 +88,25 @@ export default function StudyVictory({ onClose }) {
             >
               ×
             </button>
-            <h2 id="study-victory-title">¡Felicidades, Maestro Pokémon!</h2>
-            <p>Has completado todos los niveles de las tres ligas de Estudio.</p>
-          </div>
+            <div className="VictoryDialogEmblem" aria-hidden="true">🏆</div>
+            <p className="VictoryDialogEyebrow">Las tres ligas conquistadas</p>
+            <h2 id="study-victory-title">MAESTRÍA EN POKETYPE</h2>
+            <p className="VictoryDialogMessage" id="study-victory-description">
+              Completaste todos los niveles del modo Estudio. Tu logro ya está disponible en el perfil.
+            </p>
+            <div className="VictoryAchievementBadge">
+              <span className="VictoryAchievementIcon" aria-hidden="true">🏅</span>
+              <span>Logro desbloqueado en tu perfil</span>
+            </div>
+            <button
+              ref={continuarButtonRef}
+              className="VictoryDialogButton"
+              type="button"
+              onClick={onClose}
+            >
+              ¡Continuar!
+            </button>
+          </section>
         </div>
       )}
     </>

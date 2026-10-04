@@ -135,3 +135,5 @@ export function obtenerConfiguracionNivel(nivelId) {
 export const nivelesPorLiga = Object.fromEntries(
   Object.entries(datosLigas).map(([ligaKey, liga]) => [ligaKey, liga.niveles.map(n => n.id)])
 );
+
+export const TODOS_LOS_NIVELES = Object.values(nivelesPorLiga).flat();

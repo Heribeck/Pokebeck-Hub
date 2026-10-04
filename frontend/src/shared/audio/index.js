@@ -6,4 +6,5 @@ export {
   playTouchSound,
   playWinSound,
   resumeCurrentMusic,
+  stopMusic
 } from './audio.js';

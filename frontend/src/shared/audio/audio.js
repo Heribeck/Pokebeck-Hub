@@ -39,7 +39,7 @@ function playMusic(track, volume) {
     playAudio(track, 'music');
 }
 
-function stopMusic() {
+export function stopMusic() {
     if (!currentMusic) return;
     currentMusic.pause();
     currentMusic.currentTime = 0;

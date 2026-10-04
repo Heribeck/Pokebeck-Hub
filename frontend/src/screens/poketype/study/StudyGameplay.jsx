@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { crearIntentoNivel, procesarRondaNivel, calcularResultadoNivel } from '../../../features/poketype/modes/study/gameplay/levelMotor.js';
-import { nivelesPorLiga, obtenerConfiguracionNivel } from '../../../features/poketype/modes/study/gameplay/levelRegistry.js';
+import { obtenerConfiguracionNivel, TODOS_LOS_NIVELES } from '../../../features/poketype/modes/study/gameplay/levelRegistry.js';
 import { crearEstadoRondas, generarSiguienteRonda } from '../../../features/poketype/modes/study/gameplay/roundGenerator.js';
 import { haCompletadoTodos, marcarNivelCompletado, yaCompletoNivel } from '../../../features/poketype/modes/study/storage/levelProgressStorage.js';
 import { obtenerVelocidadTiempo } from '../../../features/poketype/modes/study/config/timeConfig.js';
@@ -15,11 +15,11 @@ import { capitalizeFirstLetter } from '../../../shared/strings/index.js';
 import { playLoseSound, playWinSound } from '../../../shared/audio/index.js';
 import { showInsterstitial } from '../../../shared/admob/index.js';
 import StudyVictory from './StudyVictory.jsx';
+import UnlockNotice from './UnlockNotice.jsx';
 
 const TIEMPO_INICIAL = 100;
 const INTERVALO_TICK_MS = 100;
 const NIVEL_FINAL_ESTUDIO = 'campeon-18';
-const TODOS_LOS_NIVELES = Object.values(nivelesPorLiga).flat();
 
 export default function StudyGameplay({ nivelId, onBack }) {
   const [intento, setIntento] = useState(null);
@@ -37,6 +37,7 @@ export default function StudyGameplay({ nivelId, onBack }) {
   const [resultadoFinal, setResultadoFinal] = useState(null);
   const [estadoRecompensaHX, setEstadoRecompensaHX] = useState(null);
   const [mostrarVictoria, setMostrarVictoria] = useState(false);
+  const [avisosDesbloqueo, setAvisosDesbloqueo] = useState([]);
   const [tiempoLeft, setTiempoLeft] = useState(TIEMPO_INICIAL);
   const [sinRondaDisponible, setSinRondaDisponible] = useState(false);
   const timerRef = useRef(null);
@@ -58,6 +59,7 @@ export default function StudyGameplay({ nivelId, onBack }) {
     setResultadoFinal(null);
     setEstadoRecompensaHX(null);
     setMostrarVictoria(false);
+    setAvisosDesbloqueo([]);
     setNivelTerminado(false);
     setRespondida(false);
     setResultadoRonda(null);
@@ -170,7 +172,8 @@ export default function StudyGameplay({ nivelId, onBack }) {
           const progresoCompleto = await haCompletadoTodos(TODOS_LOS_NIVELES);
           if (progresoCompleto) setMostrarVictoria(true);
         }
-        await verificarDesbloqueos(nivelId, config.liga);
+        const nuevosDesbloqueos = await verificarDesbloqueos(nivelId, config.liga);
+        setAvisosDesbloqueo(nuevosDesbloqueos);
       } else {
         await restarVidaGeneral();
       }
@@ -236,6 +239,12 @@ export default function StudyGameplay({ nivelId, onBack }) {
           <button className="NextButton" onClick={() => window.location.reload()}>Jugar de Nuevo</button>
         </div>
         {mostrarVictoria && <StudyVictory onClose={() => setMostrarVictoria(false)} />}
+        {avisosDesbloqueo.length > 0 && (
+          <UnlockNotice
+            unlocks={avisosDesbloqueo}
+            onClose={() => setAvisosDesbloqueo([])}
+          />
+        )}
       </div>
     );
   }
