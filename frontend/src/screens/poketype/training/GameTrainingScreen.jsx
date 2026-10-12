@@ -37,6 +37,7 @@ export default function GameTrainingScreen({ onNavigation, currentDifficulty }) 
     const [showNext, setShowNext] = useState(false)
     const [showRetry, setShowRetry] = useState(false)
     const [showRevive, setShowRevive] = useState(false)
+    const [showBack, setShowBack] = useState(true)
     const [reviveLoading, setReviveLoading] = useState(false)
 
     const revivedThisRun = useRef(false)
@@ -71,6 +72,7 @@ export default function GameTrainingScreen({ onNavigation, currentDifficulty }) 
         setGameStarted(true)
         revivedThisRun.current = false
         setShowRevive(false)
+        setShowBack(false)
         trainingLogic(setType1, setType2, setOptions, setCorrectPokemon, setTimerValue, handleTimeOut, currentDifficulty)
     }
 
@@ -80,6 +82,7 @@ export default function GameTrainingScreen({ onNavigation, currentDifficulty }) 
         setAnswered(true)
         setMessage(`Se acabó el tiempo. La respuesta correcta era ${capitalizeFirstLetter(correctPokemon.name)}`)
         setShowRetry(true)
+        setShowBack(true)
         setShowRevive(!revivedThisRun.current)
         setScore(0)
         setOptions([])
@@ -113,6 +116,7 @@ export default function GameTrainingScreen({ onNavigation, currentDifficulty }) 
             setScore(0)
             setShowRetry(true)
             setShowRevive(!revivedThisRun.current)
+            setShowBack(true)
             setOptions([])
             saveCurrentScore(0)
         }
@@ -131,6 +135,7 @@ export default function GameTrainingScreen({ onNavigation, currentDifficulty }) 
         setAnswered(false)
         setShowRetry(false)
         setShowRevive(false)
+        setShowBack(false)
         setMessage('')
         setScore(0)
         setOptions([])
@@ -168,6 +173,7 @@ export default function GameTrainingScreen({ onNavigation, currentDifficulty }) 
             setAnswered(false)
             setShowRetry(false)
             setShowRevive(false)
+            setShowBack(false)
             setMessage('¡Has revivido! Sigue avanzando.')
             setTimerValue(100)
             trainingLogic(setType1, setType2, setOptions, setCorrectPokemon, setTimerValue, handleTimeOut, currentDifficulty)
@@ -234,7 +240,7 @@ export default function GameTrainingScreen({ onNavigation, currentDifficulty }) 
                         <i className="fa-solid fa-circle-play" aria-hidden="true"></i>
                     </button>
                 )}
-                <button className="BackButton" onClick={handleBackToDifficulty}>Volver a Dificultad</button>
+                {showBack && <button className="BackButton" onClick={handleBackToDifficulty}>Volver a Dificultad</button>}
             </div>
             {score > 0 && score % 5 === 0 && <TrainingCelebration score={score} />}
 

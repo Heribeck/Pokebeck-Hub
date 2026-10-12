@@ -1,6 +1,6 @@
 import { NativeAd } from '../shared/admob/native/index.js';
 
-export default function HomeScreen({ onNavigation }) {
+export default function HomeScreen({ onNavigation, streakDialogOpen }) {
   return (
     <section className="HomeScreen">
       <header className="GlobalHeader HomeWelcome">
@@ -12,7 +12,7 @@ export default function HomeScreen({ onNavigation }) {
         </p>
       </header>
 
-      <NativeAd placementId="home" size="large" />
+      <NativeAd placementId="home" size="large" suspended={streakDialogOpen} />
 
       <section className="HomeFeaturedGame" aria-labelledby="FeaturedGameTitle">
         <p className="HomeFeaturedEyebrow">Juego destacado</p>

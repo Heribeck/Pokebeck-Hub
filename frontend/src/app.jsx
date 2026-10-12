@@ -15,6 +15,7 @@ import GameTrainingScreen from './screens/poketype/training/GameTrainingScreen.j
 import GameChallengeScreen from './screens/poketype/daily-challenge/GameChallengeScreen.jsx';
 import GeneratorScreen from './screens/poketype/generator/GeneratorScreen.jsx';
 import StreakResetDialog from './components/StreakResetDialog.jsx';
+import ConnectivityBanner from './components/ConnectivityBanner.jsx';
 import { playAppMusic } from './shared/audio/index.js';
 import { showToast } from './shared/toast/index.js';
 
@@ -89,6 +90,7 @@ export default function App() {
 
     return (
         <div className="AppShell">
+            <ConnectivityBanner />
             <Toast />
             {expiredStreak && (
                 <StreakResetDialog
@@ -115,7 +117,7 @@ export default function App() {
                 </nav>
             )}
             <main className="AppContent">
-                { screen === 'home' && <HomeScreen onNavigation={handleNavigation} /> }
+                { screen === 'home' && <HomeScreen onNavigation={handleNavigation} streakDialogOpen={!!expiredStreak} /> }
                 {(screen === 'games' || screen === 'tools') && (
                     <CatalogScreen section={screen} onNavigation={handleNavigation} />
                 )}
