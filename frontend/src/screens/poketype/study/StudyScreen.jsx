@@ -16,6 +16,7 @@ export default function StudyScreen({ onNavigation }) {
   const [nivelRequerido, setNivelRequerido] = useState(null);
   const [jugando, setJugando] = useState(false);
   const [nivelIdJugando, setNivelIdJugando] = useState(null);
+  const [retryKey, setRetryKey] = useState(0);
 
   useEffect(() => {
     if (jugando && nivelIdJugando) {
@@ -80,12 +81,18 @@ export default function StudyScreen({ onNavigation }) {
     setVista('niveles');
   };
 
+  const handleRetryLevel = () => {
+    setRetryKey(prev => prev + 1);
+  };
+
   return (
     <section className="StudyScreen">
       {jugando && nivelIdJugando && (
         <StudyGameplay
           nivelId={nivelIdJugando}
+          retryKey={retryKey}
           onBack={handleBackFromGameplay}
+          onRetry={handleRetryLevel}
         />
       )}
 

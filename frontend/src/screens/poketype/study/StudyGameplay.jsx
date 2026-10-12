@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
+
 import { crearIntentoNivel, procesarRondaNivel, calcularResultadoNivel } from '../../../features/poketype/modes/study/gameplay/levelMotor.js';
 import { obtenerConfiguracionNivel, TODOS_LOS_NIVELES } from '../../../features/poketype/modes/study/gameplay/levelRegistry.js';
 import { crearEstadoRondas, generarSiguienteRonda } from '../../../features/poketype/modes/study/gameplay/roundGenerator.js';
@@ -21,7 +22,7 @@ const TIEMPO_INICIAL = 100;
 const INTERVALO_TICK_MS = 100;
 const NIVEL_FINAL_ESTUDIO = 'campeon-18';
 
-export default function StudyGameplay({ nivelId, onBack }) {
+export default function StudyGameplay({ nivelId, retryKey, onBack, onRetry }) {
   const [intento, setIntento] = useState(null);
   const [estadoRondas, setEstadoRondas] = useState(null);
   const [rondaActual, setRondaActual] = useState(0);
@@ -40,10 +41,10 @@ export default function StudyGameplay({ nivelId, onBack }) {
   const [avisosDesbloqueo, setAvisosDesbloqueo] = useState([]);
   const [tiempoLeft, setTiempoLeft] = useState(TIEMPO_INICIAL);
   const [sinRondaDisponible, setSinRondaDisponible] = useState(false);
+  
   const timerRef = useRef(null);
   const respondidaRef = useRef(false);
   const finalizadoRef = useRef(false);
-
   const config = useMemo(() => obtenerConfiguracionNivel(nivelId), [nivelId]);
   const velocidadBase = config ? obtenerVelocidadTiempo(config.tiempo) : null;
 
@@ -69,8 +70,7 @@ export default function StudyGameplay({ nivelId, onBack }) {
     finalizadoRef.current = false;
 
     avanzarRonda(nuevoEstadoRondas, config);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nivelId, config]);
+  }, [nivelId, retryKey, config]);
 
   useEffect(() => {
     if (!intento || respondida || nivelTerminado || sinRondaDisponible || !config || velocidadBase === null) {
@@ -96,7 +96,6 @@ export default function StudyGameplay({ nivelId, onBack }) {
     }, INTERVALO_TICK_MS);
 
     return () => clearInterval(timerRef.current);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [intento, respondida, nivelTerminado, sinRondaDisponible, rondaActual, config, velocidadBase]);
 
   function avanzarRonda(estadoActual, configActual) {
@@ -236,7 +235,7 @@ export default function StudyGameplay({ nivelId, onBack }) {
         )}
         <div className="GameplayActions">
           <button className="BackButton" onClick={onBack}>Volver a Ligas</button>
-          <button className="NextButton" onClick={() => window.location.reload()}>Jugar de Nuevo</button>
+          <button className="NextButton" onClick={onRetry}>Jugar de Nuevo</button>
         </div>
         {mostrarVictoria && <StudyVictory onClose={() => setMostrarVictoria(false)} />}
         {avisosDesbloqueo.length > 0 && (
