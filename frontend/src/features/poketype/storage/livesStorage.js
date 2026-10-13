@@ -1,6 +1,6 @@
 import { Preferences } from '@capacitor/preferences';
 import { PLAYER_LIVES_KEY } from '../../../shared/storage/index.js';
-const VIDAS_MAXIMAS = 3;
+const VIDAS_MAXIMAS = 5;
 
 export async function leerEstadoVidas() {
   const resultado = await Preferences.get({ key: PLAYER_LIVES_KEY });

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getStreakProgress, obtenerHX } from '../home/index.js';
+import { getStreakProgress, obtenerHX, leerNombrePerfil, guardarNombrePerfil } from '../home/index.js';
 import { haCompletadoTodos } from '../features/poketype/modes/study/storage/levelProgressStorage.js';
 import { TODOS_LOS_NIVELES } from '../features/poketype/modes/study/gameplay/levelRegistry.js';
 import { showToast } from '../shared/toast/index.js';
@@ -8,7 +8,11 @@ export default function ProfileScreen() {
   const [hxActual, setHxActual] = useState(null);
   const [rachaActual, setRachaActual] = useState(null);
   const [estadoMaestria, setEstadoMaestria] = useState('loading');
+  const [nombrePerfil, setNombrePerfil] = useState(null);
+  const [editandoNombre, setEditandoNombre] = useState(false);
+  const [nombreInput, setNombreInput] = useState('');
   const showComingSoon = () => showToast('Disponible en próximas actualizaciones.');
+  const IdentityContent = editandoNombre ? 'div' : 'button';
 
   useEffect(() => {
     getStreakProgress()
@@ -30,6 +34,11 @@ export default function ProfileScreen() {
         setEstadoMaestria('error');
         showToast('No se pudo cargar el logro de Estudio.');
       });
+    leerNombrePerfil()
+      .then(setNombrePerfil)
+      .catch((error) => {
+        console.error('No se pudo cargar el nombre del perfil:', error);
+      });
   }, []);
 
   return (
@@ -39,15 +48,74 @@ export default function ProfileScreen() {
         <p className="ScreenSubtitle">Tu aventura, tus logros y todo lo que has descubierto.</p>
       </header>
 
-      <button type="button" className="ProfileIdentityCard" onClick={showComingSoon}>
-        <span className="ProfileAvatar" role="img" aria-label="Foto de perfil pendiente">👤</span>
-        <span className="ProfileIdentity">
-          <span className="ProfileEyebrow">Entrenador</span>
-          <span className="ProfileName">Tu nombre</span>
-          <span className="ProfileActionHint">Nombre y foto de perfil · Próximamente</span>
-        </span>
-        <span className="ProfileEditIcon" aria-hidden="true">✎</span>
-      </button>
+      <div className="ProfileIdentityCard">
+        <IdentityContent
+          className="ProfileIdentityTrigger"
+          {...(!editandoNombre && {
+            type: 'button',
+            onClick: () => {
+              setEditandoNombre(true);
+              setNombreInput(nombrePerfil || '');
+            },
+          })}
+        >
+          <span className="ProfileAvatar" role="img" aria-label="Foto de perfil pendiente">👤</span>
+          <span className="ProfileIdentity">
+            <span className="ProfileEyebrow">Entrenador</span>
+            {editandoNombre ? (
+              <input
+                type="text"
+                className="ProfileNameInput"
+                value={nombreInput}
+                onChange={(e) => setNombreInput(e.target.value)}
+                autoFocus
+              />
+            ) : (
+              <span className="ProfileName">{nombrePerfil || 'Tu nombre'}</span>
+            )}
+            <span className="ProfileActionHint">
+              {editandoNombre ? 'Escribe tu nombre' : 'Nombre y foto de perfil'}
+            </span>
+          </span>
+          {!editandoNombre && (
+            <span className="ProfileEditIcon" aria-hidden="true">✎</span>
+          )}
+        </IdentityContent>
+        {editandoNombre && (
+          <div className="ProfileEditActions">
+            <button
+              type="button"
+              className="ProfileEditButton"
+              aria-label="Guardar nombre"
+              title="Guardar nombre"
+              onClick={async () => {
+                try {
+                  await guardarNombrePerfil(nombreInput);
+                  setNombrePerfil(nombreInput);
+                  setEditandoNombre(false);
+                } catch (error) {
+                  console.error('No se pudo guardar el nombre:', error);
+                  showToast('No se pudo guardar el nombre.');
+                }
+              }}
+            >
+              <span aria-hidden="true">✓</span>
+            </button>
+            <button
+              type="button"
+              className="ProfileEditButton"
+              aria-label="Cancelar edición"
+              title="Cancelar edición"
+              onClick={() => {
+                setEditandoNombre(false);
+                setNombreInput(nombrePerfil || '');
+              }}
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+        )}
+      </div>
 
       <section className="ProfileSection" aria-labelledby="FavoritesTitle">
         <div className="ProfileSectionHeader">

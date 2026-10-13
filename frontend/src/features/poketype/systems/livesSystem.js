@@ -5,7 +5,7 @@ import {
   scheduleNotification,
 } from '../../../shared/notifications/index.js';
 
-const VIDAS_MAXIMAS = 3;
+const VIDAS_MAXIMAS = 5;
 const HORAS_POR_REGENERACION = 1;
 const MS_POR_REGENERACION = HORAS_POR_REGENERACION * 60 * 60 * 1000;
 

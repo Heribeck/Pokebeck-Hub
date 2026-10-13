@@ -101,13 +101,13 @@ export default function PoketypeScreen({ onNavigation }) {
  
         <div className="StatItem LivesPanel">
           <div className="CompactHearts">
-            {[0, 1, 2].map((index) => (
+            {[0, 1, 2, 3, 4].map((index) => (
               <span className="CompactHeart" key={index}>
                 {vidas === null ? '🤍' : index < vidas ? '❤️' : '🖤'}
               </span>
             ))}
           </div>
-          <button className="RecoverLifeButton" onClick={handleRecoverLife} disabled={vidas === null || vidas >= 3}>+</button>
+          <button className="RecoverLifeButton" onClick={handleRecoverLife} disabled={vidas === null || vidas >= 5}>+</button>
           <span className="LifeRegenerationTime">{formatRegenerationTime(tiempoRegeneracion ?? 0)}</span>
         </div>
  

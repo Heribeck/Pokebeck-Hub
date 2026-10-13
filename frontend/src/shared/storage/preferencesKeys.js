@@ -1,6 +1,7 @@
 // ====== | Pokebeck Hub Constants | ====== //
 export const STREAK_KEY = 'STREAK_SYSTEM'
 export const HX_KEY = 'POKEBECK_HX'
+export const PLAYER_NAME_KEY = 'POKEBECK_PLAYER_NAME'
 
 // ====== | Poketype Constants | ====== //
 export const GENERATOR_COUNTER_KEY = 'POKETYPE_GENERATOR_COUNTER'

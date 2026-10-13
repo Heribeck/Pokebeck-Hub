@@ -9,4 +9,5 @@ export {
   TRAINING_MAX_NORMAL_KEY,
   TRAINING_MAX_HARD_KEY,
   PLAYER_LIVES_KEY,
+  PLAYER_NAME_KEY,
 } from './preferencesKeys.js'

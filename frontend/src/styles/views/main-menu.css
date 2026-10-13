@@ -247,8 +247,31 @@
     border-radius: var(--radius-large);
     background: var(--bg-tertiary);
     color: var(--text-primary);
-    cursor: pointer;
     text-align: left;
+}
+
+.ProfileIdentityTrigger {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    align-items: center;
+    gap: 1rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    text-align: left;
+}
+
+button.ProfileIdentityTrigger {
+    cursor: pointer;
+    font: inherit;
+}
+
+button.ProfileIdentityTrigger:focus-visible {
+    border-radius: var(--radius-small);
+    outline: 2px solid var(--accent-yellow);
+    outline-offset: 4px;
 }
 
 .ProfileAvatar {
@@ -285,6 +308,52 @@
 .ProfileEditIcon {
     color: var(--accent-yellow);
     font-size: 1.25rem;
+}
+
+.ProfileNameInput {
+    box-sizing: border-box;
+    min-height: 2.75rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 0.45rem 0.65rem;
+    border: 2px solid var(--accent-yellow);
+    border-radius: var(--radius-small);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    width: 100%;
+}
+
+.ProfileNameInput:focus {
+    outline: 2px solid var(--accent-yellow);
+    outline-offset: 2px;
+}
+
+.ProfileEditActions {
+    display: flex;
+    flex: 0 0 auto;
+    gap: 0.35rem;
+}
+
+.ProfileEditButton {
+    display: grid;
+    width: 2.25rem;
+    height: 2.25rem;
+    flex: 0 0 auto;
+    place-items: center;
+    padding: 0;
+    border: 1px solid var(--accent-yellow);
+    border-radius: var(--radius-small);
+    background: var(--bg-secondary);
+    color: var(--accent-yellow);
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.ProfileEditButton:hover {
+    background: var(--accent-yellow);
+    color: var(--bg-secondary);
 }
 
 .ProfileSection {
