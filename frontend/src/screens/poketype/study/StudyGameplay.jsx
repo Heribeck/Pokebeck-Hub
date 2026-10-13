@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 
 import { crearIntentoNivel, procesarRondaNivel, calcularResultadoNivel } from '../../../features/poketype/modes/study/gameplay/levelMotor.js';
-import { obtenerConfiguracionNivel, TODOS_LOS_NIVELES } from '../../../features/poketype/modes/study/gameplay/levelRegistry.js';
+import { obtenerConfiguracionNivel, TODOS_LOS_NIVELES, obtenerSiguienteNivel } from '../../../features/poketype/modes/study/gameplay/levelRegistry.js';
 import { crearEstadoRondas, generarSiguienteRonda } from '../../../features/poketype/modes/study/gameplay/roundGenerator.js';
 import { haCompletadoTodos, marcarNivelCompletado, yaCompletoNivel } from '../../../features/poketype/modes/study/storage/levelProgressStorage.js';
 import { obtenerVelocidadTiempo } from '../../../features/poketype/modes/study/config/timeConfig.js';
@@ -22,7 +22,7 @@ const TIEMPO_INICIAL = 100;
 const INTERVALO_TICK_MS = 100;
 const NIVEL_FINAL_ESTUDIO = 'campeon-18';
 
-export default function StudyGameplay({ nivelId, retryKey, onBack, onRetry }) {
+export default function StudyGameplay({ nivelId, retryKey, onBack, onRetry, onNextLevel, siguienteNivelDesbloqueado, onNivelCompletado }) {
   const [intento, setIntento] = useState(null);
   const [estadoRondas, setEstadoRondas] = useState(null);
   const [rondaActual, setRondaActual] = useState(0);
@@ -41,6 +41,8 @@ export default function StudyGameplay({ nivelId, retryKey, onBack, onRetry }) {
   const [avisosDesbloqueo, setAvisosDesbloqueo] = useState([]);
   const [tiempoLeft, setTiempoLeft] = useState(TIEMPO_INICIAL);
   const [sinRondaDisponible, setSinRondaDisponible] = useState(false);
+  const [mostrandoResultadoRonda, setMostrandoResultadoRonda] = useState(false);
+  const siguienteNivelId = useMemo(() => obtenerSiguienteNivel(nivelId), [nivelId, resultadoFinal]);
   
   const timerRef = useRef(null);
   const respondidaRef = useRef(false);
@@ -138,7 +140,7 @@ export default function StudyGameplay({ nivelId, retryKey, onBack, onRetry }) {
     setCorazonesRestantes(paso.corazonesRestantes);
 
     if (paso.nivelTerminado) {
-      finalizarNivel();
+      setMostrandoResultadoRonda(true);
       return;
     }
 
@@ -164,6 +166,7 @@ export default function StudyGameplay({ nivelId, retryKey, onBack, onRetry }) {
           await marcarNivelCompletado(nivelId);
           await sumarHX(config.hxRecompensa);
           setEstadoRecompensaHX('ganado');
+          if (onNivelCompletado) onNivelCompletado();
         } else {
           setEstadoRecompensaHX('ya-obtenido');
         }
@@ -202,6 +205,11 @@ export default function StudyGameplay({ nivelId, retryKey, onBack, onRetry }) {
     avanzarRonda(estadoRondas, config);
   }
 
+  function verResultadoNivel() {
+    setMostrandoResultadoRonda(false);
+    finalizarNivel();
+  }
+
   if (!config) {
     return <div>Nivel no encontrado</div>;
   }
@@ -234,8 +242,11 @@ export default function StudyGameplay({ nivelId, retryKey, onBack, onRetry }) {
           <p className="HxRewardMessage">No se otorga HX porque no superaste el nivel.</p>
         )}
         <div className="GameplayActions">
-          <button className="BackButton" onClick={onBack}>Volver a Ligas</button>
           <button className="NextButton" onClick={onRetry}>Jugar de Nuevo</button>
+          {resultadoFinal.aprobado && siguienteNivelId && siguienteNivelDesbloqueado && (
+            <button className="NextButton" onClick={onNextLevel}>Siguiente Nivel</button>
+          )}
+          <button className="BackButton" onClick={onBack}>Volver a Ligas</button>
         </div>
         {mostrarVictoria && <StudyVictory onClose={() => setMostrarVictoria(false)} />}
         {avisosDesbloqueo.length > 0 && (
@@ -325,6 +336,12 @@ export default function StudyGameplay({ nivelId, retryKey, onBack, onRetry }) {
           {!resultadoRonda.nivelTerminado && (
             <button className="NextButton" onClick={siguienteRonda}>Siguiente Ronda</button>
           )}
+        </div>
+      )}
+
+      {respondida && resultadoRonda && mostrandoResultadoRonda && (
+        <div className="GameplayActions">
+          <button className="NextButton" onClick={verResultadoNivel}>Ver Resultado</button>
         </div>
       )}
     </div>

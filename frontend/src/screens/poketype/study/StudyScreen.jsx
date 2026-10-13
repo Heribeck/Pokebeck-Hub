@@ -1,8 +1,15 @@
-import { useEffect, useState } from 'react';
-import { obtenerVidasGenerales } from '../../../features/poketype/index.js';
+import { useEffect, useState, useMemo } from 'react';
+
+import { 
+  obtenerVidasGenerales, 
+  getLevelUnlockState, 
+  obtenerSiguienteNivel, 
+  obtenerNivelesCompletados, 
+  datosLigas } from '../../../features/poketype/index.js';
 import { incrementStreak } from '../../../home/index.js';
 import { showToast } from '../../../shared/toast/index.js';
 import { playAppMusic, playLeagueMusic } from '../../../shared/audio/index.js';
+
 import { LeaguesView } from './LeaguesView.jsx';
 import { LeagueLevelsView } from './LeagueLevelsView.jsx';
 import { LevelModal } from './LevelModal.jsx';
@@ -17,6 +24,7 @@ export default function StudyScreen({ onNavigation }) {
   const [jugando, setJugando] = useState(false);
   const [nivelIdJugando, setNivelIdJugando] = useState(null);
   const [retryKey, setRetryKey] = useState(0);
+  const [idsCompletados, setIdsCompletados] = useState([]);
 
   useEffect(() => {
     if (jugando && nivelIdJugando) {
@@ -25,6 +33,12 @@ export default function StudyScreen({ onNavigation }) {
     }
     playAppMusic();
   }, [jugando, nivelIdJugando]);
+
+  useEffect(() => {
+    obtenerNivelesCompletados().then(setIdsCompletados).catch((error) => {
+      console.error('No se pudieron cargar los niveles completados:', error);
+    });
+  }, [vista, nivelIdJugando, jugando]);
 
   const handleLeagueSelect = (ligaKey) => {
     setLigaSeleccionada(ligaKey);
@@ -85,6 +99,49 @@ export default function StudyScreen({ onNavigation }) {
     setRetryKey(prev => prev + 1);
   };
 
+  const handleNivelCompletado = () => {
+    obtenerNivelesCompletados().then(setIdsCompletados).catch((error) => {
+      console.error('No se pudieron cargar los niveles completados:', error);
+    });
+  };
+
+  const handleNextLevel = () => {
+    const siguienteNivelId = obtenerSiguienteNivel(nivelIdJugando);
+    if (!siguienteNivelId) return;
+
+    for (const ligaKey of Object.keys(datosLigas)) {
+      const nivel = datosLigas[ligaKey].niveles.find(n => n.id === siguienteNivelId);
+      if (nivel) {
+        const { status, requiredLevel } = getLevelUnlockState(ligaKey, siguienteNivelId, idsCompletados);
+        setNivelSeleccionado(nivel);
+        setEstadoNivel(status);
+        setNivelRequerido(requiredLevel);
+        setJugando(false);
+        setNivelIdJugando(null);
+        setVista('niveles');
+        setLigaSeleccionada(ligaKey);
+        return;
+      }
+    }
+  };
+
+  const siguienteNivelId = useMemo(() => {
+    if (!nivelIdJugando) return null;
+    return obtenerSiguienteNivel(nivelIdJugando);
+  }, [nivelIdJugando, idsCompletados]);
+
+  const siguienteNivelDesbloqueado = useMemo(() => {
+    if (!siguienteNivelId) return false;
+    for (const ligaKey of Object.keys(datosLigas)) {
+      const nivel = datosLigas[ligaKey].niveles.find(n => n.id === siguienteNivelId);
+      if (nivel) {
+        const { status } = getLevelUnlockState(ligaKey, siguienteNivelId, idsCompletados);
+        return status === 'desbloqueado' || status === 'completado';
+      }
+    }
+    return false;
+  }, [siguienteNivelId, idsCompletados]);
+
   return (
     <section className="StudyScreen">
       {jugando && nivelIdJugando && (
@@ -93,6 +150,9 @@ export default function StudyScreen({ onNavigation }) {
           retryKey={retryKey}
           onBack={handleBackFromGameplay}
           onRetry={handleRetryLevel}
+          onNextLevel={handleNextLevel}
+          siguienteNivelDesbloqueado={siguienteNivelDesbloqueado}
+          onNivelCompletado={handleNivelCompletado}
         />
       )}
 

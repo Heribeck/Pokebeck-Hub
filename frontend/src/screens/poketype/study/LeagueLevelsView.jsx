@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
-import { datosLigas } from '../../../features/poketype/modes/study/data/leaguesData.js';
-import { obtenerNivelesCompletados } from '../../../features/poketype/modes/study/storage/levelProgressStorage.js';
-import { getLevelUnlockState } from '../../../features/poketype/index.js';
+import { datosLigas, obtenerNivelesCompletados, getLevelUnlockState } from '../../../features/poketype/index.js';
 import { LevelCard } from './LevelCard.jsx';
 
 export function LeagueLevelsView({ ligaKey, onBack, onLevelClick }) {
