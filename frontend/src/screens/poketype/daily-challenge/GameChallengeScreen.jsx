@@ -17,6 +17,7 @@ import { showToast } from '../../../shared/toast/index.js'
 import { capitalizeFirstLetter } from '../../../shared/strings/index.js'
 import { typesIcons, typesColors } from '../../../features/poketype/index.js'
 import { showInsterstitial } from '../../../shared/admob/index.js'
+import { playLeagueMusic } from '../../../shared/audio/index.js'
 
 
 export default function GameChallengeScreen({ onNavigation }) {
@@ -40,6 +41,10 @@ export default function GameChallengeScreen({ onNavigation }) {
     const attemptsRef = useRef(0)
 
     useEffect(() => () => clearInterval(gameState.timerChallenge), [])
+
+    useEffect(() => {
+        if (gameStarted) playLeagueMusic('campeon')
+    }, [gameStarted])
 
     const loadRound = () => {
         challengeLogic(setType1, setType2, setOptions, setCorrectPokemon, setTimerValue, handleTimeOut, generatorRef.current, streakRef.current)
