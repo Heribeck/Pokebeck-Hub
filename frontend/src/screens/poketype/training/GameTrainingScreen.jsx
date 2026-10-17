@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { showToast } from '../../../shared/toast/index.js'
 import { typesIcons, typesColors } from '../../../features/poketype/index.js'
 import { showRewarded } from '../../../shared/admob/index.js'
+import { NativeAd } from '../../../shared/admob/native/index.js'
 import { 
     trainingLogic, 
     scoreState, 
@@ -243,6 +244,7 @@ export default function GameTrainingScreen({ onNavigation, currentDifficulty }) 
                 {showBack && <button className="BackButton" onClick={handleBackToDifficulty}>Volver a Dificultad</button>}
             </div>
             {score > 0 && score % 5 === 0 && <TrainingCelebration score={score} />}
+            {gameStarted && <NativeAd placementId="training" size="large" />}
 
         </section>
     );

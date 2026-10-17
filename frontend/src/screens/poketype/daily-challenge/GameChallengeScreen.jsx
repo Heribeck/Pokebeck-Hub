@@ -17,6 +17,7 @@ import { showToast } from '../../../shared/toast/index.js'
 import { capitalizeFirstLetter } from '../../../shared/strings/index.js'
 import { typesIcons, typesColors } from '../../../features/poketype/index.js'
 import { showInsterstitial } from '../../../shared/admob/index.js'
+import { NativeAd } from '../../../shared/admob/native/index.js'
 import { playLeagueMusic } from '../../../shared/audio/index.js'
 
 
@@ -185,6 +186,7 @@ export default function GameChallengeScreen({ onNavigation }) {
             onClick={() => onNavigation('poketype')}
             >Volver al Menu
             </button>}
+            {gameStarted && <NativeAd placementId="challenge" size="large" />}
 
         </section>
     );

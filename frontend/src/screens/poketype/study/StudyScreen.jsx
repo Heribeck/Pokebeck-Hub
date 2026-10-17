@@ -9,6 +9,7 @@ import {
 import { incrementStreak } from '../../../home/index.js';
 import { showToast } from '../../../shared/toast/index.js';
 import { playAppMusic, playLeagueMusic } from '../../../shared/audio/index.js';
+import { NativeAd } from '../../../shared/admob/native/index.js';
 
 import { LeaguesView } from './LeaguesView.jsx';
 import { LeagueLevelsView } from './LeagueLevelsView.jsx';
@@ -155,6 +156,8 @@ export default function StudyScreen({ onNavigation }) {
           onNivelCompletado={handleNivelCompletado}
         />
       )}
+
+      {jugando && <NativeAd placementId="study" size="large" />}
 
       {!jugando && vista === 'ligas' && (
         <LeaguesView onLeagueSelect={handleLeagueSelect} />

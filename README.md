@@ -114,10 +114,10 @@ Desde Android Studio se puede ejecutar en un dispositivo o emulador y generar un
 
 ### Sistemas de la aplicación
 
-- **Vidas:** hasta tres vidas, con regeneración de una vida por hora y opción de recuperar una mediante un anuncio bonificado.
+- **Vidas:** hasta cinco vidas, con regeneración de una vida por hora y opción de recuperar una mediante un anuncio bonificado.
 - **HX:** moneda de progreso usada por el juego.
 - **Racha diaria:** progreso de actividad consecutiva.
-- **Anuncios:** formatos nativo, bonificado e intersticial integrados con AdMob.
+- **Anuncios:** formatos nativo, bonificado e intersticial integrados con AdMob. Los anuncios nativos aparecen en Generator, Training, Study y Daily Challenge durante la partida, fijos en la parte inferior de la pantalla.
 - **Notificaciones:** notificaciones locales programadas, incluida la de vidas completas, y push de FCM enviadas desde Firebase. En primer plano, las push recibidas se muestran como notificación del sistema.
 - **Audio:** música y efectos de sonido de la aplicación y los modos.
 

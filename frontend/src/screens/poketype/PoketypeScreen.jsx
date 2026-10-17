@@ -3,7 +3,6 @@ import { showRewarded } from "../../shared/admob/index.js";
 import { getStreakProgress, obtenerHX } from "../../home/index.js";
 import { obtenerTiempoParaProximaRegeneracion, obtenerVidasGenerales, restaurarVidaPorAnuncio } from "../../features/poketype/index.js";
 import { showToast } from "../../shared/toast/index.js";
-import { NativeAd } from "../../shared/admob/native/index.js";
 
 function formatRegenerationTime(milliseconds) {
   if (milliseconds <= 0) return '';
@@ -113,8 +112,6 @@ export default function PoketypeScreen({ onNavigation }) {
  
       </div>
 
-      <NativeAd placementId="poketype" size="compact" />
- 
       <nav aria-label="PokeType modes" className="PoketypeModes">
         <button onClick={() => onNavigation('leagues')} className="StudyButton">
           <span className="ModeCardTitle">Estudio</span>

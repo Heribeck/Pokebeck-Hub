@@ -1,5 +1,4 @@
 import { showToast } from '../shared/toast/index.js';
-import { NativeAd } from '../shared/admob/native/index.js';
 
 const gameItems = [
   {
@@ -59,12 +58,6 @@ export default function CatalogScreen({ section, onNavigation }) {
             : 'Elige una aventura y demuestra lo que sabes del mundo Pokémon.'}
         </p>
       </header>
-
-      <NativeAd
-        key={section}
-        placementId={`catalog-${section}`}
-        size="compact"
-      />
 
       <div className="CatalogCardList">
         {items.map((item) => (

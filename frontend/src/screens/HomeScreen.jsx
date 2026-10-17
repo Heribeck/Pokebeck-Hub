@@ -1,5 +1,3 @@
-import { NativeAd } from '../shared/admob/native/index.js';
-
 export default function HomeScreen({ onNavigation, streakDialogOpen }) {
   return (
     <section className="HomeScreen">
@@ -11,8 +9,6 @@ export default function HomeScreen({ onNavigation, streakDialogOpen }) {
           Descubre Pokémon, domina sus tipos y conviértete en un entrenador imparable.
         </p>
       </header>
-
-      <NativeAd placementId="home" size="large" suspended={streakDialogOpen} />
 
       <section className="HomeFeaturedGame" aria-labelledby="FeaturedGameTitle">
         <p className="HomeFeaturedEyebrow">Juego destacado</p>
