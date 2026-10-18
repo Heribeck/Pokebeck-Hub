@@ -106,7 +106,7 @@ export default function GeneratorScreen({ onNavigation }) {
                 suspended={pokemonSearchFocused}
             />
 
-            <h2>Generador de Tipos</h2>
+            <h2 className="AppTitle">Generador de Tipos</h2>
 
             <div className="GeneratorTypes">
                 <img 
@@ -220,13 +220,11 @@ export default function GeneratorScreen({ onNavigation }) {
              onClick={handleGenerate}
             >{btnText}</button>
 
-            <button 
-            className="CheckGeneratorButton" 
+            <button
+            className="CheckGeneratorButton"
             disabled={selectDisabled}
             onClick={handleCheck}
             >Comprobar</button>
-
-            <button className="BackButton" onClick={() => onNavigation('tools')}>Volver a Herramientas</button>
 
             </div>
         

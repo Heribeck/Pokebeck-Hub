@@ -11,24 +11,20 @@ const gameItems = [
 
 const toolItems = [
   {
+    title: 'TypeMatch',
+    description: 'Calcula la efectividad de tipos de Pokémon.',
+    status: 'Disponible',
+    screen: 'typematch',
+  },
+  {
     title: 'Generador de tipos',
     description: 'Descubre combinaciones de tipos y pon a prueba tus conocimientos.',
     status: 'Disponible',
     screen: 'generator',
   },
   {
-    title: 'Pokédex',
-    description: 'Consulta datos, características y relaciones entre Pokémon.',
-    status: 'Próximamente',
-  },
-  {
     title: 'Team Builder',
     description: 'Crea equipos y descubre cómo se complementan sus integrantes.',
-    status: 'Próximamente',
-  },
-  {
-    title: 'Type Coverage Calculator',
-    description: 'Analiza la cobertura de tipos de tu equipo.',
     status: 'Próximamente',
   },
 ];

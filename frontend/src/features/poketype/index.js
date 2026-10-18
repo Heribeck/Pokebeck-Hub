@@ -19,7 +19,7 @@ export {
 
 export * from './systems/unlockSystem/index.js'
 
-export { types, typesIcons, typesColors, typeSpanish } from './data/pokemonTypes.js'
+export { typesIcons, typesColors, typeSpanish } from './data/pokemonTypes.js'
 export { gameState } from './state/poketypeState.js'
 export { scoreState } from './modes/training/state/state.js'
 export { datosLigas } from './modes/study/data/leaguesData.js'

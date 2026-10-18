@@ -213,7 +213,7 @@ export default function ProfileScreen() {
       </section>
 
       <div className="ProfileSectionFooter">
-        <span className="ProfileSectionHint">Versión de la aplicación: 2.3.8</span>
+        <span className="ProfileSectionHint">Versión de la aplicación: 2.4.8</span>
       </div>
     </section>
   );

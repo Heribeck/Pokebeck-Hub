@@ -1,24 +1,3 @@
-export const types = [
-  "normal",
-  "fire",
-  "water",
-  "electric",
-  "grass",
-  "ice",
-  "fighting",
-  "poison",
-  "ground",
-  "flying",
-  "psychic",
-  "bug",
-  "rock",
-  "ghost",
-  "dragon",
-  "dark",
-  "steel",
-  "fairy"
-];
-
 export const typesIcons = {
   "normal": "assets/img/poketype/normal.svg",
   "fire": "assets/img/poketype/fire.svg",

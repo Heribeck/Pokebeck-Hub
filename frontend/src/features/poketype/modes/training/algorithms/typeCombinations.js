@@ -1,6 +1,6 @@
 import { dataState } from "../../../../../home/index.js";
 import { validatePokemonTypes } from "../../../algorithms/pokemonTypes.js";
-import { types } from "../../../data/pokemonTypes.js";
+import { types } from "../../../../../shared/data/index.js";
 
 const THREE_GENERATION_ID_LIMIT = 386;
 

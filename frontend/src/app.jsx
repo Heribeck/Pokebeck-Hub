@@ -14,6 +14,7 @@ import DifficultyTrainingScreen from './screens/poketype/training/DifficultyTrai
 import GameTrainingScreen from './screens/poketype/training/GameTrainingScreen.jsx';
 import GameChallengeScreen from './screens/poketype/daily-challenge/GameChallengeScreen.jsx';
 import GeneratorScreen from './screens/poketype/generator/GeneratorScreen.jsx';
+import TypeMatchScreen from './screens/typematch/TypeMatchScreen.jsx';
 import StreakResetDialog from './components/StreakResetDialog.jsx';
 import ConnectivityBanner from './components/ConnectivityBanner.jsx';
 import { playAppMusic } from './shared/audio/index.js';
@@ -40,7 +41,7 @@ export default function App() {
     const [gameDataStatus, setGameDataStatus] = useState('loading');
     const mainSection = screen === 'home'
         ? 'home'
-        : screen === 'tools' || screen === 'generator'
+        : screen === 'tools' || screen === 'generator' || screen === 'typematch'
             ? 'tools'
             : screen === 'profile'
                 ? 'profile'
@@ -129,6 +130,7 @@ export default function App() {
                 { screen === 'gameTraining' && <GameTrainingScreen onNavigation={handleNavigation} currentDifficulty={currentDifficulty} /> }
                 { screen === 'gameChallenge' && <GameChallengeScreen onNavigation={handleNavigation} /> }
                 { screen === 'generator' && <GeneratorScreen onNavigation={handleNavigation} /> }
+                { screen === 'typematch' && <TypeMatchScreen onNavigation={handleNavigation} /> }
             </main>
         </div>
     )

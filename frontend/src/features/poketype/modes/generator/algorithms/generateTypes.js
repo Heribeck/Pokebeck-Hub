@@ -1,7 +1,7 @@
 import { gameState } from "../../../state/poketypeState.js";
 import { filterPokemonByType } from "./filterPokemonByTypes.js";
 import { randomInt } from "../../../../../shared/algorithms/index.js";
-import { types } from '../../../data/pokemonTypes.js'
+import { types } from "../../../../../shared/data/index.js";
 
 export function generateGeneratorTypes(setType1, setType2, setPokemonList, setSelectDisabled) {
     const t1 = types[randomInt(0, types.length - 1)]
