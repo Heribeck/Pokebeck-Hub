@@ -34,8 +34,8 @@ La interfaz está implementada con React y se empaqueta para Android mediante Ca
 
 - La aplicación principal, las pantallas de navegación y el catálogo están implementados.
 - PokeType Guess ofrece los modos Estudio, Entrenamiento y Desafío del Día.
-- El Generador de tipos está disponible desde las secciones Herramientas y PokeType.
-- Pokédex, Team Builder y Type Coverage Calculator aparecen en el catálogo como funciones próximas; aún no están disponibles.
+- TypeMatch y el Generador de tipos están disponibles en Herramientas; el Generador también se puede abrir desde PokeType.
+- Team Builder aparece en el catálogo como función próxima. Pokédex y Type Coverage Calculator siguen planificados, pero todavía no están disponibles.
 - El perfil muestra HX, racha diaria y el logro de maestría cuando se completa todo el modo Estudio. Favoritos, historial, ranking y copia de seguridad siguen como funciones próximas.
 - El progreso se guarda localmente. No hay un backend ni sincronización entre dispositivos.
 
@@ -112,12 +112,16 @@ Desde Android Studio se puede ejecutar en un dispositivo o emulador y generar un
 - **Desafío del Día:** reto diario con intentos y progreso persistentes.
 - **Generador:** genera combinaciones de tipos Pokémon.
 
+### Herramientas
+
+- **TypeMatch:** calcula la efectividad de los 18 tipos en modo defensivo u ofensivo al seleccionar hasta dos tipos. En defensa combina las interacciones de ambos tipos; en ataque muestra la mejor eficacia disponible al usar un movimiento de uno de los tipos seleccionados.
+
 ### Sistemas de la aplicación
 
 - **Vidas:** hasta cinco vidas, con regeneración de una vida por hora y opción de recuperar una mediante un anuncio bonificado.
 - **HX:** moneda de progreso usada por el juego.
 - **Racha diaria:** progreso de actividad consecutiva.
-- **Anuncios:** formatos nativo, bonificado e intersticial integrados con AdMob. Los anuncios nativos aparecen en Generator, Training, Study y Daily Challenge durante la partida, fijos en la parte inferior de la pantalla.
+- **Anuncios:** formatos nativo, bonificado e intersticial integrados con AdMob. En Android hay un anuncio compacto sobre el título del Generador, uno grande fijo sobre la navegación en TypeMatch y anuncios grandes fijos durante las partidas de Entrenamiento, Estudio y Desafío del Día.
 - **Notificaciones:** notificaciones locales programadas, incluida la de vidas completas, y push de FCM enviadas desde Firebase. En primer plano, las push recibidas se muestran como notificación del sistema.
 - **Audio:** música y efectos de sonido de la aplicación y los modos.
 
@@ -153,7 +157,11 @@ frontend/
 │   │   ├── state/
 │   │   ├── storage/
 │   │   └── systems/
+│   ├── features/typematch/
+│   │   ├── algorithms/
+│   │   └── data/
 │   ├── screens/
+│   │   └── typematch/
 │   ├── components/
 │   ├── shared/
 │   └── styles/
