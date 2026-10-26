@@ -3,8 +3,10 @@ import { typesIcons, typesColors, typeSpanish } from '../../features/poketype/da
 import { calculateEffectiveness } from '../../features/typematch/index.js';
 import { types } from '../../shared/data/index.js';
 import { NativeAd } from '../../shared/admob/native/index.js';
+import { incrementStreak } from '../../home/index.js';
+import { showToast } from '../../shared/toast/index.js';
 
-export default function TypeMatchScreen({ onNavigation }) {
+export default function TypeMatchScreen() {
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [activeTab, setActiveTab] = useState('defensivo');
 
@@ -26,6 +28,10 @@ export default function TypeMatchScreen({ onNavigation }) {
     } else {
       setSelectedTypes([selectedTypes[1], type]);
     }
+    incrementStreak().catch((error) => {
+      console.error("no se pudo incrementar la racha", error);
+      showToast("No se pudo incrementar la racha");
+    });
   };
 
   const isTypeSelected = (type) => selectedTypes.includes(type);

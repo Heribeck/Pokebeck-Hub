@@ -8,7 +8,7 @@ import { dataState, incrementStreak } from "../../../home/index.js";
 import { showToast } from "../../../shared/toast/index.js";
 import { NativeAd } from "../../../shared/admob/native/index.js";
 
-export default function GeneratorScreen({ onNavigation }) {
+export default function GeneratorScreen() {
 
     const [btnText, setBtnText] = useState('Generar');
     const [btnDisabled, setBtnDisabled] = useState(false);
