@@ -6,7 +6,6 @@ import { gameState } from "../../../features/poketype/index.js";
 import { validatePokemon, buildResultMessage } from "../../../features/poketype/index.js";
 import { dataState, incrementStreak } from "../../../home/index.js";
 import { showToast } from "../../../shared/toast/index.js";
-import { NativeAd } from "../../../shared/admob/native/index.js";
 
 export default function GeneratorScreen() {
 
@@ -100,12 +99,6 @@ export default function GeneratorScreen() {
         
             <div className="GeneratorPanel">
 
-            <NativeAd
-                placementId="generator"
-                size="compact"
-                suspended={pokemonSearchFocused}
-            />
-
             <h2 className="AppTitle">Generador de Tipos</h2>
 
             <div className="GeneratorTypes">
@@ -141,8 +134,6 @@ export default function GeneratorScreen() {
                     {resultMessage}
                 </p>
             )}
-            
-
             
             <div style={{ position: 'relative', width: '100%' }}>
                 <input
