@@ -9,13 +9,6 @@ const VIDAS_MAXIMAS = 5;
 const HORAS_POR_REGENERACION = 1;
 const MS_POR_REGENERACION = HORAS_POR_REGENERACION * 60 * 60 * 1000;
 
-function estadoPorDefecto() {
-  return {
-    vidas: VIDAS_MAXIMAS, 
-    ultimaActualizacion: Date.now(),
-  };
-}
-
 function aplicarRegeneracion(estado, ahora = Date.now()) {
   if (estado.vidas >= VIDAS_MAXIMAS) {
     return { vidas: VIDAS_MAXIMAS, ultimaActualizacion: ahora };
